@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <linearGradient id="b" x1="100%" x2="0%" y1="100%" y2="0%">
+            <stop offset="0%" stop-color="#FCA400"/>
+            <stop offset="100%" stop-color="#FFBC00"/>
+        </linearGradient>
+        <radialGradient id="c" cy="50.016%" r="49.984%" fx="50%" fy="50.016%">
+            <stop offset="0%" stop-color="#FFBE00" stop-opacity="0"/>
+            <stop offset="59.372%" stop-color="#FFBE00" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#FF6800"/>
+        </radialGradient>
+        <circle id="a" cx="10" cy="10" r="10"/>
+        <path id="f" d="M10 7.341A2.997 2.997 0 0 1 12.5 6H16v2h-3.5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1H16v2h-3.5a2.997 2.997 0 0 1-2.5-1.341A2.997 2.997 0 0 1 7.5 14H4v-2h3.5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H4V6h3.5c1.043 0 1.963.533 2.5 1.341z"/>
+        <filter id="e" width="125%" height="137.5%" x="-12.5%" y="-18.8%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 1 0 0 0 0 0.407843137 0 0 0 0 0 0 0 0 0.5 0"/>
+        </filter>
+        <linearGradient id="g" x1="0%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFDF4E"/>
+            <stop offset="46.001%" stop-color="#FFEA82"/>
+            <stop offset="100%" stop-color="#FFD914"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(2 2)">
+        <mask id="d" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <use fill="url(#b)" xlink:href="#a"/>
+        <use fill="url(#c)" xlink:href="#a"/>
+        <g fill="#000" mask="url(#d)">
+            <use filter="url(#e)" xlink:href="#f"/>
+        </g>
+        <path fill="url(#g)" fill-rule="nonzero" d="M10 0c5.523 0 10 4.477 10 10s-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM7.5 6c1.043 0 1.963.533 2.5 1.341A2.997 2.997 0 0 1 12.5 6H16v2h-3.5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1H16v2h-3.5a2.997 2.997 0 0 1-2.5-1.341A2.997 2.997 0 0 1 7.5 14H4v-2h3.5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H4V6h3.5z" mask="url(#d)"/>
+    </g>
+</svg>

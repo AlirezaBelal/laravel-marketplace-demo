@@ -7,7 +7,7 @@
 <h3 align="center">Bootstrap Icons</h3>
 
 <p align="center">
-  Official open source SVG icon library for Bootstrap with over 1,300 icons.
+  Official open source SVG icon library for Bootstrap.
   <br>
   <a href="https://icons.getbootstrap.com/"><strong>Explore Bootstrap Icons »</strong></a>
   <br>
@@ -17,10 +17,13 @@
   <a href="https://themes.getbootstrap.com/">Themes</a>
   ·
   <a href="https://blog.getbootstrap.com/">Blog</a>
-  <br>
 </p>
 
-[![Bootstrap Icons preview](https://github.com/twbs/icons/blob/main/.github/preview.png)](https://icons.getbootstrap.com)
+## 1,300+ icons
+
+[![Bootstrap Icons full set](https://github.com/twbs/icons/blob/main/.github/preview.png)](https://icons.getbootstrap.com)
+
+[Also available in Figma.](https://www.figma.com/file/tZZVOiEgKcRUHE3s6o5djB/Bootstrap-Icons-v1.4.0?node-id=0%3A1)
 
 ## Install
 
@@ -29,8 +32,6 @@ Bootstrap Icons are packaged up and published to npm. We only include the proces
 ```shell
 npm i bootstrap-icons
 ```
-
-[Also available in Figma.](https://www.figma.com/community/file/972989644486753519/Bootstrap-Icons-v1.5.0)
 
 ## Usage
 
@@ -71,7 +72,7 @@ Here are some key scripts you'll use during development. Be sure to look to our 
 
 ## Adding SVGs
 
-Icons are typically only added by @mdo, but exceptions can be made. New glyphs are designed in Figma first on a 16x16px grid, then exported as flattened SVGs with `fill` (no stroke). Once a new SVG icon has been added to the `icons` directory, we use an npm script to:
+Once a new SVG icon has been added to the `icons` directory, you'll need to optimize them. An npm script is used to:
 
 1. Optimize our SVGs with SVGO.
 2. Modify the SVGs source HTML, removing all attributes before setting new attributes and values in our preferred order.

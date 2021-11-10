@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180" height="135" viewBox="0 0 180 135">
+    <defs>
+        <linearGradient id="a" x1="85.573%" x2="0%" y1="49.998%" y2="50.003%">
+            <stop offset="0%" stop-color="#A1A3A8"/>
+            <stop offset="100%" stop-color="#C1C3C7"/>
+        </linearGradient>
+        <filter id="b" width="104.9%" height="700%" x="-2.5%" y="-300%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation=".9"/>
+        </filter>
+        <linearGradient id="c" x1="50%" x2="50%" y1="80.012%" y2="0%">
+            <stop offset="0%" stop-color="#9B1020"/>
+            <stop offset="100%" stop-color="#EF394E"/>
+        </linearGradient>
+        <linearGradient id="d" x1="50%" x2="50%" y1="0%" y2="76.38%">
+            <stop offset="0%" stop-color="#FAFAFA"/>
+            <stop offset="100%" stop-color="#FFF"/>
+        </linearGradient>
+        <path id="e" d="M24.323 6.322V0h.98v6.322h-.98zM30.6 1.778v4.544h-3.315c-.706 0-1.197-.454-1.197-1.166V3.102c0-.712.49-1.324 1.197-1.324H30.6zm-.98.988h-2.06c-.295 0-.49.296-.49.553v1.56c0 .277.235.455.49.455h2.06V2.766zm-6.082-.988v4.544h-3.413c-.706 0-1.098-.454-1.098-1.166V3.102c0-.712.412-1.324 1.098-1.324h3.413zm-.98.988H20.4c-.294 0-.392.296-.392.553v1.56c0 .277.137.455.392.455h2.158V2.766zm-7.454 3.556V0h-.98v6.322h.98zm3.315-4.544h-1.295L15.261 4.05l1.863 2.272h1.295L16.555 4.05l1.864-2.272zm-6.846 0H8.317c-.706 0-1.255.593-1.255 1.324v2.074c0 .711.549 1.146 1.255 1.146h2.275v.356c0 .276-.215.434-.47.434h-1l-1.04-.02.765 1.008h1.55c.705 0 1.176-.415 1.176-1.126V1.778zM8.611 5.334c-.274 0-.569-.178-.569-.454V3.3c0-.258.275-.554.57-.554h1.98v2.589h-1.98zM6.277 1.778v4.544h-.98V1.778h.98zm-.98-.79V0h.98v.988h-.98zm8.041.79v4.544h-.98V1.778h.98zm-.98-.79V0h.98v.988h-.98zM3.53 0v1.798-.02H1.177C.47 1.778 0 2.371 0 3.082v2.055c0 .71.49 1.185 1.177 1.185h3.335V0H3.53zm0 5.334H1.45c-.274 0-.47-.158-.47-.415V3.3c0-.258.196-.534.47-.534h2.08v2.568z"/>
+        <linearGradient id="g" x1="42.798%" x2="95.958%" y1="45.845%" y2="59.697%">
+            <stop offset="0%" stop-color="#F66D77"/>
+            <stop offset="100%" stop-color="#EF394E"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="url(#a)" d="M133.2 122.4l-.851.9H23.4l36.607-.9z" filter="url(#b)"/>
+        <path fill="url(#c)" d="M1.523 39.156L39.945 5.254a9 9 0 0 1 11.91 0l38.422 33.902a4.5 4.5 0 0 1 1.523 3.375V91.8a4.5 4.5 0 0 1-4.5 4.5H4.5A4.5 4.5 0 0 1 0 91.8V42.53a4.5 4.5 0 0 1 1.523-3.374z" transform="translate(44.1 26.1)"/>
+        <g transform="translate(49.5 34.2)">
+            <rect width="81" height="82.8" fill="url(#d)" rx="4.5"/>
+            <path fill="#F0F0F1" d="M9 46.8h63v3.6H9zM9 36h63v3.6H9zM9 25.2h63v3.6H9z"/>
+            <g transform="translate(25.2 9)">
+                <mask id="f" fill="#fff">
+                    <use xlink:href="#e"/>
+                </mask>
+                <use fill="#000" fill-rule="nonzero" xlink:href="#e"/>
+                <g fill="#EF394E" mask="url(#f)">
+                    <path d="M0 0h30.6v8.1H0z"/>
+                </g>
+            </g>
+        </g>
+        <path fill="#EF394E" d="M90 88.2L44.1 68.4v49.5a4.5 4.5 0 0 0 4.5 4.5h82.8a4.5 4.5 0 0 0 4.5-4.5V68.4L90 88.2z"/>
+        <path fill="url(#g)" d="M91.8 81.45V91.8a4.5 4.5 0 0 1-4.5 4.5H4.5A4.5 4.5 0 0 1 0 91.8V42.3l91.8 39.15z" transform="translate(44.1 26.1)"/>
+    </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="81" height="82" viewBox="0 0 81 82">
+    <defs>
+        <path id="a" d="M3.27 4.887h53.76c1.8 0 3.259 1.459 3.259 3.258v34.211c0 1.8-1.459 3.259-3.258 3.259H3.27V4.887z"/>
+        <linearGradient id="e" x1="100%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#8C31ED"/>
+            <stop offset="100%" stop-color="#A24BFF"/>
+        </linearGradient>
+        <rect id="d" width="66.793" height="53.76" x="-3.258" y="9.633" rx="3.258"/>
+        <filter id="c" width="131.4%" height="139.1%" x="-15.7%" y="-19.5%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="3.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.637964221 0 0 0 0 0.232295318 0 0 0 0 0.637964221 0 0 0 1 0"/>
+        </filter>
+        <linearGradient id="f" x1="100%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#8C31ED"/>
+            <stop offset="100%" stop-color="#A24BFF"/>
+        </linearGradient>
+        <path id="h" d="M48.16 24.64h21.89c.9 0 1.63.73 1.63 1.63v21.38c0 .9-.73 1.63-1.63 1.63H48.16c-6.804 0-12.32-5.516-12.32-12.32s5.516-12.32 12.32-12.32z"/>
+        <filter id="g" width="175.3%" height="209.6%" x="-37.7%" y="-54.8%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="4.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(4.48 9.96)">
+        <g transform="translate(3.258)">
+            <mask id="b" fill="#fff">
+                <use xlink:href="#a"/>
+            </mask>
+            <use fill="#FFAEFF" transform="rotate(-10 31.78 25.25)" xlink:href="#a"/>
+            <g mask="url(#b)">
+                <use fill="#000" filter="url(#c)" xlink:href="#d"/>
+                <use fill="url(#e)" xlink:href="#d"/>
+            </g>
+        </g>
+        <path fill="url(#f)" d="M4.48 8.96h58.24a4.48 4.48 0 0 1 4.48 4.48v47.04a4.48 4.48 0 0 1-4.48 4.48H4.48A4.48 4.48 0 0 1 0 60.48V13.44a4.48 4.48 0 0 1 4.48-4.48z"/>
+        <use fill="#000" filter="url(#g)" xlink:href="#h"/>
+        <use fill="#6900F6" xlink:href="#h"/>
+        <rect width="11.2" height="11.2" x="42.56" y="31.36" fill="#FFF" rx="5.6"/>
+    </g>
+</svg>

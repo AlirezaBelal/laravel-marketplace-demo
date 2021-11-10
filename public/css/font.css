@@ -1,6 +1,7 @@
+
 @font-face {
     font-display: block;
-    font-family: irs;
+    font-family: IRANSans;
     font-style: normal;
     font-weight: bold;
     src: url('../fonts/iransans/eot/IRANSansWeb(FaNum)_Bold.eot');
@@ -9,7 +10,7 @@
 
 @font-face {
     font-display: block;
-    font-family: irs;
+    font-family: IRANSans;
     font-style: normal;
     font-weight: 500;
     src: url('../fonts/iransans/eot/IRANSansWeb(FaNum)_Medium.eot');
@@ -18,7 +19,7 @@
 
 @font-face {
     font-display: block;
-    font-family: irs;
+    font-family: IRANSans;
     font-style: normal;
     font-weight: 300;
     src: url('../fonts/iransans/eot/IRANSansWeb(FaNum)_Light.eot');
@@ -27,7 +28,7 @@
 
 @font-face {
     font-display: block;
-    font-family: irs;
+    font-family: IRANSans;
     font-style: normal;
     font-weight: 200;
     src: url('../fonts/iransans/eot/IRANSansWeb(FaNum)_UltraLight.eot');
@@ -36,7 +37,7 @@
 
 @font-face {
     font-display: block;
-    font-family: irs;
+    font-family: IRANSans;
     font-style: normal;
     font-weight: normal;
     src: url('../fonts/iransans/eot/IRANSansWeb(FaNum).eot');
@@ -49,3 +50,39 @@
     src: url('../fonts/digikala/digikala.eot');
     src: url('../fonts/digikala/digikala.eot?#iefix') format('embedded-opentype'), url('../fonts/digikala/digikala.woff2') format('woff2'), url('../fonts/digikala/digikala.woff') format('woff'), url('../fonts/digikala/digikala.ttf') format('truetype')
 }
+
+@font-face {
+    font-display: block;
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/iran-yekan-300.eot');
+    src: url('../fonts/iran-yekan-300.eot') format('embedded-opentype'), url('../fonts/iran-yekan-300.woff2') format('woff2'), url('../fonts/iran-yekan-300.woff') format('woff'), url('../fonts/iran-yekan-300.ttf') format('truetype')
+}
+
+@font-face {
+    font-display: block;
+    font-family: IRANYekan;
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/iran-yekan-400.eot');
+    src: url('../fonts/iran-yekan-400.eot') format('embedded-opentype'), url('../fonts/iran-yekan-400.woff2') format('woff2'), url('../fonts/iran-yekan-400.woff') format('woff'), url('../fonts/iran-yekan-400.ttf') format('truetype')
+}
+
+@font-face {
+    font-display: block;
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/iran-yekan-500.eot');
+    src: url('../fonts/iran-yekan-500.eot') format('embedded-opentype'), url('../fonts/iran-yekan-500.woff2') format('woff2'), url('../fonts/iran-yekan-500.woff') format('woff'), url('../fonts/iran-yekan-500.ttf') format('truetype')
+}
+@font-face {
+    font-display: block;
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/iran-yekan-700.eot');
+    src: url('../fonts/iran-yekan-700.eot') format('embedded-opentype'), url('../fonts/iran-yekan-700.woff2') format('woff2'), url('../fonts/iran-yekan-700.woff') format('woff'), url('../fonts/iran-yekan-700.ttf') format('truetype')
+}
+
