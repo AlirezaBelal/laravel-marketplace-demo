@@ -14,6 +14,7 @@
 - slug gable **[GitHub](https://github.com/cviebrock/eloquent-sluggable)**
   - Automatic linking
 - inpout color **[Document](https://jscolor.com/)**
+- SMS panel **[GitHub](https://github.com/kavenegar/kavenegar-php)**
 
     
 ## Contact us
