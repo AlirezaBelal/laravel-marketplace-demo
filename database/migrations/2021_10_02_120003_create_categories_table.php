@@ -18,14 +18,14 @@ class CreateCategoriesTable extends Migration
 
             $table->string('title');
             $table->string('name')->nullable();
+            $table->string('description');
+            $table->text('body');
             $table->string('icon')->nullable();
             $table->string('img')->nullable();
             $table->string('status')->default(1);
             $table->string('link')->nullable();
 
-
             $table->softDeletes();
-
             $table->timestamps();
         });
     }

@@ -16,16 +16,13 @@ class Trashed extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public $img;
     public $search;
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
-    protected $paginationTheme = 'bootstrap';
 
 
     public function loadCategory()
@@ -37,7 +34,6 @@ class Trashed extends Component
     public function deleteCategory($id)
     {
         $category = Category::withTrashed()->findOrFail($id);
-        //Complete photo removal
         Storage::disk('public')->delete("storage", $category->img);
         $category->forceDelete();
         $this->emit('toast', 'success', ' دسته به صورت کامل با موفقیت حذف شد.');
@@ -53,17 +49,15 @@ class Trashed extends Component
             'url' => 'بازیابی دسته' . '-' . $category->title,
             'actionType' => 'بازیابی'
         ]);
-
         $this->emit('toast', 'success', ' دسته با موفقیت بازیابی شد.');
     }
 
+
     public function render()
     {
-
         $categories = $this->readyToLoad ? DB::table('categories')
-            ->whereNotNull('deleted_at')->
-            latest()->paginate(15) : [];
-
+            ->whereNotNull('deleted_at')
+            ->latest()->paginate(10) : [];
         return view('livewire.admin.category.trashed', compact('categories'));
     }
 }

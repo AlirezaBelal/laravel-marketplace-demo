@@ -17,20 +17,21 @@ class Update extends Component
 
     /**
      * @var string[]
-     * Input rules
+     * Manage form inputs
      */
     protected $rules = [
         'category.title' => 'required|min:3',
         'category.icon' => 'nullable',
         'category.name' => 'required',
         'category.link' => 'required',
+        'category.description' => 'nullable',
+        'category.body' => 'nullable',
         'category.status' => 'nullable',
     ];
 
 
     public function categoryForm()
     {
-
         $this->validate();
         if ($this->img) {
             $this->category->img = $this->uploadImage();
@@ -48,10 +49,13 @@ class Update extends Component
         ]);
         alert()->success('دسته با موفقیت ایجاد شد.', 'دسته آپدیت شد.');
         return redirect(route('category.index'));
-
     }
 
 
+    /**
+     * @return string
+     * Image storage path
+     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -70,7 +74,6 @@ class Update extends Component
         } else {
             $this->category->status = false;
         }
-
         $category = $this->category;
         return view('livewire.admin.category.update', compact('category'));
     }

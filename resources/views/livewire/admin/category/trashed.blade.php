@@ -1,5 +1,4 @@
 @section('title','سطل زباله دسته ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
@@ -17,8 +16,15 @@
                    href="{{route('childcategory.index')}}">
                     دسته های کودک
                 </a>
+
+                <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
+                   href="{{route('categorylevel4.index')}}">
+                    دسته های سطح 4
+                </a>
                 |
-                <a class="tab__item">جستجو: </a>
+                <a class="tab__item">
+                    جستجو:
+                </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -40,7 +46,6 @@
             <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="table__box">
                     <table class="table">
-
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
                             <th>ردیف</th>
@@ -50,7 +55,6 @@
                             <th>عملیات</th>
                         </tr>
                         </thead>
-
                         @if($readyToLoad)
                             @php($count = 1)
                             <tbody>
@@ -59,7 +63,6 @@
                                     <td>
                                         {{$count++}}
                                     </td>
-
                                     <td>
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"
                                              alt="img" width="50px">
@@ -68,7 +71,6 @@
                                     <td>
                                         {{$category->title}}
                                     </td>
-
                                     <td>
                                         {{$category->name}}
                                     </td>
@@ -81,7 +83,7 @@
 
                                         <a wire:click="trashedCategory({{$category->id}})"
                                            class="item-li i-checkouts item-restore"
-                                           title="ّبازگردانی">
+                                           title="بازگردانی">
                                         </a>
                                     </td>
                                 </tr>

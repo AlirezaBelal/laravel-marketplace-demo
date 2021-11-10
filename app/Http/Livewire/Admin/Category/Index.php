@@ -20,23 +20,29 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
+
     /**
      * @var string
-     * Site front type
+     * Front type
      */
     protected $paginationTheme = 'bootstrap';
 
-
     /**
      * @var string[]
-     * Input rules
+     * Manage form inputs
      */
     protected $rules = [
         'category.title' => 'required|min:3',
         'category.icon' => 'nullable',
         'category.name' => 'required',
         'category.link' => 'required',
+        'category.description' => 'required',
+        'category.body' => 'required',
         'category.status' => 'nullable',
+    ];
+
+    protected $listeners = [
+        'category.added' => '$refresh'
     ];
 
 
@@ -70,6 +76,8 @@ class Index extends Component
             'icon' => $this->category->icon,
             'name' => $this->category->name,
             'link' => $this->category->link,
+            'description' => $this->category->description,
+            'body' => $this->category->body,
             'status' => $this->category->status ? true : false,
         ]);
 
@@ -79,18 +87,18 @@ class Index extends Component
             ]);
         }
 
-        //Empty the form then fill out the form
         $this->category->title = "";
         $this->category->icon = "";
+        $this->category->description = "";
+        $this->category->body = "";
         $this->category->name = "";
         $this->category->link = "";
         $this->category->status = false;
         $this->img = null;
 
-        //Create a report
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن دسته' . '-' . $category->title,
+            'url' => 'افزودن دسته' . '-' . $this->category->title,
             'actionType' => 'ایجاد'
         ]);
 
@@ -100,7 +108,7 @@ class Index extends Component
 
     /**
      * @return string
-     * Upload image to memory
+     * Image storage path
      */
     public function uploadImage()
     {
@@ -119,11 +127,13 @@ class Index extends Component
         $category->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت دسته' . '-' . $category->title,
             'actionType' => 'غیرفعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت دسته با موفقیت غیرفعال شد.');
     }
 
@@ -134,11 +144,13 @@ class Index extends Component
         $category->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت دسته' . '-' . $category->title,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت دسته با موفقیت فعال شد.');
     }
 
@@ -162,17 +174,12 @@ class Index extends Component
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * Send information to the site and load the site
-     */
     public function render()
     {
         $categories = $this->readyToLoad ? Category::where('title', 'LIKE', "%{$this->search}%")
             ->orWhere('name', 'LIKE', "%{$this->search}%")
             ->orWhere('link', 'LIKE', "%{$this->search}%")
             ->latest()->paginate(10) : [];
-
         return view('livewire.admin.category.index', compact('categories'));
     }
 }

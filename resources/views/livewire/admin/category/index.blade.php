@@ -1,5 +1,4 @@
 @section('title','دسته ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
@@ -17,8 +16,15 @@
                    href="{{route('childcategory.index')}}">
                     دسته های کودک
                 </a>
+
+                <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
+                   href="{{route('categorylevel4.index')}}">
+                    دسته های سطح 4
+                </a>
                 |
-                <a class="tab__item">جستجو: </a>
+                <a class="tab__item">
+                    جستجو:
+                </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -40,7 +46,6 @@
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="table__box">
                     <table class="table">
-
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
                             <th>ردیف</th>
@@ -65,19 +70,15 @@
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"
                                              alt="img" width="50px">
                                     </td>
-
                                     <td>
                                         {{$category->icon}}
                                     </td>
-
                                     <td>
                                         {{$category->title}}
                                     </td>
-
                                     <td>
                                         {{$category->name}}
                                     </td>
-
                                     <td>
                                         @if($category->status == 1)
                                             <button wire:click="updateCategoryDisable({{$category->id}})"
@@ -114,7 +115,6 @@
                     </table>
                 </div>
             </div>
-
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته بندی جدید</p>
                 <form wire:submit.prevent="categoryForm"
@@ -127,7 +127,6 @@
                         <input type="text" wire:model.lazy="category.icon" placeholder="آیکون دسته "
                                class="form-control">
                     </div>
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="category.title" placeholder="نام دسته "
                                class="form-control">
@@ -141,6 +140,15 @@
                     <div class="form-group">
                         <input type="text" wire:model.lazy="category.link" placeholder="لینک دسته "
                                class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" wire:model.lazy="category.description" placeholder="توضیحات "
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <textarea wire:model.lazy="category.body" class="form-control" placeholder="متن دسته ">
+
+                        </textarea>
                     </div>
 
                     <div class="form-group">
