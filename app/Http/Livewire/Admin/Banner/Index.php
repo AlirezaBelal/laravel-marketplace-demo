@@ -20,8 +20,17 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
+
+    /**
+     * @var string
+     * Front type
+     */
     protected $paginationTheme = 'bootstrap';
 
+    /**
+     * @var string[]
+     * Manage form inputs
+     */
     protected $rules = [
         'banner.title' => 'required',
         'banner.link' => 'required',
@@ -67,15 +76,21 @@ class Index extends Component
         $this->banner->title = "";
         $this->banner->link = "";
         $this->img = null;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن بنر' . '-' . $this->banner->title,
             'actionType' => 'ایجاد'
         ]);
+
         $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
     }
 
 
+    /**
+     * @return string
+     * Image storage path
+     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -89,7 +104,6 @@ class Index extends Component
 
     public function render()
     {
-
         $banners = $this->readyToLoad ? Banner::where('title', 'LIKE', "%{$this->search}%")
             ->orWhere('link', 'LIKE', "%{$this->search}%")
             ->latest()->paginate(10) : [];

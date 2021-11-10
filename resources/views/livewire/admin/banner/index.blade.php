@@ -1,5 +1,4 @@
 @section('title','بنرها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
@@ -7,8 +6,13 @@
                 <a class="tab__item is-active" href="{{route('banner.index')}}">
                     بنرها
                 </a>
+                <a class="tab__item " href="{{route('profileBanner.index')}}">
+                    بنرهای پروفایل
+                </a>
                 |
-                <a class="tab__item">جستجو: </a>
+                <a class="tab__item">
+                    جستجو:
+                </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -18,12 +22,10 @@
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="table__box">
                     <table class="table">
-
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
                             <th>ردیف</th>
@@ -33,7 +35,6 @@
                             <th>عملیات</th>
                         </tr>
                         </thead>
-
                         @if($readyToLoad)
                             @php($count = 1)
                             <tbody>
@@ -42,26 +43,22 @@
                                     <td>
                                         {{$count++}}
                                     </td>
-
                                     <td>
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($banner->img)}}" alt="img"
                                              width="50px">
                                     </td>
-
                                     <td>
                                         {{$banner->title}}
                                     </td>
-
                                     <td>
                                         <a target="_blank" href="{{url($banner->link)}}">
                                             {{\Illuminate\Support\Str::limit($banner->link,20)}}
                                         </a>
                                     </td>
-
                                     <td>
-                                        <a href="{{route('banner.update',$banner)}}
-                                            " class="item-edit"
-                                           title="ویرایش"></a>
+                                        <a href="{{route('banner.update',$banner)}}" class="item-edit "
+                                           title="ویرایش">
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -75,28 +72,27 @@
                     </table>
                 </div>
             </div>
-
             <div class="col-4 bg-white">
-                <p class="box__title">ایجاد بنر جدید</p>
+                <p class="box__title">
+                    ایجاد بنر جدید
+                </p>
                 <form wire:submit.prevent="categoryForm"
                       enctype="multipart/form-data" role="form"
                       class="padding-10 categoryForm">
-
                     @include('errors.error')
-
                     <div class="form-group">
-                        <input type="text" wire:model.lazy="banner.title" placeholder="نام بنر "
-                               class="form-control">
+                        <input type="text" wire:model.lazy="banner.title" placeholder="نام بنر " class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <input type="text" wire:model.lazy="banner.link" placeholder="لینک بنر "
-                               class="form-control">
+                        <input type="text" wire:model.lazy="banner.link" placeholder="لینک بنر " class="form-control">
                     </div>
 
                     <div class="form-group">
                         <input type="file" wire:model.lazy="img" id="{{rand()}}" class="form-control">
-                        <span class="mt-2 text-danger" wire:loading wire:target="img">در حال آپلود ...</span>
+                        <span class="mt-2 text-danger" wire:loading wire:target="img">
+                            در حال آپلود ...
+                        </span>
 
                         <div wire:ignore class="progress mt-2" id="progressbar" style="display: none">
                             <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
@@ -107,7 +103,6 @@
                             <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
-
                     <button class="btn btn-brand">افزودن بنر</button>
                 </form>
             </div>

@@ -15,6 +15,10 @@ class Update extends Component
     public Banner $banner;
     public $img;
 
+    /**
+     * @var string[]
+     * Manage form inputs
+     */
     protected $rules = [
         'banner.title' => 'required',
         'banner.link' => 'required',
@@ -24,22 +28,27 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
-        if ($this->img){
+        if ($this->img) {
             $this->banner->img = $this->uploadImage();
         }
 
         $this->banner->update($this->validate());
+
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت بنر' .'-'. $this->banner->title,
+            'url' => 'آپدیت بنر' . '-' . $this->banner->title,
             'actionType' => 'آپدیت'
         ]);
+
         alert()->success(' با موفقیت آپدیت شد.', 'بنر مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('banner.index'));
-
     }
 
 
+    /**
+     * @return string
+     * Image storage path
+     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -54,6 +63,6 @@ class Update extends Component
     public function render()
     {
         $banner = $this->banner;
-        return view('livewire.admin.banner.update',compact('banner'));
+        return view('livewire.admin.banner.update', compact('banner'));
     }
 }
