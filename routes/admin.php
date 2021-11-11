@@ -223,7 +223,8 @@ Route::get('/index/title', \App\Http\Livewire\Admin\Index\Title\Index::class)
 Route::get('/index/title/update/{index}', \App\Http\Livewire\Admin\Index\Title\Update::class)
     ->name('index.title.update');
 
-Route::get('/index/category', \App\Http\Livewire\Admin\Index\Category\Index::class)->name('index.category.index');
+Route::get('/index/category', \App\Http\Livewire\Admin\Index\Category\Index::class)
+    ->name('index.category.index');
 
 Route::get('/index/newselected', \App\Http\Livewire\Admin\Product\Selected\NewProduct::class)
     ->name('index.newselected.index');
