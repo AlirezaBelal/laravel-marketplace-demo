@@ -1,5 +1,4 @@
 @section('title','سطل زباله دسته ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
@@ -7,18 +6,21 @@
                 <a class="tab__item " href="{{route('category.index')}}">
                     دسته ها
                 </a>
-
-                <a class="tab__item is-active"
-                   href="{{route('subcategory.index')}}">
+                <a class="tab__item is-active" href="{{route('subcategory.index')}}">
                     زیر دسته ها
                 </a>
-
                 <a class="tab__item {{Request::routeIs('childcategory.index') ? 'is-active': '' }}"
                    href="{{route('childcategory.index')}}">
                     دسته های کودک
                 </a>
+                <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
+                   href="{{route('categorylevel4.index')}}">
+                    دسته های سطح 4
+                </a>
                 |
-                <a class="tab__item">جستجو: </a>
+                <a class="tab__item">
+                    جستجو:
+                </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -29,18 +31,15 @@
 
                 <a class="tab__item btn btn-danger"
                    href="{{route('subcategory.trashed')}}"
-                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">
-                    سطل زباله
+                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">سطل زباله
                     ({{\App\Models\SubCategory::onlyTrashed()->count()}})
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="table__box">
                     <table class="table">
-
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
                             <th>ردیف</th>
@@ -56,20 +55,16 @@
                             <tbody>
                             @foreach($categories as $category)
                                 <tr role="row">
-
                                     <td>
                                         {{$count++}}
                                     </td>
-
                                     <td>
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"
                                              alt="img" width="50px">
                                     </td>
-
                                     <td>
                                         {{$category->title}}
                                     </td>
-
                                     <td>
                                         {{$category->name}}
                                     </td>

@@ -21,16 +21,8 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'subcategory.title' => 'required|min:3',
         'subcategory.name' => 'required',
@@ -46,18 +38,15 @@ class Index extends Component
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
+    }
+
+
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
     }
 
 
@@ -91,15 +80,11 @@ class Index extends Component
             'url' => 'افزودن زیر دسته' . '-' . $this->subcategory->title,
             'actionType' => 'ایجاد'
         ]);
-        $this->emit('toast', 'success', ' زیردسته با موفقیت ایجاد شد.');
 
+        $this->emit('toast', 'success', ' زیردسته با موفقیت ایجاد شد.');
     }
 
 
-    /**
-     * @return string
-     * Upload image to memory
-     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -117,6 +102,7 @@ class Index extends Component
         $category->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت زیر دسته' . '-' . $category->title,
@@ -132,11 +118,13 @@ class Index extends Component
         $category->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت زیر دسته' . '-' . $category->title,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت زیر دسته با موفقیت فعال شد.');
     }
 
@@ -144,7 +132,9 @@ class Index extends Component
     public function deleteCategory($id)
     {
         $category = SubCategory::find($id);
+
         $childCategory = ChildCategory::where('parent', $id)->first();
+
         if ($childCategory == null) {
             $category->delete();
             Log::create([
@@ -152,25 +142,21 @@ class Index extends Component
                 'url' => 'حذف کردن زیر دسته' . '-' . $category->title,
                 'actionType' => 'حذف'
             ]);
+
             $this->emit('toast', 'success', ' زیر دسته با موفقیت حذف شد.');
         } else {
             $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا این دسته، شامل دسته کودک است!');
         }
-
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * Send information to the site and load the site
-     */
     public function render()
     {
-
         $categories = $this->readyToLoad ? SubCategory::where('title', 'LIKE', "%{$this->search}%")
             ->orWhere('name', 'LIKE', "%{$this->search}%")
             ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.subcategory.index', compact('categories'));
     }
 }

@@ -19,10 +19,6 @@ class Trashed extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
     protected $paginationTheme = 'bootstrap';
 
 
@@ -34,10 +30,13 @@ class Trashed extends Component
 
     public function deleteCategory($id)
     {
-        $category = SubCategory::withTrashed()->findOrFail($id);
-        //Complete photo removal
+        $category = SubCategory::withTrashed()
+            ->findOrFail($id);
+
         Storage::disk('public')->delete("storage", $category->img);
+
         $category->forceDelete();
+
         $this->emit('toast', 'success', ' زیردسته به صورت کامل با موفقیت حذف شد.');
     }
 
@@ -51,16 +50,17 @@ class Trashed extends Component
             'url' => 'بازیابی زیر دسته' . '-' . $category->title,
             'actionType' => 'بازیابی'
         ]);
+
         $this->emit('toast', 'success', ' زیر دسته با موفقیت بازیابی شد.');
     }
 
 
     public function render()
     {
-
         $categories = $this->readyToLoad ? DB::table('sub_categories')
-            ->whereNotNull('deleted_at')->
-            latest()->paginate(10) : [];
+            ->whereNotNull('deleted_at')
+            ->latest()
+            ->paginate(10) : [];
 
         return view('livewire.admin.subcategory.trashed', compact('categories'));
     }

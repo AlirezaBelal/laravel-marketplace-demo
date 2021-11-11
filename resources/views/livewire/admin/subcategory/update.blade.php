@@ -1,20 +1,16 @@
 @section('title','آپدیت زیر دسته')
-
 <div>
     <div class="main-content padding-0">
         <p class="box__title">
             ویرایش زیر دسته -
             {{$subcategory->title}}
         </p>
-
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
                       enctype="multipart/form-data" role="form"
                       class="padding-10 categoryForm">
-
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="subcategory.title" placeholder="نام دسته "
                                class="form-control">
@@ -38,7 +34,6 @@
                             <label for="option4">نمایش در دسته اصلی:</label>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="subcategory.parent" name="parent" id="" class="form-control">
                             @foreach(\App\Models\Category::all() as $category)
@@ -46,7 +41,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <input type="file" wire:model.lazy="img" class="form-control">
                         <span class="mt-2 text-danger" wire:loading wire:target="img">در حال آپلود ...</span>

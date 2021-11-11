@@ -15,11 +15,6 @@ class Update extends Component
     public ChildCategory $childcategory;
     public $img;
 
-
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'childcategory.title' => 'required|min:3',
         'childcategory.name' => 'required',
@@ -37,20 +32,22 @@ class Update extends Component
         }
 
         $this->childcategory->update($this->validate());
+
         if (!$this->childcategory->status) {
             $this->childcategory->update([
                 'status' => 0
             ]);
         }
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'آپدیت دسته کودک' . '-' . $this->childcategory->title,
             'actionType' => 'آپدیت'
         ]);
+
         alert()->success('دسته کودک با موفقیت ایجاد شد.', 'دسته کودک آپدیت شد.');
 
         return redirect(route('childcategory.index'));
-
     }
 
 

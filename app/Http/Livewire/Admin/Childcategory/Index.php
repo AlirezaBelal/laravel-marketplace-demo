@@ -20,17 +20,9 @@ class Index extends Component
     public $search;
     public $readyToLoad = false;
 
-    protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
     protected $paginationTheme = 'bootstrap';
+    protected $queryString = ['search'];
 
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'childcategory.title' => 'required|min:3',
         'childcategory.name' => 'required',
@@ -45,9 +37,7 @@ class Index extends Component
         $this->childcategory = new ChildCategory();
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
     public function updated($title)
     {
         $this->validateOnly($title);
@@ -78,27 +68,23 @@ class Index extends Component
             ]);
         }
 
-
         $this->childcategory->title = "";
         $this->childcategory->name = "";
         $this->childcategory->link = "";
         $this->childcategory->parent = null;
         $this->childcategory->status = false;
         $this->img = null;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن دسته کودک' . '-' . $this->childcategory->title,
             'actionType' => 'ایجاد'
         ]);
-        $this->emit('toast', 'success', ' دسته کودک با موفقیت ایجاد شد.');
 
+        $this->emit('toast', 'success', ' دسته کودک با موفقیت ایجاد شد.');
     }
 
 
-    /**
-     * @return string
-     * Upload image to memory
-     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -116,11 +102,13 @@ class Index extends Component
         $category->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت دسته کودک' . '-' . $category->title,
             'actionType' => 'غیرفعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت دسته کودک با موفقیت غیرفعال شد.');
     }
 
@@ -131,11 +119,13 @@ class Index extends Component
         $category->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت دسته کودک' . '-' . $category->title,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت دسته کودک با موفقیت فعال شد.');
     }
 
@@ -163,7 +153,8 @@ class Index extends Component
         $categories = $this->readyToLoad ? ChildCategory::where('title', 'LIKE', "%{$this->search}%")
             ->orWhere('name', 'LIKE', "%{$this->search}%")
             ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.childcategory.index', compact('categories'));
     }
 }

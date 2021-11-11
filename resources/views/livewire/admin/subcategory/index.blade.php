@@ -1,25 +1,26 @@
 @section('title','زیر دسته ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item {{Request::routeIs('category.index') ? 'is-active': '' }}"
-                   href="{{route('category.index')}}">
+                <a class="tab__item " href="{{route('category.index')}}">
                     دسته ها
                 </a>
-
-                <a class="tab__item is-active"
-                   href="{{route('subcategory.index')}}">
+                <a class="tab__item is-active" href="{{route('subcategory.index')}}">
                     زیر دسته ها
                 </a>
-
                 <a class="tab__item {{Request::routeIs('childcategory.index') ? 'is-active': '' }}"
                    href="{{route('childcategory.index')}}">
                     دسته های کودک
                 </a>
+                <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
+                   href="{{route('categorylevel4.index')}}">
+                    دسته های سطح 4
+                </a>
                 |
-                <a class="tab__item">جستجو: </a>
+                <a class="tab__item">
+                    جستجو:
+                </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -30,18 +31,15 @@
 
                 <a class="tab__item btn btn-danger"
                    href="{{route('subcategory.trashed')}}"
-                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">
-                    سطل زباله
+                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">سطل زباله
                     ({{\App\Models\SubCategory::onlyTrashed()->count()}})
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
                 <div class="table__box">
                     <table class="table">
-
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
                             <th>ردیف</th>
@@ -59,30 +57,24 @@
                             <tbody>
                             @foreach($categories as $category)
                                 <tr role="row">
-
                                     <td>
                                         {{$count++}}
                                     </td>
-
                                     <td>
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"
                                              alt="img" width="50px">
                                     </td>
-
                                     <td>
                                         {{$category->title}}
                                     </td>
-
                                     <td>
                                         {{$category->name}}
                                     </td>
-
                                     <td>
-                                        @foreach(\App\Models\Category::where('id',$category->parent)->get() as $categoryParent)
-                                            {{$categoryParent->title}}
+                                        @foreach(\App\Models\Category::where('id',$category->parent)->get() as $ca)
+                                            {{$ca->title}}
                                         @endforeach
                                     </td>
-
                                     <td>
                                         @if($category->status == 1)
                                             <button wire:click="updateCategoryDisable({{$category->id}})"
@@ -98,7 +90,6 @@
                                             </button>
                                         @endif
                                     </td>
-
                                     <td>
                                         <a wire:click="deleteCategory({{$category->id}})" type="submit"
                                            class="item-delete mlg-15"
@@ -120,7 +111,6 @@
                     </table>
                 </div>
             </div>
-
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد زیر دسته جدید</p>
                 <form wire:submit.prevent="categoryForm"
@@ -150,7 +140,6 @@
                             <label for="option4">نمایش در دسته اصلی:</label>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="subcategory.parent" name="parent" id="" class="form-control">
                             <option value="-1">- دسته محصول -</option>
@@ -168,10 +157,9 @@
                             <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
                         </div>
                     </div>
-
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
 

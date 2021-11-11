@@ -15,10 +15,6 @@ class Update extends Component
     public SubCategory $subcategory;
     public $img;
 
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'subcategory.title' => 'required|min:3',
         'subcategory.name' => 'required',
@@ -47,10 +43,10 @@ class Update extends Component
             'url' => 'آپدیت زیردسته' . '-' . $this->subcategory->title,
             'actionType' => 'آپدیت'
         ]);
+
         alert()->success('زیر دسته با موفقیت ایجاد شد.', 'زیر دسته آپدیت شد.');
 
         return redirect(route('subcategory.index'));
-
     }
 
 
