@@ -1,10 +1,7 @@
 <section class="c-swiper c-swiper--products has-placeholder recommendation-swiper js-sntracker-carousel"
          id="recommendation-home_2">
-    <div class="recommendation-swiper__mask js-swiper-mask-recommendation-home_2 u-hidden">
-        <p>
-            این پیشنهاد به شما نشان داده نخواهد شد با تشکر از باز‌خورد شما
-        </p>
-
+    <div class="recommendation-swiper__mask js-swiper-mask-recommendation-home_2 u-hidden"><p>این پیشنهاد به شما
+            نشان داده نخواهد شد با تشکر از باز‌خورد شما</p>
         <button class="js-cancel-swiper-mask" data-id="recommendation-home_2"><i></i>
             بازگرداندن
         </button>
@@ -12,11 +9,7 @@
     @php
         $title_3 = \App\Models\TitleCategoryIndex::get()[3];
     @endphp
-    <div class="o-headline">
-        <span>
-            {{$title_3->title}}
-        </span>
-    </div>
+    <div class="o-headline"><span>{{$title_3->title}}</span></div>
     <div class="c-box">
         <div class="swiper-container swiper-container-horizontal swiper-container-rtl">
             <div class="swiper-wrapper js-products-container" id="js-products-container4"
@@ -35,14 +28,12 @@
                                 data-gtm-vis-first-on-screen-9070001_346="2514"
                                 data-gtm-vis-total-visible-time-9070001_346="100"
                                 data-gtm-vis-has-fired-9070001_346="1"><img
-                                    data-img="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}"
+                                    data-img="/storage/{{$category->product->img}}"
                                     alt="{{$category->product->title}}"
                                     class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                    src="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}">
-                                <img
+                                    src="/storage/{{$category->product->img}}"><img
                                     class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
-                                    src="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}">
-                            </a>
+                                    src="/storage/{{$category->product->img}}"></a>
                             <div class="c-product-box__title"><a
                                     href="{{$category->product->link}}"
                                     data-id="870282" class="js-carousel-ga-product-box"
@@ -50,8 +41,7 @@
                                     data-gtm-vis-total-visible-time-9070001_346="100"
                                     data-gtm-vis-has-fired-9070001_346="1">
                                     {{$category->product->title}}
-                                </a>
-                            </div>
+                                </a></div>
                             <div class="c-product-box__price-row">
                                 <div class="c-product-box__price-item">
                                     <div class="c-new-price">
@@ -71,15 +61,17 @@ $per = ($difPrice * 100) / $category->product->price;
                                                 @endphp
                                                 @if($per>1)
                                                     <div class="c-price__discount-oval">
+
                                                             <span>
-                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪
-                                                            </span>
+
+                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
+
                                                     </div>
                                                 @endif
                                                 <div class="c-price__value-wrapper">
                                                     {{\App\Models\PersianNumber::translate($category->product->discount_price)}}
-                                                    <span class="c-price__currency">تومان</span>
-                                                </div>
+                                                    <span
+                                                        class="c-price__currency">تومان</span></div>
                                             </div>
                                         @endif
                                     </div>
@@ -88,6 +80,7 @@ $per = ($difPrice * 100) / $category->product->price;
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled4" id="swiper_button_disabled4"
                  onclick="js_swiper_button_prev4()"></div>

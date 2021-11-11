@@ -15,13 +15,30 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            //اطلاعات حقیقی
+            $table->string('img')->nullable();
+            $table->string('name')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('national_code')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('birthday')->nullable();
+            $table->string('job')->nullable();
+            $table->string('money_back')->nullable();
+            $table->string('newsletter')->default(0);
+            //اطلاعات حقوقی
+            $table->string('name_company')->nullable();
+            $table->string('national_code_company')->nullable();
+            $table->string('code_company')->nullable();
+            $table->string('sabt_company')->nullable();
+            $table->string('state_company')->nullable();
+            $table->string('city_company')->nullable();
+            $table->string('phone_company')->nullable();
+            $table->string('wallet')->default(0);
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->text('profile_photo_path')->nullable();
             $table->timestamps();
         });
     }

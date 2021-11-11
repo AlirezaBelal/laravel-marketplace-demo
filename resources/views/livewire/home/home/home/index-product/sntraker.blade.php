@@ -690,9 +690,7 @@
 </section>
 
 <section class="c-swiper c-swiper--brands">
-    <div class="o-headline">
-        <span>برندهای ویژه</span>
-    </div>
+    <div class="o-headline"><span>برندهای ویژه</span></div>
     <div class="c-box">
         <div class="swiper-container swiper-container-horizontal js-swiper-brands swiper-container-rtl">
             <div class="swiper-wrapper c-adplacement" data-dkms="5" style="transform: translate3d(0px, 0px, 0px);">
@@ -705,13 +703,12 @@
                            data-gtm-vis-first-on-screen-9070001_346="9010907"
                            data-gtm-vis-total-visible-time-9070001_346="100"
                            data-gtm-vis-has-fired-9070001_346="1"><img
-                                data-src="{{\Illuminate\Support\Facades\Storage::url($brand->img)}}"
+                                data-src="/storage/{{$brand->img}}"
                                 alt="{{$brand->title}}"
-                                src="{{\Illuminate\Support\Facades\Storage::url($brand->img)}}"
-                                loading="lazy">
-                        </a>
-                    </div>
+                                src="/storage/{{$brand->img}}"
+                                loading="lazy"></a></div>
                 @endforeach
+
             </div>
             <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled"></div>
             <div class="swiper-button-next js-swiper-button-next"></div>
@@ -743,12 +740,12 @@
                                 data-gtm-vis-first-on-screen-9070001_346="2514"
                                 data-gtm-vis-total-visible-time-9070001_346="100"
                                 data-gtm-vis-has-fired-9070001_346="1"><img
-                                    data-img="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}"
+                                    data-img="/storage/{{$product->product->img}}"
                                     alt="{{$product->product->title}}"
                                     class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                    src="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}"><img
+                                    src="/storage/{{$product->product->img}}"><img
                                     class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
-                                    src="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}"></a>
+                                    src="/storage/{{$product->product->img}}"></a>
                             <div class="c-product-box__title"><a
                                     href="{{$product->product->link}}"
                                     data-id="870282" class="js-carousel-ga-product-box"
@@ -776,15 +773,17 @@ $per = ($difPrice * 100) / $product->product->price;
                                                 @endphp
                                                 @if($per>1)
                                                     <div class="c-price__discount-oval">
+
                                                             <span>
-                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪
-                                                            </span>
+
+                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
+
                                                     </div>
                                                 @endif
                                                 <div class="c-price__value-wrapper">
                                                     {{\App\Models\PersianNumber::translate($product->product->discount_price)}}
-                                                    <span class="c-price__currency">تومان</span>
-                                                </div>
+                                                    <span
+                                                        class="c-price__currency">تومان</span></div>
                                             </div>
                                         @endif
                                     </div>
@@ -793,6 +792,7 @@ $per = ($difPrice * 100) / $product->product->price;
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled"></div>
             <div class="swiper-button-next js-swiper-button-next"></div>

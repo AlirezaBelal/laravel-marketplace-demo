@@ -5,31 +5,30 @@
     @endphp
     <aside class="c-adplacement">
         @if($banner_7)
-            <a
-                href="{{$banner_7->link}}"
-                class="js-banner-impression-adro c-adplacement__item c-adplacement__item--b" data-id="69470"
-                data-observed="1" target="_blank" title="{{$banner_7->title}}" data-is-trackable=""
-                data-gtm-vis-first-on-screen-9070001_346="4135341" data-gtm-vis-total-visible-time-9070001_346="100"
-                data-gtm-vis-has-fired-9070001_346="1">
-                <div class="c-adplacement__sponsored_box"><img
-                        src="{{\Illuminate\Support\Facades\Storage::url($banner_7->img)}}"
-                        alt="{{$banner_7->title}}" loading="lazy"></div>
-            </a>
+        <a
+            href="{{$banner_7->link}}"
+            class="js-banner-impression-adro c-adplacement__item c-adplacement__item--b" data-id="69470"
+            data-observed="1" target="_blank" title="{{$banner_7->title}}" data-is-trackable=""
+            data-gtm-vis-first-on-screen-9070001_346="4135341" data-gtm-vis-total-visible-time-9070001_346="100"
+            data-gtm-vis-has-fired-9070001_346="1">
+            <div class="c-adplacement__sponsored_box"><img
+                    src="/storage/{{$banner_7->img}}"
+                    alt="{{$banner_7->title}}" loading="lazy"></div>
+        </a>
         @endif
-        @if($banner_8)
+            @if($banner_8)
             <a
-                href="{{$banner_8->link}}"
-                class="js-banner-impression-adro c-adplacement__item c-adplacement__item--b" data-id="69482"
-                data-observed="1" target="_blank" title="{{$banner_8->title}}" data-is-trackable=""
-                data-gtm-vis-first-on-screen-9070001_346="4135351" data-gtm-vis-total-visible-time-9070001_346="100"
-                data-gtm-vis-has-fired-9070001_346="1">
-                <div class="c-adplacement__sponsored_box"><img
-                        src="{{\Illuminate\Support\Facades\Storage::url($banner_8->img)}}"
-                        alt="{{$banner_8->title}}" loading="lazy"></div>
-            </a>
-        @endif
+            href="{{$banner_8->link}}"
+            class="js-banner-impression-adro c-adplacement__item c-adplacement__item--b" data-id="69482"
+            data-observed="1" target="_blank" title="{{$banner_8->title}}" data-is-trackable=""
+            data-gtm-vis-first-on-screen-9070001_346="4135351" data-gtm-vis-total-visible-time-9070001_346="100"
+            data-gtm-vis-has-fired-9070001_346="1">
+            <div class="c-adplacement__sponsored_box"><img
+                    src="/storage/{{$banner_8->img}}"
+                    alt="{{$banner_8->title}}" loading="lazy"></div>
+        </a>
+            @endif
     </aside>
-
     <div class="o-page__row o-grid o-page__row--main-page js-recommendation-home_1-row">
         <div class="col-9">
             <section class="c-swiper c-swiper--products has-placeholder recommendation-swiper js-sntracker-carousel"
@@ -43,52 +42,40 @@
                 @php
                     $title_0 = \App\Models\TitleCategoryIndex::get()[0];
                 @endphp
-                <div class="o-headline">
-                    <span>
-                        {{$title_0->title}}
-                    </span>
-                </div>
-
+                <div class="o-headline"><span>{{$title_0->title}}</span></div>
                 <div class="c-box">
                     <div class="swiper-container swiper-container-horizontal swiper-container-rtl">
+
                         <div class="swiper-wrapper js-products-container" id="js-products-container"
                              style="transform: translate3d(0px, 0px, 0px);">
-
                             @foreach(\App\Models\CategoryIndex::where('title_id',$title_0->id)->where('status',1)->get() as $category)
                                 <div class="swiper-slide js-sntracker-carousel-item" data-id="870282"
                                      data-gtm-vis-recent-on-screen-9070001_346="2493"
                                      data-gtm-vis-first-on-screen-9070001_346="2493"
                                      data-gtm-vis-total-visible-time-9070001_346="100"
                                      data-gtm-vis-has-fired-9070001_346="1" style="width: 176.667px;">
-                                    <div class="c-product-box">
-                                        <a class="c-product-box__img js-url js-carousel-ga-product-box"
-                                           data-id="870282"
-                                           href="{{$category->product->link}}"
-                                           data-gtm-vis-recent-on-screen-9070001_346="2514"
-                                           data-gtm-vis-first-on-screen-9070001_346="2514"
-                                           data-gtm-vis-total-visible-time-9070001_346="100"
-                                           data-gtm-vis-has-fired-9070001_346="1">
-
-                                            <img
-                                                data-img="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}"
+                                    <div class="c-product-box"><a
+                                            class="c-product-box__img js-url js-carousel-ga-product-box"
+                                            data-id="870282"
+                                            href="{{$category->product->link}}"
+                                            data-gtm-vis-recent-on-screen-9070001_346="2514"
+                                            data-gtm-vis-first-on-screen-9070001_346="2514"
+                                            data-gtm-vis-total-visible-time-9070001_346="100"
+                                            data-gtm-vis-has-fired-9070001_346="1"><img
+                                                data-img="/storage/{{$category->product->img}}"
                                                 alt="{{$category->product->title}}"
                                                 class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                                src="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}">
-                                            <img
+                                                src="/storage/{{$category->product->img}}"><img
                                                 class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
-                                                src="{{\Illuminate\Support\Facades\Storage::url($category->product->img)}}">
-                                        </a>
-
-                                        <div class="c-product-box__title">
-                                            <a href="{{$category->product->link}}"
-                                               data-id="870282" class="js-carousel-ga-product-box"
-                                               data-gtm-vis-first-on-screen-9070001_346="2515"
-                                               data-gtm-vis-total-visible-time-9070001_346="100"
-                                               data-gtm-vis-has-fired-9070001_346="1">
+                                                src="/storage/{{$category->product->img}}"></a>
+                                        <div class="c-product-box__title"><a
+                                                href="{{$category->product->link}}"
+                                                data-id="870282" class="js-carousel-ga-product-box"
+                                                data-gtm-vis-first-on-screen-9070001_346="2515"
+                                                data-gtm-vis-total-visible-time-9070001_346="100"
+                                                data-gtm-vis-has-fired-9070001_346="1">
                                                 {{$category->product->title}}
-                                            </a>
-                                        </div>
-
+                                            </a></div>
                                         <div class="c-product-box__price-row">
                                             <div class="c-product-box__price-item">
                                                 <div class="c-new-price">
@@ -96,31 +83,29 @@
                                                         <div class="c-price__value c-price__value--plp">
                                                             <div class="c-price__value-wrapper">
                                                                 {{\App\Models\PersianNumber::translate($category->product->price)}}
-                                                                <span class="c-price__currency">
-                                                                    تومان
-                                                                </span>
-                                                            </div>
+                                                                <span
+                                                                    class="c-price__currency">تومان</span></div>
                                                         </div>
                                                     @else
                                                         <div class="c-price__value c-price__value--plp">
-                                                            <del> {{\App\Models\PersianNumber::translate($category->product->price)}}</del>
+                                                            <del>  {{\App\Models\PersianNumber::translate($category->product->price)}}</del>
                                                             @php
                                                                 $difPrice = $category->product->price - $category->product->discount_price;
         $per = ($difPrice * 100) / $category->product->price;
                                                             @endphp
                                                             @if($per>1)
                                                                 <div class="c-price__discount-oval">
-                                                                    <span>
-                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪
-                                                                    </span>
+
+                                                            <span>
+
+                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
+
                                                                 </div>
                                                             @endif
                                                             <div class="c-price__value-wrapper">
                                                                 {{\App\Models\PersianNumber::translate($category->product->discount_price)}}
-                                                                <span class="c-price__currency">
-                                                                    تومان
-                                                                </span>
-                                                            </div>
+                                                                <span
+                                                                    class="c-price__currency">تومان</span></div>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -130,65 +115,53 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled"
-                             id="swiper_button_disabled"
-                             onclick="js_swiper_button_prev()">
-                        </div>
-                        <div class="swiper-button-next  js-swiper-button-next" id="swiper_button_add"
-                             onclick="js_swiper_button_next()">
-                        </div>
+                        <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled" id="swiper_button_disabled"
+                             onclick="js_swiper_button_prev()"></div>
+                        <div class="swiper-button-next  js-swiper-button-next"  id="swiper_button_add"
+                             onclick="js_swiper_button_next()"></div>
+
                     </div>
                 </div>
             </section>
         </div>
-
         <div class="col-3">
             <aside class="c-box c-box--promo-single">
                 <div class="c-promo-single js-promo-single" id="promo-single">
-                    <div class="c-promo-single__headline js-promo-single-bar">
-                        پیشنهادهای لحظه‌ای برای شما
-                    </div>
-
+                    <div class="c-promo-single__headline js-promo-single-bar">پیشنهادهای لحظه‌ای برای شما</div>
                     <div class="swiper-container swiper-container-horizontal js-promo-single-box swiper-container-rtl">
-                        <div class="swiper-wrapper js-promo-single-wrapper"
-                             style="transition-duration: 20ms; transform: translate3d(0px, 0px, 0px);">
-                            <div
-                                class="swiper-slide js-sntracker-carousel-item swiper-slide-duplicate swiper-slide-active"
+                        <div class="swiper-wrapper js-promo-single-wrapper" style="transition-duration: 20ms; transform: translate3d(0px, 0px, 0px);">
+                            <div class="swiper-slide js-sntracker-carousel-item swiper-slide-duplicate swiper-slide-active"
                                 data-id="2073053" data-swiper-slide-index="8" style="width: 221px;"
                                 data-gtm-vis-first-on-screen-9070001_346="4136052"
                                 data-gtm-vis-total-visible-time-9070001_346="100"
                                 data-gtm-vis-has-fired-9070001_346="1">
-                                <div class="c-product-box">
-                                    <a class="c-product-box__img js-url js-carousel-ga-product-box"
-                                       data-id="2073053"
-                                       href="/product/dkp-2073053/شارژر-همراه-شیائومی-مدل-redmi-ظرفیت-10000-میلی-آمپرساعت"
-                                       data-gtm-vis-first-on-screen-9070001_346="4136053"
-                                       data-gtm-vis-total-visible-time-9070001_346="100"
-                                       data-gtm-vis-has-fired-9070001_346="1">
-                                        <img
+                                <div class="c-product-box"><a
+                                        class="c-product-box__img js-url js-carousel-ga-product-box"
+                                        data-id="2073053"
+                                        href="/product/dkp-2073053/شارژر-همراه-شیائومی-مدل-redmi-ظرفیت-10000-میلی-آمپرساعت"
+                                        data-gtm-vis-first-on-screen-9070001_346="4136053"
+                                        data-gtm-vis-total-visible-time-9070001_346="100"
+                                        data-gtm-vis-has-fired-9070001_346="1"><img
                                             data-img="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
                                             alt="شارژر همراه شیائومی مدل Redmi ظرفیت 1000..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
                                             src="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
-                                    <div class="c-product-box__title">
-                                        <a href="/product/dkp-2073053/شارژر-همراه-شیائومی-مدل-redmi-ظرفیت-10000-میلی-آمپرساعت"
-                                           data-id="2073053" class="js-carousel-ga-product-box"
-                                           data-gtm-vis-first-on-screen-9070001_346="4136067"
-                                           data-gtm-vis-total-visible-time-9070001_346="100"
-                                           data-gtm-vis-has-fired-9070001_346="1">
+                                    <div class="c-product-box__title"><a
+                                            href="/product/dkp-2073053/شارژر-همراه-شیائومی-مدل-redmi-ظرفیت-10000-میلی-آمپرساعت"
+                                            data-id="2073053" class="js-carousel-ga-product-box"
+                                            data-gtm-vis-first-on-screen-9070001_346="4136067"
+                                            data-gtm-vis-total-visible-time-9070001_346="100"
+                                            data-gtm-vis-has-fired-9070001_346="1">
                                             شارژر همراه شیائومی مدل Redmi ظرفیت 1000...
-                                        </a>
-                                    </div>
-
+                                        </a></div>
                                     <div class="c-product-box__price-row">
                                         <div class="c-product-box__price-item">
                                             <div class="c-new-price">
                                                 <div class="c-new-price__old-value u-hidden">
                                                     <del>۲۶۴,۰۰۰</del>
-                                                    <span class="c-new-price__discount">٪۰</span>
-                                                </div>
+                                                    <span class="c-new-price__discount">٪۰</span></div>
                                                 <div class="c-new-price__value">
                                                     ۲۶۴,۰۰۰
                                                     <span class="c-new-price__currency">تومان</span></div>
@@ -197,8 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="swiper-slide js-sntracker-carousel-item swiper-slide-next swiper-slide-duplicate-prev"
+                            <div class="swiper-slide js-sntracker-carousel-item swiper-slide-next swiper-slide-duplicate-prev"
                                 data-id="1099874" data-swiper-slide-index="0" style="width: 221px;">
                                 <div class="c-product-box"><a
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
@@ -229,8 +201,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="swiper-slide js-sntracker-carousel-item" data-id="2959368"
-                                 data-swiper-slide-index="1" style="width: 221px;"
+                            <div class="swiper-slide js-sntracker-carousel-item" data-id="2959368" data-swiper-slide-index="1" style="width: 221px;"
                                  data-gtm-vis-first-on-screen-9070001_346="9008326"
                                  data-gtm-vis-total-visible-time-9070001_346="100"
                                  data-gtm-vis-has-fired-9070001_346="1">
@@ -494,8 +465,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="swiper-slide js-sntracker-carousel-item swiper-slide-duplicate swiper-slide-prev swiper-slide-duplicate-next"
+                            <div class="swiper-slide js-sntracker-carousel-item swiper-slide-duplicate swiper-slide-prev swiper-slide-duplicate-next"
                                 data-id="1099874" data-swiper-slide-index="0" style="width: 221px;"
                                 data-gtm-vis-first-on-screen-9070001_346="4141944"
                                 data-gtm-vis-total-visible-time-9070001_346="100"
@@ -543,17 +513,16 @@
     </div>
 </div>
 <script>
-    function js_swiper_button_next() {
-        document.getElementById("js-products-container").style = "transform: translate3d(530px, 0px, 0px);transition-duration: 0ms";
-        document.getElementById("swiper_button_disabled").classList.remove("swiper-button-disabled");
-        document.getElementById("swiper_button_add").style = "opacity: .15; cursor: auto;";
+function js_swiper_button_next() {
+    document.getElementById("js-products-container").style ="transform: translate3d(530px, 0px, 0px);transition-duration: 0ms";
+    document.getElementById("swiper_button_disabled").classList.remove("swiper-button-disabled");
+    document.getElementById("swiper_button_add").style ="opacity: .15; cursor: auto;";
 
-    }
-
-    function js_swiper_button_prev() {
-        document.getElementById("js-products-container").style = "transform: translate3d(0px, 0px, 0px)";
-        document.getElementById("swiper_button_disabled").classList.remove("swiper-button-disabled");
-        document.getElementById("swiper_button_disabled").style = "opacity: .15; cursor: auto;";
-        document.getElementById("swiper_button_add").style = "opacity: 1; cursor: poiner;";
-    }
+}
+function js_swiper_button_prev() {
+    document.getElementById("js-products-container").style ="transform: translate3d(0px, 0px, 0px)";
+    document.getElementById("swiper_button_disabled").classList.remove("swiper-button-disabled");
+    document.getElementById("swiper_button_disabled").style ="opacity: .15; cursor: auto;";
+    document.getElementById("swiper_button_add").style ="opacity: 1; cursor: poiner;";
+}
 </script>

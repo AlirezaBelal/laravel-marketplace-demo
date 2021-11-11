@@ -1,8 +1,7 @@
 <div class="c-swiper-specials c-swiper-specials--fresh">
-    <section class="container container--home" id="sn-carousels-fresh-incredible-offer">
-        <a href="" class="c-swiper-specials__title c-swiper-specials__title--fresh"
-           title="شگفت‌انگیز سوپرمارکتی">
-            <img src="{{asset('img/offer-supermarket.png')}}" alt="شگفت‌انگیز سوپرمارکتی">
+    <section class="container container--home" id="sn-carousels-fresh-incredible-offer"><a
+            href="/" class="c-swiper-specials__title c-swiper-specials__title--fresh"
+            title="شگفت‌انگیز سوپرمارکتی"><img src="{{asset('img/offer-supermarket.png')}}" alt="شگفت‌انگیز سوپرمارکتی">
             <div class="o-btn c-swiper-specials__btn">مشاهده همه</div>
         </a>
         <div class="c-swiper c-swiper--products c-swiper--specials">
@@ -41,37 +40,32 @@
                                                     <div class="c-price__value c-price__value--plp">
                                                         <div class="c-price__value-wrapper">
                                                             {{\App\Models\PersianNumber::translate($specialProduct->product->price)}}
-                                                            <span class="c-price__currency">
-                                                                تومان
-                                                            </span>
-                                                        </div>
+                                                            <span
+                                                                class="c-price__currency">تومان</span></div>
                                                     </div>
                                                 @else
                                                     <div class="c-price__value c-price__value--plp">
-                                                        <del>
-                                                            {{\App\Models\PersianNumber::translate($specialProduct->product->price)}}
-                                                        </del>
+                                                        <del>  {{\App\Models\PersianNumber::translate($specialProduct->product->price)}}</del>
                                                         @php
-                                                            $difPrice = ($specialProduct->product->price) - ($specialProduct->product->discount_price);
-$per = ($difPrice * 100) / ($specialProduct->product->price);
+                                                            $difPrice = $specialProduct->product->price - $specialProduct->product->discount_price;
+    $per = ($difPrice * 100) / $specialProduct->product->price;
                                                         @endphp
                                                         @if($per>1)
                                                             <div class="c-price__discount-oval">
-                                                                <span>
-                                                                    {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪
-                                                                </span>
+
+                                                            <span>
+
+                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
+
                                                             </div>
                                                         @endif
                                                         <div class="c-price__value-wrapper">
                                                             {{\App\Models\PersianNumber::translate($specialProduct->product->discount_price)}}
-                                                            <span class="c-price__currency">
-                                                                تومان
-                                                            </span>
-                                                        </div>
+                                                            <span
+                                                                class="c-price__currency">تومان</span></div>
                                                     </div>
                                                 @endif
                                             </div>
-
                                             <div class="c-product-box__add-to-cart-section">
                                                 <div class="c-product__add-container js-fresh-add-container"><a
                                                         class=" btn-add-to-cart-mini js-fresh-add-to-cart"
@@ -98,30 +92,26 @@ $per = ($difPrice * 100) / ($specialProduct->product->price);
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="c-product-box__progress-bar">
-                                            <div class="c-product-box__progress-bar-value" style="width: 34%"></div>
+                                            <div class="c-product-box__progress-bar-value" style="width: 44%"></div>
                                         </div>
-
                                         <div class="c-product-box__amazing">
-                                            <div class="c-product-box__timer js-counter"
-                                                 data-countdown="2021-10-20 00:00:00">۰۶:۵۸:۰۸
+                                            <div class="c-product-box__timer   js-counter"
+                                                 data-countdown="2021-05-06 00:00:00">۰۷:۱۳:۵۵
+
                                             </div>
 
-                                            <div class="c-product-box__remained">
-                                                <span class="c-product-box__remained-value">
-                                                    ۳۴٪
-                                                </span>
-                                                <span class="c-product-box__remained-phrase">
-                                                    فروش رفته
-                                                </span>
-                                            </div>
+
+                                            <div class="c-product-box__remained"><span
+                                                    class="c-product-box__remained-value">۴۴٪
+                                            </span>
+                                                <span class="c-product-box__remained-phrase">فروش رفته</span></div>
                                         </div>
+
                                     </div>
                                 </li>
                             </div>
                         @endforeach
-
 
                         <div class="swiper-slide c-swiper__show-more-cart--auto-height"><a
                                 href="/"

@@ -1,12 +1,12 @@
 @php
-    $header_1 = \App\Models\SiteHeader::get()[0];
+$header_1 = \App\Models\SiteHeader::get()[0];
 
-    $header_2 = \App\Models\SiteHeader::get()[1];
-    $header_3 = \App\Models\SiteHeader::get()[2];
-    $header_4 = \App\Models\SiteHeader::get()[3];
-    $header_5 = \App\Models\SiteHeader::get()[4];
-    $header_6 = \App\Models\SiteHeader::get()[5];
-    $header_7 = \App\Models\SiteHeader::get()[6];
+$header_2 = \App\Models\SiteHeader::get()[1];
+$header_3 = \App\Models\SiteHeader::get()[2];
+$header_4 = \App\Models\SiteHeader::get()[3];
+$header_5 = \App\Models\SiteHeader::get()[4];
+$header_6 = \App\Models\SiteHeader::get()[5];
+$header_7 = \App\Models\SiteHeader::get()[6];
 @endphp
 <li class="js-categories-bar-item">
     <a href="{{$header_1->link}}"
@@ -242,7 +242,7 @@
 </li>
 <li class="js-categories-bar-item js-mega-menu-main-item">
     <a href="{{$header_5->link}}"
-       class="c-navi-new-list__category-link c-navi-new-list__category-link--{{$header_5->icon}} c-navi-new-list__category-link--bold">
+    class="c-navi-new-list__category-link c-navi-new-list__category-link--{{$header_5->icon}} c-navi-new-list__category-link--bold">
         {{$header_5->title}}</a>
     <div
         class="c-navi-new-list__sublist c-navi-new-list__sublist--digiclub js-mega-menu-categories-options">

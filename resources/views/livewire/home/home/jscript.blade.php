@@ -76,7 +76,6 @@
     ]
 }
 
-
 </script>
 <script type="application/ld+json">
                 {
@@ -90,7 +89,6 @@
     }
 }
 
-
 </script>
 
 <noscript>
@@ -103,6 +101,7 @@
 {{--<script src="{{asset('js/bootstrap-iconpicker-iconset-all.min.js')}}"></script>--}}
 {{--<script src="{{asset('js/bootstrap-iconpicker.bundle.min.js')}}"></script>--}}
 {{--<script src="{{asset('js/bootstrap-iconpicker.min.js')}}"></script>--}}
+<script src="{{asset('/digikala/static/merged/b3f610e8.js')}}"></script>
 
-<livewire:scripts/>
+<livewire:scripts />
 <script src="{{asset('/js/livewire-turbolinks.js')}}" data-turbolinks-eval="false" data-turbo-eval="false"></script>

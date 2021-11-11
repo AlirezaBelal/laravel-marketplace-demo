@@ -1,5 +1,4 @@
 <div class="c-navi-new-list__options-container">
-
     @foreach(\App\Models\Category::where('status',1)->get() as $category)
         <div class="c-navi-new-list__options-list js-mega-menu-category-options"
              id="categories-{{$category->id}}">
@@ -8,12 +7,10 @@
                    class="c-navi-new-list__sublist-see-all-cats">
                     همه دسته‌بندی‌های
                     {{$category->title}}
-                </a>
-            </div>
-
+                </a></div>
             <ul>
-                @foreach(\App\Models\Menu::where('category_id',$category->id)
-                    ->where('childCategory_id',null)
+
+                @foreach(\App\Models\Menu::where('category_id',$category->id)->where('childCategory_id',null)
                     ->where('status',1)->get() as $menu)
                     <li class="c-navi-new-list__sublist-option c-navi-new-list__sublist-option--title"
                         data-event="megamenu_click" data-event-category="header_section"
@@ -29,11 +26,9 @@
                             href="{{$menu->subCategory->link}}"
                             class=" c-navi-new__medium-display-title"><span>{{$menu->subCategory->title}}</span></a>
                     </li>
-
-                    @foreach(\App\Models\Menu::where('subCategory_id',$menu->subCategory_id)
-                        ->whereNotNull('childCategory_id')
-                        ->where('status',1)
-                        ->get() as $submenu)
+                    @foreach(\App\Models\Menu::where('subCategory_id',$menu->subCategory_id)->
+                        whereNotNull('childCategory_id')
+                                ->where('status',1)->get() as $submenu)
                         <li class="c-navi-new-list__sublist-option c-navi-new-list__sublist-option--item"
                             data-event="megamenu_click" data-event-category="header_section"
                             data-event-label="category_en: cell phone pouch cover - category_fa:{{$submenu->childCategory->title}} - level: 3">
@@ -47,11 +42,13 @@
                                href="{{$submenu->childCategory->link}}"
                                class=" c-navi-new__medium-display-title">
                                 {{$submenu->childCategory->title}}
-                            </a>
-                        </li>
+                            </a></li>
                     @endforeach
                 @endforeach
+
+
             </ul>
         </div>
     @endforeach
+
 </div>

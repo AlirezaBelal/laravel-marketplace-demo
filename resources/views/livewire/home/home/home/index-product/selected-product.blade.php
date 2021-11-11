@@ -8,27 +8,22 @@
             class="c-adplacement__item js-banner-impression-adro" data-observed="0" data-id="69120" target="_blank"
             data-is-trackable="" title="{{$banner_15->title}}" data-gtm-vis-first-on-screen-9070001_346="9010469"
             data-gtm-vis-total-visible-time-9070001_346="100" data-gtm-vis-has-fired-9070001_346="1">
-            <div class="c-adplacement__sponsored_box">
-                <img src="{{\Illuminate\Support\Facades\Storage::url($banner_15->img)}}"
-                     alt="{{$banner_15->title}}" loading="lazy">
-            </div>
+            <div class="c-adplacement__sponsored_box"><img
+                    src="/storage/{{$banner_15->img}}"
+                    alt="{{$banner_15->title}}" loading="lazy"></div>
         </a>
     @endif
 </aside>
 
+
 <div class="swiper-products-container" data-type="homepagelatest">
+
     <section class="c-swiper c-swiper--products js-sntracker-carousel " id="sn-carousels-2">
         <div class="o-headline">
             <div class="o-headline__title-box">
-                <div class="o-headline__title-content">
-                    <h3>منتخب جدیدترین کالاها</h3>
-                </div>
+                <div class="o-headline__title-content"><h3>منتخب جدیدترین کالاها</h3></div>
             </div>
-            <a href="/" class="c-swiper__show-more">
-                مشاهده همه
-            </a>
-        </div>
-
+            <a href="/" class="c-swiper__show-more">مشاهده همه</a></div>
         <div class="c-box" id="sn-carousels-2">
             <div class="swiper-container swiper-container-horizontal js-swiper-products swiper-container-rtl">
                 <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
@@ -38,21 +33,20 @@
                              style="width: 217.167px;" data-gtm-vis-first-on-screen-9070001_346="9010511"
                              data-gtm-vis-total-visible-time-9070001_346="100" data-gtm-vis-has-fired-9070001_346="1">
                             <div class="c-product-box">
-                                <a class="c-product-box__img js-url js-carousel-ga-product-box"
-                                   data-id="870282"
-                                   href="{{$product->product->link}}"
-                                   data-gtm-vis-recent-on-screen-9070001_346="2514"
-                                   data-gtm-vis-first-on-screen-9070001_346="2514"
-                                   data-gtm-vis-total-visible-time-9070001_346="100"
-                                   data-gtm-vis-has-fired-9070001_346="1"><img
-                                        data-img="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}"
+                                <a
+                                    class="c-product-box__img js-url js-carousel-ga-product-box"
+                                    data-id="870282"
+                                    href="{{$product->product->link}}"
+                                    data-gtm-vis-recent-on-screen-9070001_346="2514"
+                                    data-gtm-vis-first-on-screen-9070001_346="2514"
+                                    data-gtm-vis-total-visible-time-9070001_346="100"
+                                    data-gtm-vis-has-fired-9070001_346="1"><img
+                                        data-img="/storage/{{$product->product->img}}"
                                         alt="{{$product->product->title}}"
                                         class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                        src="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}">
-                                    <img
+                                        src="/storage/{{$product->product->img}}"><img
                                         class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
-                                        src="{{\Illuminate\Support\Facades\Storage::url($product->product->img)}}">
-                                </a>
+                                        src="/storage/{{$product->product->img}}"></a>
                                 <div class="c-product-box__title"><a
                                         href="{{$product->product->link}}"
                                         data-id="870282" class="js-carousel-ga-product-box"
@@ -80,9 +74,11 @@
                                                     @endphp
                                                     @if($per>1)
                                                         <div class="c-price__discount-oval">
+
                                                             <span>
-                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪
-                                                            </span>
+
+                                                                {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
+
                                                         </div>
                                                     @endif
                                                     <div class="c-price__value-wrapper">
@@ -96,6 +92,7 @@
                                 </div>
                             </div>
                         </div>
+
                     @endforeach
                 </div>
                 <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled"></div>
