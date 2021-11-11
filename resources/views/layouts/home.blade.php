@@ -2,17 +2,14 @@
 <html lang="fa">
 <head>
     @include('livewire.home.home.head')
+
 </head>
-<body class=" t-index" style="">
-
-
+<body class=" t-index">
 @include('sweet::alert')
 @include('livewire.home.home.header')
 {{$slot}}
-
 @include('livewire.home.home.footer')
-</body>
-
 @include('livewire.home.home.jscript')
+</body>
 
 </html>
