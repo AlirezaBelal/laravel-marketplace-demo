@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Home\Home;
 
 use App\Models\FooterLinkTitle;
 use App\Models\NewsLetter;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Index extends Component
