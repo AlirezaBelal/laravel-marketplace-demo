@@ -35,15 +35,15 @@ class Index extends Component
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-
     public function updated($title)
     {
         $this->validateOnly($title);
+    }
+
+
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
     }
 
 
@@ -56,7 +56,6 @@ class Index extends Component
             'position' => $this->gallery->position,
             'status' => $this->gallery->status ? 1 : 0,
         ]);
-
 
         if ($this->img) {
             $gallery->update([
@@ -114,6 +113,7 @@ class Index extends Component
         $gallery->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
@@ -121,6 +121,7 @@ class Index extends Component
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت فعال شد.');
     }
+
 
     public function deleteCategory($id)
     {
@@ -137,10 +138,10 @@ class Index extends Component
 
     public function render()
     {
-
         $galleries = $this->readyToLoad ? Gallery::where('position', 'LIKE', "%{$this->search}%")
             ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+            ->latest()
+            ->paginate(10) : [];
 
         return view('livewire.admin.product.gallery.index', compact('galleries'));
     }

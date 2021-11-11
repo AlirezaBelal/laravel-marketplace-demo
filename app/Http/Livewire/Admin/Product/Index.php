@@ -17,11 +17,11 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * front site
-     */
     protected $paginationTheme = 'bootstrap';
+
+    protected $listeners = [
+        'category.added' => '$refresh'
+    ];
 
 
     public function loadCategory()
@@ -68,6 +68,7 @@ class Index extends Component
         $product = Product::find($id);
 
         $product->delete();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'حذف کردن محصول' . '-' . $product->title,
@@ -85,7 +86,8 @@ class Index extends Component
             ->orWhere('body', 'LIKE', "%{$this->search}%")
             ->orWhere('description', 'LIKE', "%{$this->search}%")
             ->orWhere('tags', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+            ->latest()
+            ->paginate(10) : [];
 
         return view('livewire.admin.product.index', compact('products'));
     }

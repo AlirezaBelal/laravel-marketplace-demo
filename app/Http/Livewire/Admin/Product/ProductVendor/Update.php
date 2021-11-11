@@ -32,6 +32,7 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
+
         $this->productSeller->update($this->validate());
 
         Log::create([
@@ -39,9 +40,9 @@ class Update extends Component
             'url' => 'آپدیت تنوع محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'آپدیت'
         ]);
+
         alert()->success(' با موفقیت آپدیت شد.', 'تنوع محصول مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('productVendor.index'));
-
     }
 
 

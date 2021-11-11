@@ -24,7 +24,6 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
-
         $this->color->update($this->validate());
         if (!$this->color->status) {
             $this->color->update([
@@ -34,7 +33,7 @@ class Update extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت رنگ' .'-'. $this->color->name,
+            'url' => 'آپدیت رنگ' . '-' . $this->color->name,
             'actionType' => 'آپدیت'
         ]);
 
@@ -45,13 +44,12 @@ class Update extends Component
 
     public function render()
     {
-        if ($this->color->status == 1){
+        if ($this->color->status == 1) {
             $this->color->status = true;
-        }else
-        {
+        } else {
             $this->color->status = false;
         }
         $color = $this->color;
-        return view('livewire.admin.product.color.update',compact('color'));
+        return view('livewire.admin.product.color.update', compact('color'));
     }
 }

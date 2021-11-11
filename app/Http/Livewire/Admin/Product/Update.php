@@ -13,14 +13,9 @@ class Update extends Component
     use WithFileUploads;
 
     public Category $category;
-    public Product $product;
     public $img;
+    public Product $product;
 
-    
-    /**
-     * @var string[]
-     * Input control
-     */
     protected $rules = [
         'product.title' => 'required|min:3',
         'product.name' => 'required',
@@ -30,6 +25,7 @@ class Update extends Component
         'product.status_product' => 'nullable',
         'product.subcategory_id' => 'nullable',
         'product.childcategory_id' => 'nullable',
+        'product.categorylevel4_id' => 'nullable',
         'product.color_id' => 'nullable',
         'product.brand_id' => 'nullable',
         'product.tags' => 'nullable',
@@ -52,10 +48,10 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
+
         if ($this->img) {
             $this->product->img = $this->uploadImage();
         }
-
         $this->product->update($this->validate());
 
         Log::create([
@@ -65,6 +61,7 @@ class Update extends Component
         ]);
 
         alert()->success(' با موفقیت آپدیت شد.', 'محصول مورد نظر با موفقیت آپدیت شد.');
+
         return redirect(route('product.index'));
     }
 
@@ -109,6 +106,7 @@ class Update extends Component
         }
 
         $product = $this->product;
+
         return view('livewire.admin.product.update', compact('product'));
     }
 }

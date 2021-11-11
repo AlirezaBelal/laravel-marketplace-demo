@@ -36,20 +36,23 @@ class Trashed extends Component
 
     public function trashedCategory($id)
     {
-        $attribute = Attribute::withTrashed()->where('id', $id)->first();
+        $attribute = Attribute::withTrashed()
+            ->where('id', $id)
+            ->first();
+
         $attribute->restore();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'بازیابی مشخصات کالا' . '-' . $attribute->title,
             'actionType' => 'بازیابی'
         ]);
+
         $this->emit('toast', 'success', ' مشخصات کالا با موفقیت بازیابی شد.');
     }
 
-
     public function render()
     {
-
         $attributes = $this->readyToLoad ? DB::table('attributes')
             ->whereNotNull('deleted_at')
             ->latest()->paginate(10) : [];

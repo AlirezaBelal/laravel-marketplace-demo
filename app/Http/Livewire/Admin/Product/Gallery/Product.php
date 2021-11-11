@@ -50,6 +50,7 @@ class Product extends Component
     public function categoryForm()
     {
         $this->validate();
+
         $gallery = Gallery::query()->create([
             'product_id' => $this->product->id,
             'position' => $this->gallery->position,
@@ -66,6 +67,7 @@ class Product extends Component
         $this->gallery->position = null;
         $this->gallery->status = false;
         $this->img = null;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن تصویر محصول' . '-' . $this->gallery->product_id,
@@ -134,9 +136,9 @@ class Product extends Component
     public function render()
     {
         $product = $this->product;
-
         $galleries = $this->readyToLoad ? Gallery::where('product_id', $this->product->id)
-            ->orderBy('position')->paginate(10) : [];
+            ->orderBy('position')
+            ->paginate(10) : [];
 
         return view('livewire.admin.product.gallery.product', compact('galleries', 'product'));
     }

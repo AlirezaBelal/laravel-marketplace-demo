@@ -1,12 +1,10 @@
 @section('title','آپدیت محصول')
-
 <div>
     <div class="main-content padding-0">
         <p class="box__title">
             ویرایش محصول -
             {{$product->title}}
         </p>
-
         <div class="row no-gutters bg-white">
             <div class="col-12">
                 <form wire:submit.prevent="categoryForm"
@@ -14,7 +12,6 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -22,7 +19,6 @@
                                        class="form-control">
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" wire:model.lazy="product.name" placeholder="نام انگلیسی محصول "
@@ -38,7 +34,6 @@
                                        class="form-control">
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="notificationGroup">
@@ -63,7 +58,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select wire:model.lazy="product.subcategory_id" name="subcategory_id" id=""
@@ -76,7 +70,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -89,7 +82,20 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select wire:model.lazy="product.categorylevel4_id" name="categorylevel4_id" id=""
+                                        class="form-control">
+                                    <option value="-1">--دسته سطح چهارم(می تواند خالی باشد)</option>
+                                    @foreach(\App\Models\CategoryLevel4::where('parent',$this->product->childcategory_id)->get() as $category)
+                                        <option value="{{$category->id}}">{{$category->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select wire:model.lazy="product.brand_id" name="brand_id" id="" class="form-control">
@@ -100,10 +106,8 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
+
                             <div class="form-group">
                                 <select wire:model.lazy="product.color_id" name="brand_id" id="" class="form-control">
                                     <option value="1">رنگ محصول</option>
@@ -115,14 +119,16 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <input type="text" wire:model.lazy="product.tags" placeholder="تگ های محصول "
                                        class="form-control">
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="form-group">
                             <textarea rows="5" wire:model.lazy="product.description"
@@ -131,7 +137,6 @@
                                 {{$product->description}}
                             </textarea>
                         </div>
-
                         <div class="form-group">
                             <textarea wire:model.lazy="product.body" name="body" placeholder="توضیح محصول "
                                       class="form-control" id="body_create">
@@ -145,17 +150,14 @@
                             <input type="text" wire:model.lazy="product.price" placeholder="قیمت محصول "
                                    class="form-control">
                         </div>
-
                         <div class="col-md-3">
                             <input type="text" wire:model.lazy="product.discount_price" placeholder="قیمت تخفیف خورده "
                                    class="form-control">
                         </div>
-
                         <div class="col-md-3">
                             <input type="text" wire:model.lazy="product.number" placeholder="تعداد موجودی محصول "
                                    class="form-control">
                         </div>
-
                         <div class="col-md-3">
                             <input type="text" wire:model.lazy="product.weight" placeholder="وزن محصول "
                                    class="form-control">
@@ -173,7 +175,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="notificationGroup">
@@ -184,7 +185,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="notificationGroup">
@@ -197,6 +197,7 @@
                         </div>
                     </div>
 
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -207,8 +208,8 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
+
                             <div class="form-group">
                                 <div class="notificationGroup">
                                     <input id="option14" type="checkbox" wire:model.lazy="product.special"
@@ -218,14 +219,12 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <input type="text" wire:model.lazy="product.order_count"
                                    placeholder="تعداد سفارش محصول(صفر نامحدود) "
                                    class="form-control">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <input type="file" wire:model.lazy="img" class="form-control">
                         <span class="mt-2 text-danger" wire:loading wire:target="img">در حال آپلود ...</span>
@@ -233,8 +232,8 @@
                         <div wire:ignore class="progress mt-2" id="progressbar" style="display: none">
                             <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
                         </div>
-                    </div>
 
+                    </div>
                     <div>
                         @if($img)
                             <img style="width: 400px" class="form-control mt-3 mb-3" width="400"
@@ -247,8 +246,6 @@
             </div>
         </div>
     </div>
-
-
     <script>
         document.addEventListener('livewire:load', () => {
             ClassicEditor

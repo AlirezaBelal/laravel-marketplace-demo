@@ -24,11 +24,12 @@ class CreateProductsTable extends Migration
             $table->string('category_id')->nullable();
             $table->string('subcategory_id')->nullable();
             $table->string('childcategory_id')->nullable();
+            $table->string('categorylevel4_id')->nullable();
             $table->string('color_id')->nullable();
             $table->string('brand_id')->nullable();
             $table->string('tags')->nullable();
-            $table->text('body')->nullable();
-            $table->text('description')->nullable();
+            $table->longtext('body')->nullable();
+            $table->longtext('description')->nullable();
             $table->string('price')->nullable();
             $table->string('discount_price')->nullable();
             $table->string('number')->nullable();

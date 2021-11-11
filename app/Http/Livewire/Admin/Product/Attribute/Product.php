@@ -13,7 +13,6 @@ class Product extends Component
 {
     use WithPagination;
 
-
     public AttributeValue $attribute;
     public \App\Models\Product $product;
     public $search;
@@ -50,7 +49,6 @@ class Product extends Component
 
     public function categoryForm()
     {
-
         $this->validate();
         AttributeValue::query()->create([
             'attribute_id' => $this->attribute->attribute_id,
@@ -69,9 +67,7 @@ class Product extends Component
             'url' => 'افزودن مقدار مشخصه کالا' . '-' . $this->attribute->value,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت ایجاد شد.');
-
         return redirect()->back();
     }
 
@@ -82,11 +78,13 @@ class Product extends Component
         $attribute->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت مقدار مشخصه کالا' . '-' . $this->attribute->value,
             'actionType' => 'غیرفعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصه کالا با موفقیت غیرفعال شد.');
     }
 
@@ -97,36 +95,37 @@ class Product extends Component
         $attribute->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت مقدار مشخصه کالا' . '-' . $this->attribute->value,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصه کالا با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
         $attribute = AttributeValue::find($id);
         $attribute->delete();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'حذف کردن مقدار مشخصه کالا' . '-' . $this->attribute->value,
             'actionType' => 'حذف'
         ]);
+
         $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت حذف شد.');
     }
 
 
     public function render()
     {
-
         $product = $this->product;
-
         $attributes = $this->readyToLoad ? AttributeValue::where('product_id', $this->product->id)
-            ->orderBy('product_id')->paginate(10) : [];
-
+            ->orderBy('product_id')
+            ->paginate(10) : [];
         return view('livewire.admin.product.attribute.product', compact('attributes', 'product'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Product\Selected;
 
+use App\Models\CategoryIndex;
 use App\Models\Log;
 use App\Models\ProductNewSelected;
 use Livewire\Component;
@@ -33,9 +34,6 @@ class NewProduct extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($product_id)
     {
         $this->validateOnly($product_id);
@@ -65,6 +63,7 @@ class NewProduct extends Component
         $this->product->subCategory_id = null;
         $this->product->childCategory_id = null;
         $this->product->status = false;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن محصول منتخب' . '-' . $this->product->product_id,
@@ -80,6 +79,7 @@ class NewProduct extends Component
         $category->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت محصول منتخب' . '-' . $category->category_id,
@@ -95,11 +95,13 @@ class NewProduct extends Component
         $category->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی' . '-' . $category->category_id,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت محصول منتخب با موفقیت فعال شد.');
     }
 
@@ -119,12 +121,12 @@ class NewProduct extends Component
 
     public function render()
     {
-
-        $products = $this->readyToLoad ? ProductNewSelected::where('category_id', 'LIKE', "%{$this->search}%")->
-        orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
+        $products = $this->readyToLoad ? ProductNewSelected::where('category_id', 'LIKE', "%{$this->search}%")
+            ->orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
             ->orWhere('childCategory_id', 'LIKE', "%{$this->search}%")
             ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.product.selected.new-product', compact('products'));
     }
 }

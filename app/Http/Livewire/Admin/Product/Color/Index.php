@@ -20,17 +20,8 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-
-    /**
-     * @var string
-     * Front type
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Prerequisites for creating a category form
-     */
     protected $rules = [
         'color.name' => 'required',
         'color.value' => 'required',
@@ -44,21 +35,15 @@ class Index extends Component
     }
 
 
-    /**
-     * Change page load
-     */
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     *
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
+    }
+
+
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
     }
 
 
@@ -75,12 +60,12 @@ class Index extends Component
         $this->color->name = "";
         $this->color->value = "";
         $this->color->status = false;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن رنگ' . '-' . $this->color->name,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' رنگ با موفقیت ایجاد شد.');
     }
 
@@ -91,13 +76,11 @@ class Index extends Component
         $color->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت رنگ' . '-' . $this->color->name,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت غیرفعال شد.');
     }
 
@@ -114,7 +97,6 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت رنگ' . '-' . $this->color->name,
             'actionType' => 'فعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت فعال شد.');
     }
 
@@ -133,17 +115,12 @@ class Index extends Component
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * Reload this Page
-     */
     public function render()
     {
-
         $colors = $this->readyToLoad ? Color::where('name', 'LIKE', "%{$this->search}%")
             ->orWhere('value', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.product.color.index', compact('colors'));
     }
 }

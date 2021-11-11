@@ -17,16 +17,8 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'attribute.product_id' => 'required',
         'attribute.attribute_id' => 'required',
@@ -41,9 +33,6 @@ class Index extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
@@ -59,6 +48,7 @@ class Index extends Component
     public function categoryForm()
     {
         $this->validate();
+
         AttributeValue::query()->create([
             'attribute_id' => $this->attribute->attribute_id,
             'product_id' => $this->attribute->product_id,
@@ -70,6 +60,7 @@ class Index extends Component
         $this->attribute->product_id = null;
         $this->attribute->value = "";
         $this->attribute->status = false;
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن مقدار مشخصات کالا' . '-' . $this->attribute->value,
@@ -85,11 +76,13 @@ class Index extends Component
         $attribute->update([
             'status' => 0
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت مقدار مشخصات کالا' . '-' . $attribute->value,
             'actionType' => 'غیرفعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت غیرفعال شد.');
     }
 
@@ -100,11 +93,13 @@ class Index extends Component
         $attribute->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت مقدار مشخصات کالا' . '-' . $attribute->title,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت فعال شد.');
     }
 
@@ -118,17 +113,16 @@ class Index extends Component
             'url' => 'حذف کردن مقدار مشخصات کالا' . '-' . $attribute->value,
             'actionType' => 'حذف'
         ]);
+
         $this->emit('toast', 'success', ' مقدار مشخصات کالا با موفقیت حذف شد.');
     }
 
 
     public function render()
     {
-
         $attributes = $this->readyToLoad ? AttributeValue::where('value', 'LIKE', "%{$this->search}%")
-            ->orWhere('id', $this->search)
-            ->latest()->paginate(10) : [];
-
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.product.attribute-value.index', compact('attributes'));
     }
 }

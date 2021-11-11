@@ -19,16 +19,8 @@ class Category extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * front site
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Input control
-     */
     protected $rules = [
         'attribute.childCategory' => 'nullable',
         'attribute.parent' => 'required',
@@ -44,18 +36,15 @@ class Category extends Component
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($childCategory)
     {
         $this->validateOnly($childCategory);
+    }
+
+
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
     }
 
 
@@ -83,6 +72,7 @@ class Category extends Component
         ]);
 
         $this->emit('toast', 'success', ' مشخصات کالا با موفقیت ایجاد شد.');
+
         return redirect()->back();
     }
 
@@ -102,7 +92,6 @@ class Category extends Component
 
         $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -130,20 +119,18 @@ class Category extends Component
             'url' => 'حذف کردن مشخصات کالا' . '-' . $this->attribute->childCategory,
             'actionType' => 'حذف'
         ]);
+
         $this->emit('toast', 'success', ' مشخصات کالا با موفقیت حذف شد.');
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function render()
     {
         $category = $this->category;
 
         $attributes = $this->readyToLoad ? Attribute::where('childCategory', $this->category->id)
-            ->orderBy('position')->paginate(10) : [];
-
+            ->orderBy('position')
+            ->paginate(10) : [];
         return view('livewire.admin.product.attribute.category', compact('attributes', 'category'));
     }
 }

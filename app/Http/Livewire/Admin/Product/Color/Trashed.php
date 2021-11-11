@@ -29,8 +29,12 @@ class Trashed extends Component
 
     public function deleteCategory($id)
     {
-        $color = Color::withTrashed()->findOrFail($id);
-        Storage::disk('public')->delete("storage", $color->img);
+        $color = Color::withTrashed()
+            ->findOrFail($id);
+
+        Storage::disk('public')
+            ->delete("storage", $color->img);
+
         $color->forceDelete();
         $this->emit('toast', 'success', ' رنگ به صورت کامل از دیتابیس حذف شد.');
     }
@@ -38,20 +42,24 @@ class Trashed extends Component
 
     public function trashedCategory($id)
     {
-        $color = Color::withTrashed()->where('id', $id)->first();
+        $color = Color::withTrashed()
+            ->where('id', $id)
+            ->first();
+
         $color->restore();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'بازیابی رنگ' . '-' . $color->title,
             'actionType' => 'بازیابی'
         ]);
+
         $this->emit('toast', 'success', ' رنگ با موفقیت بازیابی شد.');
     }
 
 
     public function render()
     {
-
         $colors = $this->readyToLoad ? DB::table('colors')
             ->whereNotNull('deleted_at')
             ->latest()->paginate(10) : [];

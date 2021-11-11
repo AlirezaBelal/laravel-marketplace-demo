@@ -31,6 +31,7 @@ class Update extends Component
                 'status' => 0
             ]);
         }
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'آپدیت گارانتی' . '-' . $this->warranty->name,
@@ -38,9 +39,9 @@ class Update extends Component
         ]);
 
         alert()->success(' با موفقیت آپدیت شد.', 'گارانتی مورد نظر با موفقیت آپدیت شد.');
+
         return redirect(route('warranty.index'));
     }
-
 
     public function render()
     {
@@ -50,7 +51,6 @@ class Update extends Component
             $this->warranty->status = false;
         }
         $warranty = $this->warranty;
-
         return view('livewire.admin.product.warranty.update', compact('warranty'));
     }
 }

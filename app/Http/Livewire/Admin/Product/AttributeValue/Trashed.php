@@ -38,6 +38,7 @@ class Trashed extends Component
     {
         $attribute = AttributeValue::withTrashed()->where('id', $id)->first();
         $attribute->restore();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'بازیابی مقدار مشخصه کالا' . '-' . $attribute->title,
@@ -47,13 +48,13 @@ class Trashed extends Component
         $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت بازیابی شد.');
     }
 
+
     public function render()
     {
-
         $attributes = $this->readyToLoad ? DB::table('attribute_values')
             ->whereNotNull('deleted_at')
-            ->latest()->paginate(10) : [];
-
+            ->latest()
+            ->paginate(10) : [];
         return view('livewire.admin.product.attribute-value.trashed', compact('attributes'));
     }
 }

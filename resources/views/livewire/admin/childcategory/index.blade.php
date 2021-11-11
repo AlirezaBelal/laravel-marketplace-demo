@@ -58,7 +58,7 @@
                             @foreach($categories as $category)
                                 <tr role="row">
                                     <td>
-                                        {{$category->id}}
+                                        {{$count++}}
                                     </td>
                                     <td>
                                         <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"

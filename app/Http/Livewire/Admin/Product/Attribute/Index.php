@@ -18,16 +18,8 @@ class Index extends Component
     public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    /**
-     * @var string
-     * Site front type
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Input rules
-     */
     protected $rules = [
         'attribute.childCategory' => 'required',
         'attribute.parent' => 'required',
@@ -43,10 +35,6 @@ class Index extends Component
     }
 
 
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
@@ -62,6 +50,7 @@ class Index extends Component
     public function categoryForm()
     {
         $this->validate();
+
         Attribute::query()->create([
             'childCategory' => $this->attribute->childCategory,
             'position' => $this->attribute->position,
@@ -81,8 +70,8 @@ class Index extends Component
             'url' => 'افزودن مشخصات کالا' . '-' . $this->attribute->title,
             'actionType' => 'ایجاد'
         ]);
-        $this->emit('toast', 'success', ' مشخصات کالا با موفقیت ایجاد شد.');
 
+        $this->emit('toast', 'success', ' مشخصات کالا با موفقیت ایجاد شد.');
     }
 
 
@@ -109,13 +98,16 @@ class Index extends Component
         $attribute->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت مشخصات کالا' . '-' . $attribute->title,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت فعال شد.');
     }
+
 
     public function deleteCategory($id)
     {
@@ -130,10 +122,6 @@ class Index extends Component
     }
 
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * Send information to the site and load the site
-     */
     public function render()
     {
 
@@ -142,7 +130,6 @@ class Index extends Component
             ->orWhere('childCategory', 'LIKE', "%{$this->search}%")
             ->orWhere('position', 'LIKE', "%{$this->search}%")
             ->latest()->paginate(10) : [];
-
         return view('livewire.admin.product.attribute.index', compact('attributes'));
     }
 }

@@ -18,10 +18,6 @@ class Create extends Component
     public $img;
     public $subCategory;
 
-    /**
-     * @var string[]
-     * Handle form inputs
-     */
     protected $rules = [
         'product.title' => 'required|min:3',
         'product.name' => 'required',
@@ -30,6 +26,7 @@ class Create extends Component
         'product.status_product' => 'nullable',
         'product.subcategory_id' => 'nullable',
         'product.childcategory_id' => 'nullable',
+        'product.categorylevel4_id' => 'nullable',
         'product.color_id' => 'nullable',
         'product.brand_id' => 'nullable',
         'product.tags' => 'nullable',
@@ -55,9 +52,6 @@ class Create extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
@@ -67,9 +61,11 @@ class Create extends Component
     public function categoryForm()
     {
         $this->validate();
+
         if ($this->img) {
             $this->product->img = $this->uploadImage();
         }
+
         $this->product->save();
 
         Log::create([
@@ -77,7 +73,9 @@ class Create extends Component
             'url' => 'افزودن محصول' . '-' . $this->product->title,
             'actionType' => 'ایجاد'
         ]);
+
         alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
+
         return redirect(route('product.index'));
     }
 

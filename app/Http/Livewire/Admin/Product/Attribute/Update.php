@@ -38,7 +38,6 @@ class Update extends Component
         ]);
 
         alert()->success(' با موفقیت آپدیت شد.', 'مشخصات محصول مورد نظر با موفقیت آپدیت شد.');
-
         return redirect(route('attribute.index'));
     }
 

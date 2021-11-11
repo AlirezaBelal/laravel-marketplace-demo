@@ -23,7 +23,9 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
+
         $this->attribute->update($this->validate());
+
         if (!$this->attribute->status) {
             $this->attribute->update([
                 'status' => 0
@@ -32,7 +34,7 @@ class Update extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت مقدار مشخصه' .'-'. $this->attribute->title,
+            'url' => 'آپدیت مقدار مشخصه' . '-' . $this->attribute->title,
             'actionType' => 'آپدیت'
         ]);
 
@@ -43,16 +45,19 @@ class Update extends Component
 
     public function render()
     {
-        if ($this->attribute->status == 1){
+        if ($this->attribute->status == 1) {
             $this->attribute->status = true;
-        }else
-        {
+        } else {
             $this->attribute->status = false;
         }
         $attribute = $this->attribute;
+
         $product = \App\Models\Product::find($attribute->product_id);
-        $att= \App\Models\Attribute::where('parent','>', '0') ->where('childCategory',$product->childcategory_id)->get();
-        return view('livewire.admin.product.attribute-value.update',
-            compact('attribute','product','att'));
+
+        $att = \App\Models\Attribute::where('parent', '>', '0')
+            ->where('childCategory', $product->childcategory_id)
+            ->get();
+
+        return view('livewire.admin.product.attribute-value.update', compact('attribute', 'product', 'att'));
     }
 }

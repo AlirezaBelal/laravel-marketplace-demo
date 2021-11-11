@@ -57,17 +57,21 @@ class Index extends Component
     public function categoryForm()
     {
         $this->validate();
+
         $this->productSeller->save();
+
         if (!$this->productSeller->status) {
             $this->productSeller->update([
                 'status' => 0
             ]);
         }
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'ایجاد'
         ]);
+
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت ایجاد شد.');
     }
 
@@ -93,11 +97,13 @@ class Index extends Component
         $productSeller->update([
             'status' => 1
         ]);
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'فعال'
         ]);
+
         $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
     }
 
@@ -106,11 +112,13 @@ class Index extends Component
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->delete();
+
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'حذف کردن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'حذف'
         ]);
+
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت حذف شد.');
     }
 
@@ -123,7 +131,8 @@ class Index extends Component
             ->orWhere('warranty_id', 'LIKE', "%{$this->search}%")
             ->orWhere('price', 'LIKE', "%{$this->search}%")
             ->orWhere('color_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(15) : [];
+            ->latest()
+            ->paginate(10) : [];
 
         return view('livewire.admin.product.product-vendor.index', compact('productSellers'));
     }

@@ -13,7 +13,6 @@ class Product extends Model
     use SoftDeletes;
     use Sluggable;
 
-
     protected $fillable = [
         'img',
         'title',
@@ -24,6 +23,7 @@ class Product extends Model
         'category_id',
         'subcategory_id',
         'childcategory_id',
+        'categorylevel4_id',
         'color_id',
         'brand_id',
         'tags',
@@ -43,9 +43,11 @@ class Product extends Model
 
 
     /**
-     * @return \string[][]
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
      */
-    public function sluggable():array
+    public function sluggable(): array
     {
         return [
             'link' => [
@@ -53,4 +55,36 @@ class Product extends Model
             ]
         ];
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function subcategory()
+    {
+        return $this->belongsTo(SubCategory::class, 'subcategory_id', 'id');
+    }
+
+    public function childcategory()
+    {
+        return $this->belongsTo(ChildCategory::class, 'childcategory_id', 'id');
+    }
+
+    public function categorylevel4()
+    {
+        return $this->belongsTo(CategoryLevel4::class, 'categorylevel4_id', 'id');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'color_id', 'id');
+    }
+
+
 }

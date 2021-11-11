@@ -25,13 +25,10 @@ class Update extends Component
     public function categoryForm()
     {
         $this->validate();
-
         if ($this->img) {
             $this->gallery->img = $this->uploadImage();
         }
-
         $this->gallery->update($this->validate());
-
         if (!$this->gallery->status) {
             $this->gallery->update([
                 'status' => 0
@@ -43,8 +40,8 @@ class Update extends Component
             'url' => 'آپدیت تصویر محصول' . '-' . $this->gallery->product_id,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'تصویر محصول مورد نظر با موفقیت آپدیت شد.');
 
+        alert()->success(' با موفقیت آپدیت شد.', 'تصویر محصول مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('gallery.index'));
     }
 
