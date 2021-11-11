@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="{{asset('css/responsive_991.css')}}" media="(max-width:991px)">
 <link rel="stylesheet" href="{{asset('css/responsive_768.css')}}" media="(max-width:768px)">
 <link rel="stylesheet" href="{{asset('css/font.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('css/bootstrap-iconpicker.min.css')}}">--}}
 <script src="{{asset('js/ckeditor.js')}}"></script>
-<script src="{{asset('js/sweetalert.min.js')}}"></script>
+<script src="{{asset('/js/sweetalert.min.js')}}"></script>
 <livewire:styles/>
 
 <style>
@@ -36,5 +37,12 @@
         top: 10px;
         right: 15px;
         color: #636e72;
+    }
+
+    .table td {
+        white-space: nowrap;
+        color: #444;
+        padding: 13px 5px;
+        font-size: 13px;
     }
 </style>

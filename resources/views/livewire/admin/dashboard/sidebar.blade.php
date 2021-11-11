@@ -83,6 +83,24 @@
             </a>
         </li>
 
+        <li class="item-li i-users {{Request::routeIs('seller.index') ? 'is-active': '' }}">
+            <a href="{{route('seller.index')}}">
+                فروشندگان
+            </a>
+        </li>
+
+        <li class="item-li i-dashboard {{Request::routeIs('dashboard.favorite') ? 'is-active': '' }}">
+            <a href="{{route('dashboard.favorite')}}">
+                لیست ها
+            </a>
+        </li>
+
+        <li class="item-li i-ads {{Request::routeIs('dashboard.address') ? 'is-active': '' }}">
+            <a href="{{route('dashboard.address')}}">
+                آدرس ها
+            </a>
+        </li>
+
         <hr style="margin-left: 15px;margin-right: 25px">
 
         <li class="item-li i-articles {{Request::routeIs('menu.index') ? 'is-active': '' }}">
@@ -115,7 +133,7 @@
             </a>
         </li>
 
-        <li class="item-li i-ads {{Request::routeIs('social.index') ? 'is-active': '' }}">
+        <li class="item-li i-comments {{Request::routeIs('social.index') ? 'is-active': '' }}">
             <a href="{{route('social.index')}}">
                 شبکه های اجتماعی
             </a>
@@ -139,8 +157,48 @@
             </a>
         </li>
 
+        <hr style="margin-left: 15px;margin-right: 25px">
+
+        <span>
+            صفحات دسته های سایت
+        </span>
+
+        <li class="item-li i-slideshow {{Request::routeIs('category.slider') ? 'is-active': '' }}">
+            <a href="{{route('category.slider')}}">
+                دسته ها
+            </a>
+        </li>
+
+        <li class="item-li i-slideshow {{Request::routeIs('category.level') ? 'is-active': '' }}">
+            <a href="{{route('category.level')}}">
+                زیر دسته ها
+            </a>
+        </li>
+
+        {{--        <li class="item-li i-slideshow {{Request::routeIs('category.electronic.slider') ? 'is-active': '' }}">--}}
+        {{--            <a href="{{route('category.electronic.slider')}}">--}}
+        {{--                کالای دیجیتال--}}
+        {{--            </a>--}}
+        {{--        </li>--}}
+
+        {{--        <li class="item-li i-slideshow {{Request::routeIs('category.vehicle.slider') ? 'is-active': '' }}">--}}
+        {{--            <a href="{{route('category.vehicle.slider')}}">--}}
+        {{--                خودرو، ابزار--}}
+        {{--            </a>--}}
+        {{--        </li>--}}
+
+        {{--        <li class="item-li i-slideshow {{Request::routeIs('category.apparel.slider') ? 'is-active': '' }}">--}}
+        {{--            <a href="{{route('category.apparel.slider')}}">--}}
+        {{--                مد و پوشاک--}}
+        {{--            </a>--}}
+        {{--        </li>--}}
+
 
         <hr style="margin-left: 15px;margin-right: 25px">
+
+        <span>
+            تنظیمات سایت
+        </span>
 
         <li class="item-li i-slideshow {{Request::routeIs('footer.index') ? 'is-active': '' }}">
             <a href="{{route('footer.index')}}">
@@ -159,5 +217,7 @@
                 گزارشات سیستم
             </a>
         </li>
+
+        <hr style="margin-left: 15px;margin-right: 25px">
     </ul>
 </div>
