@@ -1,7 +1,7 @@
 ## Digikala Projact by Laravel
 
 ### How to launch a project
-cofnig databesa :: ->App->database->Database line::12
+cofnig databesa :: in env -> DB_DATABASE=digikala1400
 
 add SQL :: DOC->backup_V04->all file 
 
