@@ -1,5 +1,11 @@
 ## Digikala Projact by Laravel
 
+# How to launch a project
+cofnig databesa :: ->App->database->Database line::12
+
+add SQL :: DOC->backup_V04->all file 
+
+run -> php 127.0.0.1:8000 -public
 
 ## Packages used in this project along with links
 
