@@ -18,11 +18,10 @@
                 <div class="c-login__box">
                     <form class="c-login__form"
                           wire:submit.prevent="userForm"
-                          id="authForm" novalidate="novalidate">
+                          id="authForm"  novalidate="novalidate">
 
                         <div class="c-login__header-logo">
-                            <a href="/users/login-register/?_back=https://www.digikala.com/"
-                               class="c-login__back-button"></a>
+                            <a href="/users/login-register/?_back=https://www.digikala.com/" class="c-login__back-button"></a>
                             <a href="/">
                                 <img alt="DIGIKALA.COM" src="https://www.digikala.com/static/files/bc60cf05.svg">
                             </a>
@@ -39,8 +38,7 @@
                         <div class="c-login__form-row">
                             <label class="o-form__field-container">
                                 <div class="o-form__field-frame">
-                                    <input wire:model.lazy="sms.code" name="code" type="" placeholder="" value=""
-                                           class="o-form__field js-input-field c-login__otp-input" maxlength="5">
+                                    <input wire:model.lazy="sms.code" name="code" type="" placeholder="" value="" class="o-form__field js-input-field c-login__otp-input" maxlength="5">
                                 </div>
                             </label>
 

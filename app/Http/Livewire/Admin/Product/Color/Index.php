@@ -14,20 +14,16 @@ class Index extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public Color $color;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
-    protected $rules = [
-        'color.name' => 'required',
-        'color.value' => 'required',
-        'color.status' => 'nullable',
-    ];
+    public $img;
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public Color $color;
 
     public function mount()
     {
@@ -35,15 +31,16 @@ class Index extends Component
     }
 
 
+
+    protected $rules = [
+        'color.name' => 'required',
+        'color.value' => 'required',
+        'color.status' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -51,25 +48,27 @@ class Index extends Component
     {
         $this->validate();
 
-        $color = Color::query()->create([
+        $color =    Color::query()->create([
             'name' => $this->color->name,
             'value' => $this->color->value,
-            'status' => $this->color->status ? 1 : 0,
+            'status' => $this->color->status ? 1:0 ,
         ]);
-
         $this->color->name = "";
         $this->color->value = "";
         $this->color->status = false;
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن رنگ' . '-' . $this->color->name,
+            'url' => 'افزودن رنگ' .'-'. $this->color->name,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' رنگ با موفقیت ایجاد شد.');
+
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $color = Color::find($id);
@@ -78,12 +77,11 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت رنگ' . '-' . $this->color->name,
+            'url' => 'غیرفعال کردن وضعیت رنگ' .'-'. $this->color->name,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -91,15 +89,13 @@ class Index extends Component
         $color->update([
             'status' => 1
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت رنگ' . '-' . $this->color->name,
+            'url' => 'فعال کردن وضعیت رنگ' .'-'. $this->color->name,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -107,20 +103,20 @@ class Index extends Component
         $color->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن رنگ' . '-' . $this->color->name,
+            'url' => 'حذف کردن رنگ' .'-'. $this->color->name,
             'actionType' => 'حذف'
         ]);
-
         $this->emit('toast', 'success', ' رنگ با موفقیت حذف شد.');
     }
 
 
     public function render()
     {
-        $colors = $this->readyToLoad ? Color::where('name', 'LIKE', "%{$this->search}%")
-            ->orWhere('value', 'LIKE', "%{$this->search}%")
-            ->latest()
-            ->paginate(10) : [];
-        return view('livewire.admin.product.color.index', compact('colors'));
+
+        $colors = $this->readyToLoad ? Color::where('name', 'LIKE', "%{$this->search}%")->
+        orWhere('value', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.product.color.index',compact('colors'));
     }
 }

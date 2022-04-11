@@ -13,21 +13,17 @@ class Product extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public Gallery $gallery;
-    public \App\Models\Product $product;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
-    protected $rules = [
-        'gallery.product_id' => 'nullable',
-        'gallery.status' => 'nullable',
-        'gallery.position' => 'nullable',
-    ];
+    public $img;
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public Gallery $gallery;
+    public \App\Models\Product $product;
 
     public function mount()
     {
@@ -35,49 +31,45 @@ class Product extends Component
     }
 
 
+
+    protected $rules = [
+        'gallery.product_id' => 'nullable',
+        'gallery.status' => 'nullable',
+        'gallery.position' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-
     public function categoryForm()
     {
         $this->validate();
-
-        $gallery = Gallery::query()->create([
+        $gallery =    Gallery::query()->create([
             'product_id' => $this->product->id,
             'position' => $this->gallery->position,
-            'status' => $this->gallery->status ? 1 : 0,
+            'status' => $this->gallery->status ? 1:0 ,
         ]);
 
-        if ($this->img) {
+        if ($this->img){
             $gallery->update([
                 'img' => $this->uploadImage()
             ]);
         }
-
         $this->gallery->product_id = "";
         $this->gallery->position = null;
         $this->gallery->status = false;
         $this->img = null;
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'افزودن تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت ایجاد شد.');
+
     }
-
-
     public function uploadImage()
     {
         $year = now()->year;
@@ -89,7 +81,10 @@ class Product extends Component
         return "$directory/$name";
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $gallery = Gallery::find($id);
@@ -98,12 +93,11 @@ class Product extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'غیرفعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -113,12 +107,11 @@ class Product extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'فعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -126,7 +119,7 @@ class Product extends Component
         $gallery->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'حذف کردن تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت حذف شد.');
@@ -135,11 +128,14 @@ class Product extends Component
 
     public function render()
     {
-        $product = $this->product;
-        $galleries = $this->readyToLoad ? Gallery::where('product_id', $this->product->id)
-            ->orderBy('position')
-            ->paginate(10) : [];
+$product = $this->product;
 
-        return view('livewire.admin.product.gallery.product', compact('galleries', 'product'));
+        $galleries =
+            $this->readyToLoad ? Gallery::
+        where('product_id', $this->product->id)->
+        orderBy('position')->paginate(15): [];
+
+
+        return view('livewire.admin.product.gallery.product',compact('galleries','product'));
     }
 }

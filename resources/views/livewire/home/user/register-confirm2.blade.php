@@ -17,11 +17,8 @@
             <section class="o-page o-page--account-box">
                 <div class="c-login__box">
 
-                    <form class="c-login__form" method="post" id="authForm" data-phone-number="09378589767"
-                          novalidate="novalidate">
-                        <input type="hidden" name="rc" value="UVo2aEhtTmYycFN1TmpDNU9pSm4yUT09"><input type="hidden"
-                                                                                                       name="rd"
-                                                                                                       value="WGR6QUJaSy9JQmVjM20xZHdEV0c0S0tkTmJPaVNNcUpUL3FPRU1uc0hyUGdTS214aUNCSHhqZ3U2UkhoTTJzVg~~">
+                    <form class="c-login__form" method="post" id="authForm" data-phone-number="09378589767" novalidate="novalidate">
+                        <input type="hidden" name="rc" value="UVo2aEhtTmYycFN1TmpDNU9pSm4yUT09"><input type="hidden" name="rd" value="WGR6QUJaSy9JQmVjM20xZHdEV0c0S0tkTmJPaVNNcUpUL3FPRU1uc0hyUGdTS214aUNCSHhqZ3U2UkhoTTJzVg~~">
 
                         <div class="c-login__header-logo">
                             <a href="" class="c-login__back-button"></a>
@@ -43,8 +40,7 @@
                         <div class="c-login__form-row">
                             <label class="o-form__field-container">
                                 <div class="o-form__field-frame">
-                                    <input name="login[code]" type="" placeholder="" value=""
-                                           class="o-form__field js-input-field c-login__otp-input" maxlength="5">
+                                    <input name="login[code]" type="" placeholder="" value="" class="o-form__field js-input-field c-login__otp-input" maxlength="5">
                                 </div>
                             </label>
 
@@ -55,9 +51,7 @@
                                 <span class="js-phone-code-counter" data-countdownseconds="152">۰۰:۰۰</span>
                                 دیگر
                             </div>
-                            <button type="button"
-                                    class="o-btn o-btn--full-width o-btn--link-blue-lg js-send-otp-confirm-code"
-                                    data-mode="register">
+                            <button type="button" class="o-btn o-btn--full-width o-btn--link-blue-lg js-send-otp-confirm-code" data-mode="register">
                                 دریافت مجدد کد تایید
                             </button>
                         </div>

@@ -3,13 +3,11 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('category.level')}}">
-                    دسته های زیر دسته ها
+                <a class="tab__item is-active" href="/admin/category-level">دسته های زیر دسته ها
                 </a>
+
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -17,15 +15,18 @@
                                type="text" class="text" placeholder="جستجوی دسته های زیر دسته ها ...">
                     </form>
                 </a>
+
             </div>
         </div>
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>دسته اصلی</th>
                             <th>زیر دسته</th>
                             <th>دسته کودک</th>
@@ -36,13 +37,11 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($categorylevels as $specialProduct)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
+                                    <td><a href="">{{$specialProduct->id}}</a></td>
+
                                     <td>
                                         @foreach(\App\Models\Category::where('id',$specialProduct->category_id)->get() as $category)
                                             {{$category->title}}
@@ -66,6 +65,7 @@
                                         </td>
                                     @endif
 
+
                                     @if($specialProduct->categorylevel4_id == null)
                                         <td>
                                             -
@@ -79,33 +79,37 @@
                                     @endif
 
                                     <td>
-                                        @if ($specialProduct->property == 1)
-                                            <span class="alert alert-danger">
-                                            دسته سطح دوم
-                                        </span>
+                                       @if ($specialProduct->property == 1)
+                                        <span class="alert alert-danger">   دسته سطح دوم</span>
                                         @else
-                                            <span class="alert alert-success">
-                                                دسته سطح سوم
-                                            </span>
-                                        @endif
+                                            <span class="alert alert-success">   دسته سطح سوم</span>
+                                       @endif
                                     </td>
                                     <td>
                                         <a wire:click="deleteCategory({{$specialProduct->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$categorylevels->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته های زیر دسته ها جدید</p>
@@ -115,9 +119,11 @@
 
                     @include('errors.error')
 
+
+
                     <div class="form-group">
                         <select wire:model.lazy="category_id" name="category_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -125,7 +131,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="subCategory_id" name="subCategory_id" id="" class="form-control">
-                            <option value="-1">- زیردسته -</option>
+                            <option value="-1" >- زیردسته  -</option>
                             @foreach(\App\Models\SubCategory::where('parent',$this->category_id)->get() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -150,13 +156,17 @@
                     <div class="form-group">
                         <select wire:model.lazy="property" name="property" id="" class="form-control">
                             <option value=" ">- نوع دسته محصول -</option>
-                            <option value="1">دسته سطح دوم</option>
-                            <option value="2">دسته سطح سوم</option>
+                                <option value="1">دسته سطح دوم</option>
+                                <option value="2">دسته سطح سوم</option>
                         </select>
                     </div>
+
                     <button class="btn btn-brand">افزودن به دسته های زیر دسته ها</button>
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

@@ -38,10 +38,15 @@
     <div class="c-mini-buy-box__row c-mini-buy-box__stock ">
         موجود در انبار دیجی‌کالا
     </div>
-    <div
-        class="c-mini-buy-box__row c-mini-buy-box__best-price js-data-best-price u-hidden">
-        بهترین قیمت ۳۰ روز گذشته
-    </div>
+
+    @if ($priceDate_min_price_first->discount_price == $productSeller_max_price_first->discount_price ?? $this->vendor_new->discount_price )
+        @if ($mo > 0)
+            <div
+                class="c-mini-buy-box__row c-mini-buy-box__best-price js-data-best-price ">
+                بهترین قیمت ۳۰ روز گذشته
+            </div>
+        @endif
+    @endif
     <div
         class="c-product__seller-row c-product__seller-row--price c-mini-buy-box__price-row">
         <div class="c-product__seller-price-info">

@@ -10,7 +10,6 @@ use Livewire\WithFileUploads;
 
 class Update extends Component
 {
-    public Menu $menu;
     public $status = null;
 
     protected $rules = [
@@ -19,10 +18,9 @@ class Update extends Component
         'menu.childCategory_id' => 'nullable',
         'menu.status' => 'nullable',
     ];
-
-
     public function categoryForm()
     {
+
         $this->validate();
         $this->menu->update($this->validate());
         if (!$this->menu->status) {
@@ -30,25 +28,28 @@ class Update extends Component
                 'status' => 0
             ]);
         }
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت منو' . '-' . $this->menu->category_id,
+            'url' => 'آپدیت منو' .'-'. $this->menu->category_id,
             'actionType' => 'آپدیت'
         ]);
         alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
         return redirect(route('menu.index'));
+
     }
 
+    public Menu $menu;
 
     public function render()
     {
-        if ($this->menu->status == 1) {
+        if ($this->menu->status == 1){
             $this->menu->status = true;
-        } else {
+        }else
+        {
             $this->menu->status = false;
         }
+
         $menu = $this->menu;
-        return view('livewire.admin.menu.update', compact('menu'));
+        return view('livewire.admin.menu.update',compact('menu'));
     }
 }

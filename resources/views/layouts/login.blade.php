@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" href="{{asset('digikala/css/8ba74341.css')}}">
 </head>
-<body class=" is-access-page account-pages">
+<body class=" is-access-page account-pages" style="">
 @include('sweet::alert')
 {{--@include('livewire.home.home.header')--}}
 {{$slot}}

@@ -13,16 +13,15 @@ class ForgetPassword extends Component
     public User $user;
     public SMS $sms;
 
-    protected $rules = [
-        'sms.email_phone' => 'required',
-    ];
-
-
     public function mount()
     {
         $this->sms = new Sms();
     }
 
+
+    protected $rules = [
+        'sms.email_phone' => 'required',
+    ];
 
     public function updated($email_phone)
     {
@@ -32,12 +31,10 @@ class ForgetPassword extends Component
 
     public function userForm()
     {
+
         $this->validate();
-
         $type = 'فراموشی رمز عبور';
-        $mobile = User::where('mobile', $this->sms->email_phone)
-            ->first();
-
+        $mobile = User::where('mobile', $this->sms->email_phone)->first();
         if ($mobile) {
             $code = random_int(10000, 99999);
             $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
@@ -49,7 +46,7 @@ class ForgetPassword extends Component
                 'type' => $type,
                 'user_id' => $mobile->id,
             ]);
-            return $this->redirect(route('users.password.forgetPhone', $mobile->id));
+            return $this->redirect(route('users.password.forgetPhone',$mobile->id));
         } else {
             $this->emit('toast', 'error', ' شماره موبایل وجود ندارد. به قسمت ایجاد حساب مراجعه فرمایید!');
         }
@@ -59,7 +56,9 @@ class ForgetPassword extends Component
     public function render()
     {
         $id = Request::segment(4);
+
         $user = User::find($id);
+
         return view('livewire.home.user.forget-password', compact('user'))->layout('layouts.login');
     }
 }

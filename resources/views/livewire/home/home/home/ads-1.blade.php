@@ -18,8 +18,7 @@
                 title="{{$banner_3->title}}">
                 <div class="c-adplacement__sponsored_box"><img
                         src="/storage/{{$banner_3->img}}"
-                        alt={{$banner_3->title}}" loading=" lazy"/>
-                </div>
+                        alt={{$banner_3->title}}" loading="lazy"/></div>
             </a>
             <a
                 href="{{$banner_4->link}}"

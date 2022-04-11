@@ -13,10 +13,16 @@ use Livewire\WithPagination;
 class Create extends Component
 {
     use WithFileUploads;
-
-    public Product $product;
     public $img;
-    public $subCategory;
+public $subCategory;
+    public Product $product;
+
+    public function mount()
+    {
+        $this->product = new Product();
+    }
+
+
 
     protected $rules = [
         'product.title' => 'required|min:3',
@@ -45,13 +51,6 @@ class Create extends Component
         'product.special' => 'nullable',
     ];
 
-
-    public function mount()
-    {
-        $this->product = new Product();
-    }
-
-
     public function updated($title)
     {
         $this->validateOnly($title);
@@ -60,24 +59,22 @@ class Create extends Component
 
     public function categoryForm()
     {
+
         $this->validate();
-
-        if ($this->img) {
-            $this->product->img = $this->uploadImage();
-        }
-
+        if ($this->img){
+        $this->product->img = $this->uploadImage();
+            }
         $this->product->save();
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول' . '-' . $this->product->title,
+            'url' => 'افزودن محصول' .'-'. $this->product->title,
             'actionType' => 'ایجاد'
         ]);
-
         alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
-
         return redirect(route('product.index'));
     }
+
 
 
     public function uploadImage()

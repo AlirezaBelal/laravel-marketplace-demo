@@ -13,13 +13,23 @@ class Category extends Component
 {
     use WithPagination;
 
-    public Attribute $attribute;
-    public ChildCategory $category;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public Attribute $attribute;
+    public ChildCategory $category;
+
+    public function mount()
+    {
+        $this->attribute = new Attribute();
+    }
+
+
 
     protected $rules = [
         'attribute.childCategory' => 'nullable',
@@ -29,34 +39,23 @@ class Category extends Component
         'attribute.status' => 'required',
     ];
 
-
-    public function mount()
-    {
-        $this->attribute = new Attribute();
-    }
-
-
     public function updated($childCategory)
     {
         $this->validateOnly($childCategory);
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
 
     public function categoryForm()
     {
+
         $this->validate();
         Attribute::query()->create([
             'childCategory' => $this->category->id,
             'position' => $this->attribute->position,
             'title' => $this->attribute->title,
             'parent' => $this->attribute->parent,
-            'status' => $this->attribute->status ? 1 : 0,
+            'status' => $this->attribute->status ? 1:0 ,
         ]);
 
         $this->attribute->childCategory = null;
@@ -64,32 +63,29 @@ class Category extends Component
         $this->attribute->title = "";
         $this->attribute->position = null;
         $this->attribute->status = false;
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن مشخصات کالا' . '-' . $this->attribute->title,
+            'url' => 'افزودن مشخصات کالا' .'-'. $this->attribute->title,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' مشخصات کالا با موفقیت ایجاد شد.');
-
         return redirect()->back();
     }
-
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $attribute = Attribute::find($id);
         $attribute->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت مشخصات کالا' . '-' . $this->attribute->childCategory,
+            'url' => 'غیرفعال کردن وضعیت مشخصات کالا' .'-'. $this->attribute->childCategory,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت غیرفعال شد.');
     }
 
@@ -99,16 +95,13 @@ class Category extends Component
         $attribute->update([
             'status' => 1
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت مشخصات کالا' . '-' . $this->attribute->childCategory,
+            'url' => 'فعال کردن وضعیت مشخصات کالا' .'-'. $this->attribute->childCategory,
             'actionType' => 'فعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -116,21 +109,22 @@ class Category extends Component
         $attribute->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن مشخصات کالا' . '-' . $this->attribute->childCategory,
+            'url' => 'حذف کردن مشخصات کالا' .'-'. $this->attribute->childCategory,
             'actionType' => 'حذف'
         ]);
-
         $this->emit('toast', 'success', ' مشخصات کالا با موفقیت حذف شد.');
     }
 
 
     public function render()
     {
+
         $category = $this->category;
 
-        $attributes = $this->readyToLoad ? Attribute::where('childCategory', $this->category->id)
-            ->orderBy('position')
-            ->paginate(10) : [];
-        return view('livewire.admin.product.attribute.category', compact('attributes', 'category'));
+        $attributes =
+            $this->readyToLoad ? Attribute::
+            where('childCategory', $this->category->id)->
+            orderBy('position')->paginate(15): [];
+        return view('livewire.admin.product.attribute.category',compact('attributes','category'));
     }
 }

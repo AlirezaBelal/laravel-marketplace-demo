@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Product\ProductVendor;
 
 use App\Models\Log;
+use App\Models\PriceDate;
 use App\Models\Product;
 use App\Models\ProductSeller;
 use Livewire\Component;
@@ -13,6 +14,13 @@ class Create extends Component
     use WithFileUploads;
 
     public ProductSeller $productSeller;
+
+    public function mount()
+    {
+        $this->productSeller = new ProductSeller();
+    }
+
+
 
     protected $rules = [
         'productSeller.product_id' => 'nullable',
@@ -25,14 +33,8 @@ class Create extends Component
         'productSeller.product_count' => 'required',
         'productSeller.limit_order' => 'required',
         'productSeller.status' => 'nullable',
+        'productSeller.anbar' => 'nullable',
     ];
-
-
-    public function mount()
-    {
-        $this->productSeller = new ProductSeller();
-    }
-
 
     public function updated($title)
     {
@@ -46,15 +48,22 @@ class Create extends Component
         $this->validate();
         $this->productSeller->save();
 
+        PriceDate::create([
+           'product_id' => $this->productSeller->product_id,
+           'price' => $this->productSeller->price,
+           'discount_price' => $this->productSeller->discount_price,
+           'product_seller_id' => $this->productSeller->id,
+        ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تنوع قیمت محصول' . '-' . $this->productSeller->title,
+            'url' => 'افزودن تنوع قیمت محصول' .'-'. $this->productSeller->title,
             'actionType' => 'ایجاد'
         ]);
-
         alert()->success(' با موفقیت ایجاد شد.', 'تنوع قیمت محصول مورد نظر با موفقیت ایجاد شد.');
+
         return redirect(route('productVendor.index'));
     }
+
 
 
     public function render()

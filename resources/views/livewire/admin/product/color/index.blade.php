@@ -1,20 +1,11 @@
 @section('title','رنگ ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item " href='{{route('product.index')}}'>
-                    محصولات
-                </a>
-
-                <a class="tab__item is-active" href="{{route('color.index')}}">
-                    رنگ های محصولات
-                </a>
-
-                <a class="tab__item " href="{{route('gallery.index')}}">
-                    گالری تصاویر محصولات
-                </a>
+                <a class="tab__item " href="/admin/product">محصولات</a>
+                <a class="tab__item is-active" href="/admin/color"> رنگ های محصولات</a>
+                <a class="tab__item " href="/admin/gallery"> گالری تصاویر محصولات</a>
                 |
                 <a class="tab__item">جستجو: </a>
 
@@ -27,21 +18,20 @@
 
                 <a class="tab__item btn btn-danger"
                    href="{{route('color.trashed')}}
-                       " style="color: white;float: left;margin-top: 10px;margin-left: 10px">
-                    سطل زباله
+                       " style="color: white;float: left;margin-top: 10px;margin-left: 10px">سطل زباله
                     ({{\App\Models\Color::onlyTrashed()->count()}})
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>نام رنگ</th>
                             <th>کد رنگ</th>
                             <th>وضعیت رنگ</th>
@@ -50,28 +40,18 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($colors as $color)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
-
-                                    <td>
-                                        {{$color->name}}
-                                    </td>
-
-                                    <td>
-                                        <span style="background-color: {{$color->value}}">{{$color->value}}</span>
-                                    </td>
+                                    <td><a href="">{{$color->id}}</a></td>
+                                    <td><a href="">{{$color->name}}</a></td>
+                                    <td><a href="" style="background-color: {{$color->value}}">{{$color->value}}</a></td>
 
                                     <td>
                                         @if($color->status == 1)
                                             <button wire:click="updateCategoryDisable({{$color->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$color->id}})"
@@ -83,25 +63,31 @@
                                     </td>
                                     <td>
                                         <a wire:click="deleteCategory({{$color->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                         <a href="{{route('color.update',$color)}}
-                                            " class="item-edit"
-                                           title="ویرایش">
-                                        </a>
+                                            " class="item-edit " title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$colors->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد رنگ جدید</p>
@@ -110,6 +96,7 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
 
                     <div class="form-group">
                         <input type="text" wire:model.lazy="color.name" placeholder="نام رنگ "
@@ -129,9 +116,13 @@
                         </div>
                     </div>
 
+
                     <button class="btn btn-brand">افزودن رنگ</button>
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

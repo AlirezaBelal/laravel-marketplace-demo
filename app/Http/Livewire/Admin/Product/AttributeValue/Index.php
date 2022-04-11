@@ -12,12 +12,22 @@ class Index extends Component
 {
     use WithPagination;
 
-    public AttributeValue $attribute;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public AttributeValue $attribute;
+
+    public function mount()
+    {
+        $this->attribute = new AttributeValue();
+    }
+
+
 
     protected $rules = [
         'attribute.product_id' => 'required',
@@ -26,66 +36,52 @@ class Index extends Component
         'attribute.status' => 'required',
     ];
 
-
-    public function mount()
-    {
-        $this->attribute = new AttributeValue();
-    }
-
-
     public function updated($title)
     {
         $this->validateOnly($title);
     }
 
 
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
-
-
     public function categoryForm()
     {
         $this->validate();
-
         AttributeValue::query()->create([
             'attribute_id' => $this->attribute->attribute_id,
             'product_id' => $this->attribute->product_id,
             'value' => $this->attribute->value,
-            'status' => $this->attribute->status ? 1 : 0,
+            'status' => $this->attribute->status ? 1:0 ,
         ]);
 
         $this->attribute->attribute_id = null;
         $this->attribute->product_id = null;
         $this->attribute->value = "";
         $this->attribute->status = false;
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن مقدار مشخصات کالا' . '-' . $this->attribute->value,
+            'url' => 'افزودن مقدار مشخصات کالا' .'-'. $this->attribute->value,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' مقدار مشخصات کالا با موفقیت ایجاد شد.');
+
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $attribute = AttributeValue::find($id);
         $attribute->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت مقدار مشخصات کالا' . '-' . $attribute->value,
+            'url' => 'غیرفعال کردن وضعیت مقدار مشخصات کالا' .'-'. $attribute->value,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -93,16 +89,13 @@ class Index extends Component
         $attribute->update([
             'status' => 1
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت مقدار مشخصات کالا' . '-' . $attribute->title,
+            'url' => 'فعال کردن وضعیت مقدار مشخصات کالا' .'-'. $attribute->title,
             'actionType' => 'فعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -110,19 +103,19 @@ class Index extends Component
         $attribute->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن مقدار مشخصات کالا' . '-' . $attribute->value,
+            'url' => 'حذف کردن مقدار مشخصات کالا' .'-'. $attribute->value,
             'actionType' => 'حذف'
         ]);
-
         $this->emit('toast', 'success', ' مقدار مشخصات کالا با موفقیت حذف شد.');
     }
 
 
     public function render()
     {
-        $attributes = $this->readyToLoad ? AttributeValue::where('value', 'LIKE', "%{$this->search}%")
-            ->latest()
-            ->paginate(10) : [];
-        return view('livewire.admin.product.attribute-value.index', compact('attributes'));
+
+        $attributes = $this->readyToLoad ? AttributeValue::where('value', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.product.attribute-value.index',compact('attributes'));
     }
 }

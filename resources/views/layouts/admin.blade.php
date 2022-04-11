@@ -21,10 +21,10 @@
 </html>
 <script>
     console.log(document.getElementById("copied2"));
-    setTimeout(function () {
+    setTimeout(function (){
         if (document.getElementById("copied2")) {
             document.getElementById("copied2").classList.add("u-hidden");
             document.getElementById("copied").style = "display: block !important; ";
         }
-    }, 3000)
+    },3000)
 </script>

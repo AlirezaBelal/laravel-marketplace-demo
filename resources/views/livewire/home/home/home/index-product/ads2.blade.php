@@ -142,10 +142,10 @@
                                         data-gtm-vis-first-on-screen-9070001_346="4136053"
                                         data-gtm-vis-total-visible-time-9070001_346="100"
                                         data-gtm-vis-has-fired-9070001_346="1"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="شارژر همراه شیائومی مدل Redmi ظرفیت 1000..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -176,10 +176,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="1099874"
                                         href="/product/dkp-1099874/پرینتر-چندکاره-جوهرافشان-کانن-مدل-pixma-g3411"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="پرینتر چندکاره جوهرافشان کانن مدل PIXMA ..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -212,10 +212,10 @@
                                         data-gtm-vis-first-on-screen-9070001_346="9008407"
                                         data-gtm-vis-total-visible-time-9070001_346="100"
                                         data-gtm-vis-has-fired-9070001_346="1"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/121795599.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/121795599.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt=" شارژر همراه انرجایزر مدل UE20009  ظرفیت..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/121795599.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/121795599.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -246,10 +246,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="441652"
                                         href="/product/dkp-441652/شارژر-همراه-انرجایزر-مدل-ue18000-ظرفیت-18000-میلی-آمپرساعت"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112348329.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112348329.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="شارژر همراه انرجایزر مدل UE18000 ظرفیت 1..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/112348329.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/112348329.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -277,10 +277,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="319868"
                                         href="/product/dkp-319868/شارژر-همراه-سیلیکون-پاور-مدل-s200-ظرفیت-20000-میلی-آمپر-ساعت"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/2554415.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/2554415.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="شارژر همراه سیلیکون پاور مدل S200 ظرفیت ..."
                                             class="swiper-lazy js-template-img" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/2554415.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/2554415.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -308,10 +308,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="1905221"
                                         href="/product/dkp-1905221/پرینتر-لیزری-کانن-مدل-i-sensys-lbp6030b"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112705169.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112705169.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="پرینتر لیزری کانن مدل i-Sensys LBP6030B"
                                             class="swiper-lazy js-template-img" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/112705169.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/112705169.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -339,10 +339,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="530113"
                                         href="/product/dkp-530113/کارت-حافظه-microsdhc-ویکو-من-مدل-extre600x-کلاس-10-استاندارد-uhs-i-u3-سرعت-90mbps-ظرفیت-32گیگابایت-همراه-با-آداپتور-sd"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/2525920.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/2525920.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="کارت حافظه microSDHC ویکو من مدل Extre60..."
                                             class="swiper-lazy js-template-img" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/2525920.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/2525920.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -369,10 +369,10 @@
                                 <div class="c-product-box"><a
                                         class="c-product-box__img js-url js-carousel-ga-product-box" data-id="58108"
                                         href="/product/dkp-58108/شارژر-همراه-ای-دیتا-مدل-pt100-ظرفیت-10000-میلی-آمپر-ساعت"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/114316988.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/114316988.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="شارژر همراه ای دیتا مدل PT100 ظرفیت 1000..."
                                             class="swiper-lazy js-template-img" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/114316988.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/114316988.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -400,10 +400,10 @@
                                         class="c-product-box__img js-url js-carousel-ga-product-box"
                                         data-id="1774519"
                                         href="/product/dkp-1774519/پرینتر-لیزری-اچ-پی-مدل-laserjet-pro-m15a"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112004160.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/112004160.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="پرینتر لیزری اچ پی مدل LaserJet Pro M15a"
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/112004160.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/112004160.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -437,10 +437,10 @@
                                         data-gtm-vis-first-on-screen-9070001_346="4141635"
                                         data-gtm-vis-total-visible-time-9070001_346="100"
                                         data-gtm-vis-has-fired-9070001_346="1"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="شارژر همراه شیائومی مدل Redmi ظرفیت 1000..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/113600779.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a
@@ -477,10 +477,10 @@
                                         data-gtm-vis-first-on-screen-9070001_346="4141945"
                                         data-gtm-vis-total-visible-time-9070001_346="100"
                                         data-gtm-vis-has-fired-9070001_346="1"><img
-                                            data-img="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"
+{{--                                            data-img="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"--}}
                                             alt="پرینتر چندکاره جوهرافشان کانن مدل PIXMA ..."
                                             class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
-                                            src="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img
+{{--                                            src="https://dkstatics-public.digikala.com/digikala-products/5211047.jpg?x-oss-process=image/resize,m_lfit,h_350,w_350/quality,q_60"><img--}}
                                             class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
                                             src="https://www.digikala.com/static/files/31a78819.svg"></a>
                                     <div class="c-product-box__title"><a

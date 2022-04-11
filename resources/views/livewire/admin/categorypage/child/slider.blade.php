@@ -3,28 +3,21 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('category.child.slider')}}">
-                    اسلایدر
+                <a class="tab__item is-active" href="/admin/category/apparel/slider">اسلایدر
                 </a>
-                <a class="tab__item " href="{{route('category.child.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item " href="{{route('category.child.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.child.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item " href="{{route('category.child.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item" href="{{route('category.child.brand')}}">
-                    برندهای برتر
-                </a>
+                <a class="tab__item "
+                   href="/admin/category/apparel/amazing">پیشنهاد شگفت انگیز </a>
+                <a class="tab__item "
+                   href="/admin/category/apparel/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/apparel/title">عنوان ها </a>
+                <a class="tab__item"
+                   href="/admin/category/apparel/product">محصولات </a>
+
+                <a class="tab__item"
+                   href="/admin/category/apparel/brand">برندهای برتر </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -42,7 +35,7 @@
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر اسلایدر</th>
                             <th>عنوان اسلایدر</th>
                             <th>لینک اسلایدر</th>
@@ -52,31 +45,20 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($sliders as $slider)
                                 <tr role="row">
+                                    <td><a href="">{{$slider->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$slider->img}}" alt="img" width="100px">
                                     </td>
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($slider->img)}}" alt="img"
-                                             width="50px">
-                                    </td>
-                                    <td>
-                                        {{$slider->title}}
-                                    </td>
-                                    <td>
-                                        <a target="_blank" href="{{url($slider->link)}}">
-                                            {{\Illuminate\Support\Str::limit($slider->link,20)}}
-                                        </a>
-                                    </td>
+                                    <td><a href="">{{$slider->title}}</a></td>
+                                    <td><a target="_blank" href="{{url($slider->link)}}">{{\Illuminate\Support\Str::limit($slider->link,20)}}</a></td>
                                     <td>
                                         @if($slider->status == 1)
                                             <button wire:click="updateCategoryDisable({{$slider->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$slider->id}})"
@@ -88,21 +70,31 @@
                                     </td>
                                     <td>
                                         <a wire:click="deleteCategory({{$slider->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
+{{--                                        <a href="{{route('slider.update',$slider)}}--}}
+{{--                                            " class="item-edit " title="ویرایش"></a>--}}
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$sliders->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد اسلایدر جدید</p>
@@ -111,6 +103,7 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
 
                     <div class="form-group">
                         <input type="text" wire:model.lazy="title" placeholder="نام اسلایدر "
@@ -140,6 +133,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -164,6 +159,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

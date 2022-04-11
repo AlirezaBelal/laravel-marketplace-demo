@@ -1,16 +1,12 @@
 @section('title','عنوان دسته های اصلی سایت')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('index.title.index')}}">
-                    عنوان دسته های اصلی سایت
-                </a>
+                <a class="tab__item is-active" href="/admin/index/title">عنوان دسته های اصلی سایت </a>
+                <a class="tab__item " href="/admin/index/category">محصولات دسته ها </a>
 
-                <a class="tab__item " href="{{route('index.category.index')}}">
-                    محصولات دسته ها
-                </a>
+
                 |
                 <a class="tab__item">جستجو: </a>
 
@@ -20,11 +16,12 @@
                                type="text" class="text" placeholder="جستجوی دسته های اصلی سایت ...">
                     </form>
                 </a>
+
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
 
@@ -37,14 +34,10 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($indexes as $index)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
-
+                                    <td><a href="">{{$index->id}}</a></td>
                                     <td>
                                         {{$index->title}}
                                     </td>
@@ -55,15 +48,25 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$indexes->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد عنوان برای دسته های صفحه اصلی</p>
@@ -73,13 +76,18 @@
 
                     @include('errors.error')
 
+
+
                     <div class="form-group">
-                        <input type="text" wire:model.lazy="index.title" name="title" id="" class="form-control">
+                            <input type="text" wire:model.lazy="index.title" name="title" id="" class="form-control">
                     </div>
 
                     <button class="btn btn-brand">افزودن عنوان دسته</button>
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

@@ -11,8 +11,5 @@ class Color extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'value',
-        'status'];
+    protected $fillable = ['name','value','status'];
 }

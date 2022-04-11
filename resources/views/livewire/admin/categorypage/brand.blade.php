@@ -3,28 +3,21 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item" href="{{route('category.slider')}}">
-                    اسلایدر
+                <a class="tab__item " href="/admin/category/slider">اسلایدر
                 </a>
-                <a class="tab__item " href="{{route('category.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item " href="{{route('category.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item " href="{{route('category.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item is-active" href="{{route('category.brand')}}">
-                    برندهای برتر
-                </a>
+                <a class="tab__item "
+                   href="/admin/category/amazing">پیشنهاد شگفت انگیز </a>
+                <a class="tab__item"
+                   href="/admin/category/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/title">عنوان ها </a>
+                <a class="tab__item "
+                   href="/admin/category/product">محصولات </a>
+                <a class="tab__item is-active"
+                   href="/admin/category/brand">برندهای برتر </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
+
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
                         <input wire:model.debounce.1000="search"
@@ -41,7 +34,8 @@
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
+
                             <th>تصویر برند</th>
                             <th>عنوان برند</th>
                             <th>لینک برند</th>
@@ -51,19 +45,14 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($brands as $brand)
                                 <tr role="row">
-                                    <td>
-                                        @php($count = 1)
-                                    </td>
+                                    <td><a href="">{{$brand->id}}</a></td>
 
                                     <td>
                                         @foreach(\App\Models\Brand::where('id',$brand->brand_id)->get() as $cat)
-                                            <img height="50px" width="100px"
-                                                 src="{{\Illuminate\Support\Facades\Storage::url($cat->img)}}"
-                                                 alt="  {{$cat->name}}">
+                                            <img height="50px" width="100px" src="/storage/{{$cat->img}}" alt="  {{$cat->name}}">
                                         @endforeach
                                     </td>
                                     <td>
@@ -76,28 +65,40 @@
                                             {{$cat->link}}
                                         @endforeach
                                     </td>
+
+
                                     <td>
                                         @foreach(\App\Models\Category::where('id',$brand->c_id)->get() as $cat)
                                             {{$cat->title}}
                                         @endforeach
                                     </td>
+
+
                                     <td>
                                         <a wire:click="deleteCategory({{$brand->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$brands->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد برند برتر</p>
@@ -107,9 +108,10 @@
 
                     @include('errors.error')
 
+
                     <div class="form-group">
                         <select wire:model.lazy="brand_id" name="brand_id" id="" class="form-control">
-                            <option value="-1">- برند برتر -</option>
+                            <option value="-1" >- برند برتر  -</option>
                             @foreach(\App\Models\Brand::all() as $brand)
                                 <option value="{{$brand->id}}">{{$brand->name}}</option>
                             @endforeach
@@ -117,7 +119,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="c_id" name="c_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -127,5 +129,10 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
+
 </div>
+

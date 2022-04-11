@@ -8,7 +8,7 @@
     @endphp
     <ul class="c-footer__safety-partner">
         <li>
-            {!! $footer_title_16->title !!}
+         {!! $footer_title_16->title !!}
         </li>
         <li class="c-footer__safety-partner-2">
             {!! $footer_title_17->title !!}

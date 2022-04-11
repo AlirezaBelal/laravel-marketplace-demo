@@ -8,13 +8,9 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public FooterTitle $footerTitle;
     public $readyToLoad = false;
 
-    protected $rules = [
-        'footerTitle.title' => 'required',
-    ];
-
+    public FooterTitle $footerTitle;
 
     public function mount()
     {
@@ -22,18 +18,14 @@ class Index extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    protected $rules = [
+        'footerTitle.title' => 'required',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -56,11 +48,19 @@ class Index extends Component
             ]);
             $this->emit('toast', 'success', ' عنوان فوتر سایت با موفقیت ایجاد شد.');
         }
+
+
+    }
+
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
     }
 
 
     public function render()
     {
+
         $footer_titles = FooterTitle::latest()->get();
         return view('livewire.admin.footer.title.index',compact('footer_titles'));
     }

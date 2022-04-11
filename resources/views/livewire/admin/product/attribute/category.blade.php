@@ -3,20 +3,18 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item">
-                    مشخصات کالا بر اساس دسته -
+                <a class="tab__item "> مشخصات کالا بر اساس دسته -
                     {{$this->category->title}}
                 </a>
 
+
                 <a class="tab__item btn btn-danger"
                    href="{{route('attribute.trashed')}}"
-                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">
-                    سطل زباله
+                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">سطل زباله
                     ({{\App\Models\Attribute::onlyTrashed()->count()}})
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
 
@@ -25,7 +23,7 @@
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>عنوان </th>
                             <th>زیر دسته مشخصات</th>
                             <th>موقعیت</th>
@@ -34,53 +32,53 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count=1)
                             <tbody>
                             @foreach($attributes as $attribute)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
-                                    <td>
-                                        {{$attribute->title}}
-                                    </td>
+                                    <td><a href="">{{$attribute->id}}</a></td>
+                                    <td><a href="">{{$attribute->title}}</a></td>
 
                                     <td>
                                         @if($attribute->parent == 0)
                                             سر دسته مشخصات
                                         @else
-                                            @foreach(\App\Models\Attribute::where('id',$attribute->parent)->get() as $attributeParent)
-                                                {{$attributeParent->title}}
+                                            @foreach(\App\Models\Attribute::where('id',$attribute->parent)->get() as $ca)
+
+
+                                                {{$ca->title}}
+
                                             @endforeach
                                         @endif
                                     </td>
-
-                                    <td>
-                                        {{$attribute->position}}
-                                    </td>
-
+                                    <td><a href="">{{$attribute->position}}</a></td>
                                     <td>
                                         <a wire:click="deleteCategory({{$attribute->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                         <a href="{{route('attribute.update',$attribute)}}" class="item-edit "
-                                           title="ویرایش">
-                                        </a>
+                                           title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$attributes->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
-            </div>
 
+
+            </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد مشخصات فنی کالا</p>
                 <form wire:submit.prevent="categoryForm"
@@ -88,7 +86,6 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="attribute.title" placeholder="عنوان مشخصات کالا "
                                class="form-control">
@@ -121,5 +118,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

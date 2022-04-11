@@ -24,12 +24,10 @@
                     <p class="c-login__email-info-text">
                         حساب کاربری شما در دیجی کالا ساخته شد. از خرید از میان بیش از ۲٬۰۰۰٬۰۰۰ تنوع کالا لذت ببرید
                     </p>
-                    <a href="/"
-                       class="o-btn js-user-register-confirmed o-btn--full-width o-btn--outlined-red-lg c-login__form-action">
+                    <a href="/" class="o-btn js-user-register-confirmed o-btn--full-width o-btn--outlined-red-lg c-login__form-action">
                         ادامه
                     </a>
-                    <a href="/profile/additional-info/"
-                       class="o-btn js-user-register-confirmed o-btn--full-width o-btn--link-red-lg c-login__form-action">
+                    <a href="/profile/additional-info/" class="o-btn js-user-register-confirmed o-btn--full-width o-btn--link-red-lg c-login__form-action">
                         تکمیل حساب کاربری
                     </a>
                 </div>

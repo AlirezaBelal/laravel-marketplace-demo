@@ -1,8 +1,8 @@
 <article class="c-category-desc">
     <h1 class="c-category-desc__title">{{$category->title}}
-    </h1>
+        </h1>
     <div class="c-expandable-text c-expandable-text--shadowed js-expandable-text-container collapsed"
-         onclick="open_collapsed()" id="collapsed">
+          onclick="open_collapsed()" id="collapsed">
         <div
             class="c-category-desc__text c-expandable-text__text js-expandable-text">
             <p><strong>{{$category->description}}
@@ -15,9 +15,9 @@
 </article>
 <script>
     function open_collapsed() {
-        if (document.getElementById("collapsed").classList.contains('collapsed')) {
+        if(document.getElementById("collapsed").classList.contains('collapsed')){
             document.getElementById("collapsed").classList.remove("collapsed");
-        } else {
+        }else{
             document.getElementById("collapsed").classList.add("collapsed");
         }
     }

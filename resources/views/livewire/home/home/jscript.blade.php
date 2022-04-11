@@ -75,8 +75,7 @@
         "https://www.linkedin.com/company/digikala"
     ]
 }
-
-</script>
+            </script>
 <script type="application/ld+json">
                 {
     "@context": "https://schema.org",
@@ -88,20 +87,19 @@
         "query-input": "required name=search_term_string"
     }
 }
-
-</script>
+            </script>
 
 <noscript>
-    <img src="{{asset('/digikala/atrk09e0.gif')}}"
+    <img src="https://certify.alexametrics.com/atrk.gif?account=qfWte1awQa00Uf"
          style="display:none"
          height="1"
          width="1"
          alt=""/>
 </noscript>
-{{--<script src="{{asset('js/bootstrap-iconpicker-iconset-all.min.js')}}"></script>--}}
-{{--<script src="{{asset('js/bootstrap-iconpicker.bundle.min.js')}}"></script>--}}
-{{--<script src="{{asset('js/bootstrap-iconpicker.min.js')}}"></script>--}}
-<script src="{{asset('/digikala/static/merged/b3f610e8.js')}}"></script>
+<script type="text/javascript" id="">window.matchMedia("(display-mode: standalone)").matches?(window.dataLayer=window.dataLayer||[],window.dataLayer.push({pwa:"true"})):(window.dataLayer=window.dataLayer||[],window.dataLayer.push({pwa:"false"}));</script>
+<div style="display: none; visibility: hidden;"><script type="text/javascript" src="//cdn-3.convertexperiments.com/js/10004913-10005940.js" async="null" defer="defer"></script></div>
+<iframe id="insider-worker" src="https://digikala.api.useinsider.com/worker-new.html" style="display: none;"></iframe>
+{{--<script src="{{asset('/digikala/static/merged/b3f610e8.js')}}"></script>--}}
 
 <livewire:scripts />
-<script src="{{asset('/js/livewire-turbolinks.js')}}" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+{{--<script src="{{asset('/js/livewire-turbolinks.js')}}" data-turbolinks-eval="false" data-turbo-eval="false"></script>--}}

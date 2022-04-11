@@ -41,7 +41,7 @@
                                         class="swiper-lazy js-template-img swiper-lazy-loaded" loading="lazy"
                                         @foreach (\App\Models\Product::where('id',$cat->product_id)->get() as $product)
                                         src="/storage/{{$product->img}}         ">
-                                    @endforeach
+                                        @endforeach
 
                                     <img
                                         class="c-product-box__fmcg-symbol u-hidden" loading="lazy"
@@ -67,35 +67,35 @@
                                         <div class="c-new-price">
                                             @foreach (\App\Models\Product::where('id',$cat->product_id)->get() as $product)
 
-                                                @if($product->discount_price == null)
-                                                    <div class="c-price__value c-price__value--plp">
-                                                        <div class="c-price__value-wrapper">
-                                                            {{\App\Models\PersianNumber::translate($product->price)}}
-                                                            <span
-                                                                class="c-price__currency">تومان</span></div>
-                                                    </div>
-                                                @else
-                                                    <div class="c-price__value c-price__value--plp">
-                                                        <del>  {{\App\Models\PersianNumber::translate($product->price)}}</del>
-                                                        @php
-                                                            $difPrice = $product->price - $product->discount_price;
-        $per = ($difPrice * 100) / $product->price;
-                                                        @endphp
-                                                        @if($per>1)
-                                                            <div class="c-price__discount-oval">
+                                            @if($product->discount_price == null)
+                                                <div class="c-price__value c-price__value--plp">
+                                                    <div class="c-price__value-wrapper">
+                                                        {{\App\Models\PersianNumber::translate($product->price)}}
+                                                        <span
+                                                            class="c-price__currency">تومان</span></div>
+                                                </div>
+                                            @else
+                                                <div class="c-price__value c-price__value--plp">
+                                                    <del>  {{\App\Models\PersianNumber::translate($product->price)}}</del>
+                                                    @php
+                                                        $difPrice = $product->price - $product->discount_price;
+    $per = ($difPrice * 100) / $product->price;
+                                                    @endphp
+                                                    @if($per>1)
+                                                        <div class="c-price__discount-oval">
 
                                                             <span>
 
                                                                 {{\App\Models\PersianNumber::translate(number_format((float)($per),0))}}٪</span>
 
-                                                            </div>
-                                                        @endif
-                                                        <div class="c-price__value-wrapper">
-                                                            {{\App\Models\PersianNumber::translate($product->discount_price)}}
-                                                            <span
-                                                                class="c-price__currency">تومان</span></div>
-                                                    </div>
-                                                @endif
+                                                        </div>
+                                                    @endif
+                                                    <div class="c-price__value-wrapper">
+                                                        {{\App\Models\PersianNumber::translate($product->discount_price)}}
+                                                        <span
+                                                            class="c-price__currency">تومان</span></div>
+                                                </div>
+                                            @endif
                                             @endforeach
                                         </div>
                                     </div>

@@ -6,5 +6,5 @@
 
 <script src="{{asset('js/jscolor.js')}}"></script>
 <script src="{{asset('js/js.js')}}"></script>
-<livewire:scripts/>
+<livewire:scripts />
 

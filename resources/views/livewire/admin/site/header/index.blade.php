@@ -3,9 +3,9 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('header.index')}}">
-                    منو های هدر سایت
-                </a>
+                <a class="tab__item is-active" href="/admin/header">منو
+                    های هدر سایت</a>
+
                 |
                 <a class="tab__item">جستجو: </a>
 
@@ -15,17 +15,18 @@
                                type="text" class="text" placeholder="جستجوی منو ...">
                     </form>
                 </a>
+
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر منو</th>
                             <th>آیکون منو</th>
                             <th>عنوان منو</th>
@@ -35,33 +36,22 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($headers as $header)
                                 <tr role="row">
+                                    <td><a href="">{{$header->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$header->img}}" alt="img" width="100px">
                                     </td>
+                                    <td><a href="">{{$header->icon}}</a></td>
+                                    <td><a href="">{{$header->title}}</a></td>
 
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($header->img)}}" alt="img"
-                                             width="50px">
-                                    </td>
-
-                                    <td>
-                                        {{$header->icon}}
-                                    </td>
-
-                                    <td>
-                                        {{$header->title}}
-                                    </td>
 
                                     <td>
                                         @if($header->status == 1)
                                             <button wire:click="updateCategoryDisable({{$header->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$header->id}})"
@@ -71,25 +61,32 @@
                                             </button>
                                         @endif
                                     </td>
-
                                     <td>
                                         <a href="{{route('header.update',$header)}}" class="item-edit "
-                                           title="ویرایش">
-                                        </a>
+                                           title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$headers->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
-            </div>
 
+
+            </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد منو جدید</p>
                 <form wire:submit.prevent="categoryForm"
@@ -97,7 +94,6 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="header.title" placeholder="نام منو "
                                class="form-control">
@@ -130,7 +126,7 @@
                     </div>
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
 
@@ -138,6 +134,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -162,6 +160,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

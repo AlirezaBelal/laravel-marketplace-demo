@@ -12,17 +12,16 @@ class Favorite extends Component
 {
     public FavList $favList;
 
-    protected $rules = [
-        'favList.title' => 'required',
-        'favList.description' => 'nullable',
-    ];
-
-
     public function mount()
     {
         $this->favList = new FavList();
     }
 
+
+    protected $rules = [
+        'favList.title' => 'required',
+        'favList.description' => 'nullable',
+    ];
 
     public function updated($title)
     {
@@ -41,34 +40,24 @@ class Favorite extends Component
             'link' => Str::random('6'),
             'user_id' => auth()->user()->id,
         ]);
-
         $this->emit('toast', 'success', ' لیست اضافه شد!');
-
         return $this->redirect(request()->header('Referer'));
     }
 
-
     public function deleteFavorite($id)
     {
-        $favorites = \App\Models\Favorite::where('id', $id)
-            ->first();
 
+        $favorites = \App\Models\Favorite::where('id', $id)->first();
         $favorites->delete();
-
         $this->emit('toast', 'success', 'محصول از لیست علاقه مندی های شما حذف شد.');
     }
 
-
     public function deleteObserved($id)
     {
-        $observed = \App\Models\Observed::where('id', $id)
-            ->first();
-
+        $observed = \App\Models\Observed::where('id', $id)->first();
         $observed->delete();
-
         $this->emit('toast', 'success', 'محصول از لیست اطلاع رسانی های شما حذف شد.');
     }
-
 
     public function render()
     {

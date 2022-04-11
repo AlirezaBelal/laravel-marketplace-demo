@@ -1,12 +1,8 @@
 @section('title','آپدیت عنوان دسته')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش عنوان دسته -
-            {{$index->title}}
-        </p>
-
+        <p class="box__title">ویرایش عنوان دسته -
+            {{$index->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"

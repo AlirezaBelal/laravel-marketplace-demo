@@ -3,28 +3,22 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item" href="{{route('category.slider')}}">
-                    اسلایدر
+                <a class="tab__item" href="/admin/category/slider">اسلایدر
                 </a>
-                <a class="tab__item is-active" href="{{route('category.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item " href="{{route('category.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item " href="{{route('category.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item" href="{{route('category.brand')}}">
-                    برندهای برتر
-                </a>
+                    <a class="tab__item is-active"
+                   href="/admin/category/amazing">پیشنهاد شگفت انگیز </a>
+                    <a class="tab__item "
+                       href="/admin/category/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/title">عنوان ها </a>
+                <a class="tab__item"
+                   href="/admin/category/product">محصولات </a>
+
+                <a class="tab__item"
+                   href="/admin/category/brand">برندهای برتر </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
+
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
                         <input wire:model.debounce.1000="search"
@@ -36,11 +30,13 @@
         </div>
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>دسته اصلی</th>
                             <th>زیر دسته</th>
                             <th>دسته کودک</th>
@@ -53,13 +49,11 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($specialProducts as $specialProduct)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
+                                    <td><a href="">{{$specialProduct->id}}</a></td>
+
                                     <td>
                                         @foreach(\App\Models\Category::where('id',$specialProduct->category_id)->get() as $category)
                                         {{$category->title}}
@@ -101,8 +95,7 @@
                                         @if($specialProduct->status == 1)
                                             <button wire:click="updateCategoryDisable({{$specialProduct->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$specialProduct->id}})"
@@ -114,21 +107,29 @@
                                     </td>
                                     <td>
                                         <a wire:click="deleteCategory({{$specialProduct->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$specialProducts->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد پیشنهاد شگفت انگیز جدید</p>
@@ -137,6 +138,8 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
+
 
                     <div class="form-group">
                         <select wire:model.lazy="category_id" name="category_id" id="" class="form-control">
@@ -206,5 +209,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

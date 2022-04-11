@@ -13,12 +13,21 @@ class Index extends Component
 {
     use WithPagination;
 
-    public Menu $menu;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public Menu $menu;
+
+    public function mount()
+    {
+        $this->menu = new Menu();
+    }
+
 
     protected $rules = [
         'menu.category_id' => 'required',
@@ -28,25 +37,9 @@ class Index extends Component
         'menu.status' => 'nullable',
     ];
 
-
-    public function mount()
-    {
-        $this->menu = new Menu();
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($category_id)
     {
         $this->validateOnly($category_id);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -70,10 +63,13 @@ class Index extends Component
             'url' => 'افزودن منو' . '-' . $this->menu->category_id,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' منو با موفقیت ایجاد شد.');
-    }
 
+    }
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function updateCategoryDisable($id)
     {
@@ -89,7 +85,6 @@ class Index extends Component
         $this->emit('toast', 'success', 'وضعیت منو با موفقیت غیرفعال شد.');
     }
 
-
     public function updateCategoryEnable($id)
     {
         $category = Menu::find($id);
@@ -103,7 +98,6 @@ class Index extends Component
         ]);
         $this->emit('toast', 'success', 'وضعیت منو با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -120,16 +114,18 @@ class Index extends Component
         } else {
             $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا این دسته، شامل دسته کودک است!');
         }
+
     }
 
 
     public function render()
     {
 
-        $menus = $this->readyToLoad ? Menu::where('category_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('childCategory_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.menu.index', compact('menus'));
+        $menus = $this->readyToLoad ? Menu::where('category_id', 'LIKE', "%{$this->search}%")->
+        orWhere('subCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('childCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.menu.index',compact('menus'));
     }
 }

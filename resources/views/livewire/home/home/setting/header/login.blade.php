@@ -92,10 +92,14 @@
                    data-counter="۰" href="/cart/" data-event="mini_cart_click"
                    data-event-category="header_section" data-event-label="items: 0 - total price: 0">
                 </a>
+                <span class="js-cart-count c-header__btn-cart-counter c-header__btn-cart-counter--square"
+                      data-counter="{{$carts->count()}}">{{\App\Models\PersianNumber::translate($carts->count())}}</span>
+
                 <div class="c-header__cart-info js-mini-cart-dropdown">
                     <div class="c-header__cart-info-header">
                         <div class="c-header__cart-info-count">
-                            ۰ کالا
+                            {{\App\Models\PersianNumber::translate($carts->count())}}
+                            کالا
                         </div>
                         <a data-snt-event="dkHeaderClick"
                            data-snt-params="{&quot;item&quot;:&quot;mini-cart&quot;,&quot;item_option&quot;:&quot;cart-page&quot;}"

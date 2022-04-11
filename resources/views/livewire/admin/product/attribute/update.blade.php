@@ -1,12 +1,8 @@
 @section('title','آپدیت مشخصات کالا')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش مشخصات کالا -
-            {{$attribute->title}}
-        </p>
-
+        <p class="box__title">ویرایش مشخصات کالا -
+            {{$attribute->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
@@ -14,11 +10,11 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="attribute.title" placeholder="عنوان مشخصات کالا "
                                class="form-control">
                     </div>
+
 
                     <div class="form-group">
                         <select wire:model.lazy="attribute.childCategory" name="parent" id="" class="form-control">
@@ -28,7 +24,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="attribute.parent" name="parent" id="" class="form-control">
                             <option value="-1">- انتخاب زیر دسته مشخصات کالا - </option>
@@ -38,7 +33,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="attribute.position" placeholder="موقعیت مشخصات کالا "
                                class="form-control">

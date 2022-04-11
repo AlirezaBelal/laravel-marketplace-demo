@@ -10,6 +10,11 @@ class Address extends Component
 {
     public \App\Models\Address $address;
 
+    public function mount()
+    {
+        $this->address = new \App\Models\Address();
+    }
+
     protected $rules = [
         'address.name' => 'nullable',
         'address.vahed' => 'nullable',
@@ -23,18 +28,10 @@ class Address extends Component
 
     ];
 
-
-    public function mount()
-    {
-        $this->address = new \App\Models\Address();
-    }
-
-
     public function updated($country)
     {
         $this->validateOnly($country);
     }
-
 
     public function addressForm()
     {
@@ -51,10 +48,8 @@ class Address extends Component
             'city' => $this->address->city,
             'state' => $this->address->state,
         ]);
-
         return $this->redirect(request()->header('Referer'));
     }
-
 
     public function deleteAddress($id)
     {
@@ -63,12 +58,10 @@ class Address extends Component
         $this->emit('toast', 'success', ' آدرس با موفقیت حذف شد.');
     }
 
-
     public function sendEditForm($address)
     {
-        return $this->redirect(route('address.edit', $address));
+        return $this->redirect(route('address.edit',$address));
     }
-
 
     public function render()
     {

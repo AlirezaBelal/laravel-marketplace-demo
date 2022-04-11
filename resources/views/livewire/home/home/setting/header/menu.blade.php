@@ -188,7 +188,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
         </div>
         <div class="c-navi-new-list__main-banner"><a
                 href="promotion-center/index84e4.html?&amp;promo_name=%D8%AA%D8%AE%D9%81%DB%8C%D9%81+%D9%87%D8%A7+%D9%88+%D9%BE%DB%8C%D8%B4%D9%86%D9%87%D8%A7%D8%AF%D9%87%D8%A7&amp;promo_position=promotion_center_mega_menu&amp;promo_creative=58152&amp;bCode=58152"><img
-                    src="../dkstatics-public.digikala.com/digikala-adservice-banners/560de61ce10e86ee53603192ed6e3320fd0d0923_1610191059c401.png?x-oss-process=image/quality,q_80"/></a>
+{{--                    src="../dkstatics-public.digikala.com/digikala-adservice-banners/560de61ce10e86ee53603192ed6e3320fd0d0923_1610191059c401.png?x-oss-process=image/quality,q_80"/></a>--}}
         </div>
     </div>
 </li>
@@ -305,7 +305,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
                href="https://dgka.la/dcdkhomepaege"
             >
                 <img class="c-dc-header-submenu__banner-img"
-                     src="../dkstatics-public.digikala.com/digiclub/53aa31f81138fd588df842086e152102979a00d7_1601458094.jpg"
+{{--                     src="../dkstatics-public.digikala.com/digiclub/53aa31f81138fd588df842086e152102979a00d7_1601458094.jpg"--}}
                      alt=""
                 >
             </a>

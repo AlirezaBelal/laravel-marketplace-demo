@@ -3,28 +3,21 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item" href="{{route('category.slider')}}">
-                    اسلایدر
+                <a class="tab__item " href="/admin/category/slider">اسلایدر
                 </a>
-                <a class="tab__item " href="{{route('category.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item is-active" href="{{route('category.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item " href="{{route('category.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item" href="{{route('category.brand')}}">
-                    برندهای برتر
-                </a>
+                <a class="tab__item "
+                   href="/admin/category/amazing">پیشنهاد شگفت انگیز </a>
+                <a class="tab__item is-active"
+                   href="/admin/category/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/title">عنوان ها </a>
+                <a class="tab__item"
+                   href="/admin/category/product">محصولات </a>
+
+                <a class="tab__item"
+                   href="/admin/category/brand">برندهای برتر </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -36,11 +29,13 @@
         </div>
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر بنر</th>
                             <th>عنوان بنر</th>
                             <th>لینک بنر</th>
@@ -51,34 +46,22 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($banners as $banner)
                                 <tr role="row">
+                                    <td><a href="">{{$banner->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$banner->img}}" alt="img" width="100px">
                                     </td>
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($banner->img)}}" alt="img"
-                                             width="50px">
+                                    <td><a href="">{{$banner->title}}</a></td>
+                                    <td><a target="_blank"
+                                           href="{{url($banner->link)}}">{{\Illuminate\Support\Str::limit($banner->link,20)}}</a>
                                     </td>
-                                    <td>
-                                        {{$banner->title}}
-                                    </td>
-                                    <td>
-                                        <a target="_blank" href="{{url($banner->link)}}">
-                                            {{\Illuminate\Support\Str::limit($banner->link,20)}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @if($banner->type== 1)
-                                            <span class="alert alert-danger ">
-                                                سایز بزرگ
-                                            </span>
+                                    <td>@if($banner->type== 1)
+                                            <span class="alert alert-danger ">سایز بزرگ</span>
                                         @else
-                                            <span class="alert alert-primary">
-                                                سایز کوچک
-                                            </span>
+                                            <span class="alert alert-primary"> سایز کوچک</span>
+
                                         @endif
                                     </td>
                                     <td>
@@ -88,20 +71,29 @@
                                     </td>
                                     <td>
                                         <a wire:click="deleteCategory({{$banner->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف"></a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$banners->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد بنر جدید</p>
@@ -110,6 +102,7 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
 
                     <div class="form-group">
                         <input type="text" wire:model.lazy="title" placeholder="نام بنر "
@@ -143,7 +136,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="c_id" name="c_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -153,6 +146,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -177,6 +172,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

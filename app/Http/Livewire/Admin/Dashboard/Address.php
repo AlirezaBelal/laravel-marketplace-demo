@@ -15,14 +15,16 @@ class Address extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public \App\Models\Address $address;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
+    public $img;
+    public $search;
+
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public \App\Models\Address $address;
 
     public function loadCategory()
     {
@@ -30,10 +32,12 @@ class Address extends Component
     }
 
 
+
+
+
     public function deleteAddress($id)
     {
-        $address = \App\Models\Address::where('id', $id)->first();
-
+        $address = \App\Models\Address::where('id',$id)->first();
         $address->delete();
 
         $this->emit('toast', 'success', ' آدرس با موفقیت حذف شد.');
@@ -42,13 +46,13 @@ class Address extends Component
 
     public function render()
     {
-        $addreses = $this->readyToLoad ? \App\Models\Address::where('name', 'LIKE', "%{$this->search}%")
-            ->orWhere('lname', 'LIKE', "%{$this->search}%")
-            ->orWhere('address', 'LIKE', "%{$this->search}%")
-            ->orWhere('code_posti', 'LIKE', "%{$this->search}%")
-            ->latest()
-            ->paginate(10) : [];
+        $addreses = $this->readyToLoad ? \App\Models\Address::where('name', 'LIKE', "%{$this->search}%")->
+        orWhere('lname', 'LIKE', "%{$this->search}%")->
+        orWhere('address', 'LIKE', "%{$this->search}%")->
+        orWhere('code_posti', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
 
-        return view('livewire.admin.dashboard.address', compact('addreses'));
+        return view('livewire.admin.dashboard.address',compact('addreses'));
     }
 }

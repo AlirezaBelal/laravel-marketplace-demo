@@ -13,16 +13,15 @@ class ConfirmPassword extends Component
     public User $user;
     public SMS $sms;
 
-    protected $rules = [
-        'sms.email_phone' => 'required',
-    ];
-
-
     public function mount()
     {
         $this->sms = new Sms();
     }
 
+
+    protected $rules = [
+        'sms.email_phone' => 'required',
+    ];
 
     public function updated($email_phone)
     {
@@ -36,9 +35,7 @@ class ConfirmPassword extends Component
         $this->validate();
 
         $type = 'ورود به حساب';
-        $mobile = User::where('mobile', $this->sms->email_phone)
-            ->first();
-
+        $mobile = User::where('mobile', $this->sms->email_phone)->first();
         if ($mobile) {
             $code = random_int(10000, 99999);
             $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
@@ -50,7 +47,7 @@ class ConfirmPassword extends Component
                 'type' => $type,
                 'user_id' => $mobile->id,
             ]);
-            return $this->redirect(route('users.confirm.password.verify', $mobile->id));
+            return $this->redirect(route('users.confirm.password.verify',$mobile->id));
         } else {
             $this->emit('toast', 'error', ' شماره موبایل وجود ندارد. به قسمت ایجاد حساب مراجعه فرمایید!');
         }

@@ -12,8 +12,7 @@
     <div class="o-headline"><span>{{$title_2->title}}</span></div>
     <div class="c-box">
         <div class="swiper-container swiper-container-horizontal swiper-container-rtl">
-            <div class="swiper-wrapper js-products-container" id="js-products-container3"
-                 style="transform: translate3d(0px, 0px, 0px);">
+            <div class="swiper-wrapper js-products-container" id="js-products-container3" style="transform: translate3d(0px, 0px, 0px);">
                 @foreach(\App\Models\CategoryIndex::where('title_id',$title_2->id)->where('status',1)->get() as $category)
                     <div class="swiper-slide js-sntracker-carousel-item" data-id="870282"
                          data-gtm-vis-recent-on-screen-9070001_346="2493"
@@ -84,23 +83,22 @@ $per = ($difPrice * 100) / $category->product->price;
             </div>
             <div class="swiper-button-prev js-swiper-button-prev swiper-button-disabled3" id="swiper_button_disabled3"
                  onclick="js_swiper_button_prev3()"></div>
-            <div class="swiper-button-next  js-swiper-button-next" id="swiper_button_add3"
+            <div class="swiper-button-next  js-swiper-button-next"  id="swiper_button_add3"
                  onclick="js_swiper_button_next3()"></div>
         </div>
     </div>
 </section>
 <script>
     function js_swiper_button_next3() {
-        document.getElementById("js-products-container3").style = "transform: translate3d(530px, 0px, 0px);transition-duration: 0ms";
+        document.getElementById("js-products-container3").style ="transform: translate3d(530px, 0px, 0px);transition-duration: 0ms";
         document.getElementById("swiper_button_disabled3").classList.remove("swiper-button-disabled");
-        document.getElementById("swiper_button_add3").style = "opacity: .15; cursor: auto;";
+        document.getElementById("swiper_button_add3").style ="opacity: .15; cursor: auto;";
 
     }
-
     function js_swiper_button_prev3() {
-        document.getElementById("js-products-container3").style = "transform: translate3d(0px, 0px, 0px)";
+        document.getElementById("js-products-container3").style ="transform: translate3d(0px, 0px, 0px)";
         document.getElementById("swiper_button_disabled3").classList.remove("swiper-button-disabled");
-        document.getElementById("swiper_button_disabled3").style = "opacity: .15; cursor: auto;";
-        document.getElementById("swiper_button_add3").style = "opacity: 1; cursor: poiner;";
+        document.getElementById("swiper_button_disabled3").style ="opacity: .15; cursor: auto;";
+        document.getElementById("swiper_button_add3").style ="opacity: 1; cursor: poiner;";
     }
 </script>

@@ -1,12 +1,11 @@
 @section('title','تبلیغات')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('ads.index')}}">
-                    تبلیغات دسته ها
+                <a class="tab__item is-active" href="/admin/ads">تبلیغات دسته ها
                 </a>
+
                 |
                 <a class="tab__item">جستجو: </a>
 
@@ -18,15 +17,15 @@
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر تبلیغ</th>
                             <th>عنوان تبلیغ</th>
                             <th>دسته تبلیغ</th>
@@ -36,23 +35,14 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($advertising as $ads)
                                 <tr role="row">
+                                    <td><a href="">{{$ads->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$ads->img}}" alt="img" width="100px">
                                     </td>
-
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($ads->img)}}" alt="img"
-                                             width="50px">
-                                    </td>
-
-                                    <td>
-                                        {{$ads->title}}
-                                    </td>
-
+                                    <td><a href="">{{$ads->title}}</a></td>
                                     <td>
                                         {{$ads->category->title}}
                                     </td>
@@ -61,8 +51,7 @@
                                         @if($ads->status == 1)
                                             <button wire:click="updateCategoryDisable({{$ads->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$ads->id}})"
@@ -72,28 +61,33 @@
                                             </button>
                                         @endif
                                     </td>
-
                                     <td>
                                         <a wire:click="deleteCategory({{$ads->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                         <a href="{{route('ads.update',$ads)}}
-                                            " class="item-edit"
-                                           title="ویرایش">
-                                        </a>
+                                            " class="item-edit " title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$advertising->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد تبلیغ جدید</p>
@@ -102,6 +96,7 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
 
                     <div class="form-group">
                         <input type="text" wire:model.lazy="ads.title" placeholder="عنوان تبلیغ "
@@ -115,7 +110,6 @@
                             <label for="option4">نمایش در تبلیغ اصلی:</label>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="ads.category_id" name="category_id" id="" class="form-control">
                             <option value="-1"> - انتخاب دسته تبلیغ</option>
@@ -125,7 +119,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <input type="file" wire:model.lazy="img" id="{{rand()}}" class="form-control">
                         <span class="mt-2 text-danger" wire:loading wire:target="img">در حال آپلود ...</span>
@@ -134,10 +127,9 @@
                             <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
                         </div>
                     </div>
-
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
 
@@ -145,6 +137,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -169,6 +163,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

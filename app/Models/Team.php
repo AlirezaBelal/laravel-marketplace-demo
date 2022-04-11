@@ -13,7 +13,7 @@ class Team extends JetstreamTeam
     use HasFactory;
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
@@ -24,7 +24,7 @@ class Team extends JetstreamTeam
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array
      */
     protected $fillable = [
         'name',

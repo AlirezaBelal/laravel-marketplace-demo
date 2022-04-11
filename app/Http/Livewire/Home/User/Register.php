@@ -17,16 +17,15 @@ class Register extends Component
 
     public User $user;
 
-    protected $rules = [
-        'user.email_phone' => 'required',
-    ];
-
-
     public function mount()
     {
         $this->user = new User();
     }
 
+
+    protected $rules = [
+        'user.email_phone' => 'required',
+    ];
 
     public function updated($email_phone)
     {
@@ -50,7 +49,6 @@ class Register extends Component
                 'mobile' => $this->user->email_phone,
                 'password' => Hash::make($password),
             ]);
-
             $type = 'ایجاد حساب';
             $code = random_int(10000, 99999);
             $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
@@ -68,6 +66,7 @@ class Register extends Component
 
     public function render()
     {
+
         return view('livewire.home.user.register')->layout('layouts.login');
     }
 }

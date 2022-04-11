@@ -1,12 +1,8 @@
 @section('title','آپدیت منو')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش منو -
-            {{$header->title}}
-        </p>
-
+        <p class="box__title">ویرایش منو -
+            {{$header->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="headerForm"
@@ -14,7 +10,6 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="header.title" placeholder="نام منو "
                                class="form-control">
@@ -24,8 +19,7 @@
                                class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="text" wire:model.lazy="header.icon"
-                               placeholder="آیکون منو(درصورت انتخاب تصویر آیکون خالی بگذارید) "
+                        <input type="text" wire:model.lazy="header.icon" placeholder="آیکون منو(درصورت انتخاب تصویر آیکون خالی بگذارید) "
                                class="form-control">
                     </div>
 
@@ -47,7 +41,7 @@
                     </div>
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
 

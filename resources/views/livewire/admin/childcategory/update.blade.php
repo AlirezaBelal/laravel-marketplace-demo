@@ -1,15 +1,14 @@
 @section('title','آپدیت دسته کودک')
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش دسته کودک -
-            {{$childcategory->title}}
-        </p>
+        <p class="box__title">ویرایش دسته کودک -
+            {{$childcategory->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
                       enctype="multipart/form-data" role="form"
                       class="padding-10 categoryForm">
+
                     @include('errors.error')
                     <div class="form-group">
                         <input type="text" wire:model.lazy="childcategory.title" placeholder="نام دسته "
@@ -51,10 +50,10 @@
                     </div>
                     <div>
                         @if($img)
-                            <img style="    width: 200px;" class="form-control mt-3 mb-3" width="400"
-                                 src="{{$img->temporaryUrl()}}" alt="">
+                            <img style="    width: 200px;" class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
+
                     <button type="submit" class="btn btn-brand">آپدیت دسته کودک</button>
                 </form>
             </div>

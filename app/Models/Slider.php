@@ -8,9 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'title',
-        'img',
-        'link',
-        'status'];
+    protected $fillable = ['title','img','link','status'];
 }

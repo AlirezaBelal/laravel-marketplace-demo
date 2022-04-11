@@ -5,6 +5,6 @@
 @endphp
 <div class="c-footer__copyright">
     <div class="c-footer__copyright--text">
-        {{$footer_title_3->title}}
+       {{$footer_title_3->title}}
     </div>
 </div>

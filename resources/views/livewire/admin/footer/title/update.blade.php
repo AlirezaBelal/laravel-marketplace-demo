@@ -11,8 +11,8 @@
                     <div class="form-group">
                         <div class="form-group">
                             <textarea type="text" wire:model.lazy="footer_title.title"
-                                      placeholder="عنوان فوتر را وارد کنید(یا شماره آیدی دسته کودک را وارد کنید)"
-                                      class="form-control">
+                                   placeholder="عنوان فوتر را وارد کنید(یا شماره آیدی دسته کودک را وارد کنید)"
+                                   class="form-control">
                             </textarea>
                         </div>
                     </div>

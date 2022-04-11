@@ -3,28 +3,18 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item" href="{{route('category.vehicle.slider')}}">
-                    اسلایدر
+                <a class="tab__item " href="/admin/category/vehicle/slider">اسلایدر
                 </a>
-                <a class="tab__item " href="{{route('category.vehicle.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item " href="{{route('category.vehicle.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.vehicle.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item is-active" href="{{route('category.vehicle.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item" href="{{route('category.vehicle.brand')}}">
-                    برندهای برتر
-                </a>
+                <a class="tab__item "
+                   href="/admin/category/vehicle/amazing">پیشنهاد شگفت انگیز </a>
+                <a class="tab__item"
+                   href="/admin/category/vehicle/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/vehicle/title">عنوان ها </a>
+                <a class="tab__item is-active"
+                   href="/admin/category/vehicle/product">محصولات </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -36,11 +26,14 @@
         </div>
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
+
                             <th>دسته اصلی</th>
                             <th>زیر دسته</th>
                             <th>دسته کودک</th>
@@ -51,13 +44,10 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($products as $category)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
+                                    <td><a href="">{{$category->id}}</a></td>
 
                                     <td>
                                         @foreach(\App\Models\Category::where('id',$category->category_id)->get() as $cat)
@@ -99,15 +89,25 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$products->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد محصول برای دسته های صفحه اصلی</p>
@@ -116,6 +116,7 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
 
                     <div class="form-group">
                         <select wire:model.lazy="category_id" name="category_id" id="" class="form-control">
@@ -169,5 +170,10 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
+
 </div>
+

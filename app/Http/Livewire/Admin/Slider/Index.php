@@ -18,42 +18,32 @@ class Index extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public Slider $slider;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
+    public $img;
+    public $search;
 
-    /**
-     * @var string[]
-     */
-    protected $rules = [
-        'slider.title' => 'required',
-        'slider.link' => 'required',
-//        'category.status' => 'nullable',
-    ];
+    protected $queryString = ['search'];
 
+    public $readyToLoad = false;
+
+    public Slider $slider;
 
     public function mount()
     {
         $this->slider = new Slider();
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    protected $rules = [
+        'slider.title' => 'required',
+        'slider.link' => 'required',
+        'category.status' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -64,7 +54,7 @@ class Index extends Component
         $slider = Slider::query()->create([
             'title' => $this->slider->title,
             'link' => $this->slider->link,
-            'status' => $this->slider->status ? true : false,
+            'status' => $this->slider->status ? true:false ,
         ]);
 
         if ($this->img) {
@@ -83,8 +73,8 @@ class Index extends Component
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' اسلایدر با موفقیت ایجاد شد.');
-    }
 
+    }
 
     public function uploadImage()
     {
@@ -96,6 +86,10 @@ class Index extends Component
         return "$directory/$name";
     }
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function deleteCategory($id)
     {
@@ -111,8 +105,6 @@ class Index extends Component
         $this->emit('toast', 'success', ' اسلایدر با موفقیت حذف شد.');
 
     }
-
-
     public function updateCategoryDisable($id)
     {
         $slider = Slider::find($id);
@@ -121,12 +113,11 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن اسلایدر' . '-' . $slider->title,
+            'url' => 'غیرفعال کردن اسلایدر' .'-'. $slider->title,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'اسلایدر با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -136,18 +127,19 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن اسلایدر' . '-' . $slider->title,
+            'url' => 'فعال کردن اسلایدر' .'-'. $slider->title,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'اسلایدر با موفقیت فعال شد.');
     }
 
-
     public function render()
     {
-        $sliders = $this->readyToLoad ? Slider::where('title', 'LIKE', "%{$this->search}%")
-            ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+
+        $sliders = $this->readyToLoad ? Slider::where('title', 'LIKE', "%{$this->search}%")->
+        orWhere('link', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
         return view('livewire.admin.slider.index', compact('sliders'));
     }
 }

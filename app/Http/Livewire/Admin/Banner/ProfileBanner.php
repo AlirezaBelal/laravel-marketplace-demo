@@ -13,29 +13,16 @@ class ProfileBanner extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public \App\Models\ProfileBanner $banner;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
-    /**
-     * @var string
-     * Front type
-     */
     protected $paginationTheme = 'bootstrap';
 
-    /**
-     * @var string[]
-     * Manage form inputs
-     */
-    protected $rules = [
-        'banner.title' => 'required',
-        'banner.link' => 'required',
-        'banner.discount' => 'nullable',
-        'banner.name' => 'nullable',
-    ];
+    public $img;
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public \App\Models\ProfileBanner $banner;
 
     public function mount()
     {
@@ -43,18 +30,16 @@ class ProfileBanner extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    protected $rules = [
+        'banner.title' => 'required',
+        'banner.link' => 'required',
+        'banner.discount' => 'nullable',
+        'banner.name' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -80,21 +65,15 @@ class ProfileBanner extends Component
         $this->banner->name = "";
         $this->banner->discount = "";
         $this->img = null;
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن بنر پروفایل' . '-' . $this->banner->title,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' بنر پروفایل با موفقیت ایجاد شد.');
+
     }
 
-
-    /**
-     * @return string
-     * Image storage path
-     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -105,15 +84,20 @@ class ProfileBanner extends Component
         return "$directory/$name";
     }
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function render()
     {
 
-        $banners = $this->readyToLoad ? \App\Models\ProfileBanner::where('title', 'LIKE', "%{$this->search}%")
-            ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->orWhere('name', 'LIKE', "%{$this->search}%")
-            ->orWhere('discount', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.banner.profile-banner', compact('banners'));
+        $banners = $this->readyToLoad ? \App\Models\ProfileBanner::where('title', 'LIKE', "%{$this->search}%")->
+        orWhere('link', 'LIKE', "%{$this->search}%")->
+        orWhere('name', 'LIKE', "%{$this->search}%")->
+        orWhere('discount', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.banner.profile-banner',compact('banners'));
     }
 }

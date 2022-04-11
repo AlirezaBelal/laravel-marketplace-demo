@@ -8,16 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryLevel extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'category_id',
-        'childCategory_id',
-        'subCategory_id',
-        'categorylevel4_id',
-        'property'];
+    protected $fillable = ['category_id','childCategory_id','subCategory_id','categorylevel4_id','property'];
 
     public function childCategory()
     {
-        return $this->belongsTo(ChildCategory::class, 'title', 'id');
+        return $this->belongsTo(ChildCategory::class,'title','id');
     }
 }

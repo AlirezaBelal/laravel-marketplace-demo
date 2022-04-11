@@ -1,14 +1,11 @@
 @section('title','آپدیت رنگ')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش تصویر محصول -
-            @foreach(\App\Models\Product::where('id',$gallery->product_id)->get() as $galleryProduct)
-                {{$galleryProduct->title}}
+        <p class="box__title">ویرایش تصویر محصول -
+            @foreach(\App\Models\Product::where('id',$gallery->product_id)->get() as $product)
+                {{$product->title}}
             @endforeach
         </p>
-
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
@@ -16,12 +13,11 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <select wire:model.lazy="gallery.product_id" name="product_id" id="" class="form-control">
                             <option value="1">تصویر محصول</option>
                             @foreach(\App\Models\Product::all() as $product)
-                                <option value="{{$product->id}}">{{$product->title}}</option>
+                                <option value="{{$product->id}}" >{{$product->title}}</option>
                             @endforeach
                         </select>
                     </div>

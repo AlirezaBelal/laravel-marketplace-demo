@@ -40,8 +40,7 @@
                         <div class="c-login__form-row">
                             <label class="o-form__field-container">
                                 <div class="o-form__field-frame">
-                                    <input wire:model.lazy="sms.code" type="" placeholder="" value=""
-                                           class="o-form__field js-input-field c-login__otp-input" maxlength="5">
+                                    <input wire:model.lazy="sms.code"  type="" placeholder="" value="" class="o-form__field js-input-field c-login__otp-input" maxlength="5">
                                 </div>
                             </label>
 

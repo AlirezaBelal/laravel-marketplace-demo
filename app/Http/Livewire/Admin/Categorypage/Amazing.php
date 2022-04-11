@@ -11,6 +11,12 @@ class Amazing extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
+    public $search;
+
+    protected $queryString = ['search'];
+
     public $readyToLoad = false;
     public $product_id;
     public $category_id;
@@ -20,31 +26,21 @@ class Amazing extends Component
     public $c_id;
     public $property1;
     public $property2;
-    public $search;
-
-    protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
 
 
     public function categoryForm()
     {
-        DB::connection('mysql-category')->table('category_amazing')
-            ->insert([
-                'product_id' => $this->product_id,
-                'category_id' => $this->category_id,
-                'subCategory_id' => $this->subCategory_id,
-                'childCategory_id' => $this->childCategory_id,
-                'status' => $this->status,
-                'c_id' => $this->c_id,
-                'property1' => $this->property1,
-                'property2' => $this->property2,
-            ]);
+
+        DB::connection('mysql-category')->table('category_amazing')->insert([
+            'product_id' => $this->product_id,
+            'category_id' => $this->category_id,
+            'subCategory_id' => $this->subCategory_id,
+            'childCategory_id' => $this->childCategory_id,
+            'status' => $this->status,
+            'c_id' => $this->c_id,
+            'property1' => $this->property1,
+            'property2' => $this->property2,
+        ]);
 
         $this->product_id = null;
         $this->category_id = null;
@@ -54,59 +50,46 @@ class Amazing extends Component
         $this->property1 = null;
         $this->c_id = false;
         $this->property2 = false;
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن پیشنهاد شگفت انگیز' . '-' . $this->product_id,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت ایجاد شد.');
+
     }
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function updateCategoryDisable($id)
     {
-        $category2 = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->first();
-
-        $category = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->limit($id);
-
+        $category2 = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->first();
+        $category = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->limit($id);
         $category->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category2->category_id,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت غیرفعال شد.');
     }
 
-
     public function updateCategoryEnable($id)
     {
-        $category2 = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->first();
-
-        $category = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->limit($id);
-
+        $category2 = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->first();
+        $category = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->limit($id);
         $category->update([
             'status' => 1
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'فعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category2->category_id,
@@ -115,41 +98,34 @@ class Amazing extends Component
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت فعال شد.');
     }
 
-
     public function deleteCategory($id)
     {
-        $amazing2 = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->first();
-
-        $amazing = DB::connection('mysql-category')
-            ->table('category_amazing')
-            ->where('id', $id)
-            ->limit($id);
-
+        $amazing2 = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->first();
+        $amazing = DB::connection('mysql-category')->table('category_amazing')
+            ->where('id', $id)->limit($id);
         $amazing->delete();
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'حذف کردن پیشنهاد شگفت انگیز' . '-' . $amazing2->category_id,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
+
     }
 
 
     public function render()
     {
+
         $specialProducts = $this->readyToLoad ?
-            DB::connection('mysql-category')
-                ->table('category_amazing')
-                ->where('category_id', 'LIKE', "%{$this->search}%")
-                ->orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
-                ->orWhere('childCategory_id', 'LIKE', "%{$this->search}%")
-                ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-                ->latest()
-                ->paginate(10) : [];
-        return view('livewire.admin.categorypage.amazing', compact('specialProducts'));
+            DB::connection('mysql-category')->table('category_amazing')
+                ->where('category_id', 'LIKE', "%{$this->search}%")->
+                orWhere('subCategory_id', 'LIKE', "%{$this->search}%")->
+                orWhere('childCategory_id', 'LIKE', "%{$this->search}%")->
+                orWhere('product_id', 'LIKE', "%{$this->search}%")->
+                orWhere('id', $this->search)->
+                latest()->paginate(15) : [];
+        return view('livewire.admin.categorypage.amazing',compact('specialProducts'));
     }
 }

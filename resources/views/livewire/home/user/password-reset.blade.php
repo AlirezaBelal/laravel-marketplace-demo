@@ -26,9 +26,7 @@
                                 <img alt="DIGIKALA.COM" src="https://www.digikala.com/static/files/bc60cf05.svg">
                             </a>
                         </div>
-                        <input type="hidden" name="rc" value="cVR0VVYvdlIxU01qWmNpOWFabjRsZz09"><input type="hidden"
-                                                                                                       name="rd"
-                                                                                                       value="Uk16YSt3NUh5NnIwdzBheDZiTDlFekM0WnI0bXNSUVY1d3J6UFd3RW10UEpCQVZHWUlkcmpYNGZwSVM5dDA2eFA5ZEZlZmtnVWtZN1E2NExoTVp2RHc9PQ~~">
+                        <input type="hidden" name="rc" value="cVR0VVYvdlIxU01qWmNpOWFabjRsZz09"><input type="hidden" name="rd" value="Uk16YSt3NUh5NnIwdzBheDZiTDlFekM0WnI0bXNSUVY1d3J6UFd3RW10UEpCQVZHWUlkcmpYNGZwSVM5dDA2eFA5ZEZlZmtnVWtZN1E2NExoTVp2RHc9PQ~~">
                         <div class="c-login__grow-column">
                             <div class="c-login__form-header">
                                 تغییر رمز عبور
@@ -42,18 +40,10 @@
                                 <label class="o-form__field-container has-error">
                                     <div class="o-form__field-label">رمز عبور جدید*</div>
                                     <div class="o-form__field-frame">
-                                        <input wire:model.lazy="sms.password2" name="changepassword[password]"
-                                               type="password" id="txtPassword"
-                                               placeholder="رمز عبور جدید خود را وارد نمایید" value=""
-                                               class="o-form__field js-input-field "
-                                               aria-describedby="txtPassword-error">
-                                        <span type="button"
-                                              class="o-form__password-field-button js-ui-toggle-password o-form__password-field-button--show-password"></span>
+                                        <input wire:model.lazy="sms.password2" name="changepassword[password]" type="password" id="txtPassword" placeholder="رمز عبور جدید خود را وارد نمایید" value="" class="o-form__field js-input-field " aria-describedby="txtPassword-error">
+                                        <span type="button" class="o-form__password-field-button js-ui-toggle-password o-form__password-field-button--show-password"></span>
                                     </div>
-                                    <div id="txtPassword-error" class="error o-form__error" style="">رمز عبور را وارد
-                                        نمایید
-                                    </div>
-                                </label>
+                                    <div id="txtPassword-error" class="error o-form__error" style="">رمز عبور را وارد نمایید</div></label>
 
                             </div>
 
@@ -61,12 +51,8 @@
                                 <label class="o-form__field-container">
                                     <div class="o-form__field-label">تکرار رمز عبور جدید*</div>
                                     <div class="o-form__field-frame">
-                                        <input wire:model.lazy="sms.password_confirmed" name="changepassword[password2]"
-                                               type="password" id=""
-                                               placeholder="تکرار رمز عبور جدید خود را وارد نمایید" value=""
-                                               class="o-form__field js-input-field ">
-                                        <span type="button"
-                                              class="o-form__password-field-button js-ui-toggle-password"></span>
+                                        <input wire:model.lazy="sms.password_confirmed"  name="changepassword[password2]" type="password" id="" placeholder="تکرار رمز عبور جدید خود را وارد نمایید" value="" class="o-form__field js-input-field ">
+                                        <span type="button" class="o-form__password-field-button js-ui-toggle-password"></span>
                                     </div>
                                 </label>
 

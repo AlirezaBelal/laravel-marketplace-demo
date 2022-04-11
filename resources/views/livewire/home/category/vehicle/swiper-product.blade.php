@@ -2,7 +2,7 @@
     <section class="c-swiper c-swiper--products js-sntracker-carousel " id="">
         <div class="o-headline">
             <div class="o-headline__title-box">
-                <img src="https://dkstatics-public.digikala.com/digikala-categories/706be38dab33edc343696176014df5ab33a19cde_1618127461.png" alt="{{$title->title}}">
+{{--                <img src="https://dkstatics-public.digikala.com/digikala-categories/706be38dab33edc343696176014df5ab33a19cde_1618127461.png" alt="{{$title->title}}">--}}
                 <div class="o-headline__title-content"><h3>{{$title->title}}
                     </h3>
                     <style>

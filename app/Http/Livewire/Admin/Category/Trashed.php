@@ -20,44 +20,42 @@ class Trashed extends Component
 
     public $img;
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
 
+    public $readyToLoad = false;
 
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
 
-
     public function deleteCategory($id)
     {
         $category = Category::withTrashed()->findOrFail($id);
-        Storage::disk('public')->delete("storage", $category->img);
+         Storage::disk('public')->delete("storage",$category->img);
         $category->forceDelete();
         $this->emit('toast', 'success', ' دسته به صورت کامل با موفقیت حذف شد.');
     }
-
-
     public function trashedCategory($id)
     {
         $category = Category::withTrashed()->where('id', $id)->first();
         $category->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی دسته' . '-' . $category->title,
+            'url' => 'بازیابی دسته' .'-'. $category->title,
             'actionType' => 'بازیابی'
         ]);
         $this->emit('toast', 'success', ' دسته با موفقیت بازیابی شد.');
     }
 
-
     public function render()
     {
+
         $categories = $this->readyToLoad ? DB::table('categories')
-            ->whereNotNull('deleted_at')
-            ->latest()->paginate(10) : [];
+            ->whereNotNull('deleted_at')->
+            latest()->paginate(15) : [];
+
         return view('livewire.admin.category.trashed', compact('categories'));
     }
 }

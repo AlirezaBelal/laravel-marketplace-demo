@@ -11,36 +11,31 @@ use Livewire\WithFileUploads;
 class Update extends Component
 {
     use WithFileUploads;
-
     public Slider $slider;
-    public $img;
 
+    public $img;
     protected $rules = [
         'slider.title' => 'required',
         'slider.link' => 'required',
         'slider.status' => 'nullable',
     ];
-
-
     public function categoryForm()
     {
         $this->validate();
-        if ($this->img) {
+        if ($this->img){
             $this->slider->img = $this->uploadImage();
         }
 
         $this->slider->update($this->validate());
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت اسلایدر' . '-' . $this->slider->title,
+            'url' => 'آپدیت اسلایدر' .'-'. $this->slider->title,
             'actionType' => 'آپدیت'
         ]);
         alert()->success(' با موفقیت آپدیت شد.', 'اسلایدر مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('slider.index'));
 
     }
-
-
     public function uploadImage()
     {
         $year = now()->year;
@@ -54,13 +49,14 @@ class Update extends Component
 
     public function render()
     {
-        if ($this->slider->status == 1) {
+        if ($this->slider->status == 1){
             $this->slider->status = true;
-        } else {
+        }else
+        {
             $this->slider->status = false;
         }
 
         $slider = $this->slider;
-        return view('livewire.admin.slider.update', compact('slider'));
+        return view('livewire.admin.slider.update',compact('slider'));
     }
 }

@@ -13,21 +13,15 @@ class Index extends Component
 {
     use WithPagination;
 
-    public NewsLetter $newsletter;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
-    /**
-     * @var string
-     * front site
-     */
     protected $paginationTheme = 'bootstrap';
 
-    protected $rules = [
-        'newsletter.email' => 'required',
-    ];
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public NewsLetter $newsletter;
 
     public function mount()
     {
@@ -35,18 +29,14 @@ class Index extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    protected $rules = [
+        'newsletter.email' => 'required',
+    ];
+
     public function updated($email)
     {
         $this->validateOnly($email);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -58,35 +48,41 @@ class Index extends Component
             'email' => $this->newsletter->email,
         ]);
 
-        $this->newsletter->email = "";
 
+        $this->newsletter->email = "";
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن خبرنامه' . '-' . $this->newsletter->email,
+            'url' => 'افزودن خبرنامه' .'-'. $this->newsletter->email,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' خبرنامه با موفقیت ایجاد شد.');
+
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function deleteCategory($id)
     {
         $page = NewsLetter::find($id);
         $page->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن خبرنامه' . '-' . $this->newsletter->email,
+            'url' => 'حذف کردن خبرنامه' .'-'. $this->newsletter->email,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' خبرنامه با موفقیت حذف شد.');
+
     }
 
 
     public function render()
     {
+
         $newsletters = $this->readyToLoad ? NewsLetter::where('email', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
-        latest()->paginate(10) : [];
-        return view('livewire.admin.newsletter.index', compact('newsletters'));
+        latest()->paginate(15) : [];
+        return view('livewire.admin.newsletter.index',compact('newsletters'));
     }
 }

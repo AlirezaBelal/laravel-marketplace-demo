@@ -3,16 +3,13 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item " href="{{route('banner.index')}}">
-                    بنرها
+                <a class="tab__item " href="/admin/banner">بنرها
                 </a>
-                <a class="tab__item is-active" href="{{route('profileBanner.index')}}">
-                    بنرهای پروفایل
+                <a class="tab__item is-active" href="/admin/bannerprofile">بنرهای پروفایل
                 </a>
+
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -22,67 +19,68 @@
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر بنر</th>
                             <th>عنوان بنر</th>
                             <th>لینک بنر</th>
                             <th>عملیات</th>
                         </tr>
                         </thead>
+
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($banners as $banner)
                                 <tr role="row">
+                                    <td><a href="">{{$banner->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$banner->img}}" alt="img" width="100px">
                                     </td>
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($banner->img)}}" alt="img"
-                                             width="50px">
-                                    </td>
-                                    <td>
-                                        {{$banner->title}}
-                                    </td>
-                                    <td>
-                                        <a target="_blank" href="{{url($banner->link)}}">
-                                            {{\Illuminate\Support\Str::limit($banner->link,20)}}
-                                        </a>
-                                    </td>
+                                    <td><a href="">{{$banner->title}}</a></td>
+                                    <td><a target="_blank" href="{{url($banner->link)}}">{{\Illuminate\Support\Str::limit($banner->link,20)}}</a></td>
 
                                     <td>
-                                        <a href="{{route('ProfileBanner.update',$banner)}}" class="item-edit"
-                                           title="ویرایش">
-                                        </a>
+                                        <a href="{{route('ProfileBanner.update',$banner)}}
+                                            " class="item-edit " title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$banners->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
-                <p class="box__title">
-                    ایجاد بنر جدید
-                </p>
+                <p class="box__title">ایجاد بنر جدید</p>
                 <form wire:submit.prevent="categoryForm"
                       enctype="multipart/form-data" role="form"
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
+
+
                     <div class="form-group">
                         <input type="text" wire:model.lazy="banner.title" placeholder="نام بنر "
                                class="form-control">
@@ -111,13 +109,16 @@
                     </div>
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
+
                     <button class="btn btn-brand">افزودن بنر پروفایل</button>
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -142,6 +143,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

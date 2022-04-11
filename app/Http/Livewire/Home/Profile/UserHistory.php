@@ -8,6 +8,11 @@ class UserHistory extends Component
 {
 //    public \App\Models\Address $address;
 //
+//    public function mount()
+//    {
+//        $this->address = new \App\Models\Address();
+//    }
+//
 //    protected $rules = [
 //        'address.name' => 'nullable',
 //        'address.vahed' => 'nullable',
@@ -18,15 +23,9 @@ class UserHistory extends Component
 //        'address.bld_num' => 'nullable',
 //        'address.city' => 'nullable',
 //        'address.state' => 'nullable',
+//
 //    ];
-//
-//
-//    public function mount()
-//    {
-//        $this->address = new \App\Models\Address();
-//    }
-//
-//
+
 //    public function updated($country)
 //    {
 //        $this->validateOnly($country);
@@ -50,7 +49,6 @@ class UserHistory extends Component
 //        return $this->redirect(request()->header('Referer'));
 //    }
 
-
     public function deleteUserHistory($id)
     {
         $userHistory = \App\Models\UserHistory::find($id);
@@ -58,15 +56,14 @@ class UserHistory extends Component
         $this->emit('toast', 'success', ' تاریخچه بازدید شما با موفقیت حذف شد.');
     }
 
-
 //    public function sendEditForm($address)
 //    {
 //        return $this->redirect(route('address.edit',$address));
 //    }
 
-
     public function render()
     {
-        return view('livewire.home.profile.user-history')->layout('layouts.home');
+        return view('livewire.home.profile.user-history')
+            ->layout('layouts.home');
     }
 }

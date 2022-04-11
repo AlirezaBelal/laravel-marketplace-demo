@@ -11,7 +11,8 @@ class PersianNumber extends Model
     {
         $englishNumber = array('9', '8', '7', '6', '5', '4', '3', '2', '1', '0');
         $persianNumber = array('۹', '۸', '۷', '۶', '۵', '۴', '۳', '۲', '۱', '۰');
-
         return str_replace($englishNumber, $persianNumber, $str);
+
     }
+
 }

@@ -1,15 +1,11 @@
 @section('title','محصولات دسته ها')
-
 <div>
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item " href="{{route('index.title.index')}}">
-                    عنوان دسته های اصلی سایت
-                </a>
-                <a class="tab__item is-active" href="{{route('index.category.index')}}">
-                    محصولات دسته ها
-                </a>
+                <a class="tab__item " href="/admin/index/title">عنوان دسته های اصلی سایت </a>
+                <a class="tab__item is-active" href="/admin/index/category">محصولات دسته ها </a>
+
                 |
                 <a class="tab__item">جستجو: </a>
 
@@ -19,17 +15,19 @@
                                type="text" class="text" placeholder="جستجوی محصولات دسته ...">
                     </form>
                 </a>
+
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
 
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
+
                             <th>دسته اصلی</th>
                             <th>زیر دسته</th>
                             <th>دسته کودک</th>
@@ -41,22 +39,17 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($categories as $category)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
+                                    <td><a href="">{{$category->id}}</a></td>
 
                                     <td>
                                         {{$category->category->title}}
                                     </td>
-
                                     <td>
                                         {{$category->subCategory->title}}
                                     </td>
-
                                     @if($category->childCategory_id == null)
                                         <td>
                                             -
@@ -73,13 +66,11 @@
                                     <td>
                                         {{$category->title->title}}
                                     </td>
-
                                     <td>
                                         @if($category->status == 1)
                                             <button wire:click="updateCategoryDisable({{$category->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$category->id}})"
@@ -89,7 +80,6 @@
                                             </button>
                                         @endif
                                     </td>
-
                                     <td>
                                         <a wire:click="deleteCategory({{$category->id}})" type="submit"
                                            class="item-delete mlg-15" title="حذف"></a>
@@ -100,12 +90,21 @@
                             </tbody>
                             {{$categories->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد محصول برای دسته های صفحه اصلی</p>
@@ -115,35 +114,31 @@
 
                     @include('errors.error')
 
+
                     <div class="form-group">
                         <select wire:model.lazy="category.category_id" name="category_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
-                        <select wire:model.lazy="category.subCategory_id" name="subCategory_id" id=""
-                                class="form-control">
-                            <option value="-1">- زیردسته -</option>
+                        <select wire:model.lazy="category.subCategory_id" name="subCategory_id" id="" class="form-control">
+                            <option value="-1" >- زیردسته  -</option>
                             @foreach(\App\Models\SubCategory::where('parent',$this->category->category_id)->get() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
-                        <select wire:model.lazy="category.childCategory_id" name="childCategory_id" id=""
-                                class="form-control">
-                            <option value=" ">- دسته کودک -</option>
+                        <select wire:model.lazy="category.childCategory_id" name="childCategory_id" id="" class="form-control">
+                            <option value=" ">- دسته کودک  -</option>
                             @foreach(\App\Models\ChildCategory::where('parent',$this->category->subCategory_id)->get() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="category.product_id" name="product_id" id="" class="form-control">
                             <option value=" ">- محصول -</option>
@@ -152,7 +147,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="category.title_id" name="title_id" id="" class="form-control">
                             <option value=" ">- دسته صفحه اصلی -</option>
@@ -173,5 +167,8 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
 </div>

@@ -1,12 +1,8 @@
 @section('title','آپدیت تبلیغ')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش تبلیغ -
-            {{$ads->title}}
-        </p>
-
+        <p class="box__title">ویرایش تبلیغ -
+            {{$ads->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
@@ -26,7 +22,6 @@
                             <label for="option4">نمایش در تبلیغ اصلی:</label>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <select wire:model.lazy="ads.category_id" name="category_id" id="" class="form-control">
                             <option value="-1"> - انتخاب دسته تبلیغ</option>
@@ -36,7 +31,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <input type="file" wire:model.lazy="img" id="{{rand()}}" class="form-control">
                         <span class="mt-2 text-danger" wire:loading wire:target="img">در حال آپلود ...</span>

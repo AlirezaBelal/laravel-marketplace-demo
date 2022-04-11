@@ -78,3 +78,5 @@
         </div>
     </div>
 </section>
+@include('livewire.home.modals')
+@include('livewire.home.script')

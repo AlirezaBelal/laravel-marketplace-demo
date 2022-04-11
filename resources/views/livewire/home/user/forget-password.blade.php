@@ -39,9 +39,7 @@
                             <div class="c-login__form-row c-login__form-row--margin-bottom">
                                 <label class="o-form__field-container">
                                     <div class="o-form__field-frame">
-                                        <input wire:model.lazy="sms.email_phone" name="email_phone" type=""
-                                               placeholder="{{$user->mobile}}" value="{{$user->mobile}}"
-                                               class="o-form__field js-input-field ">
+                                        <input wire:model.lazy="sms.email_phone"  name="email_phone" type="" placeholder="{{$user->mobile}}" value="{{$user->mobile}}" class="o-form__field js-input-field ">
                                     </div>
                                 </label>
 

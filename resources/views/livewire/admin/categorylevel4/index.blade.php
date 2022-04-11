@@ -3,28 +3,16 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item is-active" href="{{route('category.index')}}">
-                    دسته ها
-                </a>
-
-                <a class="tab__item {{Request::routeIs('subcategory.index') ? 'is-active': '' }}"
-                   href="{{route('subcategory.index')}}">
-                    زیر دسته ها
-                </a>
-
-                <a class="tab__item {{Request::routeIs('childcategory.index') ? 'is-active': '' }}"
-                   href="{{route('childcategory.index')}}">
-                    دسته های کودک
-                </a>
-
-                <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
-                   href="{{route('categorylevel4.index')}}">
-                    دسته های سطح 4
-                </a>
+                <a class="tab__item {{Request::routeIs('category.index') ? 'is-active': '' }}" href="/admin/category">دسته
+                    ها</a>
+                <a class="tab__item "
+                   href="/admin/subcategory">زیر دسته ها</a>
+                <a class="tab__item  "
+                   href="/admin/categorylevel4">دسته های کودک</a>
+                <a class="tab__item is-active {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
+                   href="/admin/categorylevel4">دسته های سطح 4 </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -33,22 +21,23 @@
                     </form>
                 </a>
 
+
                 <a class="tab__item btn btn-danger"
                    href="{{route('categorylevel4.trashed')}}"
-                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">
-                    سطل زباله
+                   style="color: white;float: left;margin-top: 10px;margin-left: 10px">سطل زباله
                     ({{\App\Models\Categorylevel4::onlyTrashed()->count()}})
                 </a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-8 margin-left-10 margin-bottom-15 border-radius-3">
+
                 <div class="table__box">
                     <table class="table">
+
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
                             <th>تصویر دسته سطح 4</th>
                             <th>عنوان دسته سطح 4</th>
                             <th>نام دسته سطح 4</th>
@@ -59,35 +48,26 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($categories as $category)
                                 <tr role="row">
+                                    <td><a href="">{{$category->id}}</a></td>
                                     <td>
-                                        {{$count++}}
+                                        <img src="/storage/{{$category->img}}" alt="img" width="100px">
                                     </td>
-                                    <td>
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($category->img)}}"
-                                             alt="img" width="50px">
-                                    </td>
-                                    <td>
-                                        {{$category->title}}
-                                    </td>
-                                    <td>
-                                        {{$category->name}}
-                                    </td>
-                                    <td>
-                                        @foreach(\App\Models\ChildCategory::where('id',$category->parent)->get() as $ca)
-                                            {{$ca->title}}
-                                        @endforeach
-                                    </td>
+                                    <td><a href="">{{$category->title}}</a></td>
+                                    <td><a href="">{{$category->name}}</a></td>
+                                    <td><a href="">
+                                            @foreach(\App\Models\ChildCategory::where('id',$category->parent)->get() as $ca)
+                                                {{$ca->title}}
+                                            @endforeach
+                                        </a></td>
 
                                     <td>
                                         @if($category->status == 1)
                                             <button wire:click="updateCategoryDisable({{$category->id}})"
                                                     type="submit" class="badge-success badge"
-                                                    style="background-color: green">
-                                                فعال
+                                                    style="background-color: green">فعال
                                             </button>
                                         @else
                                             <button wire:click="updateCategoryEnable({{$category->id}})"
@@ -97,27 +77,33 @@
                                             </button>
                                         @endif
                                     </td>
-
                                     <td>
                                         <a wire:click="deleteCategory({{$category->id}})" type="submit"
-                                           class="item-delete mlg-15"
-                                           title="حذف">
-                                        </a>
+                                           class="item-delete mlg-15" title="حذف"></a>
                                         <a href="{{route('categorylevel4.update',$category)}}" class="item-edit "
-                                           title="ویرایش">
-                                        </a>
+                                           title="ویرایش"></a>
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$categories->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته سطح 4 جدید</p>
@@ -170,10 +156,13 @@
                             <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
+
                     <button class="btn btn-brand">افزودن دسته</button>
                 </form>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -198,6 +187,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

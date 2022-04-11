@@ -5,10 +5,13 @@
            data-snt-event="dkHeaderClick"
            data-snt-params='{"item":"mini-cart","item_option":null}'
            data-counter="۰"
-           href="cart/index.html"
+           href="/cart"
            data-event="mini_cart_click" data-event-category="header_section"
            data-event-label="items: 0 - total price: ">
         </a>
+
+        <span class="js-cart-count c-header__btn-cart-counter c-header__btn-cart-counter--square"
+              data-counter="{{$carts->count()}}">{{\App\Models\PersianNumber::translate($carts->count())}}</span>
         <div class="c-header__cart-info js-mini-cart-dropdown">
             <div class="c-header__cart-info-header">
                 <div class="c-header__cart-info-count">
@@ -16,7 +19,7 @@
                 </div>
                 <a data-snt-event="dkHeaderClick"
                    data-snt-params='{"item":"mini-cart","item_option":"cart-page"}'
-                   href="cart/index.html" class="c-header__cart-info-link">
+                   href="/cart" class="c-header__cart-info-link">
                     <span>مشاهده سبد خرید</span>
                 </a>
             </div>
@@ -38,7 +41,7 @@
                     سبد خرید
                     <span>۰ کالا</span>
                 </div>
-                <a href="cart/index.html" class="o-link o-link--has-arrow o-link--no-border o-link--sm">مشاهده
+                <a href="/cart" class="o-link o-link--has-arrow o-link--no-border o-link--sm">مشاهده
                     سبد خرید</a>
             </div>
             <div class="c-modal__close" data-remodal-action="close"></div>

@@ -14,20 +14,16 @@ class Index extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public Gallery $gallery;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
-    protected $rules = [
-        'gallery.product_id' => 'required',
-        'gallery.status' => 'nullable',
-        'gallery.position' => 'nullable',
-    ];
+    public $img;
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public Gallery $gallery;
 
     public function mount()
     {
@@ -35,15 +31,16 @@ class Index extends Component
     }
 
 
+
+    protected $rules = [
+        'gallery.product_id' => 'required',
+        'gallery.status' => 'nullable',
+        'gallery.position' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -51,18 +48,17 @@ class Index extends Component
     {
         $this->validate();
 
-        $gallery = Gallery::query()->create([
+        $gallery =    Gallery::query()->create([
             'product_id' => $this->gallery->product_id,
             'position' => $this->gallery->position,
-            'status' => $this->gallery->status ? 1 : 0,
+            'status' => $this->gallery->status ? 1:0 ,
         ]);
 
-        if ($this->img) {
+        if ($this->img){
             $gallery->update([
                 'img' => $this->uploadImage()
             ]);
         }
-
         $this->gallery->product_id = "";
         $this->gallery->position = null;
         $this->gallery->status = false;
@@ -70,14 +66,12 @@ class Index extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'افزودن تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت ایجاد شد.');
+
     }
-
-
     public function uploadImage()
     {
         $year = now()->year;
@@ -89,23 +83,23 @@ class Index extends Component
         return "$directory/$name";
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $gallery = Gallery::find($id);
         $gallery->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'غیرفعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -113,15 +107,13 @@ class Index extends Component
         $gallery->update([
             'status' => 1
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'فعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -129,7 +121,7 @@ class Index extends Component
         $gallery->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تصویر محصول' . '-' . $this->gallery->product_id,
+            'url' => 'حذف کردن تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت حذف شد.');
@@ -138,11 +130,12 @@ class Index extends Component
 
     public function render()
     {
-        $galleries = $this->readyToLoad ? Gallery::where('position', 'LIKE', "%{$this->search}%")
-            ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-            ->latest()
-            ->paginate(10) : [];
 
-        return view('livewire.admin.product.gallery.index', compact('galleries'));
+        $galleries = $this->readyToLoad ? Gallery::where('position', 'LIKE', "%{$this->search}%")->
+        orWhere('product_id', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+
+        return view('livewire.admin.product.gallery.index',compact('galleries'));
     }
 }

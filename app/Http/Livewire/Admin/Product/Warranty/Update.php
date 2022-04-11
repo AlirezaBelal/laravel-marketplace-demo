@@ -12,15 +12,12 @@ use Livewire\WithFileUploads;
 class Update extends Component
 {
     use WithFileUploads;
-
     public Warranty $warranty;
 
     protected $rules = [
         'warranty.name' => 'required',
         'warranty.status' => 'nullable',
     ];
-
-
     public function categoryForm()
     {
         $this->validate();
@@ -31,26 +28,25 @@ class Update extends Component
                 'status' => 0
             ]);
         }
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت گارانتی' . '-' . $this->warranty->name,
+            'url' => 'آپدیت گارانتی' .'-'. $this->warranty->name,
             'actionType' => 'آپدیت'
         ]);
-
         alert()->success(' با موفقیت آپدیت شد.', 'گارانتی مورد نظر با موفقیت آپدیت شد.');
-
         return redirect(route('warranty.index'));
+
     }
 
     public function render()
     {
-        if ($this->warranty->status == 1) {
+        if ($this->warranty->status == 1){
             $this->warranty->status = true;
-        } else {
+        }else
+        {
             $this->warranty->status = false;
         }
         $warranty = $this->warranty;
-        return view('livewire.admin.product.warranty.update', compact('warranty'));
+        return view('livewire.admin.product.warranty.update',compact('warranty'));
     }
 }

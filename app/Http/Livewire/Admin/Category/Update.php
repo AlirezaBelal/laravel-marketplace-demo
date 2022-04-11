@@ -10,15 +10,8 @@ use Livewire\WithFileUploads;
 class Update extends Component
 {
     use WithFileUploads;
-
-    public Category $category;
     public $img;
     public $status = null;
-
-    /**
-     * @var string[]
-     * Manage form inputs
-     */
     protected $rules = [
         'category.title' => 'required|min:3',
         'category.icon' => 'nullable',
@@ -28,10 +21,9 @@ class Update extends Component
         'category.body' => 'nullable',
         'category.status' => 'nullable',
     ];
-
-
     public function categoryForm()
     {
+
         $this->validate();
         if ($this->img) {
             $this->category->img = $this->uploadImage();
@@ -44,18 +36,13 @@ class Update extends Component
         }
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت دسته' . '-' . $this->category->title,
+            'url' => 'آپدیت دسته' .'-'. $this->category->title,
             'actionType' => 'آپدیت'
         ]);
         alert()->success('دسته با موفقیت ایجاد شد.', 'دسته آپدیت شد.');
         return redirect(route('category.index'));
+
     }
-
-
-    /**
-     * @return string
-     * Image storage path
-     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -65,16 +52,18 @@ class Update extends Component
         $this->img->storeAs($directory, $name);
         return "$directory/$name";
     }
-
+    public Category $category;
 
     public function render()
     {
-        if ($this->category->status == 1) {
+        if ($this->category->status == 1){
             $this->category->status = true;
-        } else {
+        }else
+        {
             $this->category->status = false;
         }
-        $category = $this->category;
-        return view('livewire.admin.category.update', compact('category'));
+
+       $category = $this->category;
+        return view('livewire.admin.category.update',compact('category'));
     }
 }

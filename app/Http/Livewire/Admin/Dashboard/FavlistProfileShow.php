@@ -13,10 +13,12 @@ class FavlistProfileShow extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
 
 
     public function render()
@@ -24,6 +26,7 @@ class FavlistProfileShow extends Component
         $fave_id = Request::segment(4);
         $fav = FavList::find($fave_id);
 
-        return view('livewire.admin.dashboard.favlist-profile-show', compact('fave_id', 'fav'));
+
+        return view('livewire.admin.dashboard.favlist-profile-show',compact('fave_id','fav'));
     }
 }

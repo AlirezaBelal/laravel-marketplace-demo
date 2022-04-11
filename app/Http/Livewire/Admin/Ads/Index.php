@@ -15,21 +15,16 @@ class Index extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public AdsCategory $ads;
-    public $img;
-    public $search;
-    public $readyToLoad = false;
-
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
-    protected $rules = [
-        'ads.title' => 'required|min:3',
-        'ads.category_id' => 'nullable',
-        'ads.status' => 'nullable',
-    ];
+    public $img;
+    public $search;
 
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
+
+    public AdsCategory $ads;
 
     public function mount()
     {
@@ -37,15 +32,16 @@ class Index extends Component
     }
 
 
+
+    protected $rules = [
+        'ads.title' => 'required|min:3',
+        'ads.category_id' => 'nullable',
+        'ads.status' => 'nullable',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -53,13 +49,13 @@ class Index extends Component
     {
         $this->validate();
 
-        $ads = AdsCategory::query()->create([
+        $ads =    AdsCategory::query()->create([
             'title' => $this->ads->title,
             'category_id' => $this->ads->category_id,
-            'status' => $this->ads->status ? 1 : 0,
+            'status' => $this->ads->status ? 1:0 ,
         ]);
 
-        if ($this->img) {
+        if ($this->img){
             $ads->update([
                 'img' => $this->uploadImage()
             ]);
@@ -69,16 +65,14 @@ class Index extends Component
         $this->ads->category_id = null;
         $this->ads->status = false;
         $this->img = null;
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تبلیغات دسته' . '-' . $this->ads->title,
+            'url' => 'افزودن تبلیغات دسته' .'-'. $this->ads->title,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' تبلیغات دسته با موفقیت ایجاد شد.');
 
     }
-
 
     public function uploadImage()
     {
@@ -89,8 +83,10 @@ class Index extends Component
         $this->img->storeAs($directory, $name);
         return "$directory/$name";
     }
-
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function updateCategoryDisable($id)
     {
         $brand = AdsCategory::find($id);
@@ -99,12 +95,11 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تبلیغات دسته' . '-' . $this->ads->title,
+            'url' => 'غیرفعال کردن وضعیت تبلیغات دسته' .'-'. $this->ads->title,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تبلیغات دسته با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -114,12 +109,11 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تبلیغات دسته' . '-' . $this->ads->title,
+            'url' => 'فعال کردن وضعیت تبلیغات دسته' .'-'. $this->ads->title,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تبلیغات دسته با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
@@ -127,17 +121,19 @@ class Index extends Component
         $brand->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تبلیغات دسته' . '-' . $this->ads->title,
+            'url' => 'حذف کردن تبلیغات دسته' .'-'. $this->ads->title,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' تبلیغات دسته با موفقیت حذف شد.');
+
     }
 
 
     public function render()
     {
-        $advertising = $this->readyToLoad ? AdsCategory::where('title', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.ads.index', compact('advertising'));
+
+        $advertising = $this->readyToLoad ? AdsCategory::where('title', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->latest()->paginate(15) : [];
+        return view('livewire.admin.ads.index',compact('advertising'));
     }
 }

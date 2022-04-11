@@ -108,7 +108,7 @@
 {{--    }--}}
 {{--</script>--}}
 {{--<link rel="stylesheet" href="{{asset('/new-digikala/e5a06f44.css')}}">--}}
-<link rel="stylesheet" href="{{asset('/new-digikala/e5a06f44.css')}}">
+{{--<link rel="stylesheet" href="{{asset('/new-digikala/e5a06f44.css')}}">--}}
 <meta name="apple-itunes-app" content="app-id=1016290651, affiliate-data=myAffiliateData, app-argument=myURL"/>
 <meta name="description"
       content="هر آنچه که نیاز دارید با بهترین قیمت از دیجی‌کالا بخرید! جدیدترین انواع گوشی موبایل، لپ تاپ، لباس، لوازم آرایشی و بهداشتی، کتاب، لوازم خانگی، خودرو و... با امکان تعویض و مرجوعی آسان | ✓ارسال رايگان ✓پرداخت در محل ✓ضمانت بازگشت کالا - برای خرید کلیک کنید!"/>
@@ -116,8 +116,9 @@
       content="فروشگاه اینترنتی, خرید آنلاین، موبایل, تبلت, لپ تاپ, تلویزیون, کامپیوتر, دوربین, کتاب,لوازم خانگی, عطر و ادکلن, فروش اینترنتی، دیجی‌کالا، دیجی‌کالا"/>
 {{--<link rel="stylesheet" href="{{asset('/new-digikala/8ba74341.css')}}">--}}
 {{--<link rel="stylesheet" href="{{asset('/new-digikala/5393898d.css')}}">--}}
-<link rel="stylesheet"
-      href="{{asset('/digikala/static/merged/996b0245.css')}}"/>
+<link rel="stylesheet"  href="{{asset('/css/2b99d144.css')}}"/>
+{{--<link rel="stylesheet"  href="{{asset('/digikala/static/merged/996b0245.css')}}"/>--}}
+
 <link rel="stylesheet"
       href="{{asset('/digikala/static/merged/aee78a28.css')}}" media="screen and (max-height: 1184px)"/>
 <link rel="stylesheet"
@@ -144,11 +145,26 @@
 </script>
 
 
-<script src="{{asset('/digikala/static/merged/d208ffc7.js')}}"></script>
-<script src="{{asset('/digikala/static/merged/9e986686.js')}}"></script>
-<script src="{{asset('/digikala/static/merged/222f3f4a.js')}}"></script>
+{{--<script src="{{asset('/digikala/static/merged/d208ffc7.js')}}"></script>--}}
+{{--<script src="{{asset('/digikala/static/merged/9e986686.js')}}"></script>--}}
+{{--<script src="{{asset('/digikala/static/merged/222f3f4a.js')}}"></script>--}}
+<script src="{{asset('/files/996b0245.css')}}"></script>
+<script src="{{asset('digikala/static/merged/53dcefba.js')}}"></script>
+<script src="{{asset('digikala/static/merged/ae85375b.js')}}"></script>
+<script src="{{asset('digikala/static/merged/222f3f4a.js')}}"></script>
+
+{{--<script src="{{asset('digikala')}}/static/merged/53dcefba.js"></script>--}}
+{{--<script src="{{asset('digikala')}}/static/merged/97311f4f.js"></script>--}}
+{{--<script src="{{asset('digikala')}}/static/merged/c4cec912.js"></script>--}}
+{{--<script src="{{asset('digikala')}}/static/merged/222f3f4a.js"></script>--}}
+
+
+<link rel="stylesheet" href="https://www.parsimap.com/js/v3.1.0/parsimap.css">
+<script src="https://www.parsimap.com/js/v3.1.0/parsimap.js?key=public"></script>
+
+
 <script src="{{asset('/js/sweetalert.min.js')}}"></script>
-<script src="{{asset('/fonts/font.css')}}"></script>
+{{--<script src="{{asset('/fonts/font.css')}}"></script>--}}
 
 
 <script src="{{mix('/js/app.js')}}" defer></script>

@@ -13,53 +13,44 @@ class Trashed extends Component
 {
     use WithPagination;
 
-    public $search;
-    public $readyToLoad = false;
-
-    protected $queryString = ['search'];
     protected $paginationTheme = 'bootstrap';
 
+    public $search;
+
+    protected $queryString = ['search'];
+
+    public $readyToLoad = false;
 
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
-
-
     public function deleteCategory($id)
     {
-        $pVendor = ProductSeller::withTrashed()
-            ->findOrFail($id);
+        $pVendor = ProductSeller::withTrashed()->findOrFail($id);
 
         $pVendor->forceDelete();
-
         $this->emit('toast', 'success', ' تنوع قیمت به صورت کامل از دیتابیس حذف شد.');
     }
 
-
     public function trashedProduct($id)
     {
-        $product = ProductSeller::withTrashed()
-            ->where('id', $id)
-            ->first();
-
+        $product = ProductSeller::withTrashed()->where('id', $id)->first();
         $product->restore();
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'بازیابی تنوع محصول' . '-' . $product->product_id,
             'actionType' => 'بازیابی'
         ]);
-
         $this->emit('toast', 'success', ' تنوع محصول با موفقیت بازیابی شد.');
     }
 
     public function render()
     {
+
         $productSellers = $this->readyToLoad ? DB::table('product_sellers')
-            ->whereNotNull('deleted_at')
-            ->latest()
-            ->paginate(10) : [];
+            ->whereNotNull('deleted_at')->
+            latest()->paginate(15) : [];
         return view('livewire.admin.product.product-vendor.trashed', compact('productSellers'));
     }
 }

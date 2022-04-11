@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (auth()->user()) {
+            $carts = \App\Models\Cart::where('user_id', auth()->user()->id)->where('type', 0)->get();
+            $userIp2 = Request::ip();
+            $cart2s = \App\Models\Cart::where('ip',$userIp2)->get();
+            if ($cart2s) {
+                foreach ($cart2s as $cart){
+                    $cart->update([
+                        'user_id' =>auth()->user()->id,
+                    ]);
+                }
+
+            }
+        }else
+        {
+            $userIp = Request::ip();
+            $carts = \App\Models\Cart::where('ip', $userIp)->where('type', 0)->get();
+        }
+        View::share('carts',$carts);
     }
 }

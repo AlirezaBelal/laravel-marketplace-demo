@@ -1,10 +1,8 @@
 @section('title','آپدیت محصول')
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش محصول -
-            {{$product->title}}
-        </p>
+        <p class="box__title">ویرایش محصول -
+            {{$product->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-12">
                 <form wire:submit.prevent="categoryForm"
@@ -26,6 +24,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="row">
                         <div class="col-md-6">
@@ -291,6 +290,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

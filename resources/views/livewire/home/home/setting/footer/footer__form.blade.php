@@ -1,5 +1,5 @@
 @include('errors.error')
-<form id="SubscribeNewsletter" class="c-form-newsletter" action="{{route('post.newsletter')}}" method="post">
+<form id="SubscribeNewsletter" class="c-form-newsletter" action="{{route('post.newsletter')}}" method="post" >
     @csrf
     <fieldset>
         @php

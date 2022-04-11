@@ -3,16 +3,16 @@
 
     <div class="main-content">
         <div class="row" style="background-color: white">
-            <p class="box__title">
-                افزودن محصول جدید
-                {{--            @if($this->product->title)--}}
-                {{--                ---}}
-                {{--                {{$this->product->title}}--}}
-                {{--                @endif--}}
+            <p class="box__title">افزودن محصول جدید
+{{--            @if($this->product->title)--}}
+{{--                ---}}
+{{--                {{$this->product->title}}--}}
+{{--                @endif--}}
             </p>
             <form wire:submit.prevent="categoryForm"
                   enctype="multipart/form-data" role="form"
                   class="padding-10 categoryForm">
+
                 @include('errors.error')
                 <div class="row">
                     <div class="col-md-6">
@@ -30,25 +30,27 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                            <textarea rows="5" wire:model.lazy="product.description"
-                                      placeholder="توضیح کوتاه محصول " tabindex="-1" wire:key="description_create"
+                            <textarea rows="5"  wire:model.lazy="product.description"
+                                      placeholder="توضیح کوتاه محصول " tabindex="-1"  wire:key="description_create"
                                       class="form-control" id="description_create">
+
                             </textarea>
                     </div>
                     <div class="form-group">
-                            <textarea wire:model.lazy="product.body" name="body" placeholder="توضیح محصول "
-                                      class="form-control" id="body_create">
+                            <textarea  wire:model.lazy="product.body" name="body" placeholder="توضیح محصول "
+                                       class="form-control" id="body_create" >
+
                             </textarea>
                     </div>
                 </div>
 
                 <div class="row">
-                    {{--                    <div class="col-md-6">--}}
-                    {{--                        <div class="form-group">--}}
-                    {{--                            <input type="text" wire:model.lazy="product.link" placeholder="لینک محصول "--}}
-                    {{--                                   class="form-control">--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+{{--                    <div class="col-md-6">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <input type="text" wire:model.lazy="product.link" placeholder="لینک محصول "--}}
+{{--                                   class="form-control">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="col-md-6">
                         <input type="text" wire:model.lazy="product.number" placeholder="تعداد موجودی محصول "
                                class="form-control">
@@ -125,25 +127,26 @@
                             <select wire:model.lazy="product.color_id" name="brand_id" id="" class="form-control">
                                 <option value="1">رنگ محصول</option>
                                 @foreach(\App\Models\Color::all() as $color)
-                                    <option value="{{$color->id}}"
-                                            style="background-color: {{$color->value}}">{{$color->name}}</option>
+                                    <option value="{{$color->id}}" style="background-color: {{$color->value}}">{{$color->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
+
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text" wire:model.lazy="product.tags" placeholder="تگ های محصول "
-                                   class="form-control">
-                            @if($this->product->tags)
-                                <span class="alert-info alert "
-                                      style="margin-top: 5px;padding: 6px !important;">{{$this->product->tags}}</span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="text" wire:model.lazy="product.tags" placeholder="تگ های محصول "
+                   class="form-control">
+            @if($this->product->tags)
+                <span class="alert-info alert " style="margin-top: 5px;padding: 6px !important;">{{$this->product->tags}}</span>
+            @endif
+        </div>
+    </div>
+</div>
 
                 <div class="row">
                     <div class="col-md-4">
@@ -174,8 +177,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="notificationGroup">
-                                <input id="option11" type="checkbox" wire:model.lazy="product.publish_product"
-                                       name="publish_product"
+                                <input id="option11" type="checkbox" wire:model.lazy="product.publish_product" name="publish_product"
                                        class="form-control">
                                 <label for="option11">منتشر شده:</label>
                             </div>
@@ -216,8 +218,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="notificationGroup">
-                                <input id="option4" type="checkbox" wire:model.lazy="product.status_product"
-                                       name="status_product"
+                                <input id="option4" type="checkbox" wire:model.lazy="product.status_product" name="status_product"
                                        class="form-control">
                                 <label for="option4">نمایش در محصول اصلی:</label>
                             </div>
@@ -246,26 +247,26 @@
 
     <script>
         ClassicEditor
-            .create(document.querySelector('#description_create'), {
-                language: {
-                    ui: 'fa',
-                    content: 'fa'
+            .create( document.querySelector( '#description_create' ),{
+                language:{
+                    ui:'fa',
+                    content:'fa'
                 }
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch( error => {
+                console.error( error );
+            } );
 
         ClassicEditor
-            .create(document.querySelector('#body_create'), {
-                language: {
-                    ui: 'fa',
-                    content: 'fa'
+            .create( document.querySelector( '#body_create' ),{
+                language:{
+                    ui:'fa',
+                    content:'fa'
                 }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
 
         document.addEventListener('livewire:load', () => {
             let progressSection = document.querySelector('#progressbar'),
@@ -288,6 +289,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

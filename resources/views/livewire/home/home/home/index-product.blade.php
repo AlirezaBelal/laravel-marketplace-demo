@@ -12,3 +12,4 @@
     @include('livewire.home.home.home.index-product.selected-product')
     @include('livewire.home.home.home.index-product.sntraker')
 </article>
+

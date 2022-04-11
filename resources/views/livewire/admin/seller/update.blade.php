@@ -3,8 +3,7 @@
 
     <div class="main-content">
         <div class="row" style="background-color: white">
-            <p class="box__title">
-                ویرایش فروشنده
+            <p class="box__title">ویرایش فروشنده
                 {{$seller->name}}
                 {{$seller->lname}}
                 {{--            @if($this->product->title)--}}
@@ -18,6 +17,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         @include('errors.error')
+
                         <h4>مشخصات شخصی</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -28,8 +28,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" wire:model.lazy="seller.lname"
-                                           placeholder="نام خانوادگی فروشنده "
+                                    <input type="text" wire:model.lazy="seller.lname" placeholder="نام خانوادگی فروشنده "
                                            class="form-control">
                                 </div>
                             </div>
@@ -38,15 +37,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <input type="text" wire:model.lazy="seller.shenasname_code"
-                                           placeholder="شماره شناسنامه "
+                                    <input type="text" wire:model.lazy="seller.shenasname_code" placeholder="شماره شناسنامه "
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" wire:model.lazy="seller.national_code"
-                                           placeholder="کدملی فروشنده "
+                                    <input type="text" wire:model.lazy="seller.national_code" placeholder="کدملی فروشنده "
                                            class="form-control">
                                 </div>
                             </div>
@@ -80,8 +77,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <select wire:model.lazy="seller.code_seller" name="code_seller" id=""
-                                            class="form-control">
+                                    <select wire:model.lazy="seller.code_seller" name="code_seller" id="" class="form-control">
                                         <option value="-1">انتخاب جنسیت</option>
                                         <option value="0">آقا</option>
                                         <option value="1">خانم</option>
@@ -107,8 +103,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" wire:model.lazy="seller.brand_name"
-                                           placeholder="برند تجاری فروشنده "
+                                    <input type="text" wire:model.lazy="seller.brand_name" placeholder="برند تجاری فروشنده "
                                            class="form-control">
                                 </div>
                             </div>
@@ -155,8 +150,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" wire:model.lazy="seller.bank_account_name"
-                                           placeholder="نام حساب بانکی "
+                                    <input type="text" wire:model.lazy="seller.bank_account_name" placeholder="نام حساب بانکی "
                                            class="form-control">
                                 </div>
                             </div>
@@ -230,6 +224,11 @@
                 </div>
 
 
+
+
+
+
+
                 <div>
                     @if($logo)
                         <img style="width: 400px" class="form-control mt-3 mb-3" width="400"
@@ -244,26 +243,26 @@
 
     <script>
         ClassicEditor
-            .create(document.querySelector('#description_create'), {
-                language: {
-                    ui: 'fa',
-                    content: 'fa'
+            .create( document.querySelector( '#description_create' ),{
+                language:{
+                    ui:'fa',
+                    content:'fa'
                 }
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch( error => {
+                console.error( error );
+            } );
 
         ClassicEditor
-            .create(document.querySelector('#body_create'), {
-                language: {
-                    ui: 'fa',
-                    content: 'fa'
+            .create( document.querySelector( '#body_create' ),{
+                language:{
+                    ui:'fa',
+                    content:'fa'
                 }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
 
         document.addEventListener('livewire:load', () => {
             let progressSection = document.querySelector('#progressbar'),
@@ -286,6 +285,7 @@
                 progressBar.style.width = `${event.detail.progress}%`;
                 progressBar.textContent = `${event.detail.progress}%`;
             });
+
         });
     </script>
 </div>

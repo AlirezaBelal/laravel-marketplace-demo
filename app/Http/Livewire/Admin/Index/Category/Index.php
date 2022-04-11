@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Index\Category;
 
 use App\Models\CategoryIndex;
 use App\Models\Log;
+use App\Models\category;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,12 +12,21 @@ class Index extends Component
 {
     use WithPagination;
 
-    public CategoryIndex $category;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public CategoryIndex $category;
+
+    public function mount()
+    {
+        $this->category = new CategoryIndex();
+    }
+
 
     protected $rules = [
         'category.title_id' => 'required',
@@ -27,24 +37,9 @@ class Index extends Component
         'category.status' => 'nullable',
     ];
 
-
-    public function mount()
-    {
-        $this->category = new CategoryIndex();
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($product_id)
     {
         $this->validateOnly($product_id);
-    }
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -75,7 +70,10 @@ class Index extends Component
         $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت ایجاد شد.');
 
     }
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function updateCategoryDisable($id)
     {
@@ -91,7 +89,6 @@ class Index extends Component
         $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت غیرفعال شد.');
     }
 
-
     public function updateCategoryEnable($id)
     {
         $category = CategoryIndex::find($id);
@@ -106,7 +103,6 @@ class Index extends Component
         $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت فعال شد.');
     }
 
-
     public function deleteCategory($id)
     {
         $category = CategoryIndex::find($id);
@@ -117,17 +113,19 @@ class Index extends Component
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت حذف شد.');
+
     }
 
 
     public function render()
     {
 
-        $categories = $this->readyToLoad ? CategoryIndex::where('category_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('childCategory_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.index.category.index', compact('categories'));
+        $categories = $this->readyToLoad ? CategoryIndex::where('category_id', 'LIKE', "%{$this->search}%")->
+        orWhere('subCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('childCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('product_id', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.index.category.index',compact('categories'));
     }
 }

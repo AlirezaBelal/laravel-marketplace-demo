@@ -7,7 +7,7 @@
                href="{{$ads->category->link}}">
                 <div class="banner-item">
                     <img
-                    src="{{\Illuminate\Support\Facades\Storage::url($ads->img)}}"
+                        src="/storage/{{$ads->img}}"
                         alt="{{$ads->title}}"/>
                     <div class="c-adplacement__badge banner-item-ad">
                         <div class="c-adplacement__badge-container ">

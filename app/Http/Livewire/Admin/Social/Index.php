@@ -11,12 +11,22 @@ class Index extends Component
 {
     use WithPagination;
 
-    public Social $social;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public Social $social;
+
+    public function mount()
+    {
+        $this->social = new Social();
+    }
+
+
 
     protected $rules = [
         'social.img' => 'nullable',
@@ -25,25 +35,9 @@ class Index extends Component
         'social.link' => 'required',
     ];
 
-
-    public function mount()
-    {
-        $this->social = new Social();
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -51,7 +45,7 @@ class Index extends Component
     {
         $this->validate();
 
-        Social::query()->create([
+      Social::query()->create([
             'img' => $this->social->img,
             'icon' => $this->social->icon,
             'title' => $this->social->title,
@@ -66,7 +60,7 @@ class Index extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن شبکه اجتماعی' . '-' . $this->social->title,
+            'url' => 'افزودن شبکه اجتماعی' .'-'. $this->social->title,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' شبکه اجتماعی با موفقیت ایجاد شد.');
@@ -74,13 +68,17 @@ class Index extends Component
     }
 
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function deleteCategory($id)
     {
         $page = Social::find($id);
         $page->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن شبکه اجتماعی' . '-' . $this->social->title,
+            'url' => 'حذف کردن شبکه اجتماعی' .'-'. $this->social->title,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' شبکه اجتماعی با موفقیت حذف شد.');
@@ -91,10 +89,11 @@ class Index extends Component
     public function render()
     {
 
-        $socials = $this->readyToLoad ? Social::where('title', 'LIKE', "%{$this->search}%")
-            ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->orWhere('icon', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.social.index', compact('socials'));
+        $socials = $this->readyToLoad ? Social::where('title', 'LIKE', "%{$this->search}%")->
+        orWhere('link', 'LIKE', "%{$this->search}%")->
+        orWhere('icon', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.social.index',compact('socials'));
     }
 }

@@ -12,12 +12,21 @@ class Index extends Component
 {
     use WithPagination;
 
-    public SpecialProduct $specialProduct;
+    protected $paginationTheme = 'bootstrap';
+
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
+
+    public $readyToLoad = false;
+
+    public SpecialProduct $specialProduct;
+
+    public function mount()
+    {
+        $this->specialProduct = new SpecialProduct();
+    }
+
 
     protected $rules = [
         'specialProduct.product_id' => 'required',
@@ -29,25 +38,9 @@ class Index extends Component
         'specialProduct.status' => 'nullable',
     ];
 
-
-    public function mount()
-    {
-        $this->specialProduct = new SpecialProduct();
-    }
-
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated($product_id)
     {
         $this->validateOnly($product_id);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -72,15 +65,18 @@ class Index extends Component
         $this->specialProduct->status = false;
         $this->specialProduct->natural = false;
         $this->specialProduct->supermarket = false;
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن پیشنهاد شگفت انگیز' . '-' . $this->specialProduct->product_id,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت ایجاد شد.');
-    }
 
+    }
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function updateCategoryDisable($id)
     {
@@ -88,16 +84,13 @@ class Index extends Component
         $category->update([
             'status' => 0
         ]);
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'غیرفعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category->category_id,
             'actionType' => 'غیرفعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت غیرفعال شد.');
     }
-
 
     public function updateCategoryEnable($id)
     {
@@ -110,31 +103,32 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category->category_id,
             'actionType' => 'فعال'
         ]);
-
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت فعال شد.');
     }
-
 
     public function deleteCategory($id)
     {
         $category = SpecialProduct::find($id);
-        $category->delete();
-        Log::create([
-            'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن پیشنهاد شگفت انگیز' . '-' . $category->category_id,
-            'actionType' => 'حذف'
-        ]);
-        $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
+            $category->delete();
+            Log::create([
+                'user_id' => auth()->user()->id,
+                'url' => 'حذف کردن پیشنهاد شگفت انگیز' . '-' . $category->category_id,
+                'actionType' => 'حذف'
+            ]);
+            $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
+
     }
 
 
     public function render()
     {
-        $specialProducts = $this->readyToLoad ? SpecialProduct::where('category_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('subCategory_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('childCategory_id', 'LIKE', "%{$this->search}%")
-            ->orWhere('product_id', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
-        return view('livewire.admin.special.product.index', compact('specialProducts'));
+
+        $specialProducts = $this->readyToLoad ? SpecialProduct::where('category_id', 'LIKE', "%{$this->search}%")->
+        orWhere('subCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('childCategory_id', 'LIKE', "%{$this->search}%")->
+        orWhere('product_id', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
+        return view('livewire.admin.special.product.index',compact('specialProducts'));
     }
 }

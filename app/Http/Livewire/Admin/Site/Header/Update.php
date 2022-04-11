@@ -11,22 +11,17 @@ use Livewire\WithFileUploads;
 class Update extends Component
 {
     use WithFileUploads;
-
-    public SiteHeader $header;
     public $img;
     public $status = null;
-
-
     protected $rules = [
         'header.title' => 'required|min:3',
         'header.status' => 'required',
         'header.link' => 'required',
         'header.icon' => 'nullable',
     ];
-
-
     public function headerForm()
     {
+
         $this->validate();
         if ($this->img) {
             $this->header->img = $this->uploadImage();
@@ -37,16 +32,15 @@ class Update extends Component
                 'status' => 0
             ]);
         }
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت منو' . '-' . $this->header->title,
+            'url' => 'آپدیت منو' .'-'. $this->header->title,
             'actionType' => 'آپدیت'
         ]);
         alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
         return redirect(route('header.index'));
-    }
 
+    }
     public function uploadImage()
     {
         $year = now()->year;
@@ -56,16 +50,18 @@ class Update extends Component
         $this->img->storeAs($directory, $name);
         return "$directory/$name";
     }
+    public SiteHeader $header;
 
     public function render()
     {
-        if ($this->header->status == 1) {
+        if ($this->header->status == 1){
             $this->header->status = true;
-        } else {
+        }else
+        {
             $this->header->status = false;
         }
 
         $header = $this->header;
-        return view('livewire.admin.site.header.update', compact('header'));
+        return view('livewire.admin.site.header.update',compact('header'));
     }
 }

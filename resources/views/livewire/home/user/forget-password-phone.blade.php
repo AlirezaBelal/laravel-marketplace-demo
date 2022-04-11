@@ -18,8 +18,8 @@
 
             <section class="o-page o-page--account-box">
                 <div class="c-login__box">
-                    <form class="c-login__form" wire:submit.prevent="userForm"
-                          id="otpForm" data-name="remember"
+                    <form class="c-login__form"  wire:submit.prevent="userForm"
+                           id="otpForm" data-name="remember"
                           data-input-name="remember[code]" novalidate="novalidate">
                         <div class="c-login__header-logo">
                             <a href="" class="c-login__back-button"></a>
@@ -43,8 +43,7 @@
                             <div class="c-login__form-row">
                                 <label class="o-form__field-container">
                                     <div class="o-form__field-frame">
-                                        <input wire:model.lazy="sms.code" name="code" type="" placeholder="" value=""
-                                               class="o-form__field js-input-field c-login__otp-input" maxlength="5">
+                                        <input wire:model.lazy="sms.code"  name="code" type="" placeholder="" value="" class="o-form__field js-input-field c-login__otp-input" maxlength="5">
                                     </div>
                                 </label>
 
@@ -73,8 +72,7 @@
                             </div>
                         </div>
 
-                        <button type="submit"
-                                class="o-btn o-btn--full-width o-btn--contained-red-lg  js-opt-button-submit">
+                        <button type="submit" class="o-btn o-btn--full-width o-btn--contained-red-lg  js-opt-button-submit">
                             ادامه
                         </button>
                     </form>

@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class FooterTitle extends Model
 {
     use HasFactory;
+    protected $fillable=['title'];
 
-    protected $fillable = [
-        'title'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function childCategory()
     {
-        return $this->belongsTo(ChildCategory::class, 'title', 'id');
+        return $this->belongsTo(ChildCategory::class,'title','id');
     }
 }

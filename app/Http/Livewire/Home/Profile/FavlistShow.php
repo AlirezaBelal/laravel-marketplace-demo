@@ -8,6 +8,7 @@ class FavlistShow extends Component
 {
     public function render()
     {
-        return view('livewire.home.profile.favlist-show')->layout('layouts.home');
+        return view('livewire.home.profile.favlist-show')
+            ->layout('layouts.home');
     }
 }

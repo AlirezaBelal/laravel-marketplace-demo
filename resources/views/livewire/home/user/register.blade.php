@@ -22,7 +22,7 @@
                 </div>
                 <div class="c-login__box">
 
-                    <form class="c-login__form" id="loginForm"
+                    <form class="c-login__form"  id="loginForm"
                           wire:submit.prevent="userForm"
                           novalidate="novalidate">
 
@@ -36,15 +36,13 @@
                             ورود / ثبت ‌نام
                         </div>
                         <div class="c-login__opt-mobile-message">
-                            شماره موبایل یا پست الکترونیک خود را وارد کنید
+                            شماره موبایل یا پست الکترونیک  خود را وارد کنید
                         </div>
                         <div class="c-login__form-row">
                             <label class="o-form__field-container">
                                 <div class="o-form__field-frame">
-                                    <input wire:model.lazy="user.email_phone" name="email_phone" type="" placeholder=""
-                                           value="" class="o-form__field js-input-field ">
-                                    <span type="button"
-                                          class="o-form__field-clear-button js-ui-field-cleaner u-hidden"></span>
+                                    <input wire:model.lazy="user.email_phone" name="email_phone" type="" placeholder="" value="" class="o-form__field js-input-field ">
+                                    <span type="button" class="o-form__field-clear-button js-ui-field-cleaner u-hidden"></span>
                                 </div>
                             </label>
 

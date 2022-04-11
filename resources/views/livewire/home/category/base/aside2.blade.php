@@ -8,7 +8,7 @@
         data-gtm-vis-total-visible-time-9070001_346="100"
         data-gtm-vis-has-fired-9070001_346="1">
         <div class="c-adplacement__sponsored_box"><img
-                src="{{\Illuminate\Support\Facades\Storage::url($banner->img)}}"
+                src="/storage/{{$banner->img}}"
                 alt="{{$banner->title}}"></div>
     </a>
     @endforeach

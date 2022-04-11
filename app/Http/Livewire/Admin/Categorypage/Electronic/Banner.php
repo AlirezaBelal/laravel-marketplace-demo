@@ -14,41 +14,32 @@ class Banner extends Component
     use WithFileUploads;
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public $img;
     public $title;
     public $link;
     public $type;
     public $search;
-    public $readyToLoad = false;
+
 
     protected $queryString = ['search'];
-    protected $paginationTheme = 'bootstrap';
 
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
-    }
+    public $readyToLoad = false;
 
 
     public function categoryForm()
     {
-        $banner = DB::connection('mysql-electronic')->table('category_electronic_banner')
-            ->insert([
-                'title' => $this->title,
-                'link' => $this->link,
-                'type' => $this->type,
-            ]);
+        $banner = DB::connection('mysql-electronic')->table('category_electronic_banner')->insert([
+            'title' => $this->title,
+            'link' => $this->link,
+            'type' => $this->type,
+        ]);
+        $banner2 = DB::connection('mysql-electronic')->table('category_electronic_banner')
+            ->where('link',$this->link)->first();
 
-        $banner2 = DB::connection('mysql-electronic')
-            ->table('category_electronic_banner')
-            ->where('link', $this->link)
-            ->first();
-
-        $banner3 = DB::connection('mysql-electronic')
-            ->table('category_electronic_banner')
-            ->where('id', $banner2->id)
-            ->limit($banner2->id);
+        $banner3 = DB::connection('mysql-electronic')->table('category_electronic_banner')
+            ->where('id',$banner2->id)->limit($banner2->id);
 
         if ($this->img) {
             $banner3->update([
@@ -65,10 +56,9 @@ class Banner extends Component
             'url' => 'افزودن بنر' . '-' . $this->title,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
-    }
 
+    }
 
     public function uploadImage()
     {
@@ -80,22 +70,18 @@ class Banner extends Component
         return "$directory/$name";
     }
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function deleteCategory($id)
     {
-        $banner2 = DB::connection('mysql-electronic')
-            ->table('category_electronic_banner')
-            ->where('id', $id)
-            ->first();
-
-        $banner = DB::connection('mysql-electronic')
-            ->table('category_electronic_banner')
-            ->where('id', $id)
-            ->limit($id);
-
-        Storage::disk('public')
-            ->delete("storage", $banner2->img);
-
+        $banner2 = DB::connection('mysql-electronic')->table('category_electronic_banner')
+            ->where('id',$id)->first();
+        $banner = DB::connection('mysql-electronic')->table('category_electronic_banner')
+            ->where('id',$id)->limit($id);
+        Storage::disk('public')->delete("storage", $banner2->img);
         $banner->delete();
 
         Log::create([
@@ -103,19 +89,17 @@ class Banner extends Component
             'url' => 'حذف کردن بنر' . '-' . $banner2->title,
             'actionType' => 'حذف'
         ]);
-
         $this->emit('toast', 'success', ' بنر با موفقیت حذف شد.');
+
     }
-
-
     public function render()
     {
-        $banners = $this->readyToLoad ? DB::connection('mysql-electronic')
-            ->table('category_electronic_banner')
-            ->where('title', 'LIKE', "%{$this->search}%")
-            ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->latest()
-            ->paginate(10) : [];
-        return view('livewire.admin.categorypage.electronic.banner', compact('banners'));
+
+        $banners = $this->readyToLoad ? DB::connection('mysql-electronic')->table('category_electronic_banner')
+            ->where('title', 'LIKE', "%{$this->search}%")->
+            orWhere('link', 'LIKE', "%{$this->search}%")->
+            orWhere('id', $this->search)->
+            latest()->paginate(15) : [];
+        return view('livewire.admin.categorypage.electronic.banner',compact('banners'));
     }
 }

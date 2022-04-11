@@ -9,9 +9,5 @@ class Gallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'img',
-        'product_id',
-        'status',
-        'position'];
+    protected $fillable = ['img','product_id','status','position'];
 }

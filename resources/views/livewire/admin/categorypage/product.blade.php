@@ -3,28 +3,21 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
-                <a class="tab__item" href="{{route('category.slider')}}">
-                    اسلایدر
+                <a class="tab__item " href="/admin/category/slider">اسلایدر
                 </a>
-                <a class="tab__item " href="{{route('category.amazing')}}">
-                    پیشنهاد شگفت انگیز
-                </a>
-                <a class="tab__item " href="{{route('category.banner')}}">
-                    بنر ها
-                </a>
-                <a class="tab__item " href="{{route('category.title')}}">
-                    عنوان ها
-                </a>
-                <a class="tab__item is-active" href="{{route('category.product')}}">
-                    محصولات
-                </a>
-                <a class="tab__item" href="{{route('category.brand')}}">
-                    برندهای برتر
-                </a>
+                <a class="tab__item "
+                   href="/admin/category/amazing">پیشنهاد شگفت انگیز </a>
+                <a class="tab__item"
+                   href="/admin/category/banner">بنر ها </a>
+                <a class="tab__item "
+                   href="/admin/category/title">عنوان ها </a>
+                <a class="tab__item is-active"
+                   href="/admin/category/product">محصولات </a>
+
+                <a class="tab__item"
+                   href="/admin/category/brand">برندهای برتر </a>
                 |
-                <a class="tab__item">
-                    جستجو:
-                </a>
+                <a class="tab__item">جستجو: </a>
 
                 <a class="t-header-search">
                     <form action="" onclick="event.preventDefault();">
@@ -42,7 +35,8 @@
 
                         <thead role="rowgroup">
                         <tr role="row" class="title-row">
-                            <th>ردیف</th>
+                            <th>آیدی</th>
+
                             <th>دسته اصلی</th>
                             <th>زیر دسته</th>
                             <th>دسته کودک</th>
@@ -54,13 +48,11 @@
                         </thead>
 
                         @if($readyToLoad)
-                            @php($count = 1)
                             <tbody>
                             @foreach($products as $category)
                                 <tr role="row">
-                                    <td>
-                                        {{$count++}}
-                                    </td>
+                                    <td><a href="">{{$category->id}}</a></td>
+
                                     <td>
                                         @foreach(\App\Models\Category::where('id',$category->category_id)->get() as $cat)
                                             {{$cat->title}}
@@ -87,6 +79,7 @@
                                             {{$cat->title}}
                                         @endforeach
                                     </td>
+
                                     <td>
                                         @foreach(DB::connection('mysql-category')->table('category_title_swiper')
                                             ->where('id',$category->title_id)->get() as $cat)
@@ -104,15 +97,25 @@
                                     </td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                             {{$products->render()}}
                         @else
+
+
+
                             <div class="alert-warning alert">
                                 در حال خواندن اطلاعات از دیتابیس ...
                             </div>
+
+
                         @endif
+
+
                     </table>
                 </div>
+
+
             </div>
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد محصول برای دسته های صفحه اصلی</p>
@@ -122,9 +125,10 @@
 
                     @include('errors.error')
 
+
                     <div class="form-group">
                         <select wire:model.lazy="category_id" name="category_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -132,7 +136,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="subCategory_id" name="subCategory_id" id="" class="form-control">
-                            <option value="-1">- زیردسته -</option>
+                            <option value="-1" >- زیردسته  -</option>
                             @foreach(\App\Models\SubCategory::where('parent',$this->category_id)->get() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -140,7 +144,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="childCategory_id" name="childCategory_id" id="" class="form-control">
-                            <option value=" ">- دسته کودک -</option>
+                            <option value=" ">- دسته کودک  -</option>
                             @foreach(\App\Models\ChildCategory::where('parent',$this->subCategory_id)->get() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -174,7 +178,7 @@
                     </div>
                     <div class="form-group">
                         <select wire:model.lazy="c_id" name="c_id" id="" class="form-control">
-                            <option value="-1">- دسته -</option>
+                            <option value="-1" >- دسته  -</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -184,5 +188,10 @@
                 </form>
             </div>
         </div>
+
+
     </div>
+
+
 </div>
+

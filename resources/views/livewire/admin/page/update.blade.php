@@ -1,12 +1,8 @@
 @section('title','آپدیت صفحه سایت')
-
 <div>
     <div class="main-content padding-0">
-        <p class="box__title">
-            ویرایش صفحه سایت -
-            {{$page->title}}
-        </p>
-
+        <p class="box__title">ویرایش صفحه سایت -
+            {{$page->title}}</p>
         <div class="row no-gutters bg-white">
             <div class="col-8">
                 <form wire:submit.prevent="categoryForm"
@@ -14,7 +10,6 @@
                       class="padding-10 categoryForm">
 
                     @include('errors.error')
-
                     <div class="form-group">
                         <input type="text" wire:model.lazy="page.title" placeholder="نام صفحه سایت "
                                class="form-control">
@@ -34,7 +29,7 @@
                     </div>
                     <div>
                         @if($img)
-                            <img class="form-control mt-3 mb-3" width="200" src="{{$img->temporaryUrl()}}" alt="">
+                            <img class="form-control mt-3 mb-3" width="400" src="{{$img->temporaryUrl()}}" alt="">
                         @endif
                     </div>
 

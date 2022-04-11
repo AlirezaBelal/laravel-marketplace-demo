@@ -12,23 +12,27 @@
     "devDependencies": {
         "@tailwindcss/forms": "^0.3.1",
         "@tailwindcss/typography": "^0.4.0",
-        "alpinejs": "^3.0.6",
+        "alpinejs": "^2.7.3",
+        "autoprefixer": "^10.0.2",
         "axios": "^0.21",
-        "bootstrap": "^4.6.0",
-        "jquery": "^3.6",
+        "bootstrap": "^4.0.0",
+        "jquery": "^3.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "popper.js": "^1.16.1",
+        "popper.js": "^1.12",
         "postcss": "^8.1.14",
         "postcss-import": "^14.0.1",
-        "resolve-url-loader": "^4.0.0",
-        "sass": "^1.32.11",
-        "sass-loader": "^11.0.1",
-        "tailwindcss": "^2.2.2"
+        "resolve-url-loader": "^3.1.2",
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0",
+        "tailwindcss": "^2.0.1"
     },
     "dependencies": {
-        "bootstrap-icons": "^1.5.0",
-        "sweetalert2": "^11.1.7",
+        "@ckeditor/ckeditor5-build-classic": "^26.0.0",
+        "bootstrap-iconpicker": "^1.8.2",
+        "bootstrap-icons": "^1.4.0",
+        "remodal": "^1.1.1",
+        "sweetalert2": "^10.15.5",
         "turbolinks": "^5.2.0"
     }
 }

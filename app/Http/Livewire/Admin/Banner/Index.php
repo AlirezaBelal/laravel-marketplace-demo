@@ -14,28 +14,16 @@ class Index extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public Banner $banner;
+    protected $paginationTheme = 'bootstrap';
+
     public $img;
     public $search;
-    public $readyToLoad = false;
 
     protected $queryString = ['search'];
 
-    /**
-     * @var string
-     * Front type
-     */
-    protected $paginationTheme = 'bootstrap';
+    public $readyToLoad = false;
 
-    /**
-     * @var string[]
-     * Manage form inputs
-     */
-    protected $rules = [
-        'banner.title' => 'required',
-        'banner.link' => 'required',
-    ];
-
+    public Banner $banner;
 
     public function mount()
     {
@@ -43,18 +31,14 @@ class Index extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    protected $rules = [
+        'banner.title' => 'required',
+        'banner.link' => 'required',
+    ];
+
     public function updated($title)
     {
         $this->validateOnly($title);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -76,21 +60,15 @@ class Index extends Component
         $this->banner->title = "";
         $this->banner->link = "";
         $this->img = null;
-
         Log::create([
             'user_id' => auth()->user()->id,
             'url' => 'افزودن بنر' . '-' . $this->banner->title,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
+
     }
 
-
-    /**
-     * @return string
-     * Image storage path
-     */
     public function uploadImage()
     {
         $year = now()->year;
@@ -101,12 +79,18 @@ class Index extends Component
         return "$directory/$name";
     }
 
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function render()
     {
-        $banners = $this->readyToLoad ? Banner::where('title', 'LIKE', "%{$this->search}%")
-            ->orWhere('link', 'LIKE', "%{$this->search}%")
-            ->latest()->paginate(10) : [];
+
+        $banners = $this->readyToLoad ? Banner::where('title', 'LIKE', "%{$this->search}%")->
+        orWhere('link', 'LIKE', "%{$this->search}%")->
+        orWhere('id', $this->search)->
+        latest()->paginate(15) : [];
         return view('livewire.admin.banner.index', compact('banners'));
     }
 }

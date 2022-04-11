@@ -9,13 +9,9 @@ use Livewire\Component;
 
 class One extends Component
 {
-    public FooterLinkOne $footerLinkOne;
     public $readyToLoad = false;
 
-    protected $rules = [
-        'footerLinkOne.page_id' => 'required',
-    ];
-
+    public FooterLinkOne $footerLinkOne;
 
     public function mount()
     {
@@ -23,18 +19,14 @@ class One extends Component
     }
 
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    protected $rules = [
+        'footerLinkOne.page_id' => 'required',
+    ];
+
     public function updated($page_id)
     {
         $this->validateOnly($page_id);
-    }
-
-
-    public function loadCategory()
-    {
-        $this->readyToLoad = true;
     }
 
 
@@ -45,38 +37,38 @@ class One extends Component
         FooterLinkOne::query()->create([
             'page_id' => $this->footerLinkOne->page_id,
         ]);
-
         $this->footerLinkOne->page_id = "";
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن صفحه به فوتر سایت' . '-' . $this->footerLinkOne->page_id,
+            'url' => 'افزودن صفحه به فوتر سایت' .'-'. $this->footerLinkOne->page_id,
             'actionType' => 'ایجاد'
         ]);
-
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت ایجاد شد.');
+
     }
 
-
+    public function loadCategory()
+    {
+        $this->readyToLoad = true;
+    }
     public function deleteCategory($id)
     {
         $page = FooterLinkOne::find($id);
         $page->delete();
-
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن صفحه به فوتر سایت' . '-' . $this->footerLinkOne->page_id,
+            'url' => 'حذف کردن صفحه به فوتر سایت' .'-'. $this->footerLinkOne->page_id,
             'actionType' => 'حذف'
         ]);
-
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت حذف شد.');
-    }
 
+    }
 
     public function render()
     {
 
         $footer_links = FooterLinkOne::latest()->get();
-        return view('livewire.admin.footer.link.one', compact('footer_links'));
+
+        return view('livewire.admin.footer.link.one',compact('footer_links'));
     }
 }

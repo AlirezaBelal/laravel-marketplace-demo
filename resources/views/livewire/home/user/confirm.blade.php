@@ -39,8 +39,7 @@
                             <div class="c-login__form-row">
                                 <label class="o-form__field-container">
                                     <div class="o-form__field-frame">
-                                        <input wire:model.lazy="user.password2" name="password2" type="password" id=""
-                                               placeholder="" value=""
+                                        <input wire:model.lazy="user.password2"  name="password2" type="password" id="" placeholder="" value=""
                                                class="o-form__field js-input-field ">
                                         <span type="button"
                                               class="o-form__password-field-button js-ui-toggle-password"></span>
