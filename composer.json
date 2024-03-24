@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4p|^8.0",
+        "php": "^8.2",
         "artesaos/seotools": "^0.22.0",
         "blade-ui-kit/blade-ui-kit": "^0.3.4",
         "consoletvs/charts": "6.*",
