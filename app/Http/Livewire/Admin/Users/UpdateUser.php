@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Users;
 
 use App\Models\Category;
-use App\Models\Log;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -13,8 +12,11 @@ class UpdateUser extends Component
     use WithFileUploads;
 
     public $img;
+
     public $admin = null;
+
     public $staff = null;
+
     protected $rules = [
         'user.admin' => 'nullable',
         'user.staff' => 'nullable',
@@ -31,13 +33,13 @@ class UpdateUser extends Component
             $this->user->img = $this->uploadImage();
         }
         $this->user->update($this->validate());
-//        if (!$this->user->status) {
-//            $this->category->update([
-//                'status' => 0
-//            ]);
-//        }
+        //        if (!$this->user->status) {
+        //            $this->category->update([
+        //                'status' => 0
+        //            ]);
+        //        }
 
-//        alert()->success('کاربر با موفقیت ایجاد شد.', 'کاربر آپدیت شد.');
+        //        alert()->success('کاربر با موفقیت ایجاد شد.', 'کاربر آپدیت شد.');
         return redirect(route('users.index'));
 
     }
@@ -49,6 +51,7 @@ class UpdateUser extends Component
         $directory = "user/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -68,6 +71,7 @@ class UpdateUser extends Component
         }
 
         $user = $this->user;
+
         return view('livewire.admin.users.update-user', compact('user'));
     }
 }

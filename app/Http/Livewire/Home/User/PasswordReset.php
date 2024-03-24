@@ -11,9 +11,8 @@ use Livewire\Component;
 class PasswordReset extends Component
 {
     public User $user;
+
     public SMS $sms;
-
-
 
     public function mount()
     {
@@ -30,7 +29,6 @@ class PasswordReset extends Component
         $this->validateOnly($password2);
     }
 
-
     public function userForm()
     {
 
@@ -42,15 +40,16 @@ class PasswordReset extends Component
             ]);
             auth()->loginUsingId($user_update->id);
             $userIp2 = Request::ip();
-            $cart2s = \App\Models\Cart::where('ip',$userIp2)->get();
+            $cart2s = \App\Models\Cart::where('ip', $userIp2)->get();
             if ($cart2s) {
-                foreach ($cart2s as $cart){
+                foreach ($cart2s as $cart) {
                     $cart->update([
-                        'user_id' =>auth()->user()->id,
+                        'user_id' => auth()->user()->id,
                     ]);
                 }
 
             }
+
             return $this->redirect('/');
         } else {
             $this->emit('toast', 'error', ' پسورد وارد شده با هم مطابقت ندارد!');

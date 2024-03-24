@@ -17,15 +17,18 @@ class Slider extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $title;
+
     public $link;
+
     public $c_id;
+
     public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-
 
     public function categoryForm()
     {
@@ -42,18 +45,18 @@ class Slider extends Component
             ->where('id', $slider2->id)->limit($slider2->id);
         if ($this->img) {
             $slider3->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->title = "";
-        $this->link = "";
+        $this->title = '';
+        $this->link = '';
         $this->img = null;
         $this->c_id = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن اسلایدر' . '-' . $this->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن اسلایدر'.'-'.$this->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' اسلایدر با موفقیت ایجاد شد.');
 
@@ -66,6 +69,7 @@ class Slider extends Component
         $directory = "categorypage/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -80,13 +84,13 @@ class Slider extends Component
             ->where('id', $id)->first();
         $slider = DB::connection('mysql-category')->table('category_slider')
             ->where('id', $id)->limit($id);
-        Storage::disk('public')->delete("storage", $slider2->img);
+        Storage::disk('public')->delete('storage', $slider2->img);
         $slider->delete();
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن اسلایدر' . '-' . $slider2->title,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن اسلایدر'.'-'.$slider2->title,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' اسلایدر با موفقیت حذف شد.');
 
@@ -100,12 +104,12 @@ class Slider extends Component
             ->where('id', $id)->limit($id);
 
         $slider->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن اسلایدر' . '-' . $slider2->title,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن اسلایدر'.'-'.$slider2->title,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'اسلایدر با موفقیت غیرفعال شد.');
     }
@@ -117,12 +121,12 @@ class Slider extends Component
         $slider = DB::connection('mysql-category')->table('category_slider')
             ->where('id', $id)->limit($id);
         $slider->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن اسلایدر' . '-' . $slider2->title,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن اسلایدر'.'-'.$slider2->title,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'اسلایدر با موفقیت فعال شد.');
     }
@@ -135,6 +139,7 @@ class Slider extends Component
             orWhere('link', 'LIKE', "%{$this->search}%")->
             orWhere('id', $this->search)->
             latest()->paginate(15) : [];
-        return view('livewire.admin.categorypage.slider',compact('sliders'));
+
+        return view('livewire.admin.categorypage.slider', compact('sliders'));
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Product;
 
-use App\Http\Livewire\Home\Profile\Notification;
 use App\Mail\ProductUpdateNotification;
 use App\Models\Category;
 use App\Models\Email;
@@ -19,7 +18,9 @@ class Update extends Component
     use WithFileUploads;
 
     public $img;
+
     public Product $product;
+
     protected $rules = [
         'product.title' => 'required|min:3',
         'product.name' => 'required',
@@ -61,33 +62,33 @@ class Update extends Component
             foreach ($notifications as $notification) {
                 if ($notification->system == 1) {
                     $notification->update([
-                        'type' => 1
+                        'type' => 1,
                     ]);
                 }
                 if ($notification->sms == 1) {
 
                     $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
                     $client->send(env('SENDER_MOBILE'), $notification->user->mobile,
-                        "کالای شما موجود شد");
-//                        "کالای شما موجود شد : $notification->product->title");
+                        'کالای شما موجود شد');
+                    //                        "کالای شما موجود شد : $notification->product->title");
                     SMS::create([
                         'code' => $notification->user_id,
-                        'type' => 'کالای مورد نظر موجود شد:' . $notification->product->title,
+                        'type' => 'کالای مورد نظر موجود شد:'.$notification->product->title,
                         'user_id' => $notification->user_id,
                     ]);
 
                 }
                 if ($notification->email == 1) {
-                Mail::to($notification->user->email)
+                    Mail::to($notification->user->email)
                         ->send(new ProductUpdateNotification($notification));
 
                     Email::create([
-                        'user_id' =>$notification->user->id,
-                        'user_email' =>$notification->user->email,
-                        'user_name' =>$notification->user->name,
-                        'user_mobile' =>$notification->user->mobile,
-                        'title' =>'کالای مورد نظر شما موجود شد | '.env('APP_NAME'),
-                        'text' =>$notification->product->title,
+                        'user_id' => $notification->user->id,
+                        'user_email' => $notification->user->email,
+                        'user_name' => $notification->user->name,
+                        'user_mobile' => $notification->user->mobile,
+                        'title' => 'کالای مورد نظر شما موجود شد | '.env('APP_NAME'),
+                        'text' => $notification->product->title,
                     ]);
                 }
             }
@@ -96,10 +97,10 @@ class Update extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت محصول' . '-' . $this->product->title,
-            'actionType' => 'آپدیت'
+            'url' => 'آپدیت محصول'.'-'.$this->product->title,
+            'actionType' => 'آپدیت',
         ]);
-//        alert()->success(' با موفقیت آپدیت شد.', 'محصول مورد نظر با موفقیت آپدیت شد.');
+        //        alert()->success(' با موفقیت آپدیت شد.', 'محصول مورد نظر با موفقیت آپدیت شد.');
 
         return redirect(route('product.index'));
 
@@ -112,6 +113,7 @@ class Update extends Component
         $directory = "product/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 

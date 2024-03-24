@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Home\Profile;
 
 use App\Models\FavList;
-use App\Models\SMS;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -17,7 +15,6 @@ class Favorite extends Component
         $this->favList = new FavList();
     }
 
-
     protected $rules = [
         'favList.title' => 'required',
         'favList.description' => 'nullable',
@@ -27,7 +24,6 @@ class Favorite extends Component
     {
         $this->validateOnly($title);
     }
-
 
     public function favlistForm()
     {
@@ -41,6 +37,7 @@ class Favorite extends Component
             'user_id' => auth()->user()->id,
         ]);
         $this->emit('toast', 'success', ' لیست اضافه شد!');
+
         return $this->redirect(request()->header('Referer'));
     }
 

@@ -13,17 +13,17 @@ class Title extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-
     public $title;
-    public $link;
-    public $c_id;
-    public $search;
 
+    public $link;
+
+    public $c_id;
+
+    public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-
 
     public function categoryForm()
     {
@@ -32,18 +32,17 @@ class Title extends Component
             'link' => $this->link,
             'c_id' => $this->c_id,
         ]);
-        $this->title = "";
-        $this->link = "";
+        $this->title = '';
+        $this->link = '';
         $this->c_id = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن عناوین' . '-' . $this->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن عناوین'.'-'.$this->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' عناوین با موفقیت ایجاد شد.');
 
     }
-
 
     public function loadCategory()
     {
@@ -60,8 +59,8 @@ class Title extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن عناوین' . '-' . $banner2->title,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن عناوین'.'-'.$banner2->title,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' عناوین با موفقیت حذف شد.');
 
@@ -74,6 +73,7 @@ class Title extends Component
             ->where('title', 'LIKE', "%{$this->search}%")->
             orWhere('id', $this->search)->
             latest()->paginate(15) : [];
-        return view('livewire.admin.categorypage.title',compact('titles'));
+
+        return view('livewire.admin.categorypage.title', compact('titles'));
     }
 }

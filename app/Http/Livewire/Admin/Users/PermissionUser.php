@@ -2,9 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Users;
 
-use App\Models\Log;
-use App\Models\PermissionRole;
-use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use Livewire\Component;
@@ -12,6 +9,7 @@ use Livewire\Component;
 class PermissionUser extends Component
 {
     public $permissions;
+
     public $roles;
 
     public User $user;
@@ -49,17 +47,16 @@ class PermissionUser extends Component
 
         }
 
-
-//        alert()->success('مقام با موفقیت ایجاد شد.', 'مقام آپدیت شد.');
+        //        alert()->success('مقام با موفقیت ایجاد شد.', 'مقام آپدیت شد.');
 
         return redirect(route('users.index'));
 
     }
 
-
     public function render()
     {
         $user = $this->user;
+
         return view('livewire.admin.users.permission-user', compact('user'));
     }
 }

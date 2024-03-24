@@ -2,11 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Order;
 
-use App\Models\Category;
 use App\Models\Log;
-use App\Models\SubCategory;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class ReturnReason extends Component
@@ -14,8 +11,9 @@ class ReturnReason extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
 
     public $search;
@@ -31,8 +29,6 @@ class ReturnReason extends Component
         $this->returnReason = new \App\Models\ReturnReason();
     }
 
-
-
     protected $rules = [
         'returnReason.reason' => 'nullable',
     ];
@@ -42,23 +38,21 @@ class ReturnReason extends Component
         $this->validateOnly($reason);
     }
 
-
     public function categoryForm()
     {
 
         $this->validate();
 
-         \App\Models\ReturnReason::query()->create([
+        \App\Models\ReturnReason::query()->create([
             'reason' => $this->returnReason->reason,
         ]);
 
-
-        $this->returnReason->reason = "";
+        $this->returnReason->reason = '';
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن دلیل مرجوعی' .'-'. $this->returnReason->reason,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن دلیل مرجوعی'.'-'.$this->returnReason->reason,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' دلیل مرجوعی با موفقیت ایجاد شد.');
 
@@ -73,10 +67,9 @@ class ReturnReason extends Component
     {
         $reason = \App\Models\ReturnReason::find($id);
         $reason->delete();
-            $this->emit('toast', 'success', ' دلیل مرجوعی با موفقیت حذف شد.');
+        $this->emit('toast', 'success', ' دلیل مرجوعی با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {
@@ -85,6 +78,6 @@ class ReturnReason extends Component
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
 
-        return view('livewire.admin.order.return-reason',compact('returnReasons'));
+        return view('livewire.admin.order.return-reason', compact('returnReasons'));
     }
 }

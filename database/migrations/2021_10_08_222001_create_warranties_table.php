@@ -20,7 +20,7 @@ class CreateWarrantiesTable extends Migration
             $table->string('status')->default(1);
 
             $table->softDeletes();
-            
+
             $table->timestamps();
         });
     }

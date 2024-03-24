@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Product\Color;
 
-use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Log;
 use Livewire\Component;
@@ -17,6 +16,7 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -30,8 +30,6 @@ class Index extends Component
         $this->color = new Color();
     }
 
-
-
     protected $rules = [
         'color.name' => 'required',
         'color.value' => 'required',
@@ -43,23 +41,22 @@ class Index extends Component
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
 
-        $color =    Color::query()->create([
+        $color = Color::query()->create([
             'name' => $this->color->name,
             'value' => $this->color->value,
-            'status' => $this->color->status ? 1:0 ,
+            'status' => $this->color->status ? 1 : 0,
         ]);
-        $this->color->name = "";
-        $this->color->value = "";
+        $this->color->name = '';
+        $this->color->value = '';
         $this->color->status = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن رنگ' .'-'. $this->color->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن رنگ'.'-'.$this->color->name,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' رنگ با موفقیت ایجاد شد.');
 
@@ -69,16 +66,17 @@ class Index extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $color = Color::find($id);
         $color->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت رنگ' .'-'. $this->color->name,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت رنگ'.'-'.$this->color->name,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت غیرفعال شد.');
     }
@@ -87,12 +85,12 @@ class Index extends Component
     {
         $color = Color::find($id);
         $color->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت رنگ' .'-'. $this->color->name,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت رنگ'.'-'.$this->color->name,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت فعال شد.');
     }
@@ -103,12 +101,11 @@ class Index extends Component
         $color->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن رنگ' .'-'. $this->color->name,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن رنگ'.'-'.$this->color->name,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' رنگ با موفقیت حذف شد.');
     }
-
 
     public function render()
     {
@@ -117,6 +114,7 @@ class Index extends Component
         orWhere('value', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.product.color.index',compact('colors'));
+
+        return view('livewire.admin.product.color.index', compact('colors'));
     }
 }

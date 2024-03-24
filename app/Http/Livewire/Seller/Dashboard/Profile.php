@@ -8,25 +8,32 @@ use App\Models\Store;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use function Symfony\Component\DomCrawler\first;
 
 class Profile extends Component
 {
-
     use WithFileUploads;
 
     public $aboutUs;
-    public $website;
-    public $store_name;
-    public $store_state;
-    public $store_city;
-    public $store_address;
-    public $store_code;
-    public $store_telephone;
-    public $address;
-    public $docType;
-    public $docImage;
 
+    public $website;
+
+    public $store_name;
+
+    public $store_state;
+
+    public $store_city;
+
+    public $store_address;
+
+    public $store_code;
+
+    public $store_telephone;
+
+    public $address;
+
+    public $docType;
+
+    public $docImage;
 
     public function form_seller()
     {
@@ -54,7 +61,7 @@ class Profile extends Component
         ]);
         if ($this->docImage) {
             $sellerDoc->update([
-                'img' => $this->uploadImageDoc()
+                'img' => $this->uploadImageDoc(),
             ]);
         }
 
@@ -67,6 +74,7 @@ class Profile extends Component
         $directory = "docseller/$year/$month";
         $name = $this->docImage->getClientOriginalName();
         $this->docImage->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -76,11 +84,11 @@ class Profile extends Component
         if ($store) {
             if ($store->store_back == 1) {
                 $store->update([
-                    'store_back' => 0
+                    'store_back' => 0,
                 ]);
             } else {
                 $store->update([
-                    'store_back' => 1
+                    'store_back' => 1,
                 ]);
             }
 
@@ -88,7 +96,7 @@ class Profile extends Component
             Store::create([
                 'personal' => 1,
                 'user_id' => $id,
-                'store_back' => 1
+                'store_back' => 1,
             ]);
         }
 
@@ -98,7 +106,7 @@ class Profile extends Component
     {
         $seller = Seller::where('id', $id)->first();
         $seller->update([
-            'learning_status' => 0
+            'learning_status' => 0,
         ]);
     }
 
@@ -114,6 +122,7 @@ class Profile extends Component
         $seller = Seller::where('mobile', $user)->first();
 
         $aboutUs = $this->aboutUs;
+
         return view('livewire.seller.dashboard.profile', compact('seller', 'aboutUs'))
             ->layout('layouts.seller_dashboard');
     }

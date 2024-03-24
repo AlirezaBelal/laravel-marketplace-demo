@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SettingFooter extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'footer_more_info_copyright', 'footer_more_info_title', 'footer_more_info_description', 'footer_more_info_category',
         'footer_more_info_safety-partner1', 'footer_more_info_safety-partner2', 'footer_more_info_safety-partner3', 'footer_more_info_brand',

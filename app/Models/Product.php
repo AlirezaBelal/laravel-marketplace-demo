@@ -10,26 +10,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Sluggable;
+    use SoftDeletes;
 
     protected $fillable = ['img', 'title', 'link', 'name', 'status_product', 'vendor_id',
         'category_id', 'subcategory_id', 'childcategory_id', 'categorylevel4_id', 'color_id', 'brand_id', 'tags', 'body', 'description',
         'price', 'discount_price', 'number', 'weight', 'view', 'shipment', 'publish_product', 'original',
         'gift', 'order_count', 'special'];
 
-
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
         return [
             'link' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
@@ -63,10 +60,10 @@ class Product extends Model
         return $this->belongsTo(Color::class, 'color_id', 'id');
     }
 
-
     public function scopeWithFilters($query, $brands)
     {
         dd($query);
+
         return $query->when(count($brands), function ($query) use ($brands) {
             $query->whereIn('brand_id', $brands);
         });

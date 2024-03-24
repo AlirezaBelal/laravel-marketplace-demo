@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Seller;
 
 use App\Models\Log;
-
 use App\Models\Seller;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,16 +10,17 @@ use Livewire\WithFileUploads;
 class Create extends Component
 {
     use WithFileUploads;
+
     public $logo;
+
     public $subCategory;
+
     public Seller $seller;
 
     public function mount()
     {
         $this->seller = new Seller();
     }
-
-
 
     protected $rules = [
         'seller.code_seller' => 'nullable|min:1',
@@ -56,12 +56,11 @@ class Create extends Component
         $this->validateOnly($name);
     }
 
-
     public function categoryForm()
     {
 
         $this->validate();
-        if ($this->logo){
+        if ($this->logo) {
             $this->seller->logo = $this->uploadImage();
         }
 
@@ -69,14 +68,13 @@ class Create extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن فروشنده' .'-'. $this->seller->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن فروشنده'.'-'.$this->seller->name,
+            'actionType' => 'ایجاد',
         ]);
-//        alert()->success(' با موفقیت ایجاد شد.', 'فروشنده مورد نظر با موفقیت اضافه شد.');
+
+        //        alert()->success(' با موفقیت ایجاد شد.', 'فروشنده مورد نظر با موفقیت اضافه شد.');
         return redirect(route('seller.index'));
     }
-
-
 
     public function uploadImage()
     {
@@ -86,6 +84,7 @@ class Create extends Component
         $directory = "userseller/$year/$month/$day";
         $name = $this->logo->getClientOriginalName();
         $this->logo->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Index\Title;
 
 use App\Models\Log;
-use App\Models\Menu;
 use App\Models\TitleCategoryIndex;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -27,7 +26,6 @@ class Index extends Component
         $this->index = new TitleCategoryIndex();
     }
 
-
     protected $rules = [
         'index.title' => 'required',
     ];
@@ -36,7 +34,6 @@ class Index extends Component
     {
         $this->validateOnly($title);
     }
-
 
     public function categoryForm()
     {
@@ -49,17 +46,17 @@ class Index extends Component
         $this->index->title = '';
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن عنوان دسته صفحه اصلی سایت' . '-' . $this->index->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن عنوان دسته صفحه اصلی سایت'.'-'.$this->index->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' عنوان دسته صفحه اصلی سایت با موفقیت ایجاد شد.');
 
     }
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
-
 
     public function render()
     {
@@ -67,6 +64,7 @@ class Index extends Component
         $indexes = $this->readyToLoad ? TitleCategoryIndex::where('title', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.index.title.index',compact('indexes'));
+
+        return view('livewire.admin.index.title.index', compact('indexes'));
     }
 }

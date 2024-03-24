@@ -18,14 +18,20 @@ class Amazing extends Component
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-    public $product_id;
-    public $category_id;
-    public $subCategory_id;
-    public $childCategory_id;
-    public $status;
-    public $property1;
-    public $property2;
 
+    public $product_id;
+
+    public $category_id;
+
+    public $subCategory_id;
+
+    public $childCategory_id;
+
+    public $status;
+
+    public $property1;
+
+    public $property2;
 
     public function categoryForm()
     {
@@ -49,8 +55,8 @@ class Amazing extends Component
         $this->property2 = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن پیشنهاد شگفت انگیز' . '-' . $this->product_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن پیشنهاد شگفت انگیز'.'-'.$this->product_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت ایجاد شد.');
 
@@ -68,12 +74,12 @@ class Amazing extends Component
         $category = DB::connection('mysql-apparel')->table('category_apparel_amazing')
             ->where('id', $id)->limit($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category2->category_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت پیشنهاد شگفت انگیز'.'-'.$category2->category_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت غیرفعال شد.');
     }
@@ -85,12 +91,12 @@ class Amazing extends Component
         $category = DB::connection('mysql-apparel')->table('category_apparel_amazing')
             ->where('id', $id)->limit($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت پیشنهاد شگفت انگیز' . '-' . $category2->category_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت پیشنهاد شگفت انگیز'.'-'.$category2->category_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت فعال شد.');
     }
@@ -104,13 +110,12 @@ class Amazing extends Component
         $amazing->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن پیشنهاد شگفت انگیز' . '-' . $amazing2->category_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن پیشنهاد شگفت انگیز'.'-'.$amazing2->category_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {
@@ -123,6 +128,7 @@ class Amazing extends Component
                 orWhere('product_id', 'LIKE', "%{$this->search}%")->
                 orWhere('id', $this->search)->
                 latest()->paginate(15) : [];
+
         return view('livewire.admin.categorypage.apparel.amazing', compact('specialProducts'));
     }
 }

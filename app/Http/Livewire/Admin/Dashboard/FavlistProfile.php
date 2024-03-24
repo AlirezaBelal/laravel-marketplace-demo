@@ -25,13 +25,13 @@ class FavlistProfile extends Component
 
     public function deleteCategory($id)
     {
-        $favlists = \App\Models\FavList::where('id',$id)->first();
+        $favlists = \App\Models\FavList::where('id', $id)->first();
 
         $favlists->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن لیست عمومی' . '-' . $id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن لیست عمومی'.'-'.$id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' با موفقیت از لیست های عمومی حذف شد ! ');
 
@@ -46,6 +46,7 @@ class FavlistProfile extends Component
         orWhere('link', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.dashboard.favlist-profile',compact('favlists'));
+
+        return view('livewire.admin.dashboard.favlist-profile', compact('favlists'));
     }
 }

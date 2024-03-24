@@ -13,7 +13,7 @@ class Step1 extends Component
     public function render()
     {
         $com1 = Request::segment(2);
-        $compre1 = (int)str_replace("dkp-", "", $com1);
+        $compre1 = (int) str_replace('dkp-', '', $com1);
         $product1 = Product::find($compre1);
 
         return view('livewire.home.compare.step1',

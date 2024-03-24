@@ -10,7 +10,9 @@ class PermissionUser extends Model
     use HasFactory;
 
     protected $table = 'permission_user';
+
     protected $fillable = ['permission_id', 'user_id'];
+
     public $timestamps = false;
 
     public function permissions()

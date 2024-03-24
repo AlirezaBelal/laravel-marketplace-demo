@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Product\Selected;
 
-use App\Models\CategoryIndex;
 use App\Models\Log;
 use App\Models\ProductNewSelected;
 use Livewire\Component;
@@ -27,7 +26,6 @@ class NewProduct extends Component
         $this->product = new ProductNewSelected();
     }
 
-
     protected $rules = [
         'product.product_id' => 'required',
         'product.category_id' => 'required',
@@ -40,7 +38,6 @@ class NewProduct extends Component
     {
         $this->validateOnly($product_id);
     }
-
 
     public function categoryForm()
     {
@@ -61,12 +58,13 @@ class NewProduct extends Component
         $this->product->status = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول منتخب' . '-' . $this->product->product_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن محصول منتخب'.'-'.$this->product->product_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' محصول منتخب با موفقیت ایجاد شد.');
 
     }
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
@@ -76,12 +74,12 @@ class NewProduct extends Component
     {
         $category = ProductNewSelected::find($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت محصول منتخب' . '-' . $category->category_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت محصول منتخب'.'-'.$category->category_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت محصول منتخب با موفقیت غیرفعال شد.');
     }
@@ -90,12 +88,12 @@ class NewProduct extends Component
     {
         $category = ProductNewSelected::find($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی' . '-' . $category->category_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی'.'-'.$category->category_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت محصول منتخب با موفقیت فعال شد.');
     }
@@ -106,13 +104,12 @@ class NewProduct extends Component
         $category->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن محصول منتخب' . '-' . $category->category_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن محصول منتخب'.'-'.$category->category_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' محصول منتخب با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {
@@ -123,6 +120,7 @@ class NewProduct extends Component
         orWhere('product_id', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.product.selected.new-product',compact('products'));
+
+        return view('livewire.admin.product.selected.new-product', compact('products'));
     }
 }

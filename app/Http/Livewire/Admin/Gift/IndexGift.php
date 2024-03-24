@@ -2,13 +2,8 @@
 
 namespace App\Http\Livewire\Admin\Gift;
 
-use App\Http\Livewire\Home\Profile\Gift;
-use App\Models\Category;
 use App\Models\Log;
-use App\Models\SubCategory;
-use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class IndexGift extends Component
@@ -16,8 +11,9 @@ class IndexGift extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
 
     public $search;
@@ -33,7 +29,6 @@ class IndexGift extends Component
         $this->gift = new \App\Models\Gift();
     }
 
-
     protected $rules = [
         'gift.date_expire' => 'nullable',
         'gift.price' => 'nullable',
@@ -44,12 +39,11 @@ class IndexGift extends Component
         $this->validateOnly($code);
     }
 
-
     public function categoryForm()
     {
 
         $this->validate();
-        $code = mt_rand(1000000000 ,  9999999999999);
+        $code = mt_rand(1000000000, 9999999999999);
         $gift = \App\Models\Gift::query()->create([
             'date_expire' => $this->gift->date_expire,
             'price' => $this->gift->price,
@@ -58,14 +52,13 @@ class IndexGift extends Component
             'type' => 0,
         ]);
 
-
-        $this->gift->date_expire = "";
-        $this->gift->price = "";
+        $this->gift->date_expire = '';
+        $this->gift->price = '';
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن کارت هدیه' . '-' . auth()->user()->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن کارت هدیه'.'-'.auth()->user()->name,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' کارت هدیه با موفقیت ایجاد شد.');
 
@@ -75,7 +68,6 @@ class IndexGift extends Component
     {
         $this->readyToLoad = true;
     }
-
 
     public function deleteGift($id)
     {
@@ -87,14 +79,13 @@ class IndexGift extends Component
             $gift->delete();
             Log::create([
                 'user_id' => auth()->user()->id,
-                'url' => 'حذف کردن کارت هدیه' . '-' . $gift->code,
-                'actionType' => 'حذف'
+                'url' => 'حذف کردن کارت هدیه'.'-'.$gift->code,
+                'actionType' => 'حذف',
             ]);
             $this->emit('toast', 'success', ' کارت هدیه با موفقیت حذف شد.');
         }
 
     }
-
 
     public function render()
     {
@@ -104,6 +95,7 @@ class IndexGift extends Component
         orWhere('value_price', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
+
         return view('livewire.admin.gift.index-gift', compact('gifts'));
     }
 }

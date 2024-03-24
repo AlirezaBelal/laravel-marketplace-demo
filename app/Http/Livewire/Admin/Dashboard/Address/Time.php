@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Admin\Dashboard\Address;
 
 use App\Models\AddressTime;
-use App\Models\Log;
-use App\Models\ReceiptCenter;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,9 +11,11 @@ class Time extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
 
     protected $queryString = ['search'];
@@ -29,8 +29,6 @@ class Time extends Component
         $this->addressTime = new AddressTime();
     }
 
-
-
     protected $rules = [
         'addressTime.day' => 'nullable',
         'addressTime.date' => 'nullable',
@@ -42,7 +40,6 @@ class Time extends Component
     {
         $this->validateOnly($day);
     }
-
 
     public function categoryForm()
     {
@@ -56,11 +53,10 @@ class Time extends Component
             'price' => $this->addressTime->price,
         ]);
 
-
-        $this->addressTime->day = "";
-        $this->addressTime->time = "";
-        $this->addressTime->date = "";
-        $this->addressTime->price = "";
+        $this->addressTime->day = '';
+        $this->addressTime->time = '';
+        $this->addressTime->date = '';
+        $this->addressTime->price = '';
         $this->emit('toast', 'success', ' زمان ارسال با موفقیت ایجاد شد.');
 
     }
@@ -70,8 +66,6 @@ class Time extends Component
         $this->readyToLoad = true;
     }
 
-
-
     public function deleteCategory($id)
     {
         $times = AddressTime::find($id);
@@ -80,13 +74,13 @@ class Time extends Component
 
     }
 
-
     public function render()
     {
 
         $addressTimes = $this->readyToLoad ? AddressTime::where('day', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.dashboard.address.time',compact('addressTimes'));
+
+        return view('livewire.admin.dashboard.address.time', compact('addressTimes'));
     }
 }

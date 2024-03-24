@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Payment;
 
-use App\Models\Order;
 use App\Models\Payment;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,18 +11,22 @@ class Index extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
+
     public function render()
     {
         $payments = $this->readyToLoad ? Payment::where('transactionId', 'LIKE', "%{$this->search}%")->
@@ -35,6 +38,7 @@ class Index extends Component
         orWhere('type_payment', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.payment.index',compact('payments'));
+
+        return view('livewire.admin.payment.index', compact('payments'));
     }
 }

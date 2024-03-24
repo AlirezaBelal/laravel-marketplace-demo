@@ -2,14 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Product\Warranty;
 
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Color;
 use App\Models\Log;
 use App\Models\Warranty;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -30,16 +25,14 @@ class Trashed extends Component
         $this->readyToLoad = true;
     }
 
-
-
     public function trashedCategory($id)
     {
         $warranty = Warranty::withTrashed()->where('id', $id)->first();
         $warranty->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی گارانتی' .'-'. $warranty->name,
-            'actionType' => 'بازیابی'
+            'url' => 'بازیابی گارانتی'.'-'.$warranty->name,
+            'actionType' => 'بازیابی',
         ]);
         $this->emit('toast', 'success', ' گارانتی با موفقیت بازیابی شد.');
     }
@@ -50,6 +43,7 @@ class Trashed extends Component
         $warranty->forceDelete();
         $this->emit('toast', 'success', ' گارانتی به صورت کامل از دیتابیس حذف شد.');
     }
+
     public function render()
     {
 
@@ -57,6 +51,6 @@ class Trashed extends Component
             ->whereNotNull('deleted_at')->
             latest()->paginate(15) : [];
 
-        return view('livewire.admin.product.warranty.trashed',compact('warranties'));
+        return view('livewire.admin.product.warranty.trashed', compact('warranties'));
     }
 }

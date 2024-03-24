@@ -17,16 +17,18 @@ class Banner extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
-    public $title;
-    public $link;
-    public $type;
-    public $search;
 
+    public $title;
+
+    public $link;
+
+    public $type;
+
+    public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-
 
     public function categoryForm()
     {
@@ -36,25 +38,25 @@ class Banner extends Component
             'type' => $this->type,
         ]);
         $banner2 = DB::connection('mysql-vehicle')->table('category_vehicle_banner')
-            ->where('link',$this->link)->first();
+            ->where('link', $this->link)->first();
 
         $banner3 = DB::connection('mysql-vehicle')->table('category_vehicle_banner')
-            ->where('id',$banner2->id)->limit($banner2->id);
+            ->where('id', $banner2->id)->limit($banner2->id);
 
         if ($this->img) {
             $banner3->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->title = "";
-        $this->link = "";
+        $this->title = '';
+        $this->link = '';
         $this->type = false;
         $this->img = null;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن بنر' . '-' . $this->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن بنر'.'-'.$this->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
 
@@ -67,6 +69,7 @@ class Banner extends Component
         $directory = "categorypage/vehicle/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -78,20 +81,21 @@ class Banner extends Component
     public function deleteCategory($id)
     {
         $banner2 = DB::connection('mysql-vehicle')->table('category_vehicle_banner')
-            ->where('id',$id)->first();
+            ->where('id', $id)->first();
         $banner = DB::connection('mysql-vehicle')->table('category_vehicle_banner')
-            ->where('id',$id)->limit($id);
-        Storage::disk('public')->delete("storage", $banner2->img);
+            ->where('id', $id)->limit($id);
+        Storage::disk('public')->delete('storage', $banner2->img);
         $banner->delete();
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن بنر' . '-' . $banner2->title,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن بنر'.'-'.$banner2->title,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' بنر با موفقیت حذف شد.');
 
     }
+
     public function render()
     {
 
@@ -100,6 +104,7 @@ class Banner extends Component
             orWhere('link', 'LIKE', "%{$this->search}%")->
             orWhere('id', $this->search)->
             latest()->paginate(15) : [];
-        return view('livewire.admin.categorypage.vehicle.banner',compact('banners'));
+
+        return view('livewire.admin.categorypage.vehicle.banner', compact('banners'));
     }
 }

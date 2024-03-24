@@ -2,27 +2,25 @@
 
 namespace App\Http\Livewire\Admin\Product;
 
-use App\Models\Category;
 use App\Models\Log;
 use App\Models\Product;
-use App\Models\SubCategory;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class Create extends Component
 {
     use WithFileUploads;
+
     public $img;
-public $subCategory;
+
+    public $subCategory;
+
     public Product $product;
 
     public function mount()
     {
         $this->product = new Product();
     }
-
-
 
     protected $rules = [
         'product.title' => 'required|min:3',
@@ -56,26 +54,24 @@ public $subCategory;
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
 
         $this->validate();
-        if ($this->img){
-        $this->product->img = $this->uploadImage();
-            }
+        if ($this->img) {
+            $this->product->img = $this->uploadImage();
+        }
         $this->product->save();
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول' .'-'. $this->product->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن محصول'.'-'.$this->product->title,
+            'actionType' => 'ایجاد',
         ]);
-//        alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
+
+        //        alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
         return redirect(route('product.index'));
     }
-
-
 
     public function uploadImage()
     {
@@ -85,9 +81,9 @@ public $subCategory;
         $directory = "product/$year/$month/$day";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
-
 
     public function render()
     {

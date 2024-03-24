@@ -11,5 +11,5 @@ class Attribute extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['childCategory','parent','title','position','status'];
+    protected $fillable = ['childCategory', 'parent', 'title', 'position', 'status'];
 }

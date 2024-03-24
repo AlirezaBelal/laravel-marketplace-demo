@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Product\ProductVendor;
 
 use App\Models\Log;
-use App\Models\Product;
 use App\Models\ProductSeller;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -25,6 +24,7 @@ class Trashed extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function deleteCategory($id)
     {
         $pVendor = ProductSeller::withTrashed()->findOrFail($id);
@@ -39,8 +39,8 @@ class Trashed extends Component
         $product->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی تنوع محصول' . '-' . $product->product_id,
-            'actionType' => 'بازیابی'
+            'url' => 'بازیابی تنوع محصول'.'-'.$product->product_id,
+            'actionType' => 'بازیابی',
         ]);
         $this->emit('toast', 'success', ' تنوع محصول با موفقیت بازیابی شد.');
     }
@@ -51,6 +51,7 @@ class Trashed extends Component
         $productSellers = $this->readyToLoad ? DB::table('product_sellers')
             ->whereNotNull('deleted_at')->
             latest()->paginate(15) : [];
+
         return view('livewire.admin.product.product-vendor.trashed', compact('productSellers'));
     }
 }

@@ -11,5 +11,5 @@ class AttributeValue extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['product_id','attribute_id','value','status'];
+    protected $fillable = ['product_id', 'attribute_id', 'value', 'status'];
 }

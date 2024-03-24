@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Chart;
 
-use App\Charts\OrderChart;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -11,15 +9,16 @@ use Livewire\Component;
 class UserChart extends Component
 {
     public $chartDatasets = [[]];
-    public $chartLabels = [];
-    public $chartId = null;
 
+    public $chartLabels = [];
+
+    public $chartId = null;
 
     public function addDataToChart()
     {
 
-        $value = User::select(DB::raw("(COUNT(*)) as count"),
-            DB::raw("MONTHNAME(created_at) as month_name"))
+        $value = User::select(DB::raw('(COUNT(*)) as count'),
+            DB::raw('MONTHNAME(created_at) as month_name'))
             ->groupBy('month_name')->get()->toArray()
             ?? null;
 
@@ -35,14 +34,14 @@ class UserChart extends Component
     {
         $this->addDataToChart();
 
-        if (!$this->chartId) {
+        if (! $this->chartId) {
 
             $chart = new \App\Charts\UserChart($this->chartDatasets, $this->chartLabels);
             $this->chartId = $chart->id;
         }
 
         return view('livewire.chart.user-chart', [
-            'chart' => $chart ?? null
+            'chart' => $chart ?? null,
         ]);
     }
 }

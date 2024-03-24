@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FooterLinkTwo extends Model
 {
     use HasFactory;
-    protected $fillable=['page_id'];
+
+    protected $fillable = ['page_id'];
 }

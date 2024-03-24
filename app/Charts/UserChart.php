@@ -5,21 +5,19 @@ declare(strict_types=1);
 namespace App\Charts;
 
 use Chartisan\PHP\Chartisan;
-use ConsoleTVs\Charts\BaseChart;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 use Illuminate\Http\Request;
 
 class UserChart extends Chart
 {
-
     /**
      * Handles the HTTP request for the given chart.
      * It must always return an instance of Chartisan
      * and never a string or an array.
-     * @param array $datasets
-     * @param array $labels
+     *
+     * @param  array  $datasets
+     * @param  array  $labels
      */
-
     public function __construct($datasets = [[]], $labels = [])
     {
         parent::__construct();
@@ -50,7 +48,7 @@ class UserChart extends Chart
 
         $this->labels($labels);
 
-        $this->dataset("کاربران", "line", $datasets[0])->options([
+        $this->dataset('کاربران', 'line', $datasets[0])->options([
             'backgroundColor' => 'rgb(127,156,245, 0.4)',
             'borderColor' => '#7F9CF5',
             'pointBackgroundColor' => 'rgb(255, 255, 255, 0)',
@@ -61,7 +59,6 @@ class UserChart extends Chart
             'pointRadius' => 1,
         ]);
     }
-
 
     /**
      * Handles the HTTP request for the given chart.

@@ -4,20 +4,19 @@ namespace App\Http\Livewire\Home\User;
 
 use App\Models\SMS;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Kavenegar\KavenegarApi;
 use Livewire\Component;
 
 class ConfirmPassword extends Component
 {
     public User $user;
+
     public SMS $sms;
 
     public function mount()
     {
         $this->sms = new Sms();
     }
-
 
     protected $rules = [
         'sms.email_phone' => 'required',
@@ -27,7 +26,6 @@ class ConfirmPassword extends Component
     {
         $this->validateOnly($email_phone);
     }
-
 
     public function userForm()
     {
@@ -47,12 +45,12 @@ class ConfirmPassword extends Component
                 'type' => $type,
                 'user_id' => $mobile->id,
             ]);
-            return $this->redirect(route('users.confirm.password.verify',$mobile->id));
+
+            return $this->redirect(route('users.confirm.password.verify', $mobile->id));
         } else {
             $this->emit('toast', 'error', ' شماره موبایل وجود ندارد. به قسمت ایجاد حساب مراجعه فرمایید!');
         }
     }
-
 
     public function render()
     {

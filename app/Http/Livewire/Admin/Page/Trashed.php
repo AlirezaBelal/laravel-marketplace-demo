@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Page;
 
-use App\Models\Brand;
 use App\Models\Log;
 use App\Models\Page;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +16,7 @@ class Trashed extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -31,7 +31,7 @@ class Trashed extends Component
     public function deleteCategory($id)
     {
         $page = Page::withTrashed()->findOrFail($id);
-        Storage::disk('public')->delete("storage",$page->img);
+        Storage::disk('public')->delete('storage', $page->img);
         $page->forceDelete();
         $this->emit('toast', 'success', ' صفحه سایت به صورت کامل از دیتابیس حذف شد.');
     }
@@ -42,8 +42,8 @@ class Trashed extends Component
         $page->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی صفحه سایت' .'-'. $page->title,
-            'actionType' => 'بازیابی'
+            'url' => 'بازیابی صفحه سایت'.'-'.$page->title,
+            'actionType' => 'بازیابی',
         ]);
         $this->emit('toast', 'success', ' صفحه سایت با موفقیت بازیابی شد.');
     }
@@ -54,6 +54,7 @@ class Trashed extends Component
         $pages = $this->readyToLoad ? DB::table('pages')
             ->whereNotNull('deleted_at')->
             latest()->paginate(15) : [];
-        return view('livewire.admin.page.trashed',compact('pages'));
+
+        return view('livewire.admin.page.trashed', compact('pages'));
     }
 }

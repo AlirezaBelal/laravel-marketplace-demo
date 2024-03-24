@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Brand;
 
 use App\Models\Brand;
 use App\Models\Log;
-use App\Models\SubCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -17,6 +16,7 @@ class Trashed extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -31,7 +31,7 @@ class Trashed extends Component
     public function deleteCategory($id)
     {
         $brand = Brand::withTrashed()->findOrFail($id);
-        Storage::disk('public')->delete("storage",$brand->img);
+        Storage::disk('public')->delete('storage', $brand->img);
         $brand->forceDelete();
         $this->emit('toast', 'success', ' برند به صورت کامل از دیتابیس حذف شد.');
     }
@@ -42,8 +42,8 @@ class Trashed extends Component
         $brand->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی برند' .'-'. $brand->name,
-            'actionType' => 'بازیابی'
+            'url' => 'بازیابی برند'.'-'.$brand->name,
+            'actionType' => 'بازیابی',
         ]);
         $this->emit('toast', 'success', ' برند با موفقیت بازیابی شد.');
     }
@@ -55,6 +55,6 @@ class Trashed extends Component
             ->whereNotNull('deleted_at')->
             latest()->paginate(15) : [];
 
-        return view('livewire.admin.brand.trashed',compact('brands'));
+        return view('livewire.admin.brand.trashed', compact('brands'));
     }
 }

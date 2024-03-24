@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReceiptCenter extends Model
 {
     use HasFactory;
-    protected $fillable=['user_name','address','status'];
+
+    protected $fillable = ['user_name', 'address', 'status'];
 }

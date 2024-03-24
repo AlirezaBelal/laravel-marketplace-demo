@@ -16,13 +16,12 @@ class Brand extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $brand_id;
-    public $search;
 
+    public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-
 
     public function categoryForm()
     {
@@ -35,17 +34,15 @@ class Brand extends Component
         $banner3 = DB::connection('mysql-apparel')->table('category_apparel_brand')
             ->where('id', $banner2->id)->limit($banner2->id);
 
-
         $this->brand_id = null;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول' . '-' . $this->brand_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن محصول'.'-'.$this->brand_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' محصول با موفقیت ایجاد شد.');
 
     }
-
 
     public function loadCategory()
     {
@@ -62,8 +59,8 @@ class Brand extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن محصول' . '-' . $banner2->brand_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن محصول'.'-'.$banner2->brand_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' محصول با موفقیت حذف شد.');
 
@@ -78,6 +75,6 @@ class Brand extends Component
             orWhere('id', $this->search)->
             latest()->paginate(15) : [];
 
-        return view('livewire.admin.categorypage.apparel.brand',compact('brands'));
+        return view('livewire.admin.categorypage.apparel.brand', compact('brands'));
     }
 }
