@@ -20,6 +20,7 @@ class CreateEmailsTable extends Migration
             $table->string('user_name')->nullable();
             $table->string('user_mobile')->nullable();
             $table->longText('title')->nullable();
+            $table->longText('code')->nullable();
             $table->longText('text')->nullable();
             $table->timestamps();
         });
