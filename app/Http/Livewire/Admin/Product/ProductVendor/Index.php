@@ -2,9 +2,13 @@
 
 namespace App\Http\Livewire\Admin\Product\ProductVendor;
 
-use App\Models\Gallery;
+use App\Mail\OrderSubmit;
 use App\Models\Log;
+use App\Models\Notification;
+use App\Models\Product;
 use App\Models\ProductSeller;
+use App\Models\ProductSellTest;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -29,7 +33,6 @@ class Index extends Component
     {
         $this->productSeller = new ProductSeller();
     }
-
 
 
     protected $rules = [
@@ -63,7 +66,7 @@ class Index extends Component
         }
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'افزودن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت ایجاد شد.');
@@ -74,6 +77,7 @@ class Index extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $productSeller = ProductSeller::find($id);
@@ -82,7 +86,7 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
@@ -96,11 +100,12 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'فعال کردن وضعیت تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
     }
+
     public function updateAnbarDisable($id)
     {
         $productSeller = ProductSeller::find($id);
@@ -109,7 +114,7 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'غیرفعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت غیرفعال شد.');
@@ -123,11 +128,58 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'فعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت فعال شد.');
     }
+
+    public function OkNewProduct($id)
+    {
+        $pro = ProductSellTest::find($id);
+        $product = Product::create([
+            'title' => $pro->title,
+            'name' => $pro->ename,
+            'link' => $pro->ename,
+            'vendor_id' => $pro->user_id,
+            'category_id' => $pro->cat_id,
+            'subcategory_id' => $pro->cat2_id,
+            'childcategory_id' => $pro->cat3_id,
+            'categorylevel4_id' => $pro->cat4_id,
+            'brand_id' => $pro->brand_id,
+            'status_product' => 0,
+            'body' => $pro->detail_product,
+            'original' => $pro->original,
+            'weight' => $pro->weight,
+            'img' => $pro->img,
+            'number' => 1,
+        ]);
+        $type = 'سفارش شما ثبت شد';
+        Notification::create([
+            'user_id' => $pro->user_id,
+            'product_id' => $product->id,
+            'type' => $type,
+            'sms' => 1,
+            'email' => 1,
+            'system' => 1,
+            'text' => $product->id,
+        ]);
+        $email = \App\Models\Email::create([
+            'user_id' => $pro->user_id,
+            'user_email' => $pro->user->email,
+            'user_mobile' => $pro->user->mobile,
+            'title' => 'محصول ارسالی شما پذیرفته شد',
+            'text' => 'محصول ارسالی شما در دیجی کالا پذیرفته شد',
+            'code' => 'محصول شما پذیرفته  شد',
+        ]);
+
+        Mail::to($pro->user->email)->send(new OrderSubmit($email));
+
+        $pro->delete();
+        $this->emit('toast', 'success', 'محصول با موفقیت ساخته شد .');
+
+    }
+
 
     public function deleteCategory($id)
     {
@@ -135,7 +187,7 @@ class Index extends Component
         $productSeller->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تنوع قیمت محصول' .'-'. $this->productSeller->product_id,
+            'url' => 'حذف کردن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت حذف شد.');
@@ -154,6 +206,10 @@ class Index extends Component
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
 
-        return view('livewire.admin.product.product-vendor.index',compact('productSellers'));
+        $productTest = ProductSellTest::
+        latest()->paginate(15);
+
+        return view('livewire.admin.product.product-vendor.index',
+            compact('productSellers', 'productTest'));
     }
 }
