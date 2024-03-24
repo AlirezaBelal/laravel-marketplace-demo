@@ -35,7 +35,7 @@ class Update extends Component
             'url' => 'آپدیت تصویر محصول' .'-'. $this->gallery->product_id,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'تصویر محصول مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'تصویر محصول مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('gallery.index'));
 
     }

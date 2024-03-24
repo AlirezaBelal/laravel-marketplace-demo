@@ -59,7 +59,7 @@ class Create extends Component
             'url' => 'افزودن تنوع قیمت محصول' .'-'. $this->productSeller->title,
             'actionType' => 'ایجاد'
         ]);
-        alert()->success(' با موفقیت ایجاد شد.', 'تنوع قیمت محصول مورد نظر با موفقیت ایجاد شد.');
+//        alert()->success(' با موفقیت ایجاد شد.', 'تنوع قیمت محصول مورد نظر با موفقیت ایجاد شد.');
 
         return redirect(route('productVendor.index'));
     }

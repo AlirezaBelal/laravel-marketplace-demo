@@ -33,7 +33,7 @@ class Update extends Component
             'url' => 'آپدیت رنگ' .'-'. $this->color->name,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'رنگ مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'رنگ مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('color.index'));
 
     }

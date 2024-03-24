@@ -33,7 +33,7 @@ class Update extends Component
             'url' => 'آپدیت گارانتی' .'-'. $this->warranty->name,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'گارانتی مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'گارانتی مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('warranty.index'));
 
     }
