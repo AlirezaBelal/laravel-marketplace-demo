@@ -39,7 +39,7 @@ class Update extends Component
             'url' => 'آپدیت دسته کودک' .'-'. $this->childcategory->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success('دسته کودک با موفقیت ایجاد شد.', 'دسته کودک آپدیت شد.');
+//        alert()->success('دسته کودک با موفقیت ایجاد شد.', 'دسته کودک آپدیت شد.');
 
         return redirect(route('childcategory.index'));
 

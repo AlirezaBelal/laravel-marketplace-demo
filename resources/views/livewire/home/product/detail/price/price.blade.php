@@ -6,7 +6,9 @@
             @if ($this->vendor_new)
                 {{\App\Models\PersianNumber::translate($this->vendor_new->discount_price)}}
             @else
+                @if($productSeller_max_price_first != null)
                 {{\App\Models\PersianNumber::translate($productSeller_max_price_first->discount_price ?? $this->vendor_new->discount_price)}}
+            @endif
             @endif
         </div>
         <div
@@ -23,7 +25,9 @@
             @if ($this->vendor_new)
                 {{\App\Models\PersianNumber::translate($this->vendor_new->discount_price)}}
             @else
+                @if($productSeller_max_price_first != null)
                 {{\App\Models\PersianNumber::translate($productSeller_max_price_first->discount_price ?? $this->vendor_new->discount_price)}}
+            @endif
             @endif
 
         </div>

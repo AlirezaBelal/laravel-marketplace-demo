@@ -37,7 +37,7 @@ class Update extends Component
             'url' => 'آپدیت تبلیغات دسته' .'-'. $this->ads->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'تبلیغات دسته مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'تبلیغات دسته مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('ads.index'));
 
     }

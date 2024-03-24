@@ -10,7 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -41,6 +41,10 @@ class User extends Authenticatable
         'city_company',
         'phone_company',
         'wallet',
+        'admin',
+        'staff',
+        'seller',
+        'email_verified_at',
     ];
 
     /**
@@ -55,14 +59,14 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+//    /**
+//     * The attributes that should be cast to native types.
+//     *
+//     * @var array
+//     */
+//    protected $casts = [
+//        'email_verified_at' => 'datetime',
+//    ];
 
     /**
      * The accessors to append to the model's array form.
@@ -72,4 +76,34 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
+    public function isStaff()
+    {
+        return $this->staff;
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->permissions->contains('name', $permission->name || $this->hasRole($permission->roles));
+    }
+
+    public function hasRole($roles)
+    {
+        return !!$roles->intersect($this->roles)->all();
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

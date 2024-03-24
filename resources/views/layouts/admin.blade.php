@@ -6,7 +6,7 @@
     <script src="{{mix('/js/app.js')}}" defer></script>
 </head>
 <body>
-@include('sweet::alert')
+{{--@include('sweet::alert')--}}
 <livewire:admin.dashboard.sidebar/>
 <div class="content">
 
@@ -14,11 +14,15 @@
     @include('livewire.admin.dashboard.breadcrumb')
     {{$slot}}
 </div>
-</body>
+<link href="{{asset('js/jquery/jquery.min.js')}}" rel="stylesheet" />
 <livewire:admin.dashboard.footer/>
-
+@yield('chart')
 <script src="{{asset('/js/livewire-turbolinks.js')}}" data-turbolinks-eval="false" data-turbo-eval="false"></script>
-</html>
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        $('#roles').select2();--}}
+{{--    });--}}
+{{--</script>--}}
 <script>
     console.log(document.getElementById("copied2"));
     setTimeout(function (){
@@ -28,3 +32,8 @@
         }
     },3000)
 </script>
+
+</body>
+
+
+</html>

@@ -55,7 +55,7 @@ class Update extends Component
             'url' => 'آپدیت فروشنده' .'-'. $this->seller->name,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'فروشنده مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'فروشنده مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('seller.index'));
 
     }

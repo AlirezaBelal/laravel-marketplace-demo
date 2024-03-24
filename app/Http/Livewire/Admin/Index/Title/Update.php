@@ -22,7 +22,7 @@ class Update extends Component
             'url' => 'آپدیت عنوان دسته' .'-'. $this->index->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success('عنوان دسته با موفقیت ایجاد شد.', 'عنوان دسته آپدیت شد.');
+//        alert()->success('عنوان دسته با موفقیت ایجاد شد.', 'عنوان دسته آپدیت شد.');
         return redirect(route('index.title.index'));
 
     }

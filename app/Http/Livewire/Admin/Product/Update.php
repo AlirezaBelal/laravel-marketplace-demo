@@ -99,7 +99,7 @@ class Update extends Component
             'url' => 'آپدیت محصول' . '-' . $this->product->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'محصول مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'محصول مورد نظر با موفقیت آپدیت شد.');
 
         return redirect(route('product.index'));
 

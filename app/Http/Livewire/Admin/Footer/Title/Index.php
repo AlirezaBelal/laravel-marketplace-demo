@@ -33,7 +33,7 @@ class Index extends Component
     {
         $this->validate();
         if ($this->footerTitle->count() >17){
-            alert()->error('عنوان فوتر  آپدیت نشد.', 'عنوان فوتر  نباید بیشتر از 15 مورد باشد.');
+//            alert()->error('عنوان فوتر  آپدیت نشد.', 'عنوان فوتر  نباید بیشتر از 15 مورد باشد.');
             return redirect(route('footer_title.index'));
         }else
         {

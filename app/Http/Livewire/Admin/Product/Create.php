@@ -71,7 +71,7 @@ public $subCategory;
             'url' => 'افزودن محصول' .'-'. $this->product->title,
             'actionType' => 'ایجاد'
         ]);
-        alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
+//        alert()->success(' با موفقیت ایجاد شد.', 'محصول مورد نظر با موفقیت ایجاد شد.');
         return redirect(route('product.index'));
     }
 

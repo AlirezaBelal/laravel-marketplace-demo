@@ -3,7 +3,7 @@
         <div class="o-box__header o-box__header--two-sided">
             <div class="o-box__title">پیغام</div>
             @if(\App\Models\Notification::where('user_id',auth()->user()->id)->
-           where('type','1')->first())
+      first())
             <div>
                 <div
                       wire:click="deleteAllNotification({{auth()->user()->id}})"
@@ -13,31 +13,42 @@
                 @endif
         </div>
         @if(\App\Models\Notification::where('user_id',auth()->user()->id)->
-            where('type','1')->first())
+            first())
         <div class="c-profile-notification">
             @foreach(\App\Models\Notification::where('user_id',auth()->user()->id)->
-            where('type','1')->get() as $notification)
+            get() as $notification)
                 <a
+                    @if($notification->product_id != null)
                     href="/product/dkp-{{$notification->product_id}}/{{$notification->product->slug}}"
+                    @endif
                     class="c-profile-notification__item ">
                     <div class="c-profile-notification__info-container">
                         <div class="c-profile-notification__title">
                             🔔
-                          @if($notification->type == 1)
-                                کالا موجود شد.
-                            @endif
+                          {{$notification->type}}
                         </div>
+                        @if($notification->product_id != null)
                         <div class="c-profile-notification__description">
                             {{$notification->product->title}}
+
                         </div>
+                        @else
+                            <div class="c-profile-notification__description">
+                                {{$notification->text}}
+                            </div>
+                        @endif
                         <div class="c-profile-notification__date">
                             {{\App\Models\PersianNumber::translate(jdate($notification->updated_at)->format('%Y/%m/%d'))}}
                         </div>
                     </div>
+                    @if($notification->product_id != null)
                     <div class="c-profile-notification__img-container">
                         <img class="c-profile-notification__img"
+
                              src="/storage/{{$notification->product->img}}"
+
                              alt="Item Image"></div>
+                    @endif
                 </a>
             @endforeach
         </div>

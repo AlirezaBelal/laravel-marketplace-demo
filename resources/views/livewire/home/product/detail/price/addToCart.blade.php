@@ -15,7 +15,9 @@
        @if ($this->vendor_new)
        wire:click="addToCart({{$this->vendor_new->id}})"
        @else
+       @if($productSeller_max_price_first != null)
        wire:click="addToCart({{$productSeller_max_price_first->id ?? $this->vendor_new->id}})"
+       @endif
        @endif
 
        data-event-label="price: 40980000 - seller: marketplace - seller_name: دیجی‌کالا - seller_rating: 0 - multiple_configs: True - position: 0"><span

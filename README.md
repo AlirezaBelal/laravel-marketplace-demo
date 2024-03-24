@@ -1,27 +1,29 @@
-## Digikala Projact by Laravel
+# Digikala Project by Laravel
 
-### How to launch a project
-cofnig databesa :: in env -> DB_DATABASE=digikala1400
+## Launching the Project
 
-add SQL :: DOC->backup_V04->all file 
+1. Configure the database: Set `DB_DATABASE` in the `.env` file to `digikala_digikala`.
+2. Add SQL: Import all files from the `DOC -> backup_V06` directory.
+3. Run the project: Execute `php artisan serve` to start the server locally.
 
-run -> php 127.0.0.1:8000 -public
+## Packages Used
 
-## Packages used in this project along with links
+- [Livewire](https://laravel-livewire.com/): For dynamic, reactive interfaces.
+- [SweetAlert2](https://sweetalert2.github.io/): A beautiful, responsive replacement for JavaScript's alert.
+- [Jetstream](https://jetstream.laravel.com/2.x/installation.html): Laravel's scaffolding for modern and elegant
+  applications.
+- [Ckeditor 5](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/quick-start.html): A powerful rich text editor.
+- [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable): Provides easy creation of slugs for Eloquent
+  models.
+    - Enables automatic linking.
+- [jscolor](https://jscolor.com/): A JavaScript color picker.
+- [Kavenegar SMS Panel](https://github.com/kavenegar/kavenegar-php): Integrates Kavenegar's SMS services.
 
-- live wire **[Document](https://laravel-livewire.com/)**
-- Sweet alert 2 **[GitHub](https://sweetalert2.github.io/)**
-- Jet stream **[Document](https://jetstream.laravel.com/2.x/installation.html)**
-- Ckeditor 5 **[Document](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/quick-start.html)**
-- slug gable **[GitHub](https://github.com/cviebrock/eloquent-sluggable)**
-  - Automatic linking
-- inpout color **[Document](https://jscolor.com/)**
-- SMS panel **[GitHub](https://github.com/kavenegar/kavenegar-php)**
+## Contact Us
 
-    
-## Contact us
-Stay in touch through the following communication channels
-<br>
-Thanks, Alireza Belal
+Stay connected with us through the following channels:
 
-- Communication via e-mail :  [belal.alireza@gmail.com](mailto:belal.alireza@gmail.com).
+- **Email**: [belal.alireza@gmail.com](mailto:belal.alireza@gmail.com)
+
+Thank you,
+Alireza Belal

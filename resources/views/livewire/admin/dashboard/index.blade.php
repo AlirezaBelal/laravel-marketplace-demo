@@ -40,7 +40,9 @@
         </div>
         <div class="row no-gutters font-size-13 margin-bottom-10">
             <div class="col-8 padding-20 bg-white margin-bottom-10 margin-left-10 border-radius-3">
-                محل قرار گیری نمودار
+                سفارشات
+
+            @livewire('chart.chart')
             </div>
             <div class="col-4 info-amount padding-20 bg-white margin-bottom-12-p margin-bottom-10 border-radius-3">
 
@@ -51,6 +53,7 @@
                 <a href="/" class=" all-reconcile-text color-2b4a83">همه تسویه حساب ها</a>
             </div>
         </div>
+
         <div class="row bg-white no-gutters font-size-13">
             <div class="title__row">
                 <p>تراکنش های اخیر شما</p>

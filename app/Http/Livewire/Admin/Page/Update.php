@@ -31,7 +31,7 @@ class Update extends Component
             'url' => 'آپدیت صفحه سایت' .'-'. $this->page->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'صفحه سایت مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'صفحه سایت مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('page.index'));
 
     }

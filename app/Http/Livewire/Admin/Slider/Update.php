@@ -32,7 +32,7 @@ class Update extends Component
             'url' => 'آپدیت اسلایدر' .'-'. $this->slider->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'اسلایدر مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'اسلایدر مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('slider.index'));
 
     }

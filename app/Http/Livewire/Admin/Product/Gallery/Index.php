@@ -31,11 +31,11 @@ class Index extends Component
     }
 
 
-
     protected $rules = [
         'gallery.product_id' => 'required',
         'gallery.status' => 'nullable',
         'gallery.position' => 'nullable',
+        'img' => 'nullable|max:1000000',
     ];
 
     public function updated($title)
@@ -48,13 +48,13 @@ class Index extends Component
     {
         $this->validate();
 
-        $gallery =    Gallery::query()->create([
+        $gallery = Gallery::query()->create([
             'product_id' => $this->gallery->product_id,
             'position' => $this->gallery->position,
-            'status' => $this->gallery->status ? 1:0 ,
+            'status' => $this->gallery->status ? 1 : 0,
         ]);
 
-        if ($this->img){
+        if ($this->img) {
             $gallery->update([
                 'img' => $this->uploadImage()
             ]);
@@ -66,12 +66,13 @@ class Index extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تصویر محصول' .'-'. $this->gallery->product_id,
+            'url' => 'افزودن تصویر محصول' . '-' . $this->gallery->product_id,
             'actionType' => 'ایجاد'
         ]);
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت ایجاد شد.');
 
     }
+
     public function uploadImage()
     {
         $year = now()->year;
@@ -87,6 +88,7 @@ class Index extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $gallery = Gallery::find($id);
@@ -95,7 +97,7 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
+            'url' => 'غیرفعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
             'actionType' => 'غیرفعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت غیرفعال شد.');
@@ -109,7 +111,7 @@ class Index extends Component
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تصویر محصول' .'-'. $this->gallery->product_id,
+            'url' => 'فعال کردن وضعیت تصویر محصول' . '-' . $this->gallery->product_id,
             'actionType' => 'فعال'
         ]);
         $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت فعال شد.');
@@ -121,7 +123,7 @@ class Index extends Component
         $gallery->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تصویر محصول' .'-'. $this->gallery->product_id,
+            'url' => 'حذف کردن تصویر محصول' . '-' . $this->gallery->product_id,
             'actionType' => 'حذف'
         ]);
         $this->emit('toast', 'success', ' تصویر محصول با موفقیت حذف شد.');
@@ -136,6 +138,6 @@ class Index extends Component
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
 
-        return view('livewire.admin.product.gallery.index',compact('galleries'));
+        return view('livewire.admin.product.gallery.index', compact('galleries'));
     }
 }

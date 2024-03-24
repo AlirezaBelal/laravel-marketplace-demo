@@ -48,9 +48,10 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="c-profile-order__list-item-actions c-profile-order__list-item-actions--has-separator"><a
                             href="/profile/orders-return/132248684/select-items/" class="o-btn o-btn--link-blue-md">ثبت
-                            مرجوعی</a><a href="/profile/orders/132248684/invoice/" class="o-btn o-btn--link-blue-md">مشاهده
+                            مرجوعی</a><a href="/profile/orders/{{$payment->id}}/invoice/" class="o-btn o-btn--link-blue-md">مشاهده
                             فاکتور</a></div>
                 </div>
             @endforeach

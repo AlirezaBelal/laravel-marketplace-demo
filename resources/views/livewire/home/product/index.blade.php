@@ -2,6 +2,7 @@
     <main id="main">
         <div id="HomePageTopBanner"></div>
         <div id="content">
+
             <div data-category-id="11" data-product-id="3048126" class="o-page js-product-page c-product-page">
                 <div class="container">
                     <div class="c-product__nav-container">
@@ -16,3 +17,7 @@
             </div>
     </main>
 </div>
+
+@include('livewire.home.product.cssjs')
+@include('livewire.home.product.modals')
+

@@ -33,7 +33,7 @@ class Update extends Component
             'url' => 'آپدیت مشخصات کالا' .'-'. $this->attribute->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'مشخصات محصول مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'مشخصات محصول مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('attribute.index'));
 
     }

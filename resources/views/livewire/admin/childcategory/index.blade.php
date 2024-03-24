@@ -3,8 +3,10 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
+                @can('category-show')
                 <a class="tab__item {{Request::routeIs('category.index') ? 'is-active': '' }}" href="/admin/category">دسته
                     ها</a>
+                @endcan
                 <a class="tab__item "
                    href="/admin/subcategory">زیر دسته ها</a>
                 <a class="tab__item is-active "

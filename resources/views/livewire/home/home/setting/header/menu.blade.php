@@ -209,7 +209,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
         <div class="c-dp-header-submenu">
             <div class="c-dp-header-submenu__content">
                 <div class="c-dp-header-submenu__head-title">
-                    خدمات ویژه کاربران <img src="static/files/4a2895fc.svg" alt="Digiplus">
+                    خدمات ویژه کاربران <img src="/files/4a2895fc.svg" alt="Digiplus">
                 </div>
                 <div class="c-dp-header-submenu__head-subtitle">
                     ارسال رایگان بدون محدودیت قیمت، هدیه نقدی و بازگشت کالا تا ۳۰ روز پس از
@@ -225,7 +225,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
                     <li class="c-dp-header-submenu__nav-item c-dp-header-submenu__nav-item--plus-products">
                         <a class="c-dp-header-submenu__nav-link"
                            href="search/index4f40.html?only_plus=1&amp;digiplus%5B0%5D=has_plus_cash_back">
-                            کالاهای <img src="static/files/4a2895fc.svg" alt="Digiplus">
+                            کالاهای <img src="/files/4a2895fc.svg" alt="Digiplus">
                         </a>
                     </li>
                 </ul>
@@ -233,7 +233,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
             <a class="c-dp-header-submenu__banner-link"
                href="plus/landing/index.html">
                 <img class="c-dp-header-submenu__banner-img"
-                     src="static/files/38492329.jpg"
+                     src="/files/38492329.jpg"
                      alt="Banner"
                 >
             </a>
@@ -249,7 +249,7 @@ $header_7 = \App\Models\SiteHeader::get()[6];
         <div class="c-dc-header-submenu">
             <div class="c-dc-header-submenu__content">
                 <img class="c-dc-header-submenu__logo-img"
-                     src="static/files/1c93eb76.svg"
+                     src="/files/1c93eb76.svg"
                      alt="Digiclub"
                 >
                 <ul class="c-dc-header-submenu__nav">

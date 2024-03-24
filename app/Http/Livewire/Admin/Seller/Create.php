@@ -72,7 +72,7 @@ class Create extends Component
             'url' => 'افزودن فروشنده' .'-'. $this->seller->name,
             'actionType' => 'ایجاد'
         ]);
-        alert()->success(' با موفقیت ایجاد شد.', 'فروشنده مورد نظر با موفقیت اضافه شد.');
+//        alert()->success(' با موفقیت ایجاد شد.', 'فروشنده مورد نظر با موفقیت اضافه شد.');
         return redirect(route('seller.index'));
     }
 
@@ -83,7 +83,7 @@ class Create extends Component
         $year = now()->year;
         $month = now()->month;
         $day = now()->day;
-        $directory = "seller/$year/$month/$day";
+        $directory = "userseller/$year/$month/$day";
         $name = $this->logo->getClientOriginalName();
         $this->logo->storeAs($directory, $name);
         return "$directory/$name";

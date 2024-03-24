@@ -39,7 +39,7 @@ class Update extends Component
             'url' => 'آپدیت زیردسته' .'-'. $this->subcategory->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success('زیر دسته با موفقیت ایجاد شد.', 'زیر دسته آپدیت شد.');
+//        alert()->success('زیر دسته با موفقیت ایجاد شد.', 'زیر دسته آپدیت شد.');
 
         return redirect(route('subcategory.index'));
 

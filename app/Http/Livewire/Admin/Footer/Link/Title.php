@@ -33,7 +33,7 @@ class Title extends Component
     {
         $this->validate();
        if ($this->footerLinkTitle->count() >2){
-           alert()->error('عنوان فوتر صفحه سایت آپدیت نشد.', 'عنوان فوتر صفحه سایت نباید بیشتر از 3 تا باشد.');
+//           alert()->error('عنوان فوتر صفحه سایت آپدیت نشد.', 'عنوان فوتر صفحه سایت نباید بیشتر از 3 تا باشد.');
            return redirect(route('footer_page_title.index'));
        }else
        {

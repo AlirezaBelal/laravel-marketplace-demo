@@ -13,7 +13,7 @@
                             <div class="swiper-slide" data-carousel="sn-carousels-incredible-offer"
                                  data-id="{{$specialProduct->id}}">
                                 <li>
-                                    <a href="{{$specialProduct->product->link}}"
+                                    <a href="/product/dkp-{{$specialProduct->product->id}}/{{$specialProduct->product->link}}"
                                        data-id="1429756"
                                        class="c-product-box__box-link js-product-url js-carousel-ga-product-box"></a>
                                     <div

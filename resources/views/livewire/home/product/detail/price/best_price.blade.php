@@ -28,6 +28,7 @@
         </div>
     </div>
 </div>
+@if($productSeller_max_price_first != null)
 @if ($priceDate_min_price_first->discount_price == $productSeller_max_price_first->discount_price ?? $this->vendor_new->discount_price )
     @if ($mo > 0)
         <div
@@ -35,4 +36,5 @@
             بهترین قیمت ۳۰ روز گذشته
         </div>
     @endif
+@endif
 @endif

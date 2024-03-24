@@ -3,10 +3,14 @@
     <div class="main-content" wire:init="loadCategory">
         <div class="tab__box">
             <div class="tab__items">
+                @can('show-category')
                 <a class="tab__item is-active" href="/admin/category">دسته
                     ها</a>
+                @endcan
+                @can('subcategory-show')
                 <a class="tab__item {{Request::routeIs('subcategory.index') ? 'is-active': '' }}"
                    href="/admin/subcategory">زیر دسته ها</a>
+                @endcan
                 <a class="tab__item {{Request::routeIs('childcategory.index') ? 'is-active': '' }}"
                    href="/admin/childcategory">دسته های کودک</a>
                 <a class="tab__item {{Request::routeIs('categorylevel4.index') ? 'is-active': '' }}"
@@ -59,6 +63,7 @@
                                     <td><a href="">{{$category->name}}</a></td>
 
                                     <td>
+                                        @can('status-category')
                                         @if($category->status == 1)
                                             <button wire:click="updateCategoryDisable({{$category->id}})"
                                                     type="submit" class="badge-success badge"
@@ -71,11 +76,16 @@
                                                 غیرفعال
                                             </button>
                                         @endif
+                                        @endcan
                                     </td>
                                     <td>
+                                        @can('delete-category')
                                         <a wire:click="deleteCategory({{$category->id}})" type="submit"
                                            class="item-delete mlg-15" title="حذف"></a>
+                                        @endcan
+                                        @can('edit-category')
                                         <a href="{{route('category.update',$category)}}" class="item-edit " title="ویرایش"></a>
+                                            @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,8 +109,10 @@
 
 
             </div>
+
             <div class="col-4 bg-white">
                 <p class="box__title">ایجاد دسته بندی جدید</p>
+                @can('create-category')
                 <form wire:submit.prevent="categoryForm"
                       enctype="multipart/form-data" role="form"
                       class="padding-10 categoryForm">
@@ -158,6 +170,7 @@
 
                     <button class="btn btn-brand">افزودن دسته</button>
                 </form>
+                @endcan
             </div>
         </div>
 
