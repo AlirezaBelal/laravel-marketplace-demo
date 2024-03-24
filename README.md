@@ -4,7 +4,9 @@
 
 1. Configure the database: Set `DB_DATABASE` in the `.env` file to `digikala_digikala`.
 2. Add SQL: Import all files from the `DOC -> backup_V06` directory.
-3. Run the project: Execute `php artisan serve` to start the server locally.
+3. Run `composer install`
+4. Run `nmp install`
+5Run the project: Execute `php artisan serve` to start the server locally.
 
 ## Packages Used
 
