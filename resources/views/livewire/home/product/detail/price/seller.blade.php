@@ -13,7 +13,10 @@
                 @if ($this->vendor_new)
                     {{$this->vendor_new->vendor['name']}}
                 @else
+
+                    @if($productSeller_max_price_first != null)
                     {{$productSeller_max_price_first->vendor['name'] ?? $this->vendor_new->vendor['name']}}
+                        @endif
                 @endif
 
             </span>

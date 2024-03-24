@@ -26,3 +26,5 @@
         </div>
     </div>
 </footer>
+
+@yield('footer_home')

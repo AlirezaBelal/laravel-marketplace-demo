@@ -5,7 +5,9 @@
         @if ($this->vendor_new)
             {{$this->vendor_new->warranty['name']}}
         @else
+            @if($productSeller_max_price_first != null)
             {{$productSeller_max_price_first->warranty['name'] ?? $this->vendor_new->warranty['name']}}
+                @endif
         @endif
 
     </div>
@@ -25,7 +27,9 @@
                     @if ($this->vendor_new)
                         {{$this->vendor_new->warranty['name']}}
                     @else
+                        @if($productSeller_max_price_first != null)
                         {{$productSeller_max_price_first->warranty['name'] ?? $this->vendor_new->warranty['name']}}
+                    @endif
                     @endif
 
                 </div>

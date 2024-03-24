@@ -2,9 +2,9 @@
     @if($product->publish_product == 1)
         <div class="c-product__circle-variants__title">
             <header>رنگ :</header>
-
+                @if($this->color !=null)
             <span class="js-color-title">{{$this->color ?? $productSeller_min_price_first->color->name}}</span>
-
+@endif
 
         </div>
 

@@ -22,7 +22,7 @@
                         <div class="c-product-box"><a
                                 class="c-product-box__img js-url js-carousel-ga-product-box"
                                 data-id="870282"
-                                href="{{$category->product->link}}"
+                                href="/product/dkp-{{$category->product->id}}/{{$category->product->link}}"
                                 data-gtm-vis-recent-on-screen-9070001_346="2514"
                                 data-gtm-vis-first-on-screen-9070001_346="2514"
                                 data-gtm-vis-total-visible-time-9070001_346="100"

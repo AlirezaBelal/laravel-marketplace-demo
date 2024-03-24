@@ -4,7 +4,7 @@
         <div class="tab__box">
             <div class="tab__items">
                 <a class="tab__item " href="/admin/product">محصولات</a>
-                <a class="tab__item is-active" href="/admin/productVendor"> تنوع قیمت محصول</a>
+                <a class="tab__item is-active" href="/admin/productVendor"> تنوع قیمت محصول و محصولات در انتظار تایید</a>
 
                 |
                 <a class="tab__item">جستجو: </a>
@@ -139,7 +139,70 @@
 
             </div>
         </div>
+        <div class="tab__box">
+            <div class="tab__items">
+                <a class="tab__item " >محصولات فروشندگان تایید نشده</a>
 
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 margin-left-10 margin-bottom-15 border-radius-3">
+
+                <div class="table__box">
+                    <table class="table">
+
+                        <thead role="rowgroup">
+                        <tr role="row" class="title-row">
+                            <th>آیدی</th>
+                            <th>نام محصول</th>
+                            <th>نام فروشنده</th>
+                            <th>محصول جدید</th>
+
+                        </tr>
+                        </thead>
+
+
+                            <tbody>
+                            @foreach($productTest as $productSeller)
+                                <tr role="row">
+                                    <td><a href="">{{$productSeller->id}}</a></td>
+                                    <td>
+
+                                            {{$productSeller->title}}
+
+                                    </td>
+                                    <td>
+                                        @foreach(\App\Models\User::where('id',$productSeller->user_id)->get() as $user)
+                                            {{$user->name}}
+                                        @endforeach
+                                    </td>
+
+                                    <td>
+
+                                            <button wire:click="OkNewProduct({{$productSeller->id}})"
+                                                    type="submit" class="badge-success badge"
+                                                    style="background-color: green">تایید
+                                            </button>
+
+
+                                    </td>
+
+
+
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+
+
+
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
 
     </div>
 </div>

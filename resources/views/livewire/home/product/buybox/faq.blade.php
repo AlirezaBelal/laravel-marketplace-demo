@@ -1,7 +1,14 @@
-<div class="c-faq js-product-tab-content js-faq-container" id="questions"
+<div class="c-faq " id="questions" wire:init="loadComment"
      data-method="questions" data-fetch-from-service="1">
     <div class="o-box__header"><span class="o-box__title">پرسش و پاسخ</span><span
             class="o-box__header-desc">{{$product->name}}</span>
     </div>
-    <div class="js-content"></div>
-</div>
+    <div class="">
+        <div class="c-question__container">
+                @include('livewire.home.product.detail.comtop')
+                @include('livewire.home.product.detail.com2')
+                @include('livewire.home.product.detail.comremodal')
+        </div>
+    </div>
+    </div>
+@include('livewire.home.product.detail.remodal')

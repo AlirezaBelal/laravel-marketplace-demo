@@ -35,7 +35,7 @@
                             <th>آیدی</th>
                             <th>لوگو فروشنده</th>
                             <th>نام و نام خانوادگی</th>
-                            <th>نوع فروشنده</th>
+                            <th>تایید فروشنده</th>
                             <th>موبایل</th>
                             <th>ایمیل</th>
                             <th>نام برند</th>
@@ -52,10 +52,27 @@
                                         <img src="/storage/{{$seller->logo}}" alt="img" width="100px">
                                     </td>
                                     <td><a href="">{{$seller->name}}{{$seller->lname}}</a></td>
-                                    <td><a href="">{{$seller->type_seller}}</a></td>
+
+                                    <td>
+                                        @if($seller->learning_status == 1)
+                                            <button
+                                                    type="submit" class="badge-success badge"
+                                                    style="background-color: green">تایید شده
+                                            </button>
+                                        @else
+                                            <button wire:click="acceptSeller({{$seller->id}})"
+                                                    type="submit" class="badge-danger badge"
+                                                    style="background-color: red">
+                                                عدم تایید
+                                            </button>
+                                        @endif
+                                    </td>
+
+
                                     <td><a href="">{{$seller->mobile}}</a></td>
                                     <td><a href="">{{$seller->email}}</a></td>
                                     <td><a href="">{{$seller->brand_name}}</a></td>
+
 
 
 

@@ -3,7 +3,8 @@
         <div class="c-header__row js-header-sticky">
             <div class="c-header__right-side">
                 @include('livewire.home.home.setting.header.logo')
-                @include('livewire.home.home.setting.header.search')
+                @livewire('global-search')
+{{--                @include('livewire.home.home.setting.header.search')--}}
             </div>
             @include('livewire.home.home.setting.header.login')
         </div>
