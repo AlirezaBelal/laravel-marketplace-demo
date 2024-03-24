@@ -5,10 +5,10 @@
     </div>
     <div class="">
         <div class="c-question__container">
-                @include('livewire.home.product.detail.comtop')
-                @include('livewire.home.product.detail.com2')
-                @include('livewire.home.product.detail.comremodal')
+            @include('livewire.home.product.detail.comtop')
+            @include('livewire.home.product.detail.com23')
+            @include('livewire.home.product.detail.comremodal')
         </div>
     </div>
-    </div>
+</div>
 @include('livewire.home.product.detail.remodal')
