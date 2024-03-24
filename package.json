@@ -16,7 +16,7 @@
         "autoprefixer": "^10.0.2",
         "axios": "^0.21",
         "bootstrap": "^4.0.0",
-        "jquery": "^3.2",
+        "jquery": "^3.6.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "popper.js": "^1.12",
@@ -31,7 +31,10 @@
         "@ckeditor/ckeditor5-build-classic": "^26.0.0",
         "bootstrap-iconpicker": "^1.8.2",
         "bootstrap-icons": "^1.4.0",
+        "chart.js": "^3.7.1",
         "remodal": "^1.1.1",
+        "select2": "^4.1.0-rc.0",
+        "select2-bootstrap-theme": "^0.1.0-beta.10",
         "sweetalert2": "^10.15.5",
         "turbolinks": "^5.2.0"
     }
