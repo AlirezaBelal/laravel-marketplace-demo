@@ -3,20 +3,21 @@
 namespace App\Http\Livewire\Home\Product;
 
 
-use App\Http\Livewire\Admin\Dashboard\Observed;
-use App\Http\Livewire\Home\Profile\UserHistory;
-use App\Models\Attribute;
-use App\Models\Brand;
 use App\Models\Cart;
-use App\Models\Category;
 use App\Models\Color;
+use App\Models\Comment;
+use App\Models\Compare;
 use App\Models\Favorite;
-use App\Models\Log;
 use App\Models\Notification;
 use App\Models\PriceDate;
 use App\Models\Product;
 use App\Models\ProductSeller;
-use Illuminate\Support\Facades\DB;
+use App\Models\Rate;
+use App\Models\Review;
+use Artesaos\SEOTools\Facades\JsonLd;
+use Artesaos\SEOTools\Facades\JsonLdMulti;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
@@ -25,26 +26,186 @@ class Index extends Component
 {
     public $product;
     public $color;
+    public $comment;
     public $vendor_new;
     public $new_price;
 
+    public $queryString = ['filters'];
     public Notification $notification;
+//    public Comment $comment;
+    public $readyToLoad = false;
+
+    public array $filterOptions = [
+        'like' => ['1'],
+        'parent_a' => ['1'],
+        'parent_b' => ['0'],
+        'my_q' => ['1'],
+    ];
+    public array $filters = array();
+    public array $filterToMerge = [
+        'like' => [],
+        'parent_a' => [],
+        'parent_b' => [],
+        'my_q' => [],
+    ];
+    public $orderSelect;
+    public $orderBy = [
+        'key' => 'created_at',
+        'direction' => 'desc'
+    ];
 
     public function mount($id)
     {
         $this->product = Product::find($id);
         $this->notification = new Notification();
+//        $this->comment = new Comment();
     }
 
     protected $rules = [
         'notification.sms' => 'nullable',
         'notification.email' => 'nullable',
         'notification.system' => 'nullable',
+        'comment.comment' => 'nullable',
     ];
 
     public function updated($sms)
     {
         $this->validateOnly($sms);
+    }
+
+    public function likequestion($id)
+    {
+        if (auth()->user()) {
+            $com = Comment::find($id);
+            $rate = Rate::where('comment_id', $id)->where('user_id', auth()->user()->id)
+                ->where('product_id', $com->product_id)->first();
+            if ($rate) {
+                $rate->delete();
+                $this->emit('toast', 'success', ' امتیاز شما حذف شد.');
+
+            } else {
+                Rate::create([
+                    'user_id' => auth()->user()->id,
+                    'product_id' => $com->product_id,
+                    'comment_id' => $id,
+                    'like' => 1,
+                ]);
+            }
+            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+
+        } else {
+            return $this->redirect('/login');
+        }
+    }
+
+    public function reportquestion($id)
+    {
+        if (auth()->user()) {
+            $com = Comment::find($id);
+
+            if ($com->report == 1) {
+                $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+
+            } else {
+                $com->update([
+                    'report' => 1
+                ]);
+            }
+            $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+
+        } else {
+            return $this->redirect('/login');
+        }
+    }
+
+
+    public function likeReview($id)
+    {
+        if (auth()->user()) {
+            $review = Review::find($id);
+            $review->update([
+                'liked' => 1,
+                'dislike' => 0
+            ]);
+            $rate = Rate::where('review_id', $id)->where('user_id', auth()->user()->id)
+                ->where('product_id', $review->product_id)->first();
+            if ($rate) {
+                $rate->delete();
+                $this->emit('toast', 'success', ' امتیاز شما حذف شد.');
+
+            } else {
+                Rate::create([
+                    'user_id' => auth()->user()->id,
+                    'product_id' => $review->product_id,
+                    'review_id' => $id,
+                    'like' => 1,
+                ]);
+            }
+
+            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+
+        } else {
+            return $this->redirect('/login');
+        }
+    }
+
+    public function dislikeReview($id)
+    {
+        if (auth()->user()) {
+            $review = Review::find($id);
+            $review->update([
+                'liked' => 0,
+                'dislike' => 1
+            ]);
+            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+
+        } else {
+            return $this->redirect('/login');
+        }
+    }
+
+    public function reportReview($id)
+    {
+        if (auth()->user()) {
+            $review = Review::find($id);
+
+
+            if ($review->report == 1) {
+                $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+
+            } else {
+                $review->update([
+                    'report' => 1,
+                ]);
+            }
+            $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+
+        } else {
+            return $this->redirect('/login');
+        }
+    }
+
+
+    public function addQuestion()
+    {
+
+        if (auth()->user()) {
+            Comment::create([
+                'user_id' => auth()->user()->id,
+                'product_id' => $this->product->id,
+                'comment' => $this->comment,
+                'like' => 0,
+                'report' => 0,
+                'parent' => 0,
+                'status' => 0,
+            ]);
+            $this->emit('toast', 'success', ' نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.');
+
+            return back();
+        } else {
+            return $this->redirect('/login');
+        }
+
     }
 
     public function addToCart($id)
@@ -139,6 +300,12 @@ class Index extends Component
 
     }
 
+    public function loadComment()
+    {
+        $this->readyToLoad = true;
+    }
+
+
     public function changeColor($id)
     {
         $color = Color::find($id);
@@ -219,6 +386,40 @@ class Index extends Component
         $this->emit('toast', 'success', 'محصول به اطلاع رسانی ها اضافه شد.');
     }
 
+    public function compareAdd($id)
+    {
+        if (auth()->user()) {
+//dd(Compare::where('user_id',auth()->user()->id)->first());
+            if (Compare::where('user_id', auth()->user()->id)->first()) {
+                if (Compare::where('product_id', $id)->where('user_id', auth()->user()->id)->first() == null) {
+                    $com = Compare::create([
+                        'user_id' => auth()->user()->id,
+                        'product_id' => $id,
+                    ]);
+                    $first = Compare::where('user_id', auth()->user()->id)->first();
+                    $url = '/compare/dkp-' . $first->product_id . '/dkp-' . $id;
+                    return $this->redirect($url);
+                } else {
+                    return $this->redirect(route('compare.step1', $id));
+                }
+
+
+            } else {
+                Compare::create([
+                    'user_id' => auth()->user()->id,
+                    'product_id' => $id,
+                ]);
+
+                return $this->redirect(route('compare.step1', $id));
+            }
+
+
+        } else {
+            $this->redirect('/login');
+        }
+
+
+    }
 
     public function render()
     {
@@ -260,6 +461,7 @@ class Index extends Component
         ///
         $priceDate_min_price_first = PriceDate::where('product_id', $product->id)->
         orderBy('discount_price', 'ASC')->first();
+
         $priceDate_min_price_first1 = PriceDate::where('product_id', $product->id)->
         orderBy('discount_price', 'ASC')->get()[1];
 
@@ -267,16 +469,204 @@ class Index extends Component
         if ($priceDate_min_price_first1) {
             $date1 = $priceDate_min_price_first->created_at;
             $date2 = $priceDate_min_price_first1->created_at;
-            $different =  $date2->diff($date1);
+            $different = $date2->diff($date1);
 
         }
         $day = $different->format('%d');
         $mo = $different->format('%m');
 
+        SEOMeta::setTitle($product->title);
+        SEOMeta::setDescription($product->resume);
+        SEOMeta::addMeta('product:published_time', $product->created_at, 'property');
+        SEOMeta::addMeta('product:section', $product->category, 'property');
+        SEOMeta::addKeyword(['key1', 'key2', 'key3']);
+
+        OpenGraph::setDescription($product->resume);
+        OpenGraph::setTitle($product->title);
+        OpenGraph::setUrl('http://digikala.ir');
+        OpenGraph::addProperty('type', 'product');
+        OpenGraph::addProperty('locale', 'fa_IR');
+        OpenGraph::addProperty('locale:alternate', ['pt-pt', 'en-us', 'fa_IR']);
+
+        OpenGraph::addImage($product->img);
+        OpenGraph::addImage($product->img);
+        OpenGraph::addImage(['url' => 'http://image.url.com/cover.jpg', 'size' => 300]);
+        OpenGraph::addImage('http://image.url.com/cover.jpg', ['height' => 300, 'width' => 300]);
+
+        JsonLd::setTitle($product->title);
+        JsonLd::setDescription($product->title);
+        JsonLd::setType('product');
+        JsonLd::addImage($product->img);
+
+        // OR with multi
+
+        JsonLdMulti::setTitle($product->title);
+        JsonLdMulti::setDescription($product->title);
+        JsonLdMulti::setType('product');
+        JsonLdMulti::addImage($product->img);
+        if (!JsonLdMulti::isEmpty()) {
+            JsonLdMulti::newJsonLd();
+            JsonLdMulti::setType('WebPage');
+            JsonLdMulti::setTitle('Page product - ' . $product->title);
+        }
+
+        // Namespace URI: http://ogp.me/ns/product#
+        // product
+        OpenGraph::setTitle('product')
+            ->setDescription('Some product')
+            ->setType('product')
+            ->setproduct([
+                'published_time' => 'datetime',
+                'modified_time' => 'datetime',
+                'expiration_time' => 'datetime',
+                'author' => 'profile / array',
+                'section' => 'string',
+                'tag' => 'string / array'
+            ]);
+
+        // Namespace URI: http://ogp.me/ns/book#
+        // book
+        OpenGraph::setTitle('product')
+            ->setDescription('Some product')
+            ->setType('product')
+            ->setBook([
+                'author' => 'profile / array',
+                'isbn' => 'string',
+                'release_date' => 'datetime',
+                'Availability' => 'new',
+                'tag' => 'string / array'
+            ]);
+
+        // Namespace URI: http://ogp.me/ns/profile#
+        // profile
+        OpenGraph::setTitle('Profile')
+            ->setDescription('Some Person')
+            ->setType('profile')
+            ->setProfile([
+                'first_name' => 'string',
+                'last_name' => 'string',
+                'username' => 'string',
+                'gender' => 'enum(male, female)'
+            ]);
+
+        // Namespace URI: http://ogp.me/ns/music#
+        // music.song
+        OpenGraph::setType('music.song')
+            ->setMusicSong([
+                'duration' => 'integer',
+                'album' => 'array',
+                'album:disc' => 'integer',
+                'album:track' => 'integer',
+                'musician' => 'array'
+            ]);
+
+        // music.album
+        OpenGraph::setType('music.album')
+            ->setMusicAlbum([
+                'song' => 'music.song',
+                'song:disc' => 'integer',
+                'song:track' => 'integer',
+                'musician' => 'profile',
+                'release_date' => 'datetime'
+            ]);
+
+        //music.playlist
+        OpenGraph::setType('music.playlist')
+            ->setMusicPlaylist([
+                'song' => 'music.song',
+                'song:disc' => 'integer',
+                'song:track' => 'integer',
+                'creator' => 'profile'
+            ]);
+
+        // music.radio_station
+        OpenGraph::setType('music.radio_station')
+            ->setMusicRadioStation([
+                'creator' => 'profile'
+            ]);
+
+        // Namespace URI: http://ogp.me/ns/video#
+        // video.movie
+        OpenGraph::setType('video.movie')
+            ->setVideoMovie([
+                'actor' => 'profile / array',
+                'actor:role' => 'string',
+                'director' => 'profile /array',
+                'writer' => 'profile / array',
+                'duration' => 'integer',
+                'release_date' => 'datetime',
+                'tag' => 'string / array'
+            ]);
+
+        // video.episode
+        OpenGraph::setType('video.episode')
+            ->setVideoEpisode([
+                'actor' => 'profile / array',
+                'actor:role' => 'string',
+                'director' => 'profile /array',
+                'writer' => 'profile / array',
+                'duration' => 'integer',
+                'release_date' => 'datetime',
+                'tag' => 'string / array',
+                'series' => 'video.tv_show'
+            ]);
+
+        // video.tv_show
+        OpenGraph::setType('video.tv_show')
+            ->setVideoTVShow([
+                'actor' => 'profile / array',
+                'actor:role' => 'string',
+                'director' => 'profile /array',
+                'writer' => 'profile / array',
+                'duration' => 'integer',
+                'release_date' => 'datetime',
+                'tag' => 'string / array'
+            ]);
+
+        // video.other
+        OpenGraph::setType('video.other')
+            ->setVideoOther([
+                'actor' => 'profile / array',
+                'actor:role' => 'string',
+                'director' => 'profile /array',
+                'writer' => 'profile / array',
+                'duration' => 'integer',
+                'release_date' => 'datetime',
+                'tag' => 'string / array'
+            ]);
+
+        // og:video
+        OpenGraph::addVideo('http://example.com/movie.swf', [
+            'secure_url' => 'https://example.com/movie.swf',
+            'type' => 'application/x-shockwave-flash',
+            'width' => 400,
+            'height' => 300
+        ]);
+
+        // og:audio
+        OpenGraph::addAudio('http://example.com/sound.mp3', [
+            'secure_url' => 'https://secure.example.com/sound.mp3',
+            'type' => 'audio/mpeg'
+        ]);
+
+        // og:place
+        OpenGraph::setTitle('Place')
+            ->setDescription('Some Place')
+            ->setType('place')
+            ->setPlace([
+                'location:latitude' => 'float',
+                'location:longitude' => 'float',
+            ]);
+
+
+        $comments = $this->readyToLoad ? Comment::where('status', 1)->
+        where('product_id', $product->id)->where('parent', 0)->
+        latest()->paginate(15) : [];
         return view('livewire.home.product.index', compact('product', 'productSeller_count'
                 , 'productSeller', 'productSeller_max_price', 'productSeller_max_price_first',
-                'productSeller_max_price_all','mo','day','priceDate_min_price_first',
-                'productSeller_max_price_all_init', 'productSeller_min_price_first')
+                'productSeller_max_price_all', 'mo', 'day', 'priceDate_min_price_first',
+                'productSeller_max_price_all_init', 'productSeller_min_price_first'
+                , 'comments')
         )->layout('layouts.home');
     }
 }
