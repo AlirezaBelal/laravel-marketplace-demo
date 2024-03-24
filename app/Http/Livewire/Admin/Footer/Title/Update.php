@@ -23,7 +23,7 @@ class Update extends Component
             'url' => 'آپدیت عنوان فوتر صفحه سایت' .'-'. $this->footer_title->page_id,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success('عنوان فوتر صفحه سایت با موفقیت ایجاد شد.', 'عنوان فوتر صفحه سایت آپدیت شد.');
+//        alert()->success('عنوان فوتر صفحه سایت با موفقیت ایجاد شد.', 'عنوان فوتر صفحه سایت آپدیت شد.');
 
         return redirect(route('footer_title.index'));
 

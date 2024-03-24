@@ -33,7 +33,7 @@ class Update extends Component
             'url' => 'آپدیت منو' .'-'. $this->menu->category_id,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
+//        alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
         return redirect(route('menu.index'));
 
     }

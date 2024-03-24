@@ -31,7 +31,7 @@ class Update extends Component
             'url' => 'آپدیت بنر' .'-'. $this->banner->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'بنر مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'بنر مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('banner.index'));
 
     }

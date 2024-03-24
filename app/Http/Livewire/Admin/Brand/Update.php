@@ -45,7 +45,7 @@ class Update extends Component
             'url' => 'آپدیت برند' .'-'. $this->brand->title,
             'actionType' => 'آپدیت'
         ]);
-        alert()->success(' با موفقیت آپدیت شد.', 'برند مورد نظر با موفقیت آپدیت شد.');
+//        alert()->success(' با موفقیت آپدیت شد.', 'برند مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('brand.index'));
 
     }
