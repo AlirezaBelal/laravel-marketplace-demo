@@ -18,11 +18,17 @@ class Categorylevel extends Component
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
+
     public $category_id;
+
     public $subCategory_id;
+
     public $childCategory_id;
+
     public $categorylevel4_id;
+
     public $property;
+
     public function categoryForm()
     {
 
@@ -42,8 +48,8 @@ class Categorylevel extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن دسته های زیردسته ها' . '-' . $this->category_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن دسته های زیردسته ها'.'-'.$this->category_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' دسته های زیردسته ها با موفقیت ایجاد شد.');
 
@@ -61,12 +67,12 @@ class Categorylevel extends Component
         $category = DB::table('category_levels')
             ->where('id', $id)->limit($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت دسته های زیردسته ها' . '-' . $category2->category_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت دسته های زیردسته ها'.'-'.$category2->category_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته های زیردسته ها با موفقیت غیرفعال شد.');
     }
@@ -78,12 +84,12 @@ class Categorylevel extends Component
         $category = DB::table('category_levels')
             ->where('id', $id)->limit($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت دسته های زیردسته ها' . '-' . $category2->category_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت دسته های زیردسته ها'.'-'.$category2->category_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته های زیردسته ها با موفقیت فعال شد.');
     }
@@ -97,13 +103,12 @@ class Categorylevel extends Component
         $amazing->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن دسته های زیردسته ها' . '-' . $amazing2->category_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن دسته های زیردسته ها'.'-'.$amazing2->category_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' دسته های زیردسته ها با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {
@@ -115,6 +120,7 @@ class Categorylevel extends Component
                 orWhere('childCategory_id', 'LIKE', "%{$this->search}%")->
                 orWhere('id', $this->search)->
                 latest()->paginate(15) : [];
-        return view('livewire.admin.categorypage.categorylevel',compact('categorylevels'));
+
+        return view('livewire.admin.categorypage.categorylevel', compact('categorylevels'));
     }
 }

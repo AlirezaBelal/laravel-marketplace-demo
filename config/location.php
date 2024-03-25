@@ -82,7 +82,7 @@ return [
 
         'local' => [
 
-            'path' => database_path('maxmind/GeoLite2-City.mmdb')
+            'path' => database_path('maxmind/GeoLite2-City.mmdb'),
 
         ],
 

@@ -49,8 +49,6 @@ class CreateSellersTable extends Migration
             $table->string('ghardad_invoice')->nullable();
             $table->string('ghardad_pay')->nullable();
 
-
-
             $table->string('learning_status')->nullable();
             $table->string('wallet')->nullable();
             $table->timestamps();

@@ -6,19 +6,21 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\ReceiptCenter;
-use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
 class Shipping extends Component
 {
     public $address_use;
+
     public $order;
+
     public $orders;
+
     public $dPrice;
+
     public $dateId;
 
     protected $listeners = ['adtime' => '$refresh'];
-
 
     public function checkout_address($id)
     {
@@ -50,7 +52,7 @@ class Shipping extends Component
 
     public function shippingId($id)
     {
-//        $this->dateId = $id;
+        //        $this->dateId = $id;
     }
 
     public function addToPayment($data)
@@ -60,22 +62,23 @@ class Shipping extends Component
                 'user_id' => auth()->user()->id,
                 'order_id' => $order->id,
                 'total_price' => $data + $this->dPrice,
-                'time_id' =>  $this->dateId,
+                'time_id' => $this->dateId,
                 'shipping_price' => $this->dPrice,
                 'order_number' => $order->order_number,
             ]);
             if ($order->address_id == null) {
-                $address = Address::where('user_id',auth()->user()->id)->first();
+                $address = Address::where('user_id', auth()->user()->id)->first();
                 $order->update([
                     'address_id' => $address->id,
                 ]);
             }
         }
 
-        $carts = Cart::where('user_id',auth()->user()->id)->where('type',0)->get();
+        $carts = Cart::where('user_id', auth()->user()->id)->where('type', 0)->get();
         foreach ($carts as $cart) {
             $cart->delete();
         }
+
         return $this->redirect(route('order.payment'));
     }
 
@@ -91,6 +94,7 @@ class Shipping extends Component
             ->where('type', 0)->get();
 
         $addresses = Address::where('user_id', auth()->user()->id)->get();
+
         return view('livewire.home.order.shipping',
             compact('addresses', 'orders', 'order_last')
         )->layout('layouts.shipping');

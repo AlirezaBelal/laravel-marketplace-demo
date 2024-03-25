@@ -11,5 +11,5 @@ class SubCategory extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['img','title','link','name','parent','status'];
+    protected $fillable = ['img', 'title', 'link', 'name', 'parent', 'status'];
 }

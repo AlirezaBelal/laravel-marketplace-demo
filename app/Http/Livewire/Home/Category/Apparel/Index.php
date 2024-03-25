@@ -12,7 +12,7 @@ class Index extends Component
     {
         $category_name = request()->path();
 
-        $category = Category::where('link', '/' . $category_name . '/')->first();
+        $category = Category::where('link', '/'.$category_name.'/')->first();
 
         $sliders = DB::connection('mysql-apparel')->table('category_apparel_slider')
             ->where('status', 1)->get();
@@ -32,6 +32,6 @@ class Index extends Component
 
         return view('livewire.home.category.apparel.index',
             compact('category', 'sliders', 'amazings', 'banners',
-            'bigbanners', 'bigbanners2', 'title_count', 'products','brands'))->layout('layouts.home');
+                'bigbanners', 'bigbanners2', 'title_count', 'products', 'brands'))->layout('layouts.home');
     }
 }

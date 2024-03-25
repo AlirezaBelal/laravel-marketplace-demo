@@ -2,14 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Cart;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\ValidatedInput;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Validator;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('path.public', function () {
-            return realpath(base_path() . '/digikala/public');
-        });
+//        $this->app->bind('path.public', function () {
+//            return realpath(base_path().'/digikala/public');
+//        });
     }
 
     /**
@@ -50,13 +47,13 @@ class AppServiceProvider extends ServiceProvider
         }
         View::share('carts', $carts);
 
-
         Validator::extend('max_mb', function ($attribute, $value, $parameters, $validator) {
             $this->requireParameterCount(1, $parameters, 'max_mb');
-            if ($value instanceof UploadedFile && !$value->isValid()) {
+            if ($value instanceof UploadedFile && ! $value->isValid()) {
                 return false;
             }
             $mb = $value->getSize() / 1024 / 1024;
+
             return $this->getSize($attribute, $mb) <= $parameters[0];
         });
 

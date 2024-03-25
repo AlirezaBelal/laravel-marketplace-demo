@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AddressTime extends Model
 {
     use HasFactory;
-    protected $fillable=['day','date','time','price'];
 
+    protected $fillable = ['day', 'date', 'time', 'price'];
 }

@@ -2,10 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Log;
 
-use App\Models\Category;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class Index extends Component
@@ -15,6 +12,7 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -26,7 +24,6 @@ class Index extends Component
         $this->readyToLoad = true;
     }
 
-
     public function render()
     {
 
@@ -35,6 +32,7 @@ class Index extends Component
         orWhere('url', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.log.index',compact('logs'));
+
+        return view('livewire.admin.log.index', compact('logs'));
     }
 }

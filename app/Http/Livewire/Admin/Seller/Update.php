@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Seller;
 
-use App\Models\Banner;
 use App\Models\Log;
 use App\Models\Seller;
 use Livewire\Component;
@@ -11,9 +10,11 @@ use Livewire\WithFileUploads;
 class Update extends Component
 {
     use WithFileUploads;
+
     public Seller $seller;
 
     public $logo;
+
     protected $rules = [
         'seller.code_seller' => 'nullable|min:1',
         'seller.type_seller' => 'nullable',
@@ -42,23 +43,26 @@ class Update extends Component
         'seller.learning_status' => 'nullable',
         'seller.wallet' => 'nullable',
     ];
+
     public function categoryForm()
     {
         $this->validate();
-        if ($this->logo){
+        if ($this->logo) {
             $this->seller->logo = $this->uploadImage();
         }
 
         $this->seller->update($this->validate());
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت فروشنده' .'-'. $this->seller->name,
-            'actionType' => 'آپدیت'
+            'url' => 'آپدیت فروشنده'.'-'.$this->seller->name,
+            'actionType' => 'آپدیت',
         ]);
-//        alert()->success(' با موفقیت آپدیت شد.', 'فروشنده مورد نظر با موفقیت آپدیت شد.');
+
+        //        alert()->success(' با موفقیت آپدیت شد.', 'فروشنده مورد نظر با موفقیت آپدیت شد.');
         return redirect(route('seller.index'));
 
     }
+
     public function uploadImage()
     {
         $year = now()->year;
@@ -67,13 +71,14 @@ class Update extends Component
         $directory = "seller/$year/$month/$day";
         $name = $this->logo->getClientOriginalName();
         $this->logo->storeAs($directory, $name);
+
         return "$directory/$name";
     }
-
 
     public function render()
     {
         $seller = $this->seller;
-        return view('livewire.admin.seller.update',compact('seller'));
+
+        return view('livewire.admin.seller.update', compact('seller'));
     }
 }

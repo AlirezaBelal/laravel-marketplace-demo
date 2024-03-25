@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\Seller\Auth\Register;
 
-use App\Mail\SellerRegister;
 use App\Models\Seller;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Email extends Component
@@ -12,7 +10,6 @@ class Email extends Component
     public Seller $seller;
 
     public $code;
-
 
     public function registerEmailVerify()
     {
@@ -27,13 +24,12 @@ class Email extends Component
             $this->emit('toast', 'error', ' کد وارد شده صحیح نمی باشد.');
         }
 
-
     }
 
     public function render()
     {
         $seller = $this->seller;
-        return view('livewire.seller.auth.register.email'
-            , compact('seller'))->layout('layouts.seller');
+
+        return view('livewire.seller.auth.register.email', compact('seller'))->layout('layouts.seller');
     }
 }

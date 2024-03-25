@@ -3,10 +3,8 @@
 namespace App\Http\Livewire\Admin\Comment;
 
 use App\Mail\OrderSubmit;
-use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Review;
-use App\Models\SubCategory;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,12 +14,17 @@ class ReviewIndex extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public Review $review;
 
     public function loadCategory()
@@ -33,7 +36,7 @@ class ReviewIndex extends Component
     {
         $review = Review::find($id);
         $review->update([
-            'status' => 0
+            'status' => 0,
         ]);
 
         $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
@@ -43,7 +46,7 @@ class ReviewIndex extends Component
     {
         $review = Review::find($id);
         $review->update([
-            'status' => 1
+            'status' => 1,
         ]);
 
         $type = 'بررسی شما تایید شد';
@@ -75,7 +78,7 @@ class ReviewIndex extends Component
     {
         $review = Review::find($id);
         $review->update([
-            'ok_buy' => 1
+            'ok_buy' => 1,
         ]);
 
         $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
@@ -85,7 +88,7 @@ class ReviewIndex extends Component
     {
         $review = Review::find($id);
         $review->update([
-            'ok_buy' => 0
+            'ok_buy' => 0,
         ]);
 
         $this->emit('toast', 'success', 'وضعیت نظر با موفقیت فعال شد.');
@@ -99,7 +102,6 @@ class ReviewIndex extends Component
 
     }
 
-
     public function render()
     {
 
@@ -110,6 +112,7 @@ class ReviewIndex extends Component
         orWhere('product_id', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
+
         return view('livewire.admin.comment.review-index', compact('reviews'));
     }
 }

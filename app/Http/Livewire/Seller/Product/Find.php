@@ -9,6 +9,7 @@ use Livewire\Component;
 class Find extends Component
 {
     public $search;
+
     protected $queryString = ['search'];
 
     public function addToSale($id)
@@ -37,6 +38,7 @@ class Find extends Component
         orWhere('name', 'LIKE', "%{$this->search}%")->
         orWhere('link', 'LIKE', "%{$this->search}%")->
         where('status_product', 1)->get();
+
         return view('livewire.seller.product.find', compact('products'))
             ->layout('layouts.seller_dashboard');
     }

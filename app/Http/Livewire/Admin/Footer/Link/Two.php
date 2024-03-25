@@ -17,8 +17,6 @@ class Two extends Component
         $this->footerLinkTwo = new FooterLinkTwo();
     }
 
-
-
     protected $rules = [
         'footerLinkTwo.page_id' => 'required',
     ];
@@ -28,7 +26,6 @@ class Two extends Component
         $this->validateOnly($page_id);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
@@ -36,11 +33,11 @@ class Two extends Component
         FooterLinkTwo::query()->create([
             'page_id' => $this->footerLinkTwo->page_id,
         ]);
-        $this->footerLinkTwo->page_id = "";
+        $this->footerLinkTwo->page_id = '';
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن صفحه به فوتر سایت' .'-'. $this->footerLinkTwo->page_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن صفحه به فوتر سایت'.'-'.$this->footerLinkTwo->page_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت ایجاد شد.');
 
@@ -50,14 +47,15 @@ class Two extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function deleteCategory($id)
     {
         $page = FooterLinkTwo::find($id);
         $page->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن صفحه به فوتر سایت' .'-'. $this->footerLinkTwo->page_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن صفحه به فوتر سایت'.'-'.$this->footerLinkTwo->page_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت حذف شد.');
 
@@ -68,6 +66,6 @@ class Two extends Component
 
         $footer_links = FooterLinkTwo::latest()->get();
 
-        return view('livewire.admin.footer.link.two',compact('footer_links'));
+        return view('livewire.admin.footer.link.two', compact('footer_links'));
     }
 }

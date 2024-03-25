@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Payment;
 
 use App\Models\BankPayment;
-use App\Models\Payment;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,18 +11,22 @@ class Pay extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
+
     public function render()
     {
 
@@ -32,6 +35,7 @@ class Pay extends Component
         orWhere('order_number', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.payment.pay',compact('payments'));
+
+        return view('livewire.admin.payment.pay', compact('payments'));
     }
 }

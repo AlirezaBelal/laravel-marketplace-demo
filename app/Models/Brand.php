@@ -11,5 +11,5 @@ class Brand extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['img','description','vip','parent','link','name','status'];
+    protected $fillable = ['img', 'description', 'vip', 'parent', 'link', 'name', 'status'];
 }

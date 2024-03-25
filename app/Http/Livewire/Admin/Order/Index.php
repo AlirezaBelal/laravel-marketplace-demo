@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Order;
 
 use App\Models\Order;
-use App\Models\ReceiptCenter;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,18 +11,22 @@ class Index extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
+
     public function render()
     {
         $orders = $this->readyToLoad ? Order::where('address_id', 'LIKE', "%{$this->search}%")->
@@ -35,6 +38,7 @@ class Index extends Component
         orWhere('type_send', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.order.index',compact('orders'));
+
+        return view('livewire.admin.order.index', compact('orders'));
     }
 }

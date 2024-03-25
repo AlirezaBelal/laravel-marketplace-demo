@@ -21,6 +21,7 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -33,7 +34,6 @@ class Index extends Component
     {
         $this->productSeller = new ProductSeller();
     }
-
 
     protected $rules = [
         'productSeller.product_id' => 'nullable',
@@ -54,20 +54,19 @@ class Index extends Component
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
         $this->productSeller->save();
-        if (!$this->productSeller->status) {
+        if (! $this->productSeller->status) {
             $this->productSeller->update([
-                'status' => 0
+                'status' => 0,
             ]);
         }
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت ایجاد شد.');
 
@@ -82,12 +81,12 @@ class Index extends Component
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
     }
@@ -96,12 +95,12 @@ class Index extends Component
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
     }
@@ -110,12 +109,12 @@ class Index extends Component
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->update([
-            'anbar' => 0
+            'anbar' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن موجودی انبار فروشنده در تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت غیرفعال شد.');
     }
@@ -124,12 +123,12 @@ class Index extends Component
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->update([
-            'anbar' => 1
+            'anbar' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن موجودی انبار فروشنده در تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن موجودی انبار فروشنده در تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت فعال شد.');
     }
@@ -180,19 +179,17 @@ class Index extends Component
 
     }
 
-
     public function deleteCategory($id)
     {
         $productSeller = ProductSeller::find($id);
         $productSeller->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن تنوع قیمت محصول' . '-' . $this->productSeller->product_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت حذف شد.');
     }
-
 
     public function render()
     {
@@ -206,8 +203,7 @@ class Index extends Component
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
 
-        $productTest = ProductSellTest::
-        latest()->paginate(15);
+        $productTest = ProductSellTest::latest()->paginate(15);
 
         return view('livewire.admin.product.product-vendor.index',
             compact('productSellers', 'productTest'));

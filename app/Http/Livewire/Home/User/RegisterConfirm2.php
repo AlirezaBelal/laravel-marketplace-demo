@@ -14,7 +14,6 @@ class RegisterConfirm2 extends Component
         $this->user = new User();
     }
 
-
     protected $rules = [
         'user.email_phone' => 'required',
     ];
@@ -23,6 +22,7 @@ class RegisterConfirm2 extends Component
     {
         $this->validateOnly($email_phone);
     }
+
     public function render()
     {
         return view('livewire.home.user.register-confirm2')->layout('layouts.login');

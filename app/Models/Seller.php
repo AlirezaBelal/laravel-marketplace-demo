@@ -14,7 +14,7 @@ class Seller extends Model
         'logo', 'about', 'bank_shaba', 'bank_account_name', 'email', 'mobile',
         'website', 'state', 'city', 'address', 'pin_code', 'telephone',
         'location', 'ghardad_status', 'ghardad_number', 'ghardad_file', 'ghardad_start_day',
-        'ghardad_end_day', 'ghardad_invoice', 'ghardad_pay', 'learning_status', 'wallet'
+        'ghardad_end_day', 'ghardad_invoice', 'ghardad_pay', 'learning_status', 'wallet',
 
     ];
 }

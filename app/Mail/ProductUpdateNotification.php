@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Notification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,7 +11,8 @@ class ProductUpdateNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-   public $notification;
+    public $notification;
+
     /**
      * Create a new message instance.
      *

@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Home\Profile;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Gift extends Component
@@ -27,15 +25,14 @@ class Gift extends Component
     public function giftForm()
     {
         $this->validate();
-        $newcode = \App\Models\Gift::where('code',$this->gift->newcard)->first();
+        $newcode = \App\Models\Gift::where('code', $this->gift->newcard)->first();
         if ($newcode) {
             $newcode->update([
-               'user_id' => auth()->user()->id,
-               'type' => 1,
+                'user_id' => auth()->user()->id,
+                'type' => 1,
             ]);
             $this->emit('toast', 'success', ' کد هدیه وارد شده ثبت شد.');
-        }else
-        {
+        } else {
             $this->emit('toast', 'error', ' کد هدیه وارد شده وجود ندارد.');
         }
 

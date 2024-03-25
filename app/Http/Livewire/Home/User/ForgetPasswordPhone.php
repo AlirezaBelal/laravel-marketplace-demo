@@ -10,13 +10,13 @@ use Livewire\Component;
 class ForgetPasswordPhone extends Component
 {
     public User $user;
+
     public SMS $sms;
 
     public function mount()
     {
         $this->sms = new Sms();
     }
-
 
     protected $rules = [
         'sms.code' => 'required',
@@ -27,7 +27,6 @@ class ForgetPasswordPhone extends Component
         $this->validateOnly($code);
     }
 
-
     public function userForm()
     {
 
@@ -35,7 +34,7 @@ class ForgetPasswordPhone extends Component
         $sms_code = SMS::where('code', $this->sms->code)->first();
         if ($sms_code) {
             if ($sms_code->user_id == $this->user->id) {
-                return $this->redirect(route('users.password.reset',$this->user->id));
+                return $this->redirect(route('users.password.reset', $this->user->id));
             } else {
                 $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
             }
@@ -44,7 +43,9 @@ class ForgetPasswordPhone extends Component
             $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
         }
     }
-    public function resendSMS($id){
+
+    public function resendSMS($id)
+    {
 
         $type = 'اسمس دوباره فراموشی رمز حساب';
         $mobile = User::where('id', $id)->first();
@@ -59,6 +60,7 @@ class ForgetPasswordPhone extends Component
             'user_id' => $mobile->id,
         ]);
         $this->emit('toast', 'success', 'کد تایید دوباره ارسال شد!');
+
         return $this->redirect(request()->header('Referer'));
     }
 

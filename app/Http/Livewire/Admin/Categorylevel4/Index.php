@@ -17,6 +17,7 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -29,8 +30,6 @@ class Index extends Component
     {
         $this->categorylevel4 = new CategoryLevel4();
     }
-
-
 
     protected $rules = [
         'categorylevel4.title' => 'required|min:3',
@@ -45,36 +44,34 @@ class Index extends Component
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
 
-
-        $categorylevel4 =    CategoryLevel4::query()->create([
+        $categorylevel4 = CategoryLevel4::query()->create([
             'title' => $this->categorylevel4->title,
             'name' => $this->categorylevel4->name,
             'link' => $this->categorylevel4->link,
             'parent' => $this->categorylevel4->parent,
-            'status' => $this->categorylevel4->status ? 1:0 ,
+            'status' => $this->categorylevel4->status ? 1 : 0,
         ]);
 
-        if ($this->img){
+        if ($this->img) {
             $categorylevel4->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->categorylevel4->title = "";
-        $this->categorylevel4->name = "";
-        $this->categorylevel4->link = "";
+        $this->categorylevel4->title = '';
+        $this->categorylevel4->name = '';
+        $this->categorylevel4->link = '';
         $this->categorylevel4->parent = null;
         $this->categorylevel4->status = false;
         $this->img = null;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن دسته سطح 4' .'-'. $this->categorylevel4->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن دسته سطح 4'.'-'.$this->categorylevel4->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' دسته سطح 4 با موفقیت ایجاد شد.');
 
@@ -87,22 +84,25 @@ class Index extends Component
         $directory = "categorylevel4/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $category = CategoryLevel4::find($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت دسته سطح 4' .'-'. $category->title,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت دسته سطح 4'.'-'.$category->title,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته سطح 4 با موفقیت غیرفعال شد.');
     }
@@ -111,12 +111,12 @@ class Index extends Component
     {
         $category = CategoryLevel4::find($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت دسته سطح 4' .'-'. $category->title,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت دسته سطح 4'.'-'.$category->title,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته سطح 4 با موفقیت فعال شد.');
     }
@@ -124,22 +124,20 @@ class Index extends Component
     public function deleteCategory($id)
     {
         $category = CategoryLevel4::find($id);
-        $product = Product::where('categorylevel4_id',$id)->first();
-        if ($product == null){
+        $product = Product::where('categorylevel4_id', $id)->first();
+        if ($product == null) {
             $category->delete();
             Log::create([
                 'user_id' => auth()->user()->id,
-                'url' => 'حذف کردن دسته سطح 4' .'-'. $category->title,
-                'actionType' => 'حذف'
+                'url' => 'حذف کردن دسته سطح 4'.'-'.$category->title,
+                'actionType' => 'حذف',
             ]);
             $this->emit('toast', 'success', ' دسته سطح 4 با موفقیت حذف شد.');
-        }else
-        {
+        } else {
             $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا این دسته، شامل محصول است!');
         }
 
     }
-
 
     public function render()
     {
@@ -149,6 +147,7 @@ class Index extends Component
         orWhere('link', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.categorylevel4.index',compact('categories'));
+
+        return view('livewire.admin.categorylevel4.index', compact('categories'));
     }
 }

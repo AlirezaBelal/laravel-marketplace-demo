@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Home\Profile\Order\Detail;
 
-use App\Models\Banner;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\ReturnOrder;
@@ -12,8 +11,11 @@ use Livewire\Component;
 class Returned extends Component
 {
     public $order_price;
+
     public $status = [];
+
     public $newPrice;
+
     public $order_number;
 
     public ReturnOrder $returnOrder;
@@ -22,7 +24,6 @@ class Returned extends Component
     {
         $this->returnOrder = new ReturnOrder();
     }
-
 
     protected $rules = [
         'returnOrder.status' => 'nullable',
@@ -38,24 +39,23 @@ class Returned extends Component
         $this->validate();
         $orders = Order::where('order_number', $this->order_number)->get();
         $returnedPayments = ReturnOrder::where('order_number', $this->order_number)->get();
-        foreach ($this->status as $state){
+        foreach ($this->status as $state) {
             $returnedPaymentU = ReturnOrder::where('id', $state)->get();
-            foreach ($returnedPaymentU as $returnedPayment){
+            foreach ($returnedPaymentU as $returnedPayment) {
                 $returnedPayment->update([
-                    'status' => 0
+                    'status' => 0,
                 ]);
             }
         }
 
-        return redirect(route('returned.itemInfo',$this->order_number));
-
+        return redirect(route('returned.itemInfo', $this->order_number));
 
     }
 
     public function newPrice($id)
     {
         $returnPayment = ReturnOrder::find($id);
-        $this->newPrice = $this->newPrice +  $returnPayment->order->total_price;
+        $this->newPrice = $this->newPrice + $returnPayment->order->total_price;
     }
 
     public function render()
@@ -67,8 +67,8 @@ class Returned extends Component
         $payments = Payment::where('order_number', $order_number)->get();
         $order_first = Order::where('order_number', $order_number)->first();
         $returnedPayments = ReturnOrder::where('order_number', $order_number)->get();
-        return view('livewire.home.profile.order.detail.returned_detail'
-            , compact('order_number', 'orders', 'payments', 'payment_first','returnedPayments'))
+
+        return view('livewire.home.profile.order.detail.returned_detail', compact('order_number', 'orders', 'payments', 'payment_first', 'returnedPayments'))
             ->layout('layouts.home');
     }
 }

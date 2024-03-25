@@ -13,20 +13,27 @@ class Index extends Component
 {
     use WithFileUploads;
     use WithPagination;
+
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $img;
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public Category $category;
+
     public function mount()
     {
         $this->category = new Category();
     }
-
 
     protected $rules = [
         'category.title' => 'required|min:3',
@@ -42,40 +49,41 @@ class Index extends Component
     {
         $this->validateOnly($title);
     }
+
     public function categoryForm()
     {
 
         $this->validate();
 
-        $category =  Category::query()->create([
+        $category = Category::query()->create([
             'title' => $this->category->title,
             'icon' => $this->category->icon,
             'name' => $this->category->name,
             'link' => $this->category->link,
             'description' => $this->category->description,
             'body' => $this->category->body,
-            'status' => $this->category->status ? true:false ,
+            'status' => $this->category->status ? true : false,
         ]);
 
-        if ($this->img){
+        if ($this->img) {
             $category->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->category->title = "";
-        $this->category->icon = "";
-        $this->category->description = "";
-        $this->category->body = "";
-        $this->category->name = "";
-        $this->category->link = "";
+        $this->category->title = '';
+        $this->category->icon = '';
+        $this->category->description = '';
+        $this->category->body = '';
+        $this->category->name = '';
+        $this->category->link = '';
         $this->category->status = false;
         $this->img = null;
 
         Log::create([
-           'user_id' => auth()->user()->id,
-            'url' => 'افزودن دسته' .'-'. $this->category->title,
-            'actionType' => 'ایجاد'
+            'user_id' => auth()->user()->id,
+            'url' => 'افزودن دسته'.'-'.$this->category->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' دسته با موفقیت ایجاد شد.');
 
@@ -88,22 +96,25 @@ class Index extends Component
         $directory = "category/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $category = Category::find($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت دسته' .'-'. $category->title,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت دسته'.'-'.$category->title,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته با موفقیت غیرفعال شد.');
     }
@@ -112,12 +123,12 @@ class Index extends Component
     {
         $category = Category::find($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت دسته' .'-'. $category->title,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت دسته'.'-'.$category->title,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت دسته با موفقیت فعال شد.');
     }
@@ -125,22 +136,20 @@ class Index extends Component
     public function deleteCategory($id)
     {
         $category = Category::find($id);
-        $subCategory = SubCategory::where('parent',$id)->first();
-        if ($subCategory == null){
+        $subCategory = SubCategory::where('parent', $id)->first();
+        if ($subCategory == null) {
             $category->delete();
             Log::create([
                 'user_id' => auth()->user()->id,
-                'url' => 'حذف کردن دسته' .'-'. $category->title,
-                'actionType' => 'حذف'
+                'url' => 'حذف کردن دسته'.'-'.$category->title,
+                'actionType' => 'حذف',
             ]);
             $this->emit('toast', 'success', ' دسته با موفقیت حذف شد.');
-        }else
-        {
+        } else {
             $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا زیردسته دارد!');
         }
 
     }
-
 
     public function render()
     {

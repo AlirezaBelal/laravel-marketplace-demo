@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Index\Category;
 
 use App\Models\CategoryIndex;
 use App\Models\Log;
-use App\Models\category;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,7 +26,6 @@ class Index extends Component
         $this->category = new CategoryIndex();
     }
 
-
     protected $rules = [
         'category.title_id' => 'required',
         'category.product_id' => 'required',
@@ -41,7 +39,6 @@ class Index extends Component
     {
         $this->validateOnly($product_id);
     }
-
 
     public function categoryForm()
     {
@@ -64,12 +61,13 @@ class Index extends Component
         $this->category->status = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول دسته صفحه اصلی' . '-' . $this->category->product_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن محصول دسته صفحه اصلی'.'-'.$this->category->product_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت ایجاد شد.');
 
     }
+
     public function loadCategory()
     {
         $this->readyToLoad = true;
@@ -79,12 +77,12 @@ class Index extends Component
     {
         $category = CategoryIndex::find($id);
         $category->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت محصول دسته صفحه اصلی' . '-' . $category->category_id,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت محصول دسته صفحه اصلی'.'-'.$category->category_id,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت غیرفعال شد.');
     }
@@ -93,12 +91,12 @@ class Index extends Component
     {
         $category = CategoryIndex::find($id);
         $category->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی' . '-' . $category->category_id,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی'.'-'.$category->category_id,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت فعال شد.');
     }
@@ -109,13 +107,12 @@ class Index extends Component
         $category->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن محصول دسته صفحه اصلی' . '-' . $category->category_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن محصول دسته صفحه اصلی'.'-'.$category->category_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {
@@ -126,6 +123,7 @@ class Index extends Component
         orWhere('product_id', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.index.category.index',compact('categories'));
+
+        return view('livewire.admin.index.category.index', compact('categories'));
     }
 }

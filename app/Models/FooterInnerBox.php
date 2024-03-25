@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FooterInnerBox extends Model
 {
     use HasFactory;
-    protected $fillable=['page_id','top'];
+
+    protected $fillable = ['page_id', 'top'];
 }

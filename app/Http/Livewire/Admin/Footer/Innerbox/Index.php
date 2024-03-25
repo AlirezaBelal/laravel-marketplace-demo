@@ -4,10 +4,7 @@ namespace App\Http\Livewire\Admin\Footer\Innerbox;
 
 use App\Models\FooterInnerBox;
 use App\Models\Log;
-use App\Models\Page;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class Index extends Component
 {
@@ -20,8 +17,6 @@ class Index extends Component
         $this->footerInnerBox = new FooterInnerBox();
     }
 
-
-
     protected $rules = [
         'footerInnerBox.page_id' => 'required',
         'footerInnerBox.top' => 'required',
@@ -32,21 +27,20 @@ class Index extends Component
         $this->validateOnly($page_id);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
 
-         FooterInnerBox::query()->create([
+        FooterInnerBox::query()->create([
             'page_id' => $this->footerInnerBox->page_id,
-             'top' => $this->footerInnerBox->top ? true:false ,
+            'top' => $this->footerInnerBox->top ? true : false,
         ]);
-        $this->footerInnerBox->page_id = "";
+        $this->footerInnerBox->page_id = '';
         $this->footerInnerBox->top = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن صفحه به فوتر سایت' .'-'. $this->footerInnerBox->page_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن صفحه به فوتر سایت'.'-'.$this->footerInnerBox->page_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت ایجاد شد.');
 
@@ -56,14 +50,15 @@ class Index extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function deleteCategory($id)
     {
         $page = FooterInnerBox::find($id);
         $page->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن صفحه به فوتر سایت' .'-'. $this->footerInnerBox->page_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن صفحه به فوتر سایت'.'-'.$this->footerInnerBox->page_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت حذف شد.');
 
@@ -73,6 +68,7 @@ class Index extends Component
     {
 
         $footer_pages = FooterInnerBox::latest()->get();
-        return view('livewire.admin.footer.innerbox.index',compact('footer_pages'));
+
+        return view('livewire.admin.footer.innerbox.index', compact('footer_pages'));
     }
 }

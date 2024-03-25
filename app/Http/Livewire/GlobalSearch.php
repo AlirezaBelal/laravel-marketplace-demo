@@ -12,11 +12,13 @@ use Livewire\Component;
 class GlobalSearch extends Component
 {
     public string $search = '';
+
     public array $results = [];
+
     public array $searchable = [];
 
     protected array $rules = [
-        'search' => 'required|min:3'
+        'search' => 'required|min:3',
     ];
 
     public function mount()
@@ -55,7 +57,7 @@ class GlobalSearch extends Component
             $query = (new $model())->query();
 
             foreach ($columns as $column) {
-                $query->orWhere($column, 'LIKE', '%' . $this->search . '%');
+                $query->orWhere($column, 'LIKE', '%'.$this->search.'%');
             }
             foreach ($columns as $field) {
                 $queryResult = $query->take(10)->get();
@@ -74,7 +76,7 @@ class GlobalSearch extends Component
                         $fields[$field_key] = $resource->{$field};
 
                         return [
-//                          'linkTo' => route($route_key.'.show',$route_params),
+                            //                          'linkTo' => route($route_key.'.show',$route_params),
                             'fields' => $fields,
                             'img' => $img,
                             'name' => $name,
@@ -84,7 +86,6 @@ class GlobalSearch extends Component
                     });
                 }
             }
-
 
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Home\Cart;
 
-
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\PriceDate;
@@ -13,38 +12,38 @@ use Stevebauman\Location\Facades\Location;
 
 class Index extends Component
 {
-//    public \App\Models\Gift $gift;
-//
-//    public function mount()
-//    {
-//        $this->gift = new \App\Models\Gift();
-//    }
-//
-//    protected $rules = [
-//        'gift.newcard' => 'nullable',
-//    ];
-//
-//    public function updated($newcard)
-//    {
-//        $this->validateOnly($newcard);
-//    }
-//
-//    public function giftForm()
-//    {
-//        $this->validate();
-//        $newcode = \App\Models\Gift::where('code',$this->gift->newcard)->first();
-//        if ($newcode) {
-//            $newcode->update([
-//                'user_id' => auth()->user()->id,
-//                'type' => 1,
-//            ]);
-//            $this->emit('toast', 'success', ' کد هدیه وارد شده ثبت شد.');
-//        }else
-//        {
-//            $this->emit('toast', 'error', ' کد هدیه وارد شده وجود ندارد.');
-//        }
-//
-//    }
+    //    public \App\Models\Gift $gift;
+    //
+    //    public function mount()
+    //    {
+    //        $this->gift = new \App\Models\Gift();
+    //    }
+    //
+    //    protected $rules = [
+    //        'gift.newcard' => 'nullable',
+    //    ];
+    //
+    //    public function updated($newcard)
+    //    {
+    //        $this->validateOnly($newcard);
+    //    }
+    //
+    //    public function giftForm()
+    //    {
+    //        $this->validate();
+    //        $newcode = \App\Models\Gift::where('code',$this->gift->newcard)->first();
+    //        if ($newcode) {
+    //            $newcode->update([
+    //                'user_id' => auth()->user()->id,
+    //                'type' => 1,
+    //            ]);
+    //            $this->emit('toast', 'success', ' کد هدیه وارد شده ثبت شد.');
+    //        }else
+    //        {
+    //            $this->emit('toast', 'error', ' کد هدیه وارد شده وجود ندارد.');
+    //        }
+    //
+    //    }
     public function deleteCartProduct($id)
     {
         $cart = Cart::find($id);
@@ -56,7 +55,7 @@ class Index extends Component
     {
         $cart = Cart::find($id);
         $cart->update([
-            'type' => 0
+            'type' => 0,
         ]);
         $this->emit('toast', 'success', 'محصول به سبد اصلی خرید شما اضافه شد.');
     }
@@ -65,7 +64,7 @@ class Index extends Component
     {
         $cart = Cart::find($id);
         $cart->update([
-            'type' => 1
+            'type' => 1,
         ]);
         $this->emit('toast', 'success', 'محصول به لیست خرید بعدی شما اضافه شد.');
     }
@@ -80,7 +79,7 @@ class Index extends Component
         }
         foreach ($cart_others as $cart_other) {
             $cart_other->update([
-                'type' => 0
+                'type' => 0,
             ]);
         }
         $this->emit('toast', 'success', ' تمام محصول به لیست خرید بعدی شما اضافه شدند.');
@@ -94,7 +93,7 @@ class Index extends Component
             if ($productSeller->limit_order > $cart->count) {
 
                 $cart->update([
-                    'count' => $cart->count + 1
+                    'count' => $cart->count + 1,
                 ]);
                 $this->emit('toast', 'success', 'محصول آپدیت شد');
             } else {
@@ -104,7 +103,6 @@ class Index extends Component
             $this->emit('toast', 'error', 'حداکثر تعداد محصول نزد فروشنده ');
         }
 
-
     }
 
     public function minToCount($id)
@@ -112,7 +110,7 @@ class Index extends Component
         $cart = Cart::find($id);
         if ($cart->count > 1) {
             $cart->update([
-                'count' => $cart->count - 1
+                'count' => $cart->count - 1,
             ]);
         }
         $this->emit('toast', 'success', 'محصول آپدیت شد');
@@ -128,45 +126,44 @@ class Index extends Component
             $location = Location::get($userIp2);
             if ($carts) {
                 $order = Order::all()->last();
-               if ($order) {
-                   foreach ($carts as $cart) {
-                     $orders =   Order::create([
-                           'user_id' => auth()->user()->id,
-                           'order_number' => $order->order_number + 1,
-                           'product_id' => $cart->product_id,
-                           'product_seller_id' => $cart->product_seller_id,
-                           'payment' => 0,
-                           'product_color' => $cart->product_color,
-                           'total_price' => $cart->product_price,
-                           'total_discount_price' => $cart->product_price_discount,
-                           'ip' => $userIp2,
-                           'count' => $cart->count,
-                           'product_vendor' => $cart->product_vendor,
-                           'product_warranty' => $cart->product_warranty,
+                if ($order) {
+                    foreach ($carts as $cart) {
+                        $orders = Order::create([
+                            'user_id' => auth()->user()->id,
+                            'order_number' => $order->order_number + 1,
+                            'product_id' => $cart->product_id,
+                            'product_seller_id' => $cart->product_seller_id,
+                            'payment' => 0,
+                            'product_color' => $cart->product_color,
+                            'total_price' => $cart->product_price,
+                            'total_discount_price' => $cart->product_price_discount,
+                            'ip' => $userIp2,
+                            'count' => $cart->count,
+                            'product_vendor' => $cart->product_vendor,
+                            'product_warranty' => $cart->product_warranty,
 
-                       ]);
-                   }
-               }else{
-                   $number = '111111111';
-                   foreach ($carts as $cart) {
-                       $orders =    Order::create([
-                           'user_id' => auth()->user()->id,
-                           'order_number' => $number,
-                           'product_id' => $cart->product_id,
-                           'product_seller_id' => $cart->product_seller_id,
-                           'payment' => 0,
-                           'product_color' => $cart->product_color,
-                           'total_price' => $cart->product_price,
-                           'total_discount_price' => $cart->product_price_discount,
-                           'ip' => $userIp2,
-                           'count' => $cart->count,
-                           'product_vendor' => $cart->product_vendor,
-                           'product_warranty' => $cart->product_warranty,
+                        ]);
+                    }
+                } else {
+                    $number = '111111111';
+                    foreach ($carts as $cart) {
+                        $orders = Order::create([
+                            'user_id' => auth()->user()->id,
+                            'order_number' => $number,
+                            'product_id' => $cart->product_id,
+                            'product_seller_id' => $cart->product_seller_id,
+                            'payment' => 0,
+                            'product_color' => $cart->product_color,
+                            'total_price' => $cart->product_price,
+                            'total_discount_price' => $cart->product_price_discount,
+                            'ip' => $userIp2,
+                            'count' => $cart->count,
+                            'product_vendor' => $cart->product_vendor,
+                            'product_warranty' => $cart->product_warranty,
 
-                       ]);
-                   }
-               }
-
+                        ]);
+                    }
+                }
 
                 return $this->redirect(route('order.shipping'));
 
@@ -178,7 +175,6 @@ class Index extends Component
         } else {
             return $this->redirect('/login');
         }
-
 
     }
 
@@ -192,7 +188,7 @@ class Index extends Component
             if ($cartIps) {
                 foreach ($cartIps as $cartIp) {
                     $cartIp->update([
-                        'user_id' => auth()->user()->id
+                        'user_id' => auth()->user()->id,
                     ]);
                 }
             }
@@ -209,11 +205,11 @@ class Index extends Component
 
         foreach ($carts as $cart) {
             $cart->update([
-                'view' => $cart->view + 1
+                'view' => $cart->view + 1,
             ]);
             if ($cart->view >= 2) {
                 $cart->update([
-                    'read_cart' => 1
+                    'read_cart' => 1,
                 ]);
             }
         }
@@ -244,16 +240,12 @@ class Index extends Component
                 $day = $different->format('%d');
                 $mo = $different->format('%m');
 
-                return view('livewire.home.cart.index'
-                    , compact('carts', 'cart_others', 'mo', 'day'
-                        , 'priceDate_min_price_first', 'cart_read_cart'))->layout('layouts.home');
+                return view('livewire.home.cart.index', compact('carts', 'cart_others', 'mo', 'day', 'priceDate_min_price_first', 'cart_read_cart'))->layout('layouts.home');
             }
         } else {
-            return view('livewire.home.cart.index'
-                , compact('carts', 'cart_others', 'cart_read_cart'))
+            return view('livewire.home.cart.index', compact('carts', 'cart_others', 'cart_read_cart'))
                 ->layout('layouts.home');
         }
-
 
     }
 }

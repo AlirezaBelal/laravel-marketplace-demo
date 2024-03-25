@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Users;
 
 use App\Models\Log;
 use App\Models\User;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -15,20 +14,25 @@ class IndexUser extends Component
     use WithPagination;
 
     protected $listeners = [
-        'user.added' => '$refresh'
+        'user.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $img;
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public User $user;
 
     public function mount()
     {
         $this->user = new User();
     }
-
 
     protected $rules = [
         'user.admin' => 'nullable',
@@ -58,21 +62,21 @@ class IndexUser extends Component
 
         if ($this->img) {
             $user->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->user->mobile = "";
-        $this->user->email = "";
-        $this->user->name = "";
+        $this->user->mobile = '';
+        $this->user->email = '';
+        $this->user->name = '';
         $this->user->staff = false;
         $this->user->admin = false;
         $this->img = null;
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن کاربر' . '-' . $this->user->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن کاربر'.'-'.$this->user->name,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' کاربر با موفقیت ایجاد شد.');
 
@@ -85,6 +89,7 @@ class IndexUser extends Component
         $directory = "user/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -97,12 +102,11 @@ class IndexUser extends Component
     {
         $user = user::find($id);
         $user->update([
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
 
         $this->emit('toast', 'success', 'ایمیل کاربر با موفقیت تایید شد.');
     }
-
 
     public function deleteUser($id)
     {
@@ -112,7 +116,6 @@ class IndexUser extends Component
         $this->emit('toast', 'success', ' کاربر با موفقیت حذف شد.');
 
     }
-
 
     public function render()
     {

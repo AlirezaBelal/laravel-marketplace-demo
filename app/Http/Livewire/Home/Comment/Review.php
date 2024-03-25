@@ -2,34 +2,18 @@
 
 namespace App\Http\Livewire\Home\Comment;
 
-use App\Models\Cart;
-use App\Models\CategoryLevel4;
-use App\Models\Color;
-use App\Models\Comment;
-use App\Models\Favorite;
-use App\Models\Log;
-use App\Models\Notification;
-use App\Models\PriceDate;
 use App\Models\Product;
-use App\Models\ProductSeller;
-use App\Models\Rate;
-use Artesaos\SEOTools\Facades\JsonLd;
-use Artesaos\SEOTools\Facades\JsonLdMulti;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Illuminate\Support\Facades\Request;
 use Livewire\Component;
-use Stevebauman\Location\Facades\Location;
 
 class Review extends Component
 {
-
     public $product;
+
     public $color;
+
     public $comment;
 
     public \App\Models\Review $review;
-
 
     public function mount($id)
     {
@@ -78,9 +62,8 @@ class Review extends Component
             'review_hidden' => $this->review->review_hidden ? 1 : 0,
         ]);
 
-        return $this->redirect('/product/dkp-' . $this->product->id . '/' . $this->product->link);
+        return $this->redirect('/product/dkp-'.$this->product->id.'/'.$this->product->link);
     }
-
 
     public function render()
     {

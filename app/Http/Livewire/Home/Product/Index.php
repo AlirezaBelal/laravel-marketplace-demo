@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Home\Product;
 
-
 use App\Models\Cart;
 use App\Models\Color;
 use App\Models\Comment;
@@ -25,14 +24,20 @@ use Stevebauman\Location\Facades\Location;
 class Index extends Component
 {
     public $product;
+
     public $color;
+
     public $comment;
+
     public $vendor_new;
+
     public $new_price;
 
     public $queryString = ['filters'];
+
     public Notification $notification;
-//    public Comment $comment;
+
+    //    public Comment $comment;
     public $readyToLoad = false;
 
     public array $filterOptions = [
@@ -41,24 +46,28 @@ class Index extends Component
         'parent_b' => ['0'],
         'my_q' => ['1'],
     ];
-    public array $filters = array();
+
+    public array $filters = [];
+
     public array $filterToMerge = [
         'like' => [],
         'parent_a' => [],
         'parent_b' => [],
         'my_q' => [],
     ];
+
     public $orderSelect;
+
     public $orderBy = [
         'key' => 'created_at',
-        'direction' => 'desc'
+        'direction' => 'desc',
     ];
 
     public function mount($id)
     {
         $this->product = Product::find($id);
         $this->notification = new Notification();
-//        $this->comment = new Comment();
+        //        $this->comment = new Comment();
     }
 
     protected $rules = [
@@ -108,7 +117,7 @@ class Index extends Component
 
             } else {
                 $com->update([
-                    'report' => 1
+                    'report' => 1,
                 ]);
             }
             $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
@@ -118,14 +127,13 @@ class Index extends Component
         }
     }
 
-
     public function likeReview($id)
     {
         if (auth()->user()) {
             $review = Review::find($id);
             $review->update([
                 'liked' => 1,
-                'dislike' => 0
+                'dislike' => 0,
             ]);
             $rate = Rate::where('review_id', $id)->where('user_id', auth()->user()->id)
                 ->where('product_id', $review->product_id)->first();
@@ -155,7 +163,7 @@ class Index extends Component
             $review = Review::find($id);
             $review->update([
                 'liked' => 0,
-                'dislike' => 1
+                'dislike' => 1,
             ]);
             $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
 
@@ -168,7 +176,6 @@ class Index extends Component
     {
         if (auth()->user()) {
             $review = Review::find($id);
-
 
             if ($review->report == 1) {
                 $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
@@ -184,7 +191,6 @@ class Index extends Component
             return $this->redirect('/login');
         }
     }
-
 
     public function addQuestion()
     {
@@ -305,7 +311,6 @@ class Index extends Component
         $this->readyToLoad = true;
     }
 
-
     public function changeColor($id)
     {
         $color = Color::find($id);
@@ -351,7 +356,7 @@ class Index extends Component
         }
 
         $this->emit('toast', 'success', ' محصول ثبت شد و در صورت موجود بودن با روش های انتخابی اطلاع رسانی خواهد شد.');
-//        return $this->redirect(request()->header('Referer'));
+        //        return $this->redirect(request()->header('Referer'));
     }
 
     public function updateFavoriteDisable($id)
@@ -365,7 +370,7 @@ class Index extends Component
     {
         $favarites = Favorite::create([
             'product_id' => $id,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
         ]);
         $this->emit('toast', 'success', 'محصول به علاقه مندی ها اضافه شد.');
     }
@@ -381,7 +386,7 @@ class Index extends Component
     {
         $observed = \App\Models\Observed::create([
             'product_id' => $id,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
         ]);
         $this->emit('toast', 'success', 'محصول به اطلاع رسانی ها اضافه شد.');
     }
@@ -389,7 +394,7 @@ class Index extends Component
     public function compareAdd($id)
     {
         if (auth()->user()) {
-//dd(Compare::where('user_id',auth()->user()->id)->first());
+            //dd(Compare::where('user_id',auth()->user()->id)->first());
             if (Compare::where('user_id', auth()->user()->id)->first()) {
                 if (Compare::where('product_id', $id)->where('user_id', auth()->user()->id)->first() == null) {
                     $com = Compare::create([
@@ -397,12 +402,12 @@ class Index extends Component
                         'product_id' => $id,
                     ]);
                     $first = Compare::where('user_id', auth()->user()->id)->first();
-                    $url = '/compare/dkp-' . $first->product_id . '/dkp-' . $id;
+                    $url = '/compare/dkp-'.$first->product_id.'/dkp-'.$id;
+
                     return $this->redirect($url);
                 } else {
                     return $this->redirect(route('compare.step1', $id));
                 }
-
 
             } else {
                 Compare::create([
@@ -413,11 +418,9 @@ class Index extends Component
                 return $this->redirect(route('compare.step1', $id));
             }
 
-
         } else {
             $this->redirect('/login');
         }
-
 
     }
 
@@ -432,7 +435,7 @@ class Index extends Component
             if ($userhistory == null) {
                 \App\Models\UserHistory::create([
                     'user_id' => auth()->user()->id,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
             }
         }
@@ -452,7 +455,6 @@ class Index extends Component
         orderBy('discount_price', 'ASC')->skip('3')->take(PHP_INT_MAX)->get();
         $productSeller_count = ProductSeller::where('product_id', $product->id)->count();
 
-
         $priceDate = PriceDate::where('product_id', $product->id)->get();
 
         $priceDate_min_price = PriceDate::where('product_id', $product->id)->
@@ -464,7 +466,6 @@ class Index extends Component
 
         $priceDate_min_price_first1 = PriceDate::where('product_id', $product->id)->
         orderBy('discount_price', 'ASC')->get()[1];
-
 
         if ($priceDate_min_price_first1) {
             $date1 = $priceDate_min_price_first->created_at;
@@ -504,10 +505,10 @@ class Index extends Component
         JsonLdMulti::setDescription($product->title);
         JsonLdMulti::setType('product');
         JsonLdMulti::addImage($product->img);
-        if (!JsonLdMulti::isEmpty()) {
+        if (! JsonLdMulti::isEmpty()) {
             JsonLdMulti::newJsonLd();
             JsonLdMulti::setType('WebPage');
-            JsonLdMulti::setTitle('Page product - ' . $product->title);
+            JsonLdMulti::setTitle('Page product - '.$product->title);
         }
 
         // Namespace URI: http://ogp.me/ns/product#
@@ -521,7 +522,7 @@ class Index extends Component
                 'expiration_time' => 'datetime',
                 'author' => 'profile / array',
                 'section' => 'string',
-                'tag' => 'string / array'
+                'tag' => 'string / array',
             ]);
 
         // Namespace URI: http://ogp.me/ns/book#
@@ -534,7 +535,7 @@ class Index extends Component
                 'isbn' => 'string',
                 'release_date' => 'datetime',
                 'Availability' => 'new',
-                'tag' => 'string / array'
+                'tag' => 'string / array',
             ]);
 
         // Namespace URI: http://ogp.me/ns/profile#
@@ -546,7 +547,7 @@ class Index extends Component
                 'first_name' => 'string',
                 'last_name' => 'string',
                 'username' => 'string',
-                'gender' => 'enum(male, female)'
+                'gender' => 'enum(male, female)',
             ]);
 
         // Namespace URI: http://ogp.me/ns/music#
@@ -557,7 +558,7 @@ class Index extends Component
                 'album' => 'array',
                 'album:disc' => 'integer',
                 'album:track' => 'integer',
-                'musician' => 'array'
+                'musician' => 'array',
             ]);
 
         // music.album
@@ -567,7 +568,7 @@ class Index extends Component
                 'song:disc' => 'integer',
                 'song:track' => 'integer',
                 'musician' => 'profile',
-                'release_date' => 'datetime'
+                'release_date' => 'datetime',
             ]);
 
         //music.playlist
@@ -576,13 +577,13 @@ class Index extends Component
                 'song' => 'music.song',
                 'song:disc' => 'integer',
                 'song:track' => 'integer',
-                'creator' => 'profile'
+                'creator' => 'profile',
             ]);
 
         // music.radio_station
         OpenGraph::setType('music.radio_station')
             ->setMusicRadioStation([
-                'creator' => 'profile'
+                'creator' => 'profile',
             ]);
 
         // Namespace URI: http://ogp.me/ns/video#
@@ -595,7 +596,7 @@ class Index extends Component
                 'writer' => 'profile / array',
                 'duration' => 'integer',
                 'release_date' => 'datetime',
-                'tag' => 'string / array'
+                'tag' => 'string / array',
             ]);
 
         // video.episode
@@ -608,7 +609,7 @@ class Index extends Component
                 'duration' => 'integer',
                 'release_date' => 'datetime',
                 'tag' => 'string / array',
-                'series' => 'video.tv_show'
+                'series' => 'video.tv_show',
             ]);
 
         // video.tv_show
@@ -620,7 +621,7 @@ class Index extends Component
                 'writer' => 'profile / array',
                 'duration' => 'integer',
                 'release_date' => 'datetime',
-                'tag' => 'string / array'
+                'tag' => 'string / array',
             ]);
 
         // video.other
@@ -632,7 +633,7 @@ class Index extends Component
                 'writer' => 'profile / array',
                 'duration' => 'integer',
                 'release_date' => 'datetime',
-                'tag' => 'string / array'
+                'tag' => 'string / array',
             ]);
 
         // og:video
@@ -640,13 +641,13 @@ class Index extends Component
             'secure_url' => 'https://example.com/movie.swf',
             'type' => 'application/x-shockwave-flash',
             'width' => 400,
-            'height' => 300
+            'height' => 300,
         ]);
 
         // og:audio
         OpenGraph::addAudio('http://example.com/sound.mp3', [
             'secure_url' => 'https://secure.example.com/sound.mp3',
-            'type' => 'audio/mpeg'
+            'type' => 'audio/mpeg',
         ]);
 
         // og:place
@@ -658,15 +659,13 @@ class Index extends Component
                 'location:longitude' => 'float',
             ]);
 
-
         $comments = $this->readyToLoad ? Comment::where('status', 1)->
         where('product_id', $product->id)->where('parent', 0)->
         latest()->paginate(15) : [];
-        return view('livewire.home.product.index', compact('product', 'productSeller_count'
-                , 'productSeller', 'productSeller_max_price', 'productSeller_max_price_first',
-                'productSeller_max_price_all', 'mo', 'day', 'priceDate_min_price_first',
-                'productSeller_max_price_all_init', 'productSeller_min_price_first'
-                , 'comments')
+
+        return view('livewire.home.product.index', compact('product', 'productSeller_count', 'productSeller', 'productSeller_max_price', 'productSeller_max_price_first',
+            'productSeller_max_price_all', 'mo', 'day', 'priceDate_min_price_first',
+            'productSeller_max_price_all_init', 'productSeller_min_price_first', 'comments')
         )->layout('layouts.home');
     }
 }

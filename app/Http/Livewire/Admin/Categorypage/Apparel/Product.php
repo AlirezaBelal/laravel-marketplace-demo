@@ -16,18 +16,22 @@ class Product extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $product_id;
-    public $title_id;
-    public $category_id;
-    public $subCategory_id;
-    public $childCategory_id;
-    public $status;
-    public $search;
 
+    public $title_id;
+
+    public $category_id;
+
+    public $subCategory_id;
+
+    public $childCategory_id;
+
+    public $status;
+
+    public $search;
 
     protected $queryString = ['search'];
 
     public $readyToLoad = false;
-
 
     public function categoryForm()
     {
@@ -45,7 +49,6 @@ class Product extends Component
         $banner3 = DB::connection('mysql-apparel')->table('category_apparel_product_swiper')
             ->where('id', $banner2->id)->limit($banner2->id);
 
-
         $this->title_id = null;
         $this->product_id = null;
         $this->category_id = null;
@@ -54,13 +57,12 @@ class Product extends Component
         $this->status = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن محصول' . '-' . $this->title_id,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن محصول'.'-'.$this->title_id,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' محصول با موفقیت ایجاد شد.');
 
     }
-
 
     public function loadCategory()
     {
@@ -77,8 +79,8 @@ class Product extends Component
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن محصول' . '-' . $banner2->title_id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن محصول'.'-'.$banner2->title_id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' محصول با موفقیت حذف شد.');
 

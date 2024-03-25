@@ -25,7 +25,6 @@ class CreateChildCategoriesTable extends Migration
 
             $table->softDeletes();
 
-
             $table->timestamps();
         });
     }

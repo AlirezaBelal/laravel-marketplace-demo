@@ -11,8 +11,7 @@ class Review extends Model
 
     protected $fillable = ['product_id', 'user_id', 'status', 'parent', 'review',
         'review_title', 'plus_rate', 'plus_min', 'review_hidden', 'keyfiat_sakht',
-        'arzesh_kharid', 'noavari', 'emkanat', 'sohoolate_estefade', 'zaher', 'ok_buy'
-        , 'liked', 'dislike', 'report'];
+        'arzesh_kharid', 'noavari', 'emkanat', 'sohoolate_estefade', 'zaher', 'ok_buy', 'liked', 'dislike', 'report'];
 
     public function product()
     {

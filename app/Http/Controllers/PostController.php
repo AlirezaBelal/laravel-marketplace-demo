@@ -12,13 +12,14 @@ class PostController extends Controller
     {
         $newsletter = NewsLetter::where('email', $request->email)->first();
         if ($newsletter) {
-//            alert()->error(' ایمیل شما قبلا در  خبرنامه ثبت شده است.', 'ایمیل وجود دارد.');
+            //            alert()->error(' ایمیل شما قبلا در  خبرنامه ثبت شده است.', 'ایمیل وجود دارد.');
         } else {
             NewsLetter::create([
-                'email' => $request->email
+                'email' => $request->email,
             ]);
-//            alert()->success(' ایمیل شما با موفقیت در خبرنامه ثبت شد.', 'با تشکر');
+            //            alert()->success(' ایمیل شما با موفقیت در خبرنامه ثبت شد.', 'با تشکر');
         }
+
         return back();
     }
 
@@ -38,7 +39,7 @@ class PostController extends Controller
             'state' => $request->state,
         ]);
 
-//        alert()->success(' آدرس با موفقیت ثبت شد.', 'ثبت آدرس');
+        //        alert()->success(' آدرس با موفقیت ثبت شد.', 'ثبت آدرس');
 
         return back();
     }
@@ -48,7 +49,7 @@ class PostController extends Controller
         $address = Address::find($id);
         $address->delete();
 
-//        alert()->success(' آدرس با موفقیت حذف شد.', 'حذف آدرس');
+        //        alert()->success(' آدرس با موفقیت حذف شد.', 'حذف آدرس');
 
         return back();
     }

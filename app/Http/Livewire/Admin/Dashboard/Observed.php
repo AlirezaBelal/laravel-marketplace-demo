@@ -25,13 +25,13 @@ class Observed extends Component
 
     public function deleteCategory($id)
     {
-        $favorites = \App\Models\Observed::where('id',$id)->first();
+        $favorites = \App\Models\Observed::where('id', $id)->first();
 
         $favorites->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن اطلاع رسانی' . '-' . $id,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن اطلاع رسانی'.'-'.$id,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' با موفقیت از لیست اطلاع رسانی ها حذف شد ! ');
 
@@ -44,6 +44,7 @@ class Observed extends Component
         orWhere('product_id', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.dashboard.observed',compact('observeds'));
+
+        return view('livewire.admin.dashboard.observed', compact('observeds'));
     }
 }
