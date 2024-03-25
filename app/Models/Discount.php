@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Discount extends Model
 {
     use HasFactory;
-    protected $fillable =['code','status','vendor_id','category_id','product_id','percent','type'
-        ,'price','code','date_expire'];
+
+    protected $fillable = ['code', 'status', 'vendor_id', 'category_id', 'product_id', 'percent', 'type', 'price', 'code', 'date_expire'];
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Product\Color;
 
-use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Log;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +29,7 @@ class Trashed extends Component
     public function deleteCategory($id)
     {
         $color = Color::withTrashed()->findOrFail($id);
-        Storage::disk('public')->delete("storage",$color->img);
+        Storage::disk('public')->delete('storage', $color->img);
         $color->forceDelete();
         $this->emit('toast', 'success', ' رنگ به صورت کامل از دیتابیس حذف شد.');
     }
@@ -41,8 +40,8 @@ class Trashed extends Component
         $color->restore();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'بازیابی رنگ' .'-'. $color->title,
-            'actionType' => 'بازیابی'
+            'url' => 'بازیابی رنگ'.'-'.$color->title,
+            'actionType' => 'بازیابی',
         ]);
         $this->emit('toast', 'success', ' رنگ با موفقیت بازیابی شد.');
     }
@@ -54,6 +53,6 @@ class Trashed extends Component
             ->whereNotNull('deleted_at')->
             latest()->paginate(15) : [];
 
-        return view('livewire.admin.product.color.trashed',compact('colors'));
+        return view('livewire.admin.product.color.trashed', compact('colors'));
     }
 }

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SiteHeader extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','img','link','icon','status'];
+
+    protected $fillable = ['title', 'img', 'link', 'icon', 'status'];
 }

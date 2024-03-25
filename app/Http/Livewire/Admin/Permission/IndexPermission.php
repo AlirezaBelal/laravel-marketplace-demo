@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Permission;
 
 use App\Models\Log;
 use App\Models\Permission;
-use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,19 +12,23 @@ class IndexPermission extends Component
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public Permission $permission;
 
     public function mount()
     {
         $this->permission = new Permission();
     }
-
 
     protected $rules = [
         'permission.name' => 'required',
@@ -47,14 +50,13 @@ class IndexPermission extends Component
             'def' => $this->permission->def,
         ]);
 
-
-        $this->permission->name = "";
-        $this->permission->def = "";
+        $this->permission->name = '';
+        $this->permission->def = '';
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن دسترسی' . '-' . $this->permission->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن دسترسی'.'-'.$this->permission->name,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' دسترسی با موفقیت ایجاد شد.');
 
@@ -65,21 +67,18 @@ class IndexPermission extends Component
         $this->readyToLoad = true;
     }
 
-
     public function deleteRole($id)
     {
         $role = Permission::find($id);
         $role->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن دسترسی' . '-' . $role->name,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن دسترسی'.'-'.$role->name,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' دسترسی با موفقیت حذف شد.');
 
-
     }
-
 
     public function render()
     {

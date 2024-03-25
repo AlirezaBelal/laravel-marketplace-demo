@@ -2,13 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Role;
 
-use App\Models\Category;
 use App\Models\Log;
 use App\Models\PermissionRole;
 use App\Models\Role;
-use App\Models\SubCategory;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class IndexRole extends Component
@@ -16,20 +13,25 @@ class IndexRole extends Component
     use WithPagination;
 
     public $permissions;
+
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public Role $role;
 
     public function mount()
     {
         $this->role = new Role();
     }
-
 
     protected $rules = [
         'role.name' => 'required',
@@ -56,15 +58,14 @@ class IndexRole extends Component
             ]);
         }
 
-
-        $this->role->name = "";
-        $this->role->def = "";
+        $this->role->name = '';
+        $this->role->def = '';
         $this->permissions = false;
 
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن مقام' . '-' . $this->role->name,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن مقام'.'-'.$this->role->name,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' مقام با موفقیت ایجاد شد.');
 
@@ -75,21 +76,18 @@ class IndexRole extends Component
         $this->readyToLoad = true;
     }
 
-
     public function deleteRole($id)
     {
         $role = Role::find($id);
         $role->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن مقام' . '-' . $role->name,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن مقام'.'-'.$role->name,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' مقام با موفقیت حذف شد.');
 
-
     }
-
 
     public function render()
     {

@@ -2,12 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Role;
 
-use App\Models\CategoryLevel4;
 use App\Models\Log;
 use App\Models\PermissionRole;
 use App\Models\Role;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class UpdateRole extends Component
 {
@@ -15,8 +13,8 @@ class UpdateRole extends Component
 
     public Role $role;
 
-
     public $img;
+
     protected $rules = [
         'role.name' => 'required',
         'role.def' => 'nullable',
@@ -25,7 +23,6 @@ class UpdateRole extends Component
     public function categoryForm()
     {
         $this->validate();
-
 
         $this->role->update($this->validate());
         $permissionDelete = PermissionRole::where('role_id', $this->role->id)->delete();
@@ -37,19 +34,19 @@ class UpdateRole extends Component
         }
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت مقام' . '-' . $this->role->def,
-            'actionType' => 'آپدیت'
+            'url' => 'آپدیت مقام'.'-'.$this->role->def,
+            'actionType' => 'آپدیت',
         ]);
-//        alert()->success('مقام با موفقیت ایجاد شد.', 'مقام آپدیت شد.');
+        //        alert()->success('مقام با موفقیت ایجاد شد.', 'مقام آپدیت شد.');
 
         return redirect(route('role.index'));
 
     }
 
-
     public function render()
     {
         $role = $this->role;
+
         return view('livewire.admin.role.update-role', compact('role'));
     }
 }

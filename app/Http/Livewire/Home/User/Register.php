@@ -2,26 +2,20 @@
 
 namespace App\Http\Livewire\Home\User;
 
-use App\Models\Category;
-use App\Models\Log;
 use App\Models\SMS;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Kavenegar\KavenegarApi;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 
 class Register extends Component
 {
-
     public User $user;
 
     public function mount()
     {
         $this->user = new User();
     }
-
 
     protected $rules = [
         'user.email_phone' => 'required',
@@ -31,7 +25,6 @@ class Register extends Component
     {
         $this->validateOnly($email_phone);
     }
-
 
     public function userForm()
     {
@@ -60,6 +53,7 @@ class Register extends Component
                 'type' => $type,
                 'user_id' => $user->id,
             ]);
+
             return $this->redirect(route('users.register.confirm', $user->id));
         }
     }

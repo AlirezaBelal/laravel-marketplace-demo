@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Mail\OrderSubmit;
 use App\Models\Notification;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +33,7 @@ use Spatie\Sitemap\SitemapGenerator;
 
 Route::get('/sitem', function () {
     SitemapGenerator::create('http://127.0.0.1:8000/')->writeToFile(public_path('sitemap.xml'));
+
     return back();
 });
 Route::get('/', \App\Http\Livewire\Home\Home\Index::class)
@@ -48,10 +48,10 @@ Route::get('/register', function () {
 //category and Subcategory
 Route::middleware('web')->prefix('main')->group(function () {
     Route::get('/{category}', \App\Http\Livewire\Home\Category\Index::class);
-//Route::get('/electronic-devices',\App\Http\Livewire\Home\Category\Electronic\Index::class)->name('category.electronic.index');
-//Route::get('/vehicles',\App\Http\Livewire\Home\Category\Vehicle\Index::class)->name('category.electronic.index');
-//Route::get('/apparel',\App\Http\Livewire\Home\Category\Apparel\Index::class)->name('category.apparel.index');
-//Route::get('/mother-and-child/',\App\Http\Livewire\Home\Category\Child\Index::class)->name('category.child.index');
+    //Route::get('/electronic-devices',\App\Http\Livewire\Home\Category\Electronic\Index::class)->name('category.electronic.index');
+    //Route::get('/vehicles',\App\Http\Livewire\Home\Category\Vehicle\Index::class)->name('category.electronic.index');
+    //Route::get('/apparel',\App\Http\Livewire\Home\Category\Apparel\Index::class)->name('category.apparel.index');
+    //Route::get('/mother-and-child/',\App\Http\Livewire\Home\Category\Child\Index::class)->name('category.child.index');
 });
 Route::middleware('web')->prefix('search')->group(function () {
     Route::get('/{category}', \App\Http\Livewire\Home\SubCategory\Index::class);
@@ -75,6 +75,7 @@ Route::middleware('web')->prefix('users')->group(function () {
     Route::get('/welcome', \App\Http\Livewire\Home\User\Welcome::class)->name('users.welcome');
     Route::get('/logout', function () {
         auth()->logout();
+
         return redirect('/');
     });
 });
@@ -101,7 +102,6 @@ Route::middleware('web')->prefix('profile')->middleware('auth')->group(function 
     Route::get('/orders/{id}/invoice', \App\Http\Livewire\Home\Profile\Order\Invoice::class)
         ->name('order.profile.invoice');
 
-
 });
 
 //compare
@@ -110,11 +110,9 @@ Route::get('/compare/dkp-{id2}/dkp-{id}', \App\Http\Livewire\Home\Compare\Step2:
 //Route::get('/compare/dkp-{id}/dkp-{id}/dkp-{id}', \App\Http\Livewire\Home\Compare\Step3::class)->name('compare.step3');
 //Route::get('/compare/dkp-{id}/dkp-{id}/dkp-{id}/dkp-{id}', \App\Http\Livewire\Home\Compare\Step4::class)->name('compare.step4');
 
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-
 
 //newsletter
 Route::post('/newsletter', [PostController::class, 'newsletter'])->name('post.newsletter');
@@ -140,7 +138,6 @@ Route::get('/payment/bank/pay', [\App\Http\Controllers\PayController::class, 'pa
 //payment Bank
 Route::get('/payment/bank/callback', [\App\Http\Controllers\PayController::class, 'callback'])
     ->name('bank.callback');
-
 
 //seller register
 Route::get('/seller/registration', App\Http\Livewire\Seller\Auth\Register::class)

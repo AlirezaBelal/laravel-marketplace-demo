@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Home\Profile;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Address extends Component
@@ -48,6 +46,7 @@ class Address extends Component
             'city' => $this->address->city,
             'state' => $this->address->state,
         ]);
+
         return $this->redirect(request()->header('Referer'));
     }
 
@@ -60,12 +59,13 @@ class Address extends Component
 
     public function sendEditForm($address)
     {
-        return $this->redirect(route('address.edit',$address));
+        return $this->redirect(route('address.edit', $address));
     }
 
     public function render()
     {
         $address = $this->address;
+
         return view('livewire.home.profile.address',
             compact('address'))->layout('layouts.home');
     }

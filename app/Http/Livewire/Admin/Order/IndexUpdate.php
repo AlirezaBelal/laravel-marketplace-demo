@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Admin\Order;
 
 use App\Mail\OrderSubmit;
-use App\Models\Log;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\SMS;
@@ -18,6 +17,7 @@ class IndexUpdate extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+
     protected $rules = [
         'order.status' => 'nullable',
     ];
@@ -42,7 +42,7 @@ class IndexUpdate extends Component
                 'system' => 1,
                 'text' => $this->order->product->title,
             ]);
-//email to seller
+            //email to seller
 
             $email = \App\Models\Email::create([
                 'user_id' => $seller->id,
@@ -66,19 +66,17 @@ class IndexUpdate extends Component
 
             Mail::to($this->order->user->email)->send(new OrderSubmit($email));
 
-
             //sms user
             $code = random_int(10000, 99999);
             $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
             $client->send(env('SENDER_MOBILE'), env('To_MOBILE'),
-                "  سفارش شما تحویل داده شد");
+                '  سفارش شما تحویل داده شد');
 
             SMS::create([
                 'code' => $code,
                 'type' => $type,
                 'user_id' => $this->order->user_id,
             ]);
-
 
         } elseif ($this->order->status == 'paid') {
             $type = 'سفارش شما  پرداخت شد';
@@ -116,8 +114,7 @@ class IndexUpdate extends Component
             ]);
         }
 
-
-//        alert()->success('وضعیت سفارش با موفقیت ایجاد شد.', 'وضعیت سفارش آپدیت شد.');
+        //        alert()->success('وضعیت سفارش با موفقیت ایجاد شد.', 'وضعیت سفارش آپدیت شد.');
         return redirect(route('admin.orders.index'));
 
     }
@@ -127,6 +124,7 @@ class IndexUpdate extends Component
     public function render()
     {
         $order = $this->order;
+
         return view('livewire.admin.order.index-update', compact('order'));
     }
 }

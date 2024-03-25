@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Home\Order;
 
 use App\Models\Address;
 use App\Models\BankPayment;
-use App\Models\Cart;
 use App\Models\Discount;
 use App\Models\Gift;
 use App\Models\Order;
@@ -14,12 +13,17 @@ use Livewire\Component;
 class Payment extends Component
 {
     public $discount_price;
+
     public $discount_type;
+
     public $dTotalPercent;
+
     public $dgift;
+
     public $sumPrice;
 
     public Discount $discount;
+
     public Gift $gift;
 
     public function mount()
@@ -130,7 +134,7 @@ class Payment extends Component
         $payments = \App\Models\Payment::where('order_number', $order_number)->get();
         foreach ($payments as $payment) {
             $payment->update([
-                'type_payment' => 1
+                'type_payment' => 1,
             ]);
         }
     }
@@ -140,7 +144,7 @@ class Payment extends Component
         $payments = \App\Models\Payment::where('order_number', $order_number)->get();
         foreach ($payments as $payment) {
             $payment->update([
-                'type_payment' => 0
+                'type_payment' => 0,
             ]);
         }
     }
@@ -171,17 +175,17 @@ class Payment extends Component
             $gift = Gift::where('code', $this->gift->code)->first();
             if ($gift->value_price > $orders->sum('total_discount_price')) {
                 $gift->update([
-                    'value_price' => $gift->value_price - $orders->sum('total_discount_price')
-            ]);
+                    'value_price' => $gift->value_price - $orders->sum('total_discount_price'),
+                ]);
             } elseif ($gift->value_price < $orders->sum('total_discount_price')) {
                 $gift->update([
-                    'value_price' => 0
-            ]);
+                    'value_price' => 0,
+                ]);
+            }
         }
-        }
-        foreach ($orders as $order){
+        foreach ($orders as $order) {
             $order->update([
-               'status' => 'wait'
+                'status' => 'wait',
             ]);
             $returnedPayment = ReturnOrder::create([
                 'user_id' => auth()->user()->id,
@@ -189,6 +193,7 @@ class Payment extends Component
                 'order_id' => $order->id,
             ]);
         }
+
         return $this->redirect(route('bank.payment', $payments[0]->order_number));
     }
 
@@ -201,8 +206,7 @@ class Payment extends Component
         $payments = \App\Models\Payment::where('order_number', $order_number)->get();
         $addresses = Address::where('user_id', auth()->user()->id)->get();
 
-        return view('livewire.home.order.payment'
-            , compact('order_number', 'payments', 'orders', 'order_last', 'order_number'))
+        return view('livewire.home.order.payment', compact('order_number', 'payments', 'orders', 'order_last', 'order_number'))
             ->layout('layouts.shipping');
     }
 }

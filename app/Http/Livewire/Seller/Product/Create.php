@@ -18,16 +18,27 @@ class Create extends Component
     protected $queryString = ['search'];
 
     public $brand;
+
     public $name_kala;
+
     public $nameEn_kala;
+
     public $tool;
+
     public $arz;
+
     public $ertfa;
+
     public $sharh;
+
     public $plus;
+
     public $min;
+
     public $vazn;
+
     public $img;
+
     public $brands;
 
     public function mount()
@@ -71,10 +82,10 @@ class Create extends Component
         $i = 0;
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
 
     }
-
 
     public function addCategoryToSale($id)
     {
@@ -148,7 +159,6 @@ class Create extends Component
         orWhere('name', 'LIKE', "%{$this->search}%")->
         orWhere('link', 'LIKE', "%{$this->search}%")->
         where('status', 1)->get();
-
 
         return view('livewire.seller.product.create', compact('categories')
         )->layout('layouts.seller_dashboard');

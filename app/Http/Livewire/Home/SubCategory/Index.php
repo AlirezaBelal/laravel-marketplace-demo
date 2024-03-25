@@ -27,7 +27,7 @@ class Index extends Component
     public function mount($category)
     {
 
-        $subCategory = SubCategory::where('link', '/' . $category . '/')->first();
+        $subCategory = SubCategory::where('link', '/'.$category.'/')->first();
 
         $product = Product::where('subcategory_id', $subCategory->id)->get();
 
@@ -47,35 +47,32 @@ class Index extends Component
     public function render()
     {
 
-        $subCategory = SubCategory::where('link', '/' . $this->category . '/')->first();
+        $subCategory = SubCategory::where('link', '/'.$this->category.'/')->first();
         $first_category = Category::where('id', $subCategory->parent)->first();
         $category_tag_latest = ChildCategory::where('parent', $subCategory->id)->where('status', 1)->get()->last();
         $category_tags = ChildCategory::where('parent', $subCategory->id)->where('status', 1)->get();
         $product_random = Product::where('subcategory_id', $subCategory->id)->inRandomOrder()->get();
         $products = Product::where('subcategory_id', $subCategory->id)->get();
 
-
-        if (!empty($this->search) || $this->selected['brands'] || $this->selected['status'] ||
+        if (! empty($this->search) || $this->selected['brands'] || $this->selected['status'] ||
             $this->selected['original'] || $this->selected['min_price'] || $this->selected['max_price']) {
-
 
             if ($this->selected['brands']) {
                 foreach ($this->selected['brands'] as $key => $value) {
                     $products = Product::where('subcategory_id', $subCategory->id)->
-                    where('title', 'LIKE', '%' . $this->search . '%')
+                    where('title', 'LIKE', '%'.$this->search.'%')
                         ->where('brand_id', $value)
                         ->get();
                 }
 
-
             } elseif ($this->selected['status']) {
                 $products = Product::where('subcategory_id', $subCategory->id)->
-                where('title', 'LIKE', '%' . $this->search . '%')
+                where('title', 'LIKE', '%'.$this->search.'%')
                     ->where('status_product', 1)
                     ->get();
             } elseif ($this->selected['original']) {
                 $products = Product::where('subcategory_id', $subCategory->id)->
-                where('title', 'LIKE', '%' . $this->search . '%')
+                where('title', 'LIKE', '%'.$this->search.'%')
                     ->where('original', 1)
                     ->get();
             } elseif ($this->selected['min_price'] && $this->selected['max_price']) {
@@ -96,19 +93,17 @@ class Index extends Component
                     ->get();
             } else {
                 $products = Product::where('subcategory_id', $subCategory->id)->
-                where('title', 'LIKE', '%' . $this->search . '%')
+                where('title', 'LIKE', '%'.$this->search.'%')
                     ->get();
 
             }
 
-//                $products = $products->where('title', 'LIKE', '%' . $value . '%');
+            //                $products = $products->where('title', 'LIKE', '%' . $value . '%');
 
         }
 
-
-//            $products->orderBy('created_at','desc');
-//        $products = Product::where('subcategory_id', $category->id)->get();
-
+        //            $products->orderBy('created_at','desc');
+        //        $products = Product::where('subcategory_id', $category->id)->get();
 
         $products_paginate = Product::where('subcategory_id', $subCategory->id)->paginate();
         $product_count = Product::where('subcategory_id', $subCategory->id)->count();
@@ -117,9 +112,7 @@ class Index extends Component
         $brands = \App\Models\Brand::where('parent', $first_category->id)->get();
 
         return view('livewire.home.sub-category.index',
-            compact('categories', 'category_tags', 'category_tag_latest', 'product_random'
-                , 'first_category', 'subCategory', 'product_count', 'products', 'products_paginate'
-                , 'brands')
+            compact('categories', 'category_tags', 'category_tag_latest', 'product_random', 'first_category', 'subCategory', 'product_count', 'products', 'products_paginate', 'brands')
         )->layout('layouts.home');
     }
 }

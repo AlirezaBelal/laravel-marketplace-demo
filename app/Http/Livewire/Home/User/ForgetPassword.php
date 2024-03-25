@@ -11,13 +11,13 @@ use Livewire\Component;
 class ForgetPassword extends Component
 {
     public User $user;
+
     public SMS $sms;
 
     public function mount()
     {
         $this->sms = new Sms();
     }
-
 
     protected $rules = [
         'sms.email_phone' => 'required',
@@ -27,7 +27,6 @@ class ForgetPassword extends Component
     {
         $this->validateOnly($email_phone);
     }
-
 
     public function userForm()
     {
@@ -46,12 +45,12 @@ class ForgetPassword extends Component
                 'type' => $type,
                 'user_id' => $mobile->id,
             ]);
-            return $this->redirect(route('users.password.forgetPhone',$mobile->id));
+
+            return $this->redirect(route('users.password.forgetPhone', $mobile->id));
         } else {
             $this->emit('toast', 'error', ' شماره موبایل وجود ندارد. به قسمت ایجاد حساب مراجعه فرمایید!');
         }
     }
-
 
     public function render()
     {

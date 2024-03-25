@@ -15,8 +15,6 @@ class OrderSubmit extends Mailable
 
     /**
      * Create a new message instance.
-     *
-     * @param Email $email
      */
     public function __construct(Email $email)
     {
@@ -33,6 +31,7 @@ class OrderSubmit extends Mailable
 
         $order = Order::where('user_id', auth()->user()->id)->get()->last();
         $user = User::where('email', $this->email->user_email)->first();
+
         return $this->view('emails.order.submit', compact('order', 'user'));
     }
 }

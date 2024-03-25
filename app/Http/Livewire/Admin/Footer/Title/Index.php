@@ -17,8 +17,6 @@ class Index extends Component
         $this->footerTitle = new FooterTitle();
     }
 
-
-
     protected $rules = [
         'footerTitle.title' => 'required',
     ];
@@ -28,27 +26,24 @@ class Index extends Component
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
-        if ($this->footerTitle->count() >17){
-//            alert()->error('عنوان فوتر  آپدیت نشد.', 'عنوان فوتر  نباید بیشتر از 15 مورد باشد.');
+        if ($this->footerTitle->count() > 17) {
+            //            alert()->error('عنوان فوتر  آپدیت نشد.', 'عنوان فوتر  نباید بیشتر از 15 مورد باشد.');
             return redirect(route('footer_title.index'));
-        }else
-        {
+        } else {
             FooterTitle::query()->create([
                 'title' => $this->footerTitle->title,
             ]);
-            $this->footerTitle->title = "";
+            $this->footerTitle->title = '';
             Log::create([
                 'user_id' => auth()->user()->id,
-                'url' => 'افزودن صفحه به فوتر سایت' .'-'. $this->footerTitle->title,
-                'actionType' => 'ایجاد'
+                'url' => 'افزودن صفحه به فوتر سایت'.'-'.$this->footerTitle->title,
+                'actionType' => 'ایجاد',
             ]);
             $this->emit('toast', 'success', ' عنوان فوتر سایت با موفقیت ایجاد شد.');
         }
-
 
     }
 
@@ -57,11 +52,11 @@ class Index extends Component
         $this->readyToLoad = true;
     }
 
-
     public function render()
     {
 
         $footer_titles = FooterTitle::latest()->get();
-        return view('livewire.admin.footer.title.index',compact('footer_titles'));
+
+        return view('livewire.admin.footer.title.index', compact('footer_titles'));
     }
 }

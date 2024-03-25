@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class FavList extends Model
 {
     use HasFactory;
-    protected $fillable=['user_id','title','link','description'];
 
-
+    protected $fillable = ['user_id', 'title', 'link', 'description'];
 
     public function products()
     {
-        return $this->belongsTo(Product::class,'product_id','id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
     public function users()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

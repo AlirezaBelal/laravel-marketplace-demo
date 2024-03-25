@@ -26,7 +26,7 @@ class CreateProductSellersTable extends Migration
             $table->string('product_count');
             $table->string('limit_order');
             $table->string('status');
-            
+
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,10 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Dashboard;
 
-use App\Models\Log;
-use App\Models\Product;
-use App\Models\Seller;
-use App\Models\TitleCategoryIndex;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -18,6 +14,7 @@ class Address extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -31,18 +28,13 @@ class Address extends Component
         $this->readyToLoad = true;
     }
 
-
-
-
-
     public function deleteAddress($id)
     {
-        $address = \App\Models\Address::where('id',$id)->first();
+        $address = \App\Models\Address::where('id', $id)->first();
         $address->delete();
 
         $this->emit('toast', 'success', ' آدرس با موفقیت حذف شد.');
     }
-
 
     public function render()
     {
@@ -53,6 +45,6 @@ class Address extends Component
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
 
-        return view('livewire.admin.dashboard.address',compact('addreses'));
+        return view('livewire.admin.dashboard.address', compact('addreses'));
     }
 }

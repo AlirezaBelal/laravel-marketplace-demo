@@ -3,28 +3,28 @@
 namespace App\Http\Livewire\Admin\Comment;
 
 use App\Mail\OrderSubmit;
-use App\Models\Category;
 use App\Models\Comment;
-use App\Models\Log;
 use App\Models\Notification;
-use App\Models\SubCategory;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class CommentIndex extends Component
 {
-
     use WithPagination;
 
     protected $listeners = [
-        'category.added' => '$refresh'
+        'category.added' => '$refresh',
     ];
+
     protected $paginationTheme = 'bootstrap';
+
     public $search;
+
     protected $queryString = ['search'];
+
     public $readyToLoad = false;
+
     public Comment $comment;
 
     public function loadCategory()
@@ -36,7 +36,7 @@ class CommentIndex extends Component
     {
         $comment = Comment::find($id);
         $comment->update([
-            'status' => 0
+            'status' => 0,
         ]);
 
         $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
@@ -47,7 +47,7 @@ class CommentIndex extends Component
         $comment = Comment::find($id);
 
         $comment->update([
-            'status' => 1
+            'status' => 1,
         ]);
         $type = 'نظر شما تایید شد';
         Notification::create([
@@ -71,7 +71,6 @@ class CommentIndex extends Component
 
         Mail::to($comment->user->email)->send(new OrderSubmit($email));
 
-
         $this->emit('toast', 'success', 'وضعیت نظر با موفقیت فعال شد.');
     }
 
@@ -83,7 +82,6 @@ class CommentIndex extends Component
 
     }
 
-
     public function render()
     {
 
@@ -92,6 +90,7 @@ class CommentIndex extends Component
         orWhere('product_id', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
+
         return view('livewire.admin.comment.comment-index', compact('comments'));
     }
 }

@@ -20,7 +20,7 @@ class CreateGalleriesTable extends Migration
             $table->string('product_id')->nullable();
             $table->string('status')->default(1);
             $table->string('position')->nullable();
-            
+
             $table->timestamps();
         });
     }

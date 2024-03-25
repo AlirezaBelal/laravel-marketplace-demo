@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Admin\Product\AttributeValue;
 
-use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Log;
 use Livewire\Component;
@@ -27,8 +26,6 @@ class Index extends Component
         $this->attribute = new AttributeValue();
     }
 
-
-
     protected $rules = [
         'attribute.product_id' => 'required',
         'attribute.attribute_id' => 'required',
@@ -41,7 +38,6 @@ class Index extends Component
         $this->validateOnly($title);
     }
 
-
     public function categoryForm()
     {
         $this->validate();
@@ -49,17 +45,17 @@ class Index extends Component
             'attribute_id' => $this->attribute->attribute_id,
             'product_id' => $this->attribute->product_id,
             'value' => $this->attribute->value,
-            'status' => $this->attribute->status ? 1:0 ,
+            'status' => $this->attribute->status ? 1 : 0,
         ]);
 
         $this->attribute->attribute_id = null;
         $this->attribute->product_id = null;
-        $this->attribute->value = "";
+        $this->attribute->value = '';
         $this->attribute->status = false;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن مقدار مشخصات کالا' .'-'. $this->attribute->value,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن مقدار مشخصات کالا'.'-'.$this->attribute->value,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' مقدار مشخصات کالا با موفقیت ایجاد شد.');
 
@@ -69,16 +65,17 @@ class Index extends Component
     {
         $this->readyToLoad = true;
     }
+
     public function updateCategoryDisable($id)
     {
         $attribute = AttributeValue::find($id);
         $attribute->update([
-            'status' => 0
+            'status' => 0,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'غیرفعال کردن وضعیت مقدار مشخصات کالا' .'-'. $attribute->value,
-            'actionType' => 'غیرفعال'
+            'url' => 'غیرفعال کردن وضعیت مقدار مشخصات کالا'.'-'.$attribute->value,
+            'actionType' => 'غیرفعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت غیرفعال شد.');
     }
@@ -87,12 +84,12 @@ class Index extends Component
     {
         $attribute = AttributeValue::find($id);
         $attribute->update([
-            'status' => 1
+            'status' => 1,
         ]);
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'فعال کردن وضعیت مقدار مشخصات کالا' .'-'. $attribute->title,
-            'actionType' => 'فعال'
+            'url' => 'فعال کردن وضعیت مقدار مشخصات کالا'.'-'.$attribute->title,
+            'actionType' => 'فعال',
         ]);
         $this->emit('toast', 'success', 'وضعیت مقدار مشخصات کالا با موفقیت فعال شد.');
     }
@@ -103,12 +100,11 @@ class Index extends Component
         $attribute->delete();
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'حذف کردن مقدار مشخصات کالا' .'-'. $attribute->value,
-            'actionType' => 'حذف'
+            'url' => 'حذف کردن مقدار مشخصات کالا'.'-'.$attribute->value,
+            'actionType' => 'حذف',
         ]);
         $this->emit('toast', 'success', ' مقدار مشخصات کالا با موفقیت حذف شد.');
     }
-
 
     public function render()
     {
@@ -116,6 +112,7 @@ class Index extends Component
         $attributes = $this->readyToLoad ? AttributeValue::where('value', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
-        return view('livewire.admin.product.attribute-value.index',compact('attributes'));
+
+        return view('livewire.admin.product.attribute-value.index', compact('attributes'));
     }
 }

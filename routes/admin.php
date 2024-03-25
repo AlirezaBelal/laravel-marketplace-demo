@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 //======================================>admin/dashboard
 Route::get('/', \App\Http\Livewire\Admin\Dashboard\Index::class)->name('admin.index');
 
@@ -63,7 +62,6 @@ Route::get('/productVendor/update/{productSeller}', \App\Http\Livewire\Admin\Pro
 Route::get('/productVendor/trashed', \App\Http\Livewire\Admin\Product\ProductVendor\Trashed::class)->name('productVendor.trashed');
 Route::get('/productVendor/product/{product}', \App\Http\Livewire\Admin\Product\ProductVendor\Single::class)->name('product.productVendor');
 
-
 //=======================================> //Attribute//
 Route::get('/attribute', \App\Http\Livewire\Admin\Product\Attribute\Index::class)->name('attribute.index');
 Route::get('/attribute/update/{attribute}', \App\Http\Livewire\Admin\Product\Attribute\Update::class)->name('attribute.update');
@@ -81,7 +79,6 @@ Route::get('/page/trashed', \App\Http\Livewire\Admin\Page\Trashed::class)->name(
 //=======================================> //newsletter//
 Route::get('/newsletter', \App\Http\Livewire\Admin\NewsLetter\Index::class)->name('newsletter.index');
 Route::get('/social', \App\Http\Livewire\Admin\Social\Index::class)->name('social.index');
-
 
 /////////////////////////////////////////////Settings
 //=======================================> //footer//
@@ -117,7 +114,6 @@ Route::get('/gift', \App\Http\Livewire\Admin\Gift\IndexGift::class)->name('admin
 //=================discount Code
 Route::get('/discount', \App\Http\Livewire\Admin\Discount\IndexDiscount::class)->name('discount.index');
 
-
 //=======================================> //brands//
 Route::get('/ads', \App\Http\Livewire\Admin\Ads\Index::class)->name('ads.index');
 Route::get('/ads/update/{ads}', \App\Http\Livewire\Admin\Ads\Update::class)->name('ads.update');
@@ -132,7 +128,6 @@ Route::get('/slider', \App\Http\Livewire\Admin\Slider\Index::class)->name('slide
 Route::get('/slider/update/{slider}', \App\Http\Livewire\Admin\Slider\Update::class)->name('slider.update');
 //=======================================> //Special//
 Route::get('/special/product', \App\Http\Livewire\Admin\Special\Product\Index::class)->name('special.product.index');
-
 
 //Category Page
 Route::get('/category/slider', \App\Http\Livewire\Admin\Categorypage\Slider::class)->name('category.slider');
@@ -193,8 +188,6 @@ Route::get('/payment/{payment}', \App\Http\Livewire\Admin\Payment\ShowPayment::c
 //comment
 Route::get('/comment', \App\Http\Livewire\Admin\Comment\CommentIndex::class)->name('admin.comment.index');
 Route::get('/review', \App\Http\Livewire\Admin\Comment\ReviewIndex::class)->name('admin.review.index');
-
-
 
 //
 ////=======================================> //electronic-devices// اگر خواستید از حالت چند دیتابیسی استفاده کنید و برای هر دسته  یک دیتابیس داشته باشید فعال کنید

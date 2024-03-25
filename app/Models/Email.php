@@ -9,6 +9,5 @@ class Email extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'user_email', 'user_name', 'user_mobile', 'code'
-        , 'title', 'text'];
+    protected $fillable = ['user_id', 'user_email', 'user_name', 'user_mobile', 'code', 'title', 'text'];
 }

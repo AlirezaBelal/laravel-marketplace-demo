@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Admin\Banner;
 
 use App\Models\Banner;
 use App\Models\Log;
-use App\Models\Page;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -17,6 +16,7 @@ class Index extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $img;
+
     public $search;
 
     protected $queryString = ['search'];
@@ -30,7 +30,6 @@ class Index extends Component
         $this->banner = new Banner();
     }
 
-
     protected $rules = [
         'banner.title' => 'required',
         'banner.link' => 'required',
@@ -40,7 +39,6 @@ class Index extends Component
     {
         $this->validateOnly($title);
     }
-
 
     public function categoryForm()
     {
@@ -53,17 +51,17 @@ class Index extends Component
 
         if ($this->img) {
             $banner->update([
-                'img' => $this->uploadImage()
+                'img' => $this->uploadImage(),
             ]);
         }
 
-        $this->banner->title = "";
-        $this->banner->link = "";
+        $this->banner->title = '';
+        $this->banner->link = '';
         $this->img = null;
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'افزودن بنر' . '-' . $this->banner->title,
-            'actionType' => 'ایجاد'
+            'url' => 'افزودن بنر'.'-'.$this->banner->title,
+            'actionType' => 'ایجاد',
         ]);
         $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
 
@@ -76,6 +74,7 @@ class Index extends Component
         $directory = "banner/$year/$month";
         $name = $this->img->getClientOriginalName();
         $this->img->storeAs($directory, $name);
+
         return "$directory/$name";
     }
 
@@ -91,6 +90,7 @@ class Index extends Component
         orWhere('link', 'LIKE', "%{$this->search}%")->
         orWhere('id', $this->search)->
         latest()->paginate(15) : [];
+
         return view('livewire.admin.banner.index', compact('banners'));
     }
 }

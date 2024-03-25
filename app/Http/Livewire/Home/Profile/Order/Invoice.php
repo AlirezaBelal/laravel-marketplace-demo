@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire\Home\Profile\Order;
 
-
 use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
@@ -22,7 +20,6 @@ class Invoice extends Component
                 'proPriceCountD' => ($ord->total_price * $ord->count) - ($ord->total_discount_price * $ord->count),
             ]);
         }
-
 
         return view('livewire.home.profile.order.invoice', compact('order'))
             ->layout('layouts.invoice');

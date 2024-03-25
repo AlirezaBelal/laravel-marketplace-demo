@@ -11,13 +11,13 @@ use Livewire\Component;
 class ConfirmPasswordVerify extends Component
 {
     public User $user;
+
     public SMS $sms;
 
     public function mount()
     {
         $this->sms = new Sms();
     }
-
 
     protected $rules = [
         'sms.code' => 'required',
@@ -27,7 +27,6 @@ class ConfirmPasswordVerify extends Component
     {
         $this->validateOnly($code);
     }
-
 
     public function userForm()
     {
@@ -40,15 +39,16 @@ class ConfirmPasswordVerify extends Component
                 auth()->loginUsingId($sms_code->user_id);
                 $userIp2 = Request::ip();
 
-                $cart2s = \App\Models\Cart::where('ip',$userIp2)->get();
+                $cart2s = \App\Models\Cart::where('ip', $userIp2)->get();
                 if ($cart2s) {
-                    foreach ($cart2s as $cart){
+                    foreach ($cart2s as $cart) {
                         $cart->update([
-                            'user_id' =>auth()->user()->id,
+                            'user_id' => auth()->user()->id,
                         ]);
                     }
 
                 }
+
                 return $this->redirect('/');
             } else {
                 $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
@@ -57,8 +57,10 @@ class ConfirmPasswordVerify extends Component
         } else {
             $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
         }
-        }
-    public function resendSMS($id){
+    }
+
+    public function resendSMS($id)
+    {
 
         $type = 'اسمس دوباره ورود به حساب';
         $mobile = User::where('id', $id)->first();
@@ -73,10 +75,11 @@ class ConfirmPasswordVerify extends Component
             'user_id' => $mobile->id,
         ]);
         $this->emit('toast', 'success', 'کد تایید دوباره ارسال شد!');
+
         return $this->redirect(request()->header('Referer'));
     }
 
-        public function render()
+    public function render()
     {
         return view('livewire.home.user.confirm-password-verify')->layout('layouts.login');
     }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Menu;
 
-use App\Models\Category;
 use App\Models\Log;
 use App\Models\Menu;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 class Update extends Component
 {
@@ -18,22 +16,24 @@ class Update extends Component
         'menu.childCategory_id' => 'nullable',
         'menu.status' => 'nullable',
     ];
+
     public function categoryForm()
     {
 
         $this->validate();
         $this->menu->update($this->validate());
-        if (!$this->menu->status) {
+        if (! $this->menu->status) {
             $this->menu->update([
-                'status' => 0
+                'status' => 0,
             ]);
         }
         Log::create([
             'user_id' => auth()->user()->id,
-            'url' => 'آپدیت منو' .'-'. $this->menu->category_id,
-            'actionType' => 'آپدیت'
+            'url' => 'آپدیت منو'.'-'.$this->menu->category_id,
+            'actionType' => 'آپدیت',
         ]);
-//        alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
+
+        //        alert()->success('منو با موفقیت ایجاد شد.', 'منو آپدیت شد.');
         return redirect(route('menu.index'));
 
     }
@@ -42,14 +42,14 @@ class Update extends Component
 
     public function render()
     {
-        if ($this->menu->status == 1){
+        if ($this->menu->status == 1) {
             $this->menu->status = true;
-        }else
-        {
+        } else {
             $this->menu->status = false;
         }
 
         $menu = $this->menu;
-        return view('livewire.admin.menu.update',compact('menu'));
+
+        return view('livewire.admin.menu.update', compact('menu'));
     }
 }

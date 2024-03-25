@@ -34,5 +34,3 @@ Route::get('/orders', App\Http\Livewire\Seller\Orders\Order::class)
 //======================================>seller/create/product
 Route::get('/content/create/product', App\Http\Livewire\Seller\Product\Create::class)
     ->name('seller.product.create');
-
-

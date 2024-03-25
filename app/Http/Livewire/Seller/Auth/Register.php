@@ -5,11 +5,9 @@ namespace App\Http\Livewire\Seller\Auth;
 use App\Mail\SellerRegister;
 use App\Models\Email;
 use App\Models\Seller;
-use App\Models\SMS;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Kavenegar\KavenegarApi;
 use Livewire\Component;
 
 class Register extends Component
@@ -21,7 +19,6 @@ class Register extends Component
         $this->seller = new Seller();
     }
 
-
     protected $rules = [
         'seller.email' => 'nullable',
         'seller.phone' => 'nullable',
@@ -32,7 +29,6 @@ class Register extends Component
     {
         $this->validateOnly($email);
     }
-
 
     public function registerSellerForm()
     {
@@ -61,7 +57,6 @@ class Register extends Component
 
         ]);
         Mail::to($seller->email)->send(new SellerRegister($email));
-
 
         return $this->redirect(route('seller.register.email', $seller->id));
 
