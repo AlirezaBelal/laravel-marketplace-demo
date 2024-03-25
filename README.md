@@ -1,4 +1,6 @@
-# Digikala Project by Laravel
+# Digikala Project by Laravel & Livewire
+
+![img.png](img.png)
 
 ## Launching the Project
 
@@ -6,7 +8,7 @@
 2. Add SQL: Import all files from the `DOC -> backup_V06` directory.
 3. Run `composer install`
 4. Run `nmp install`
-5Run the project: Execute `php artisan serve` to start the server locally.
+5. Run the project: Execute `php artisan serve` to start the server locally.
 
 ## Packages Used
 
