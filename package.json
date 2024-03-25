@@ -35,7 +35,7 @@
         "remodal": "^1.1.1",
         "select2": "^4.1.0-rc.0",
         "select2-bootstrap-theme": "^0.1.0-beta.10",
-        "sweetalert2": "^10.15.5",
+        "sweetalert2": "^11.6.13",
         "turbolinks": "^5.2.0"
     }
 }
