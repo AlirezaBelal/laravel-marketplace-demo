@@ -77,7 +77,7 @@ Route::get('/page', \App\Http\Livewire\Admin\Page\Index::class)->name('page.inde
 Route::get('/page/update/{page}', \App\Http\Livewire\Admin\Page\Update::class)->name('page.update');
 Route::get('/page/trashed', \App\Http\Livewire\Admin\Page\Trashed::class)->name('page.trashed');
 //=======================================> //newsletter//
-Route::get('/newsletter', \App\Http\Livewire\Admin\NewsLetter\Index::class)->name('newsletter.index');
+Route::get('/newsletter', \App\Http\Livewire\Admin\Newsletter\Index::class)->name('newsletter.index');
 Route::get('/social', \App\Http\Livewire\Admin\Social\Index::class)->name('social.index');
 
 /////////////////////////////////////////////Settings
