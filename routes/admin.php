@@ -23,15 +23,15 @@ Route::get('/log', \App\Http\Livewire\Admin\Log\Index::class)->name('log.index')
 Route::get('/category', \App\Http\Livewire\Admin\Category\Index::class)->name('category.index')->middleware('can:show-category');
 Route::get('/subcategory', \App\Http\Livewire\Admin\Subcategory\Index::class)->name('subcategory.index');
 Route::get('/childcategory', \App\Http\Livewire\Admin\Childcategory\Index::class)->name('childcategory.index');
-Route::get('/categorylevel4', \App\Http\Livewire\Admin\categorylevel4\Index::class)->name('categorylevel4.index');
+Route::get('/categorylevel4', \App\Http\Livewire\Admin\Categorylevel4\Index::class)->name('categorylevel4.index');
 Route::get('/category/update/{category}', \App\Http\Livewire\Admin\Category\Update::class)->name('category.update');
 Route::get('/subcategory/update/{subcategory}', \App\Http\Livewire\Admin\Subcategory\Update::class)->name('subcategory.update');
 Route::get('/childcategory/update/{childcategory}', \App\Http\Livewire\Admin\Childcategory\Update::class)->name('childcategory.update');
-Route::get('/categorylevel4/update/{categorylevel4}', \App\Http\Livewire\Admin\categorylevel4\Update::class)->name('categorylevel4.update');
+Route::get('/categorylevel4/update/{categorylevel4}', \App\Http\Livewire\Admin\Categorylevel4\Update::class)->name('categorylevel4.update');
 Route::get('/category/trashed', \App\Http\Livewire\Admin\Category\Trashed::class)->name('category.trashed');
 Route::get('/subcategory/trashed', \App\Http\Livewire\Admin\Subcategory\Trashed::class)->name('subcategory.trashed');
 Route::get('/childcategory/trashed', \App\Http\Livewire\Admin\Childcategory\Trashed::class)->name('childcategory.trashed');
-Route::get('/categorylevel4/trashed', \App\Http\Livewire\Admin\categorylevel4\Trashed::class)->name('categorylevel4.trashed');
+Route::get('/categorylevel4/trashed', \App\Http\Livewire\Admin\Categorylevel4\Trashed::class)->name('categorylevel4.trashed');
 
 //=======================================> //product//
 Route::get('/product', \App\Http\Livewire\Admin\Product\Index::class)->name('product.index')->middleware('can:show-product');
@@ -68,9 +68,9 @@ Route::get('/attribute/update/{attribute}', \App\Http\Livewire\Admin\Product\Att
 Route::get('/attribute/trashed', \App\Http\Livewire\Admin\Product\Attribute\Trashed::class)->name('attribute.trashed');
 Route::get('/attribute/category/{category}', \App\Http\Livewire\Admin\Product\Attribute\Category::class)->name('category.attribute');
 //=======================================> //Attribute//
-Route::get('/attributeValue', \App\Http\Livewire\Admin\Product\attributeValue\Index::class)->name('attributeValue.index');
-Route::get('/attributeValue/update/{attribute}', \App\Http\Livewire\Admin\Product\attributeValue\Update::class)->name('attributeValue.update');
-Route::get('/attributeValue/trashed', \App\Http\Livewire\Admin\Product\attributeValue\Trashed::class)->name('attributeValue.trashed');
+Route::get('/attributeValue', \App\Http\Livewire\Admin\Product\AttributeValue\Index::class)->name('attributeValue.index');
+Route::get('/attributeValue/update/{attribute}', \App\Http\Livewire\Admin\Product\AttributeValue\Update::class)->name('attributeValue.update');
+Route::get('/attributeValue/trashed', \App\Http\Livewire\Admin\Product\AttributeValue\Trashed::class)->name('attributeValue.trashed');
 Route::get('/attribute/product/{product}', \App\Http\Livewire\Admin\Product\Attribute\Product::class)->name('product.attribute');
 //=======================================> //page//
 Route::get('/page', \App\Http\Livewire\Admin\Page\Index::class)->name('page.index');
