@@ -30,7 +30,7 @@ jobs:
           cache: npm
 
       - name: Refresh Composer lock metadata only
-        run: composer update --lock --no-interaction --no-progress
+        run: composer update --lock --no-interaction --no-progress --no-scripts
 
       - name: Remove unsupported unused root frontend packages
         run: npm uninstall @ckeditor/ckeditor5-build-classic sweetalert2 --ignore-scripts
