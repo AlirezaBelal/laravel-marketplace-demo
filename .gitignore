@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/logs/*.log
 /vendor
 .env
 .env.backup
@@ -13,3 +14,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 .idea
+
+# Never commit development or production database exports.
+*.sql
+/DOC/backup*/
