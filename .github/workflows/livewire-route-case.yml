@@ -39,7 +39,7 @@ jobs:
                   corrected = canonical.get(relative.lower())
                   if corrected and corrected != relative:
                       changed.append((str(route_file), relative, corrected))
-                      return r'\App\Http\Livewire\' + corrected + '::class'
+                      return '\\App\\Http\\Livewire\\' + corrected + '::class'
                   return match.group(0)
 
               updated = pattern.sub(replace, text)
