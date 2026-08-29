@@ -17,7 +17,7 @@ This project is an independent educational marketplace implementation. It is **n
 - Livewire-driven interactive UI
 - order/payment records and configurable payment drivers
 - SMS and email notification integration points
-- sitemap generation, charts, SEO helpers, file management, and Persian/Jalali date support
+- charts, SEO helpers, file management, and Persian/Jalali date support
 
 ## Architecture snapshot
 
@@ -78,7 +78,9 @@ The current branch intentionally excludes:
 - vendor/node dependency directories
 - runtime logs and generated storage files
 
-See [SECURITY.md](SECURITY.md) and [SECURITY_REMEDIATION.md](SECURITY_REMEDIATION.md) for the repository's current support boundary and cleanup notes.
+The dependency lock is kept on stable releases. CI performs Composer and npm audits. The Composer audit has four explicit advisory exceptions, all scoped to the unsupported Laravel 9 framework line; any additional PHP advisory still fails CI. See [SECURITY.md](SECURITY.md) for the exact advisory IDs and support boundary.
+
+See [SECURITY_REMEDIATION.md](SECURITY_REMEDIATION.md) for the repository cleanup notes.
 
 ## Technology
 
@@ -92,13 +94,15 @@ See [SECURITY.md](SECURITY.md) and [SECURITY_REMEDIATION.md](SECURITY_REMEDIATIO
 
 The unsupported CKEditor 5 predefined build and its tracked runtime bundle were removed during the repository security cleanup. Admin text fields retain their native textarea fallback rather than carrying an unmaintained editor dependency.
 
+The unused runtime sitemap endpoint and its crawler/browser dependency chain were also removed rather than retaining unnecessary attack surface in a legacy demo.
+
 ## Current limitations
 
-- Laravel 9 is end-of-life.
+- Laravel 9 is end-of-life and retains documented framework-level advisories with no supported Laravel 9 fix path.
 - The codebase originated as a bootcamp project and contains legacy design choices.
 - Historical database exports are not part of current setup.
 - No production SLA, hosted deployment, or production payment certification is claimed.
-- A future modernization should move the application to a supported Laravel release and refresh frontend dependencies.
+- A future modernization should move the application to a supported Laravel release and re-run application-level integration/security testing.
 
 ## License
 
