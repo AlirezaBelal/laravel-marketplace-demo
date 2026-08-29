@@ -1,6 +1,6 @@
 # Laravel Marketplace Demo
 
-[![CI](https://github.com/AlirezaBelal/DigiKala_Laravel/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/DigiKala_Laravel/actions/workflows/ci.yml)
+[![CI](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml)
 
 ![Marketplace UI](img.png)
 
@@ -47,8 +47,8 @@ Requirements:
 - MySQL or another database supported by the application schema
 
 ```bash
-git clone https://github.com/AlirezaBelal/DigiKala_Laravel.git
-cd DigiKala_Laravel
+git clone https://github.com/AlirezaBelal/laravel-marketplace-demo.git
+cd laravel-marketplace-demo
 cp .env.example .env
 composer install
 php artisan key:generate
