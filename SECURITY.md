@@ -6,6 +6,15 @@ This repository is a **legacy educational project**, not a supported production 
 
 The application currently targets Laravel 9. Laravel 9's official security-fix window ended on **February 6, 2024**. Before using this code in a deployed environment, upgrade Laravel and the surrounding dependency stack to supported versions and perform a fresh security review.
 
+The locked dependency graph is intentionally kept on **stable releases**. Current CI runs a full Composer audit and allows only the following Laravel 9 advisories because no supported fix exists on the Laravel 9 release line:
+
+- `PKSA-m5cs-t1y6-qpcs`
+- `PKSA-3r5d-mb8f-1qw9`
+- `PKSA-mdq4-51ck-6kdq`
+- `PKSA-8qx3-n5y5-vvnd`
+
+These exceptions document framework end-of-life debt; they are not claims that the issues are safe for production. Any additional PHP advisory still fails CI.
+
 ## Current repository rules
 
 The current branch must not contain:
