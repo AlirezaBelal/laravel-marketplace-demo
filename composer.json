@@ -13,7 +13,6 @@
     "require": {
         "php": "^8.2",
         "artesaos/seotools": "^0.22.0",
-        "blade-ui-kit/blade-ui-kit": "^0.3.4",
         "consoletvs/charts": "6.*",
         "cviebrock/eloquent-sluggable": "^9.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -28,7 +27,6 @@
         "morilog/jalali": "3.*",
         "pharaonic/livewire-select2": "^1.0",
         "shetabit/multipay": "^1.9",
-        "spatie/laravel-sitemap": "^6.0",
         "stevebauman/location": "^6.2",
         "unisharp/laravel-filemanager": "^2.2"
     },
@@ -63,7 +61,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
