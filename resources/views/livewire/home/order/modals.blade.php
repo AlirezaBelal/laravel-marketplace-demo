@@ -275,7 +275,7 @@
                                 <input name="mobile" type="text" placeholder=""
                                        class="o-form__field js-input-field js-address-mobile-phone">
                             </div>
-                            <div class="o-form__field-helper">مثل: ۰۹۱۲۳۴۵۶۷۸۹</div>
+                            <div class="o-form__field-helper">مثل: ۰۹۰۰۰۰۰۰۰۰۰</div>
                         </label></div>
                 </div>
                 <div class="c-address__separator"></div>

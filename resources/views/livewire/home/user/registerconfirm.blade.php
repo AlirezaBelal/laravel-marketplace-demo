@@ -18,7 +18,7 @@
 
                     <form class="c-login__form"
                           wire:submit.prevent="userForm"
-                          id="authForm" data-phone-number="09378589767" novalidate="novalidate">
+                          id="authForm" data-phone-number="09000000000" novalidate="novalidate">
 
                         <div class="c-login__header-logo">
                             <a href="" class="c-login__back-button"></a>

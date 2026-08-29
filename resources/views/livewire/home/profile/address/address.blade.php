@@ -3,7 +3,7 @@
         <div class="o-box__header"><span class="o-box__title">نشانی‌ها</span></div>
         @foreach(\App\Models\Address::all() as $address)
             <div class="c-profile-address__item js-user-address-container"
-                 data-address="{&quot;id&quot;:44140919,&quot;full_name&quot;:&quot;{{$address->name}} {{$address->lname}}&quot;,&quot;mobile_phone&quot;:&quot;09120634157&quot;,&quot;phone_code&quot;:null,&quot;post_code&quot;:&quot;8158756491&quot;,&quot;phone&quot;:null,&quot;address&quot;:&quot;تهران،خ. اقلیمی، خ. مسعود ملایری پور&quot;,&quot;description&quot;:null,&quot;active&quot;:true,&quot;default&quot;:false,&quot;city_id&quot;:1698,&quot;city_name&quot;:&quot;تهران&quot;,&quot;state_id&quot;:9,&quot;state_name&quot;:&quot;تهران&quot;,&quot;district_id&quot;:2834,&quot;district_name&quot;:&quot;15 خرداد&quot;,&quot;building_no&quot;:&quot;2543&quot;,&quot;unit&quot;:&quot;5&quot;,&quot;full_address&quot;:&quot;تهران، تهران، تهران،خ. اقلیمی، خ. مسعود ملایری پور، پلاک ۲۵۴۳، واحد ۵&quot;,&quot;map_lon&quot;:51.43535,&quot;map_lat&quot;:35.72,&quot;map_lon_mobile&quot;:&quot;0.00000&quot;,&quot;map_lat_mobile&quot;:&quot;0.00000&quot;,&quot;map_lon_web&quot;:&quot;0.00000&quot;,&quot;map_lat_web&quot;:&quot;0.00000&quot;,&quot;fmcg_support&quot;:true,&quot;is_shared_address&quot;:false,&quot;shared_address_id&quot;:null}">
+                 data-address='@json(["id" => $address->id, "full_name" => trim($address->name." ".$address->lname), "mobile_phone" => $address->mobile, "post_code" => $address->code_posti, "address" => $address->address])'>
                 <div class="c-profile-address__item-top">
                     <div class="c-profile-address__item-title">{{$address->address}}
                     </div>
@@ -84,6 +84,6 @@
 {{--    }--}}
 {{--</script>--}}
 {{--<script--}}
-{{--    src="https://maps.googleapis.com/maps/api/js?key=REDACTED_GOOGLE_API_KEY&callback=initMap&libraries=&v=weekly"--}}
+{{--    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.browser_key', '') }}&callback=initMap&libraries=&v=weekly"--}}
 {{--    async--}}
 {{--></script>--}}

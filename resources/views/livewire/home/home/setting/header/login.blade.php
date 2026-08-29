@@ -4,9 +4,7 @@
             <input type="hidden" id="topBarMeta" data-cart_count="0"
                                                     data-cart_items="[]">
 
-            <input type="hidden" id="ESILogged" data-logged="1" data-user_id="7406722"
-                   data-email="09120634157" data-default_phone="09120634157" data-login_phone="09120634157"
-                   data-mobile_phone="09120634157" data-first_name="توحید" data-last_name="داننده">
+            <input type="hidden" id="ESILogged" data-logged="1" data-user_id="{{ auth()->id() }}">
 
             <div class="c-header__btn-user-container c-header__btn-profile-container js-dropdown-container">
                 <a data-snt-event="dkHeaderClick"

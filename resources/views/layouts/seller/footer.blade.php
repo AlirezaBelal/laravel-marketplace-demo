@@ -203,7 +203,7 @@
     </div>
 </div>
 <script
-    src="https://maps.googleapis.com/maps/api/js?key=REDACTED_GOOGLE_API_KEY&amp;language=fa&amp;libraries=places"
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.browser_key', '') }}&amp;language=fa&amp;libraries=places"
     async="" defer=""></script>
 
 

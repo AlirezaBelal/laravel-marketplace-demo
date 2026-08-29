@@ -370,7 +370,7 @@
         <form class="c-modal__content js-not-empty-parent
         js-phone-modal" id="personal-info-phone-form" novalidate="novalidate"><label class="o-form__field-container">
                 <div class="o-form__field-frame"><input name="additionalinfo[mobile_phone]" type="" placeholder=""
-                                                        value="09120634157"
+                                                        value="09000000000"
                                                         class="o-form__field js-input-field js-not-empty-input"></div>
             </label>
             <div class="c-modal__btn-container">

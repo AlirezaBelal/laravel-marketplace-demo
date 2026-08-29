@@ -35,7 +35,7 @@
                                                                      checked="checked"><span
                                             class="c-ui-checkbox__check"></span></label></li>
                                 <li><label class="c-form-notification__label" for="incredible-notification-param-2">پیامک
-                                        به <span class="js-observed-user-number">09120634157</span></label><label
+                                        به <span class="js-observed-user-number">09000000000</span></label><label
                                         class="c-ui-checkbox"><input type="checkbox" value="1" name="observed[sms]"
                                                                      checked="checked"
                                                                      id="incredible-notification-param-2"><span

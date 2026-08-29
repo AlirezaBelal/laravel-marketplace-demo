@@ -885,7 +885,7 @@
             "firstName": "\u062a\u0648\u062d\u06cc\u062f",
             "lastName": "\u062f\u0627\u0646\u0646\u062f\u0647",
             "nationalSecurityNumber": null,
-            "mobile": "09120634157"
+            "mobile": "09000000000"
         };
         var addressAjaxUrls = {
             "add": "\/ajax\/shipping\/addresses\/add\/",

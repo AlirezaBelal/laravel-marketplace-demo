@@ -17,7 +17,7 @@
             <section class="o-page o-page--account-box">
                 <div class="c-login__box">
 
-                    <form class="c-login__form" method="post" id="authForm" data-phone-number="09378589767" novalidate="novalidate">
+                    <form class="c-login__form" method="post" id="authForm" data-phone-number="09000000000" novalidate="novalidate">
                         <input type="hidden" name="rc" value="UVo2aEhtTmYycFN1TmpDNU9pSm4yUT09"><input type="hidden" name="rd" value="WGR6QUJaSy9JQmVjM20xZHdEV0c0S0tkTmJPaVNNcUpUL3FPRU1uc0hyUGdTS214aUNCSHhqZ3U2UkhoTTJzVg~~">
 
                         <div class="c-login__header-logo">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="c-login__opt-mobile-message">
                             حساب کاربری با شماره موبایل
-                            ۰۹۳۷۸۵۸۹۷۶۷
+                            ۰۹۰۰۰۰۰۰۰۰۰
                             وجود ندارد.
                             <br>
                             برای ساخت حساب جدید، کد تایید برای این شماره ارسال گردید.

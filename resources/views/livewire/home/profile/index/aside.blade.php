@@ -9,8 +9,8 @@
                     <div class="c-profile-box__avatar js-user-avatar js-change-avatar"
                          style="background-image: url(https://www.digikala.com/static/files/2a5b1e32.svg)"></div>
                     <div class="c-profile-box__header-content">
-                        <div class="c-profile-box__username">توحید داننده</div>
-                        <div class="c-profile-box__phone">۰۹۱۲۰۶۳۴۱۵۷</div>
+                        <div class="c-profile-box__username">{{ optional(auth()->user())->name ?? 'حساب کاربری' }}</div>
+                        <div class="c-profile-box__phone">{{ optional(auth()->user())->mobile ?? '' }}</div>
                     </div>
                 </div>
                 <a class="c-profile-box__row c-profile-box__row--has-next js-wallet-container-active"
