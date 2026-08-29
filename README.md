@@ -108,4 +108,4 @@ The unused runtime sitemap endpoint and its crawler/browser dependency chain wer
 
 ## License
 
-The repository includes an Apache License 2.0 text in [LICENSE.md](LICENSE.md). Third-party packages and assets remain subject to their own licenses and terms.
+The repository is licensed under the [Apache License 2.0](LICENSE). Third-party packages and assets remain subject to their own licenses and terms.
