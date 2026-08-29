@@ -20,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any authentication / authorization services.
+     * Register authentication / authorization services.
      *
      * @return void
      */
@@ -28,12 +28,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        \Gate::before(function ($user) {
+        Gate::before(function ($user) {
             if ($user->isAdmin()) {
                 return true;
             }
         });
-        foreach (Permission::all() as $permission) {
+
+        // Composer package discovery and most CI/Artisan commands should not require
+        // a live application database. Dynamic permission gates are only needed for
+        // the HTTP runtime where the permission records are available.
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
+        foreach (Permission::with('roles')->get() as $permission) {
             Gate::define($permission->name, function ($user) use ($permission) {
                 return $user->hasPermission($permission);
             });
