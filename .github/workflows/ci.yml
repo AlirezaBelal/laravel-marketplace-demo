@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  repository-contract:
+    name: Repository safety contract
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+
+      - name: Run repository safety contract
+        run: php tests/repository_safety.php
+
+      - name: Lint PHP source
+        run: |
+          find app bootstrap config database routes tests -type f -name '*.php' -print0 \
+            | xargs -0 -n1 php -l
+
+  php:
+    name: PHP dependency and framework checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate Composer metadata
+        run: composer validate --no-check-publish
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare local test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+
+      - name: Framework boot smoke
+        run: |
+          php artisan --version
+          php artisan route:list
+
+      - name: Run unit tests
+        run: vendor/bin/phpunit --testsuite Unit
+
+      - name: Audit locked PHP dependencies
+        run: composer audit --locked
+
+  frontend:
+    name: Frontend build and runtime dependency audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build production assets
+        run: npm run production
+
+      - name: Audit runtime frontend dependencies
+        run: npm audit --omit=dev --audit-level=high
