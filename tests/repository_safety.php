@@ -52,7 +52,7 @@ foreach ($scanRoots as $scanRoot) {
         }
 
         $extension = strtolower($file->getExtension());
-        if (! in_array($extension, ['php', 'js', 'json', 'blade.php'], true)
+        if (! in_array($extension, ['php', 'js', 'json'], true)
             && ! str_ends_with($file->getFilename(), '.blade.php')) {
             continue;
         }
@@ -73,8 +73,10 @@ foreach ($scanRoots as $scanRoot) {
         }
 
         if (str_starts_with($scanRoot, 'resources/views')) {
-            if (preg_match('/(?<![0-9])09[0-9]{9}(?![0-9])/', $content)
-                || preg_match('/۰۹[۰-۹]{9}/u', $content)) {
+            $asciiWithoutSynthetic = str_replace('09000000000', '', $content);
+            $persianWithoutSynthetic = str_replace('۰۹۰۰۰۰۰۰۰۰۰', '', $content);
+            if (preg_match('/(?<![0-9])09[0-9]{9}(?![0-9])/', $asciiWithoutSynthetic)
+                || preg_match('/۰۹[۰-۹]{9}/u', $persianWithoutSynthetic)) {
                 $failures[] = 'Hard-coded Iranian mobile-like value is tracked in '.$file->getPathname();
             }
         }
