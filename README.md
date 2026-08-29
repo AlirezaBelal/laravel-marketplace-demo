@@ -1,33 +1,103 @@
-# Digikala Project by Laravel & Livewire
+# Laravel Marketplace Demo
 
-![img.png](img.png)
+![Marketplace UI](img.png)
 
-## Launching the Project
+A legacy educational e-commerce / marketplace application built with **Laravel 9**, **Livewire**, Blade, Jetstream/Fortify, and a collection of commerce-oriented integrations.
 
-1. Configure the database: Set `DB_DATABASE` in the `.env` file to `digikala_digikala`.
-2. Add SQL: Import all files from the `DOC -> backup_V06` directory.
-3. Run `composer install`
-4. Run `nmp install`
-5. Run the project: Execute `php artisan serve` to start the server locally.
+> **Portfolio status:** this repository is preserved as a bootcamp-era full-stack project and architecture sample. Laravel 9 is end-of-life and no longer receives official security fixes, so this codebase should **not** be treated as production-ready without a framework and dependency upgrade.
 
-## Packages Used
+This project is an independent educational marketplace implementation. It is **not affiliated with, endorsed by, or operated by Digikala**.
 
-- [Livewire](https://laravel-livewire.com/): For dynamic, reactive interfaces.
-- [SweetAlert2](https://sweetalert2.github.io/): A beautiful, responsive replacement for JavaScript's alert.
-- [Jetstream](https://jetstream.laravel.com/2.x/installation.html): Laravel's scaffolding for modern and elegant
-  applications.
-- [Ckeditor 5](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/quick-start.html): A powerful rich text editor.
-- [Eloquent Sluggable](https://github.com/cviebrock/eloquent-sluggable): Provides easy creation of slugs for Eloquent
-  models.
-    - Enables automatic linking.
-- [jscolor](https://jscolor.com/): A JavaScript color picker.
-- [Kavenegar SMS Panel](https://github.com/kavenegar/kavenegar-php): Integrates Kavenegar's SMS services.
+## What the project demonstrates
 
-## Contact Us
+- customer registration, authentication, profile, address, wishlist, and order flows
+- product/category browsing, search-oriented routes, comparisons, comments, and cart/shipping flows
+- seller registration and seller-facing routes
+- admin routes and dashboard-oriented components
+- Livewire-driven interactive UI
+- order/payment records and configurable payment drivers
+- SMS and email notification integration points
+- sitemap generation, charts, SEO helpers, file management, and Persian/Jalali date support
 
-Stay connected with us through the following channels:
+## Architecture snapshot
 
-- **Email**: [belal.alireza@gmail.com](mailto:belal.alireza@gmail.com)
+```text
+Browser / Livewire UI
+        |
+        v
+Laravel routes + Livewire components + controllers
+        |
+        +--> Eloquent models / MySQL
+        +--> payment gateway abstraction
+        +--> SMS / email integrations
+        +--> admin and seller workflows
+```
 
-Thank you,
-Alireza Belal
+The payment callback now verifies the gateway transaction before marking orders as paid. Notification delivery is treated as a side effect after payment state has been committed.
+
+## Safe local setup
+
+Requirements:
+
+- PHP 8.2+
+- Composer 2
+- Node.js / npm
+- MySQL or another database supported by the application schema
+
+```bash
+git clone https://github.com/AlirezaBelal/DigiKala_Laravel.git
+cd DigiKala_Laravel
+cp .env.example .env
+composer install
+php artisan key:generate
+npm install
+npm run dev
+```
+
+Configure your local database in `.env`, then use the Laravel migrations available in `database/migrations` as the source-controlled schema definition:
+
+```bash
+php artisan migrate
+php artisan serve
+```
+
+Raw development database exports are intentionally **not** part of the supported setup. The old `DOC/backup_V06` dumps were removed from the current branch because row-level database exports do not belong in a public repository. If demo records are needed, use synthetic fixtures or create local records manually.
+
+## Payment and notification safety
+
+The tracked `.env.example` uses the package's **local payment driver** by default. Real payment credentials, SMS credentials, mail credentials, and callback secrets must stay outside source control.
+
+Real payment gateways in this legacy project have not been certified for production use. Before deploying a real gateway, upgrade the framework/dependencies, review the selected driver's current API contract, use HTTPS callback URLs, and run an application-specific security review.
+
+## Security posture
+
+The current branch intentionally excludes:
+
+- database dumps (`*.sql`)
+- `.env` and local credentials
+- vendor/node dependency directories
+- runtime logs and generated storage files
+
+See [SECURITY.md](SECURITY.md) and [SECURITY_REMEDIATION.md](SECURITY_REMEDIATION.md) for the repository's current support boundary and cleanup notes.
+
+## Technology
+
+- Laravel 9
+- Livewire 2
+- Jetstream / Fortify / Sanctum
+- Blade, Tailwind, Bootstrap, Alpine.js
+- Shetabit Multipay
+- Kavenegar integration
+- CKEditor, Chart.js, SweetAlert2
+
+## Current limitations
+
+- Laravel 9 is end-of-life.
+- The codebase originated as a bootcamp project and contains legacy design choices.
+- Historical database exports are not part of current setup.
+- No production SLA, hosted deployment, or production payment certification is claimed.
+- A future modernization should move the application to a supported Laravel release and refresh frontend dependencies.
+
+## License
+
+The repository includes an Apache License 2.0 text in [LICENSE.md](LICENSE.md). Third-party packages and assets remain subject to their own licenses and terms.
