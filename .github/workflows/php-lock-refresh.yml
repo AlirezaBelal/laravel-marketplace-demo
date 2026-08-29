@@ -23,8 +23,12 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Update packages within declared constraints
-        run: composer update --with-all-dependencies --no-interaction --no-progress --no-scripts
+      - name: Update stable packages within declared constraints
+        run: composer update --with-all-dependencies --no-interaction --no-progress --no-scripts --no-audit --no-security-blocking
+
+      - name: Reject development package locks
+        run: |
+          php -r '$lock=json_decode(file_get_contents("composer.lock"), true, 512, JSON_THROW_ON_ERROR); foreach (array_merge($lock["packages"] ?? [], $lock["packages-dev"] ?? []) as $package) { $version=$package["version"] ?? ""; if (str_contains($version, "dev") || str_ends_with($version, "-dev")) { fwrite(STDERR, "Development dependency locked: {$package["name"]} {$version}\n"); exit(1); } }'
 
       - name: Validate refreshed lock
         run: composer validate --no-check-publish
@@ -37,6 +41,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No lock changes required.'
           else
-            git commit -m 'chore: refresh PHP dependencies within legacy constraints'
+            git commit -m 'chore: lock stable PHP dependencies'
             git push origin HEAD:master
           fi
