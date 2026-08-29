@@ -1,0 +1,42 @@
+name: PHP lock refresh
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - .github/workflows/php-lock-refresh.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+
+      - name: Update packages within declared constraints
+        run: composer update --with-all-dependencies --no-interaction --no-progress --no-scripts
+
+      - name: Validate refreshed lock
+        run: composer validate --no-check-publish
+
+      - name: Commit refreshed lock
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add composer.lock
+          if git diff --cached --quiet; then
+            echo 'No lock changes required.'
+          else
+            git commit -m 'chore: refresh PHP dependencies within legacy constraints'
+            git push origin HEAD:master
+          fi
