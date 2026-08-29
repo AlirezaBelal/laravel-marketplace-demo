@@ -88,7 +88,9 @@ See [SECURITY.md](SECURITY.md) and [SECURITY_REMEDIATION.md](SECURITY_REMEDIATIO
 - Blade, Tailwind, Bootstrap, Alpine.js
 - Shetabit Multipay
 - Kavenegar integration
-- CKEditor, Chart.js, SweetAlert2
+- Chart.js and legacy admin UI components
+
+The unsupported CKEditor 5 predefined build and its tracked runtime bundle were removed during the repository security cleanup. Admin text fields retain their native textarea fallback rather than carrying an unmaintained editor dependency.
 
 ## Current limitations
 
