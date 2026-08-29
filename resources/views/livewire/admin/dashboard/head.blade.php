@@ -13,7 +13,6 @@
     <link href="{{asset('css/select2-bootstrap.min.css')}}" rel="stylesheet" />
 
 {{--    <link rel="stylesheet" href="{{asset('css/bootstrap-iconpicker.min.css')}}">--}}
-    <script src="{{asset('js/ckeditor.js')}}"></script>
     <script src="{{asset('/js/sweetalert.min.js')}}"></script>
 
 

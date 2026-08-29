@@ -242,8 +242,7 @@
     </div>
 
     <script>
-        ClassicEditor
-            .create( document.querySelector( '#description_create' ),{
+        window.ClassicEditor?.create( document.querySelector( '#description_create' ),{
                 language:{
                     ui:'fa',
                     content:'fa'
@@ -253,8 +252,7 @@
                 console.error( error );
             } );
 
-        ClassicEditor
-            .create( document.querySelector( '#body_create' ),{
+        window.ClassicEditor?.create( document.querySelector( '#body_create' ),{
                 language:{
                     ui:'fa',
                     content:'fa'
