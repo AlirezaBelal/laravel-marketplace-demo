@@ -1,12 +1,15 @@
 {
-    "name": "laravel/laravel",
+    "name": "alirezabelal/marketplace-demo",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Legacy educational Laravel marketplace application demonstrating multi-role commerce workflows, Livewire UI, payments, notifications, and admin/seller operations.",
     "keywords": [
-        "framework",
-        "laravel"
+        "laravel",
+        "livewire",
+        "marketplace",
+        "ecommerce",
+        "education"
     ],
-    "license": "MIT",
+    "license": "Apache-2.0",
     "require": {
         "php": "^8.2",
         "artesaos/seotools": "^0.22.0",
