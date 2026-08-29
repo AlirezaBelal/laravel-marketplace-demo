@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,9 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        $this->app->bind('path.public', function () {
-//            return realpath(base_path().'/digikala/public');
-//        });
+        //
     }
 
     /**
@@ -29,33 +28,40 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (auth()->user()) {
-            $carts = \App\Models\Cart::where('user_id', auth()->user()->id)->where('type', 0)->get();
-            $userIp2 = Request::ip();
-            $cart2s = \App\Models\Cart::where('ip', $userIp2)->get();
-            if ($cart2s) {
-                foreach ($cart2s as $cart) {
-                    $cart->update([
-                        'user_id' => auth()->user()->id,
-                    ]);
-                }
+        $carts = collect();
 
+        // Composer, Artisan and CI must be able to boot the framework without an
+        // operational database. Cart hydration belongs only to HTTP runtime.
+        if (! $this->app->runningInConsole()) {
+            if (auth()->check()) {
+                $userId = auth()->id();
+                $carts = Cart::where('user_id', $userId)->where('type', 0)->get();
+
+                Cart::where('ip', Request::ip())
+                    ->whereNull('user_id')
+                    ->update(['user_id' => $userId]);
+            } else {
+                $carts = Cart::where('ip', Request::ip())->where('type', 0)->get();
             }
-        } else {
-            $userIp = Request::ip();
-            $carts = \App\Models\Cart::where('ip', $userIp)->where('type', 0)->get();
         }
+
         View::share('carts', $carts);
 
-        Validator::extend('max_mb', function ($attribute, $value, $parameters, $validator) {
-            $this->requireParameterCount(1, $parameters, 'max_mb');
-            if ($value instanceof UploadedFile && ! $value->isValid()) {
+        Validator::extend('max_mb', function ($attribute, $value, $parameters) {
+            if (count($parameters) !== 1 || ! is_numeric($parameters[0])) {
                 return false;
             }
-            $mb = $value->getSize() / 1024 / 1024;
 
-            return $this->getSize($attribute, $mb) <= $parameters[0];
+            if (! $value instanceof UploadedFile || ! $value->isValid()) {
+                return false;
+            }
+
+            $maxMegabytes = (float) $parameters[0];
+            if ($maxMegabytes < 0) {
+                return false;
+            }
+
+            return ($value->getSize() / 1024 / 1024) <= $maxMegabytes;
         });
-
     }
 }
