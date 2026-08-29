@@ -4,184 +4,211 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderSubmit;
 use App\Models\BankPayment;
+use App\Models\Email as EmailLog;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\Payment as PaymentModel;
 use App\Models\SMS;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Kavenegar\KavenegarApi;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 use Shetabit\Multipay\Invoice;
-use Shetabit\Multipay\Payment;
+use Shetabit\Multipay\Payment as PaymentGateway;
+use Throwable;
 
 class PayController extends Controller
 {
     public function pay()
     {
-        $bank = BankPayment::where('user_id', auth()->user()->id)->where('status', 0)->get()->last();
-        if ($bank->status == 1) {
-            //            alert()->message('شما قبلا این سفارش را پرداخت کرده اید.');
+        $bank = BankPayment::where('user_id', auth()->id())
+            ->where('status', 0)
+            ->latest('id')
+            ->first();
+
+        if (! $bank) {
             return back();
         }
-        $payconfig = config('payment');
-        $payment = new Payment($payconfig);
+
+        $gateway = new PaymentGateway(config('payment'));
         $invoice = (new Invoice)->amount($bank->price);
 
-        return $payment->callbackUrl(env('CALLBACK_URL'))->purchase($invoice, function ($driver, $transactionId) {
-            $bank = BankPayment::where('user_id', auth()->user()->id)->where('status', 0)->get()->last();
-            $paymentModels = \App\Models\Payment::where('order_number', $bank->order_number)->get();
-            foreach ($paymentModels as $paymentModel) {
-                $paymentModel->update([
+        return $gateway
+            ->callbackUrl(route('bank.callback'))
+            ->purchase($invoice, function ($driver, $transactionId) use ($bank) {
+                PaymentModel::where('order_number', $bank->order_number)->update([
                     'transactionId' => $transactionId,
                     'driver' => config('payment.default'),
                 ]);
-            }
-        })->pay()->render();
+            })
+            ->pay()
+            ->render();
     }
 
     public function callback()
     {
+        $transactionId = request()->input('Authority')
+            ?: request()->input('transactionId');
 
-        $Authority = \request()->Authority;
-        $status = \request()->Status;
-        if ($status == 'OK') {
-            $payments = \App\Models\Payment::where('transactionId', $Authority)->get();
-            $bank_payments = BankPayment::where('order_number', $payments[0]->order_number)->get();
-            $orders = Order::where('order_number', $payments[0]->order_number)->get();
-            foreach ($payments as $payment) {
-                $payment->update([
-                    'status' => 1,
-                ]);
-            }
-            foreach ($bank_payments as $bank_payment) {
-                $bank_payment->update([
-                    'status' => 1,
-                ]);
-            }
+        if (! $transactionId) {
+            return redirect()->route('home.index');
+        }
+
+        $paymentRecord = PaymentModel::where('transactionId', $transactionId)->first();
+        if (! $paymentRecord) {
+            return redirect()->route('home.index');
+        }
+
+        $bankPayment = BankPayment::where('order_number', $paymentRecord->order_number)
+            ->where('status', 0)
+            ->first();
+
+        if (! $bankPayment) {
+            return redirect()->route('home.index');
+        }
+
+        $gateway = new PaymentGateway(config('payment'));
+        if ($paymentRecord->driver) {
+            $gateway->via($paymentRecord->driver);
+        }
+
+        try {
+            $receipt = $gateway
+                ->amount($bankPayment->price)
+                ->transactionId($transactionId)
+                ->verify();
+        } catch (InvalidPaymentException $exception) {
+            report($exception);
+
+            return redirect()->route('home.index');
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return redirect()->route('home.index');
+        }
+
+        $referenceId = method_exists($receipt, 'getReferenceId')
+            ? (string) $receipt->getReferenceId()
+            : (string) $transactionId;
+
+        $orders = DB::transaction(function () use ($bankPayment, $referenceId) {
+            PaymentModel::where('order_number', $bankPayment->order_number)->update([
+                'status' => 1,
+            ]);
+
+            BankPayment::where('order_number', $bankPayment->order_number)->update([
+                'status' => 1,
+            ]);
+
+            $orders = Order::where('order_number', $bankPayment->order_number)->get();
             foreach ($orders as $order) {
                 $order->update([
                     'payment' => 1,
-                    'transaction_id' => $Authority,
+                    'transaction_id' => $referenceId,
                     'status' => 'paid',
                 ]);
-                //مشتری
-                $type = 'سفارش شما ثبت شد';
+
                 Notification::create([
                     'user_id' => $order->user_id,
                     'product_id' => $order->product_id,
-                    'type' => $type,
+                    'type' => 'سفارش شما ثبت شد',
                     'sms' => 1,
                     'email' => 1,
                     'system' => 1,
                     'text' => $order->product->title,
                 ]);
-                //فروشنده
-                $type = 'سفارش جدیدی برای شما ثبت شد';
+
                 Notification::create([
                     'user_id' => $order->product_seller_id,
                     'product_id' => $order->product_id,
-                    'type' => $type,
+                    'type' => 'سفارش جدیدی برای شما ثبت شد',
                     'sms' => 1,
                     'email' => 1,
                     'system' => 1,
                     'text' => $order->product->title,
                 ]);
-                //ادمین
-                $type = 'سفارش جدیدی در سایت ثبت شد';
+
                 Notification::create([
                     'user_id' => 1,
                     'product_id' => $order->product_id,
-                    'type' => $type,
+                    'type' => 'سفارش جدیدی در سایت ثبت شد',
                     'sms' => 1,
                     'email' => 1,
                     'system' => 1,
                     'text' => $order->product->title,
                 ]);
-                /////////////////////////////////sms
-                ///
-
-                $type2 = 'سفارش جدیدی برای شما ثبت شد';
-                $seller = User::where('id', $order->product_seller_id)->first();
-                $code = random_int(10000, 99999);
-                $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
-                $client->send(env('SENDER_MOBILE'), $seller->mobile,
-                    '  سفارش محصولی در سایت دیجی کالا برای شما ثبت شد');
-
-                SMS::create([
-                    'code' => $code,
-                    'type' => $type2,
-                    'user_id' => $order->product_seller_id,
-                ]);
-
-                $type3 = 'سفارش جدیدی در سایت شما ثبت شد';
-                $Admin = User::where('id', 1)->first();
-                $code = random_int(10000, 99999);
-                $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
-                $client->send(env('SENDER_MOBILE'), $Admin->mobile,
-                    '  سفارش محصولی در سایت دیجی کالا برای شما ثبت شد');
-
-                SMS::create([
-                    'code' => $code,
-                    'type' => $type3,
-                    'user_id' => 1,
-                ]);
-
-                ///////////////////////////////////email
-                $email = \App\Models\Email::create([
-                    'user_id' => $seller->id,
-                    'user_email' => $seller->email,
-                    'user_mobile' => $seller->mobile,
-                    'title' => 'سفارش محصولی در سایت  برای شما ثبت شد',
-                    'text' => 'سفارش محصولی در سایت دیجی کالا برای شما ثبت شد',
-                    'code' => 'سفارش با موفقیت پرداخت شد',
-                ]);
-
-                Mail::to(auth()->user()->email)->send(new OrderSubmit($email));
-                //////////admin
-
-                $email3 = \App\Models\Email::create([
-                    'user_id' => $Admin->id,
-                    'user_email' => $Admin->email,
-                    'user_mobile' => $Admin->mobile,
-                    'title' => 'سفارش جدیدی در سایت دریافت شد',
-                    'text' => 'سفارش جدیدی در سایت با موفقیت دریافت شد و پرداخت شده است',
-                    'code' => 'سفارش با موفقیت پرداخت شد',
-                ]);
-
-                Mail::to($Admin->email)->send(new OrderSubmit($email3));
-
             }
-            //            alert()->success('پرداخت موفق')->message('سفارش با موفقیت ثبت شد.');
 
-            $type = 'سفارش شما ثبت شد';
-            $code = random_int(10000, 99999);
-            $client = new KavenegarApi(env('KAVENEGAR_CLIENT_API'));
-            $client->send(env('SENDER_MOBILE'), auth()->user()->mobile,
-                "کد تایید شما: $code");
+            return $orders;
+        });
 
+        $customer = User::find($bankPayment->user_id);
+        $admin = User::find(1);
+
+        foreach ($orders as $order) {
+            $seller = User::find($order->product_seller_id);
+            if ($seller) {
+                $this->sendSms($seller, 'سفارش محصولی در سایت برای شما ثبت شد', 'سفارش جدیدی برای شما ثبت شد');
+                $this->sendEmail($seller, 'سفارش محصولی برای شما ثبت شد', 'سفارش محصولی در سایت برای شما ثبت شد');
+            }
+        }
+
+        if ($admin) {
+            $this->sendSms($admin, 'سفارش جدیدی در سایت ثبت شد', 'سفارش جدیدی در سایت شما ثبت شد');
+            $this->sendEmail($admin, 'سفارش جدیدی در سایت دریافت شد', 'سفارش جدیدی در سایت با موفقیت دریافت شد و پرداخت شده است');
+        }
+
+        if ($customer) {
+            $this->sendSms($customer, 'سفارش شما با موفقیت پرداخت شد', 'سفارش شما ثبت شد');
+            $this->sendEmail($customer, 'سفارش شما با موفقیت دریافت شد', 'سفارش شما با موفقیت دریافت شد و در حال پردازش است');
+        }
+
+        return $customer
+            ? redirect()->route('profile.index')
+            : redirect()->route('home.index');
+    }
+
+    private function sendSms(User $user, string $message, string $type): void
+    {
+        $apiKey = (string) env('KAVENEGAR_CLIENT_API', '');
+        $sender = (string) env('SENDER_MOBILE', '');
+
+        if ($apiKey === '' || $sender === '' || ! $user->mobile) {
+            return;
+        }
+
+        try {
+            (new KavenegarApi($apiKey))->send($sender, $user->mobile, $message);
             SMS::create([
-                'code' => $code,
+                'code' => random_int(10000, 99999),
                 'type' => $type,
-                'user_id' => auth()->user()->id,
+                'user_id' => $user->id,
             ]);
+        } catch (Throwable $exception) {
+            report($exception);
+        }
+    }
 
-            ////////////////////////////
-            $email = \App\Models\Email::create([
-                'user_id' => auth()->user()->id,
-                'user_email' => auth()->user()->email,
-                'user_mobile' => auth()->user()->mobile,
-                'title' => 'سفارش شما با موفقیت دریافت شد',
-                'text' => 'سفارش شما با موفقیت دریافت شد و در حال پردازش است',
+    private function sendEmail(User $user, string $title, string $text): void
+    {
+        if (! $user->email) {
+            return;
+        }
+
+        try {
+            $email = EmailLog::create([
+                'user_id' => $user->id,
+                'user_email' => $user->email,
+                'user_mobile' => $user->mobile,
+                'title' => $title,
+                'text' => $text,
                 'code' => 'سفارش با موفقیت پرداخت شد',
             ]);
 
-            Mail::to(auth()->user()->email)->send(new OrderSubmit($email));
-
-            ///////////////////////////////////////////////////
-
-            return redirect(route('profile.index'));
-        } else {
-            //            alert()->message('پرداخت با شکست مواجه شد.');
-            return redirect('/');
+            Mail::to($user->email)->send(new OrderSubmit($email));
+        } catch (Throwable $exception) {
+            report($exception);
         }
     }
 }
