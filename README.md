@@ -1,5 +1,7 @@
 # Laravel Marketplace Demo
 
+[![CI](https://github.com/AlirezaBelal/DigiKala_Laravel/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/DigiKala_Laravel/actions/workflows/ci.yml)
+
 ![Marketplace UI](img.png)
 
 A legacy educational e-commerce / marketplace application built with **Laravel 9**, **Livewire**, Blade, Jetstream/Fortify, and a collection of commerce-oriented integrations.
