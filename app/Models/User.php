@@ -18,11 +18,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
@@ -47,11 +42,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -59,42 +49,29 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_secret',
     ];
 
-    //    /**
-    //     * The attributes that should be cast to native types.
-    //     *
-    //     * @var array
-    //     */
-    //    protected $casts = [
-    //        'email_verified_at' => 'datetime',
-    //    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'profile_photo_url',
     ];
 
     public function isAdmin()
     {
-        return $this->admin;
+        return (bool) $this->admin;
     }
 
     public function isStaff()
     {
-        return $this->staff;
+        return (bool) $this->staff;
     }
 
     public function hasPermission($permission)
     {
-        return $this->permissions->contains('name', $permission->name || $this->hasRole($permission->roles));
+        return $this->permissions->contains('name', $permission->name)
+            || $this->hasRole($permission->roles);
     }
 
     public function hasRole($roles)
     {
-        return (bool) $roles->intersect($this->roles)->all();
+        return $roles->intersect($this->roles)->isNotEmpty();
     }
 
     public function permissions()
