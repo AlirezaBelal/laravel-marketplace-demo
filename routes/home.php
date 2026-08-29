@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Models\Notification;
-use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-use Spatie\Sitemap\SitemapGenerator;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,26 +13,6 @@ use Spatie\Sitemap\SitemapGenerator;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('ma',function (){
-//    $order = Order::where('user_id',auth()->user()->id)->get()->last();
-//    $type = 'سفارش شما ثبت شد';
-//    Notification::create([
-//        'user_id' =>$order->user_id,
-//        'product_id' =>$order->product_id,
-//        'type' =>$type,
-//        'sms' =>1,
-//        'email' =>1,
-//        'system' =>1,
-//        'text' =>$order->product->title,
-//    ]);
-//
-//});
-
-Route::get('/sitem', function () {
-    SitemapGenerator::create('http://127.0.0.1:8000/')->writeToFile(public_path('sitemap.xml'));
-
-    return back();
-});
 Route::get('/', \App\Http\Livewire\Home\Home\Index::class)
     ->name('home.index');
 Route::get('/login', function () {
