@@ -1,13 +1,12 @@
 {
     "name": "alirezabelal/marketplace-demo",
     "type": "project",
-    "description": "Legacy educational Laravel marketplace application demonstrating multi-role commerce workflows, Livewire UI, payments, notifications, and admin/seller operations.",
+    "description": "Laravel multi-vendor marketplace with Livewire, customer and seller workflows, orders, payments, notifications and administration; preserved as a legacy project.",
     "keywords": [
         "laravel",
         "livewire",
         "marketplace",
-        "ecommerce",
-        "education"
+        "ecommerce"
     ],
     "license": "Apache-2.0",
     "require": {

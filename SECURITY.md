@@ -2,7 +2,7 @@
 
 ## Support status
 
-This repository is a **legacy educational project**, not a supported production service.
+This repository preserves a completed **legacy Laravel marketplace project**, not a supported production service.
 
 The application currently targets Laravel 9. Laravel 9's official security-fix window ended on **February 6, 2024**. Before using this code in a deployed environment, upgrade Laravel and the surrounding dependency stack to supported versions and perform a fresh security review.
 
@@ -15,6 +15,8 @@ The locked dependency graph is intentionally kept on **stable releases**. Curren
 
 These exceptions document framework end-of-life debt; they are not claims that the issues are safe for production. Any additional PHP advisory still fails CI.
 
+A fresh locked audit on 2026-10-24 reports six additional, non-ignored advisories across laravel/framework (2), league/commonmark (2), symfony/http-foundation (1) and symfony/yaml (1). One Laravel advisory is classified critical by the advisory feed. The complete npm dependency graph reports 69 findings. These are dependency findings, not application exploit verification. Existing exceptions have not been expanded; the previous green CI does not establish current dependency safety.
+
 ## Current repository rules
 
 The current branch must not contain:
@@ -26,7 +28,7 @@ The current branch must not contain:
 - personal data such as names, phone numbers, postal addresses, or customer records
 - runtime logs containing request or user information
 
-Database dumps are ignored and the legacy `DOC/backup_V06` exports have been removed from the current branch. Historical Git commits may still contain older repository content and should not be treated as a sanitized data source.
+Database dumps are ignored. The owner rewrote both branches on 2026-10-25 to remove historical SQL backups and Google API key patterns. Old PR references, cached objects and other clones may still retain earlier material; server-side removal is not confirmed. See SECURITY_REMEDIATION.md.
 
 ## Payment safety
 
@@ -39,3 +41,7 @@ Do not include credentials, personal data, or exploit payloads containing sensit
 ## Credential response
 
 If a real credential is ever committed, removing it from the current branch is not sufficient. Revoke or rotate the credential at the provider first, then replace it with an environment-variable reference.
+
+## Archive limitations
+
+The owner authorized retention of the legacy source with known dependency audit failures visible and approved retention of the existing UI assets. Archival is not a security clearance, credential revocation or independent third-party rights verification. GitHub Support cleanup of old refs/caches and Google Cloud credential review remain owner follow-ups. Do not publish sensitive review evidence in issues or pull requests.
