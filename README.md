@@ -4,9 +4,11 @@
 
 A completed Laravel 9 and Livewire 2 multi-vendor marketplace project implementing customer, seller and administrator workflows, product management, shopping carts, orders, payment records and notification integrations.
 
-**Legacy source archive:** no routine feature development is planned. This unsupported runtime is retained for code review and portfolio reference, not production deployment. Native GitHub archival is pending the security and third-party-content review described below; this notice does not make the repository read-only.
+**Completed legacy project:** no routine feature development is planned. This unsupported runtime is retained for code review and portfolio reference, not production deployment. GitHub's native archive banner is the authoritative read-only status.
 
 This project is independent of and **not affiliated with, endorsed by, or operated by Digikala**.
+
+![Marketplace UI](img.png)
 
 ## Implemented workflows
 
@@ -54,7 +56,7 @@ The checked-in environment defaults to the local payment driver and disabled deb
 
 Laravel 9's security support ended on February 6, 2024. Livewire 2 and the frontend stack are legacy dependencies; no ongoing security-support guarantee is made.
 
-The last successful master CI at `ea65fd6` ran three jobs: repository safety checks/PHP lint, framework boot/routes plus **one PHPUnit test with one assertion**, and frontend build/runtime dependency audit. It did not test complete customer, seller, administrator or payment workflows.
+CI runs three jobs: repository safety checks/PHP lint, framework boot/routes plus **one PHPUnit test with one assertion**, and frontend build/runtime dependency audit. On the sanitized documentation branch reviewed on 2026-10-25, repository safety and frontend build/runtime audit pass; the PHP job fails at the locked dependency audit. CI does not test complete customer, seller, administrator or payment workflows.
 
 A fresh locked-dependency audit on **2026-10-24** failed: Composer reported six non-ignored advisories across Laravel, CommonMark and Symfony, in addition to four existing Laravel exceptions. The complete npm graph reported 69 findings. Counts are a dated dependency snapshot, not proof that every issue is reachable in this application; inspect the actual dependency tree and [security policy](SECURITY.md). Old green CI is not a current security clearance.
 
@@ -62,11 +64,11 @@ No advisory exception was added or validation weakened for this presentation upd
 
 ## Preservation and public-content review
 
-Development database exports were removed from the current tree. **Git history was not rewritten or certified free of personal data or credentials.** The owner must privately classify historical exports and revoke any exposed credentials; never attach raw records to public issues.
+On 2026-10-25, the owner rewrote both repository branches to remove historical SQL backups and replace Google API key patterns. This does not establish deletion of old pull-request references, cached objects, forks or existing clones. GitHub Support cleanup remains pending; historical Google Cloud credential revocation/restriction has not been confirmed. Never restore old dumps or merge pre-cleanup history. See [cleanup notes](SECURITY_REMEDIATION.md).
 
-The historical frontend includes Digikala-named assets, fonts and other third-party content whose redistribution rights have not been established by this review. The existing screenshot is not embedded here pending provenance/rights confirmation; its file and history are preserved. Attribution or this project's license does not grant rights over third-party material.
+The owner approved retention of the existing imagery, fonts and UI assets for this portfolio artifact. They remain unchanged. This records the owner's decision, not an independent legal clearance; Apache-2.0 does not grant rights over third-party material.
 
-Native archival is deferred until material publication concerns are resolved and applicable CI checks pass. See [cleanup notes](SECURITY_REMEDIATION.md). The GitHub archive banner/API is the authoritative read-only status; a README notice is not a substitute.
+The owner accepts preservation of this unsupported source archive with known dependency failures disclosed. No security checks or advisory exceptions are weakened for archival.
 
 ## License
 

@@ -28,7 +28,7 @@ The current branch must not contain:
 - personal data such as names, phone numbers, postal addresses, or customer records
 - runtime logs containing request or user information
 
-Database dumps are ignored and the legacy `DOC/backup_V06` exports have been removed from the current branch. Historical Git commits may still contain older repository content and should not be treated as a sanitized data source.
+Database dumps are ignored. The owner rewrote both branches on 2026-10-25 to remove historical SQL backups and Google API key patterns. Old PR references, cached objects and other clones may still retain earlier material; server-side removal is not confirmed. See SECURITY_REMEDIATION.md.
 
 ## Payment safety
 
@@ -42,6 +42,6 @@ Do not include credentials, personal data, or exploit payloads containing sensit
 
 If a real credential is ever committed, removing it from the current branch is not sufficient. Revoke or rotate the credential at the provider first, then replace it with an environment-variable reference.
 
-## Archival gate
+## Archive limitations
 
-Native archival remains pending current CI and owner review of historical database-export provenance and third-party frontend/screenshot redistribution rights. Do not treat archival as revoking credentials, deleting Git history or curing third-party rights. Do not publish sensitive review evidence in issues or pull requests.
+The owner authorized retention of the legacy source with known dependency audit failures visible and approved retention of the existing UI assets. Archival is not a security clearance, credential revocation or independent third-party rights verification. GitHub Support cleanup of old refs/caches and Google Cloud credential review remain owner follow-ups. Do not publish sensitive review evidence in issues or pull requests.
