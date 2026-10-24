@@ -2,7 +2,7 @@
 
 ## Support status
 
-This repository is a **legacy educational project**, not a supported production service.
+This repository preserves a completed **legacy Laravel marketplace project**, not a supported production service.
 
 The application currently targets Laravel 9. Laravel 9's official security-fix window ended on **February 6, 2024**. Before using this code in a deployed environment, upgrade Laravel and the surrounding dependency stack to supported versions and perform a fresh security review.
 
@@ -14,6 +14,8 @@ The locked dependency graph is intentionally kept on **stable releases**. Curren
 - `PKSA-8qx3-n5y5-vvnd`
 
 These exceptions document framework end-of-life debt; they are not claims that the issues are safe for production. Any additional PHP advisory still fails CI.
+
+A fresh locked audit on 2026-10-24 reports six additional, non-ignored advisories across laravel/framework (2), league/commonmark (2), symfony/http-foundation (1) and symfony/yaml (1). One Laravel advisory is classified critical by the advisory feed. The complete npm dependency graph reports 69 findings. These are dependency findings, not application exploit verification. Existing exceptions have not been expanded; the previous green CI does not establish current dependency safety.
 
 ## Current repository rules
 
@@ -39,3 +41,7 @@ Do not include credentials, personal data, or exploit payloads containing sensit
 ## Credential response
 
 If a real credential is ever committed, removing it from the current branch is not sufficient. Revoke or rotate the credential at the provider first, then replace it with an environment-variable reference.
+
+## Archival gate
+
+Native archival remains pending current CI and owner review of historical database-export provenance and third-party frontend/screenshot redistribution rights. Do not treat archival as revoking credentials, deleting Git history or curing third-party rights. Do not publish sensitive review evidence in issues or pull requests.

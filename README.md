@@ -1,50 +1,35 @@
-# Laravel Marketplace Demo
+# Laravel Multi-Vendor Marketplace
 
 [![CI](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml)
 
-![Marketplace UI](img.png)
+A completed Laravel 9 and Livewire 2 multi-vendor marketplace project implementing customer, seller and administrator workflows, product management, shopping carts, orders, payment records and notification integrations.
 
-A legacy educational e-commerce / marketplace application built with **Laravel 9**, **Livewire**, Blade, Jetstream/Fortify, and a collection of commerce-oriented integrations.
+**Legacy source archive:** no routine feature development is planned. This unsupported runtime is retained for code review and portfolio reference, not production deployment. Native GitHub archival is pending the security and third-party-content review described below; this notice does not make the repository read-only.
 
-> **Portfolio status:** this repository is preserved as a bootcamp-era full-stack project and architecture sample. Laravel 9 is end-of-life and no longer receives official security fixes, so this codebase should **not** be treated as production-ready without a framework and dependency upgrade.
+This project is independent of and **not affiliated with, endorsed by, or operated by Digikala**.
 
-This project is an independent educational marketplace implementation. It is **not affiliated with, endorsed by, or operated by Digikala**.
+## Implemented workflows
 
-## What the project demonstrates
+- Customers: registration, authentication, profiles, addresses, wishlists, product browsing, comparisons, comments, carts, shipping and orders.
+- Sellers: registration and seller-facing marketplace routes.
+- Administrators: product and commerce management components, payment records and dashboard views.
+- Integrations: configurable payment drivers, SMS/email notifications, charts, SEO helpers, file management and Persian/Jalali dates.
 
-- customer registration, authentication, profile, address, wishlist, and order flows
-- product/category browsing, search-oriented routes, comparisons, comments, and cart/shipping flows
-- seller registration and seller-facing routes
-- admin routes and dashboard-oriented components
-- Livewire-driven interactive UI
-- order/payment records and configurable payment drivers
-- SMS and email notification integration points
-- charts, SEO helpers, file management, and Persian/Jalali date support
+These are implemented code paths, not claims of comprehensive acceptance testing, deployed customers or commercial operation.
 
-## Architecture snapshot
+## Stack and boundaries
 
-```text
-Browser / Livewire UI
-        |
-        v
-Laravel routes + Livewire components + controllers
-        |
-        +--> Eloquent models / MySQL
-        +--> payment gateway abstraction
-        +--> SMS / email integrations
-        +--> admin and seller workflows
-```
+Laravel 9.52.22, Livewire 2.12.8, Blade, Jetstream/Fortify/Sanctum, Eloquent, MySQL-oriented migrations, Tailwind, Bootstrap and Alpine.js. Payment integration uses Shetabit Multipay; SMS integration uses Kavenegar.
 
-The payment callback now verifies the gateway transaction before marking orders as paid. Notification delivery is treated as a side effect after payment state has been committed.
+Routes, controllers and Livewire components coordinate Eloquent models and external adapters. Payment callbacks call the configured gateway's verification API with the recorded transaction and amount before changing payment/order state. Those database updates run in a transaction; SMS/email delivery follows the commit.
 
-## Safe local setup
+This is a code-level review of the callback, not proof of complete payment correctness, authorization coverage, concurrency safety or certification against a live gateway. No live payment or notification delivery is claimed.
 
-Requirements:
+## Local inspection and setup
 
-- PHP 8.2+
-- Composer 2
-- Node.js / npm
-- MySQL or another database supported by the application schema
+Use an isolated local environment with synthetic records only. Do not expose this application publicly or supply production credentials.
+
+Requirements: PHP 8.2 (the CI environment), Composer 2, Node.js/npm and a database compatible with the migrations. CI used Node.js 20; that historical toolchain is not a recommendation for a newly deployed service.
 
 ```bash
 git clone https://github.com/AlirezaBelal/laravel-marketplace-demo.git
@@ -52,60 +37,37 @@ cd laravel-marketplace-demo
 cp .env.example .env
 composer install
 php artisan key:generate
-npm install
+npm ci
 npm run dev
 ```
 
-Configure your local database in `.env`, then use the Laravel migrations available in `database/migrations` as the source-controlled schema definition:
+Configure a local database in `.env`, then:
 
 ```bash
 php artisan migrate
-php artisan serve
+php artisan serve --host=127.0.0.1
 ```
 
-Raw development database exports are intentionally **not** part of the supported setup. The old `DOC/backup_V06` dumps were removed from the current branch because row-level database exports do not belong in a public repository. If demo records are needed, use synthetic fixtures or create local records manually.
+The checked-in environment defaults to the local payment driver and disabled debug mode. Keep payment, SMS, mail and database credentials outside Git. Migrations are the supported schema source; no complete synthetic catalog or end-to-end installation/data fixture is claimed. Do not restore historical development dumps.
 
-## Payment and notification safety
+## Security and verification status
 
-The tracked `.env.example` uses the package's **local payment driver** by default. Real payment credentials, SMS credentials, mail credentials, and callback secrets must stay outside source control.
+Laravel 9's security support ended on February 6, 2024. Livewire 2 and the frontend stack are legacy dependencies; no ongoing security-support guarantee is made.
 
-Real payment gateways in this legacy project have not been certified for production use. Before deploying a real gateway, upgrade the framework/dependencies, review the selected driver's current API contract, use HTTPS callback URLs, and run an application-specific security review.
+The last successful master CI at `ea65fd6` ran three jobs: repository safety checks/PHP lint, framework boot/routes plus **one PHPUnit test with one assertion**, and frontend build/runtime dependency audit. It did not test complete customer, seller, administrator or payment workflows.
 
-## Security posture
+A fresh locked-dependency audit on **2026-10-24** failed: Composer reported six non-ignored advisories across Laravel, CommonMark and Symfony, in addition to four existing Laravel exceptions. The complete npm graph reported 69 findings. Counts are a dated dependency snapshot, not proof that every issue is reachable in this application; inspect the actual dependency tree and [security policy](SECURITY.md). Old green CI is not a current security clearance.
 
-The current branch intentionally excludes:
+No advisory exception was added or validation weakened for this presentation update. A supported runtime would require separately authorized modernization and application-level security/integration tests.
 
-- database dumps (`*.sql`)
-- `.env` and local credentials
-- vendor/node dependency directories
-- runtime logs and generated storage files
+## Preservation and public-content review
 
-The dependency lock is kept on stable releases. CI performs Composer and npm audits. The Composer audit has four explicit advisory exceptions, all scoped to the unsupported Laravel 9 framework line; any additional PHP advisory still fails CI. See [SECURITY.md](SECURITY.md) for the exact advisory IDs and support boundary.
+Development database exports were removed from the current tree. **Git history was not rewritten or certified free of personal data or credentials.** The owner must privately classify historical exports and revoke any exposed credentials; never attach raw records to public issues.
 
-See [SECURITY_REMEDIATION.md](SECURITY_REMEDIATION.md) for the repository cleanup notes.
+The historical frontend includes Digikala-named assets, fonts and other third-party content whose redistribution rights have not been established by this review. The existing screenshot is not embedded here pending provenance/rights confirmation; its file and history are preserved. Attribution or this project's license does not grant rights over third-party material.
 
-## Technology
-
-- Laravel 9
-- Livewire 2
-- Jetstream / Fortify / Sanctum
-- Blade, Tailwind, Bootstrap, Alpine.js
-- Shetabit Multipay
-- Kavenegar integration
-- Chart.js and legacy admin UI components
-
-The unsupported CKEditor 5 predefined build and its tracked runtime bundle were removed during the repository security cleanup. Admin text fields retain their native textarea fallback rather than carrying an unmaintained editor dependency.
-
-The unused runtime sitemap endpoint and its crawler/browser dependency chain were also removed rather than retaining unnecessary attack surface in a legacy demo.
-
-## Current limitations
-
-- Laravel 9 is end-of-life and retains documented framework-level advisories with no supported Laravel 9 fix path.
-- The codebase originated as a bootcamp project and contains legacy design choices.
-- Historical database exports are not part of current setup.
-- No production SLA, hosted deployment, or production payment certification is claimed.
-- A future modernization should move the application to a supported Laravel release and re-run application-level integration/security testing.
+Native archival is deferred until material publication concerns are resolved and applicable CI checks pass. See [cleanup notes](SECURITY_REMEDIATION.md). The GitHub archive banner/API is the authoritative read-only status; a README notice is not a substitute.
 
 ## License
 
-The repository is licensed under the [Apache License 2.0](LICENSE). Third-party packages and assets remain subject to their own licenses and terms.
+Project-authored code is distributed under the existing [Apache License 2.0](LICENSE). Third-party packages, fonts, images, trademarks and other assets remain subject to their own rights and terms.
