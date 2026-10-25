@@ -1,3 +1,4 @@
+@if (\App\Models\Banner::count() >= 13)
 <aside class="c-about-digikala-items">
     @php
         $banner_9 = \App\Models\Banner::get()[9];
@@ -41,3 +42,4 @@
                     alt="{{$banner_12->title}}" loading="lazy"></div>
         </a></aside>
 </aside>
+@endif

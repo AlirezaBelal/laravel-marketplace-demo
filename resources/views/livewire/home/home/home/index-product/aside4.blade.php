@@ -1,3 +1,4 @@
+@if (\App\Models\Banner::count() >= 15)
 @php
     $banner_13 = \App\Models\Banner::get()[13];
     $banner_14 = \App\Models\Banner::get()[14];
@@ -26,3 +27,4 @@
     </a>
 @endif
 </aside>
+@endif

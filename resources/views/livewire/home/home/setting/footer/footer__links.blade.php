@@ -1,3 +1,4 @@
+@if (\App\Models\FooterLinkTitle::count() >= 2)
 <div class="c-footer__links">
     <nav class="c-footer__links--col">
         <div class="o-headline-links">
@@ -80,3 +81,4 @@
         </ul>
     </nav>
 </div>
+@endif

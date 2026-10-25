@@ -1,3 +1,4 @@
+@if (\App\Models\Banner::count() >= 9 && \App\Models\TitleCategoryIndex::exists())
 <div class="o-page">
     @php
         $banner_7 = \App\Models\Banner::get()[7];
@@ -526,3 +527,4 @@ function js_swiper_button_prev() {
     document.getElementById("swiper_button_add").style ="opacity: 1; cursor: poiner;";
 }
 </script>
+@endif

@@ -1,3 +1,4 @@
+@if (\App\Models\Banner::count() >= 16)
 @php
     $banner_15 = \App\Models\Banner::get()[15];
 @endphp
@@ -101,3 +102,4 @@
         </div>
     </section>
 </div>
+@endif

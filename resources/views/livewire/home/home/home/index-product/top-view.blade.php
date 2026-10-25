@@ -1,3 +1,4 @@
+@if (\App\Models\TitleCategoryIndex::count() >= 3)
 <section class="c-swiper c-swiper--products has-placeholder recommendation-swiper js-sntracker-carousel"
          id="recommendation-home_2">
     <div class="recommendation-swiper__mask js-swiper-mask-recommendation-home_2 u-hidden"><p>این پیشنهاد به شما
@@ -103,3 +104,4 @@ $per = ($difPrice * 100) / $category->product->price;
         document.getElementById("swiper_button_add3").style ="opacity: 1; cursor: poiner;";
     }
 </script>
+@endif

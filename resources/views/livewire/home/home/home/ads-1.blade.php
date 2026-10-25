@@ -1,3 +1,4 @@
+@if (\App\Models\Banner::count() >= 7)
 @php
     $banner_3 = \App\Models\Banner::get()[3];
     $banner_4 = \App\Models\Banner::get()[4];
@@ -53,3 +54,4 @@
             </a></aside>
     </div>
 </article>
+@endif

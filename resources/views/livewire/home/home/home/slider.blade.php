@@ -1,3 +1,5 @@
+{{-- An empty catalog has no promotional banners yet. --}}
+@if (\App\Models\Banner::count() >= 3)
 @php
     $banner_0 = \App\Models\Banner::get()[0];
     $banner_1 = \App\Models\Banner::get()[1];
@@ -54,3 +56,4 @@
         </div>
     </div>
 </article>
+@endif

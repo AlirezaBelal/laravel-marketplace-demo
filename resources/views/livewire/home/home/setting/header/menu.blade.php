@@ -1,3 +1,5 @@
+{{-- The historical navigation expects seven configured header entries. --}}
+@if (\App\Models\SiteHeader::count() >= 7)
 @php
 $header_1 = \App\Models\SiteHeader::get()[0];
 
@@ -322,3 +324,4 @@ $header_7 = \App\Models\SiteHeader::get()[6];
         href="{{$header_7->link}}">
         {{$header_7->title}}
     </a></li>
+@endif
