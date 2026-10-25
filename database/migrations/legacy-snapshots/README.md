@@ -1,13 +1,14 @@
 # Inactive historical migration snapshots
 
 The original repository carried 180 migration files. Of those, 68 later files
-redeclared classes already present in earlier migrations and attempted to
-create the same tables. With all 180 files active, a fresh migration fails
+redeclared classes already present in earlier migrations, and six additional
+files with `categry` in their filenames attempted to create the same
+`mysql-category` tables as earlier definitions. With all 180 files active, a fresh migration fails
 before any application table is created (`Cannot redeclare class
 CreateCategoriesTable`).
 
 For the modernization candidate, each **earlier** migration remains active
-and the corresponding **later** duplicate has been moved here unchanged.
+and the corresponding **later** duplicate (74 files total) has been moved here unchanged.
 Laravel's default migrator scans `database/migrations/*_*.php`, so these files
 are retained for audit and historical comparison but are not automatically
 run. Do not add this directory to the migrator's configured paths.

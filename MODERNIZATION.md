@@ -46,8 +46,9 @@ of correct real-world checkout or deployment behavior.
 ## Open compatibility and security work
 
 1. **Database baseline:** The historical set contained 180 migration files,
-   including 68 repeated named migration classes and repeated table creations.
-   The later copies have been preserved unchanged under
+   including 68 repeated named migration classes and six further migrations
+   targeting tables that were already created. The 74 later copies have been
+   preserved unchanged under
    `database/migrations/legacy-snapshots/`, leaving the earlier definitions
    active. Fresh MySQL migration compatibility is checked using six disposable
    GitHub Actions databases (main plus five historical category connections);
