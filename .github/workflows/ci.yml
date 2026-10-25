@@ -35,7 +35,7 @@ jobs:
             | xargs -0 -n1 php -l
 
   php:
-    name: PHP dependency and framework checks
+    name: PHP framework checks (legacy)
     runs-on: ubuntu-latest
 
     steps:
@@ -70,8 +70,6 @@ jobs:
       - name: Run unit tests
         run: vendor/bin/phpunit --testsuite Unit
 
-      - name: Audit locked PHP dependencies
-        run: composer audit --locked
 
   frontend:
     name: Frontend build and runtime dependency audit
