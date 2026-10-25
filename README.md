@@ -1,6 +1,7 @@
 # Laravel Multi-Vendor Marketplace
 
 [![CI](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml)
+[![Dependency security audit (legacy)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml)
 
 A completed Laravel 9 and Livewire 2 multi-vendor marketplace project implementing customer, seller and administrator workflows, product management, shopping carts, orders, payment records and notification integrations.
 
@@ -56,7 +57,7 @@ The checked-in environment defaults to the local payment driver and disabled deb
 
 Laravel 9's security support ended on February 6, 2024. Livewire 2 and the frontend stack are legacy dependencies; no ongoing security-support guarantee is made.
 
-CI runs three jobs: repository safety checks/PHP lint, framework boot/routes plus **one PHPUnit test with one assertion**, and frontend build/runtime dependency audit. On the sanitized documentation branch reviewed on 2026-10-25, repository safety and frontend build/runtime audit pass; the PHP job fails at the locked dependency audit. CI does not test complete customer, seller, administrator or payment workflows.
+Functional CI checks repository safety/PHP lint, Laravel boot/routes plus **one PHPUnit test with one assertion**, and the frontend build/runtime npm audit. A **separate, visibly failing** [Dependency security audit (legacy)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml) checks locked Composer dependencies and the complete npm graph, including development tools. This separation does not ignore advisories, fix vulnerabilities, or make the runtime safe; check **both** workflow results. CI does not test complete customer, seller, administrator or payment workflows.
 
 A fresh locked-dependency audit on **2026-10-24** failed: Composer reported six non-ignored advisories across Laravel, CommonMark and Symfony, in addition to four existing Laravel exceptions. The complete npm graph reported 69 findings. Counts are a dated dependency snapshot, not proof that every issue is reachable in this application; inspect the actual dependency tree and [security policy](SECURITY.md). Old green CI is not a current security clearance.
 
@@ -64,7 +65,7 @@ No advisory exception was added or validation weakened for this presentation upd
 
 ## Preservation and public-content review
 
-On 2026-10-25, the owner rewrote both repository branches to remove historical SQL backups and replace Google API key patterns. This does not establish deletion of old pull-request references, cached objects, forks or existing clones. GitHub Support cleanup remains pending; historical Google Cloud credential revocation/restriction has not been confirmed. Never restore old dumps or merge pre-cleanup history. See [cleanup notes](SECURITY_REMEDIATION.md).
+On 2026-10-25, the owner rewrote both repository branches to remove historical SQL backups and replace Google API key patterns. This does not establish deletion of old pull-request references, cached objects, forks or existing clones. A GitHub Support request has been filed, but server-side cleanup remains pending. The owner reports cancelling Google Cloud; this has not independently established that historically exposed keys are revoked or unusable. Never restore old dumps or merge pre-cleanup history. See [cleanup notes](SECURITY_REMEDIATION.md).
 
 The owner approved retention of the existing imagery, fonts and UI assets for this portfolio artifact. They remain unchanged. This records the owner's decision, not an independent legal clearance; Apache-2.0 does not grant rights over third-party material.
 
