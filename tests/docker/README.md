@@ -28,16 +28,41 @@ docker compose -f compose.acceptance.yml exec -T app sh -lc 'test -f .env || cp 
 docker compose -f compose.acceptance.yml exec -T app php artisan key:generate --force
 ```
 
-Then initialize the *new disposable* MySQL databases and run the feature suite:
+Run the Feature suite **first, on the untouched disposable MySQL container**:
+
+```bash
+docker compose -f compose.acceptance.yml exec -T -e APP_ENV=testing -e CACHE_STORE=array -e SESSION_DRIVER=array -e MAIL_MAILER=array app vendor/bin/phpunit --testsuite Feature --display-phpunit-deprecations
+```
+
+Important: `RefreshDatabase` invokes `migrate:fresh` on the **main** MySQL
+connection. The historical migrations also create tables in **five other**
+connections, which that reset does not clear. Running `php artisan migrate`
+first in the same sandbox leaves category tables behind and causes
+`SQLSTATE[42S01]` duplicate-table errors during PHPUnit setup. CI deliberately
+runs fresh-migration and full-Feature jobs with **separate** MySQL instances.
+
+After the Feature suite succeeds, check/complete the migration ledger for
+browser inspection (this is normally a no-op after PHPUnit):
 
 ```bash
 docker compose -f compose.acceptance.yml exec -T app php artisan migrate --force
-docker compose -f compose.acceptance.yml exec -T app vendor/bin/phpunit --testsuite Feature
 ```
 
+If this disposable database was already migrated *before* PHPUnit, reset
+**only the acceptance Compose project** to start with fresh empty tmpfs data:
+
+```bash
+docker compose -f compose.acceptance.yml down
+docker compose -f compose.acceptance.yml up -d
+```
+
+This removes the two Compose containers and their temporary MySQL contents;
+it does **not** erase the host clone, its `.env`, `vendor/`, Vite assets or
+any XAMPP database. Do not use `down -v` or run manual `migrate:fresh`.
+
 With the previous steps succeeding, visit <http://127.0.0.1:18080/> in a
-browser. The schema is empty until synthetic records are added; the test suite
-does not create a comprehensive sample catalog. External SMS/OTP providers
+browser. The schema exists, but no comprehensive sample catalog is seeded;
+the test suite only uses synthetic records. External SMS/OTP providers
 are disabled and interactive registration remains **not yet accepted**.
 
 When finished, stop this sandbox with:
