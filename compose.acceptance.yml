@@ -1,0 +1,59 @@
+# Opt-in, disposable browser/feature acceptance environment.
+# No connection to a host MySQL server; only the web port binds to loopback.
+name: laravel-marketplace-acceptance
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: marketplace_acceptance
+      MYSQL_USER: marketplace_acceptance
+      MYSQL_PASSWORD: test_only_do_not_reuse
+      MYSQL_ROOT_PASSWORD: test_only_root_do_not_reuse
+    tmpfs:
+      - /var/lib/mysql
+    volumes:
+      - ./tests/docker/01-extra-databases.sql:/docker-entrypoint-initdb.d/01-extra-databases.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --host=127.0.0.1 --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 30s
+
+  app:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "false"
+      APP_URL: http://127.0.0.1:18080
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: marketplace_acceptance
+      DB_USERNAME: marketplace_acceptance
+      DB_PASSWORD: test_only_do_not_reuse
+      DATABASE_URL: ""
+      CACHE_DRIVER: array
+      CACHE_STORE: array
+      SESSION_DRIVER: file
+      MAIL_MAILER: log
+      QUEUE_CONNECTION: sync
+      PAYMENT_METHOD: local
+      KAVENEGAR_CLIENT_API: ""
+      SENDER_MOBILE: ""
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+    ports:
+      - "127.0.0.1:18080:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: >-
+      sh -lc 'until [ -f .env ] && [ -f vendor/autoload.php ]; do sleep 2; done;
+      exec php artisan serve --host=0.0.0.0 --port=8000'

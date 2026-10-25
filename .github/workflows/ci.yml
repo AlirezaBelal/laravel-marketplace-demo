@@ -29,6 +29,9 @@ jobs:
       - name: Run repository safety contract
         run: php tests/repository_safety.php
 
+      - name: Validate opt-in local acceptance Compose definition
+        run: docker compose -f compose.acceptance.yml config --quiet
+
       - name: Lint PHP source
         run: |
           find app bootstrap config database routes tests -type f -name '*.php' -print0 \

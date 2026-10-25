@@ -35,6 +35,10 @@ Use an isolated local environment with synthetic records only. Do not expose thi
 
 Requirements for **isolated local testing**: PHP 8.4, Composer 2, Node.js 22, npm and MySQL 8.4. Use test-only credentials and avoid importing historical SQL backups.
 
+For Windows hosts with Docker Desktop and Linux containers, an **opt-in local
+test sandbox** provides PHP 8.4 and six disposable MySQL 8.4 schemas without
+using the host's XAMPP/database. See [Docker acceptance instructions](tests/docker/README.md).
+
 ```bash
 git clone https://github.com/AlirezaBelal/laravel-marketplace-demo.git
 cd laravel-marketplace-demo

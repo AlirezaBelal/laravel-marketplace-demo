@@ -29,6 +29,9 @@ in-place upgrade of an existing database.
 Run these in an **isolated local/test environment**, with a freshly created
 test database, stubbed payment gateway and stubbed SMS delivery. Do not run
 `migrate:fresh` against an existing or production database: it deletes tables.
+The [optional Docker acceptance sandbox](tests/docker/README.md) isolates PHP
+and MySQL from the host but does not seed a realistic catalog or replace the
+required authenticated browser journeys.
 
 - [ ] On desktop and mobile, the public homepage, category pages, search and
   product details load without server errors or browser-console errors.
