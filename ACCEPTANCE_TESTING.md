@@ -1,12 +1,16 @@
-# Marketplace archival acceptance checklist
+# Marketplace commercial integration and acceptance checklist
 
-Use **synthetic accounts, products, addresses, and orders only**. This project
-is not production-ready and none of the steps below authorize use of live
-payment/SMS credentials, public deployment, or real customer data.
+This checklist is for **teams adopting the source code for a real product**.
+Run tests with synthetic accounts, addresses, products, orders and payment
+references in a private staging environment. The repository does not grant
+permission to deploy untested workflows or use another party's real payment
+or SMS credentials. **The adopting integrator/operator owns the verification,
+provider setup and sign-off required before handling live users or payments.**
 
 ## Automated gate (GitHub-hosted, no local database needed)
 
-Open PR #13 and verify that every job succeeds on the **same head commit**:
+Review the three workflows for the currently deployed source SHA on `master`.
+The known passing baseline is commit `50daca1` (7/7 jobs):
 
 1. `CI`: repository safety, PHP framework/selected feature checks, Vite build
    and runtime npm audit.
@@ -24,7 +28,7 @@ Historical duplicate migrations remain available at
 `database/migrations/legacy-snapshots/`. Its success does not establish an
 in-place upgrade of an existing database.
 
-## Manual browser gate (not yet verified)
+## Operator-owned manual browser gate (not yet verified)
 
 Run these in an **isolated local/test environment**, with a freshly created
 test database, stubbed payment gateway and stubbed SMS delivery. Do not run
@@ -64,10 +68,25 @@ For each item, record `PASS`, `FAIL` or `NOT TESTED`, the candidate commit
 SHA, browser version and any sanitized repro steps. Never include keys,
 personal records or historical SQL dumps in a public issue/PR.
 
-## Archive decision
+## Provider integration and go-live approval
 
-An all-green automated run is necessary but does not prove the full UI or
-payment lifecycle. Keep the modernization PR as a draft while high-impact
-manual/provider tests are incomplete. If some checks cannot reasonably be
-performed, document them explicitly and obtain the owner's decision about
-archiving a **non-production portfolio demo** with those limitations.
+A commercial integrator must connect its **own** payment gateway and SMS/OTP
+providers, use test-mode accounts first, verify callback signatures/references
+and exact charged amounts, exercise failure/success/replay/refund flows and
+concurrent MySQL callbacks, and implement manual financial reconciliation.
+Use no public repository secrets and do not run real transactions in CI.
+
+The operator must also complete cross-account authorization and seller/admin
+checks, verify pricing and inventory at checkout, harden uploads and guest
+sessions, prove backup/restore and rollback, and maintain security monitoring.
+**Do not substitute seven green CI jobs for these acceptance results.**
+
+A release owner should record `PASS`, `FAIL`, or `NOT TESTED` for each checklist
+item, evidence links without sensitive information, resolved blocking issues,
+operational contact, approval date and deployed commit SHA. Only that operator
+can declare **its own installed system** production-ready after meeting its
+own legal, security, payment-provider and business requirements.
+
+The source repository can be archived independently. An archive is a record of
+source availability, not evidence of a commercially accepted deployment.
+See [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md).

@@ -1,6 +1,6 @@
 # Disposable local acceptance sandbox
 
-Use **only in a fresh clone** of the modernization branch, with synthetic
+Use **only in a fresh clone** of `master`, with synthetic
 records. Requires Docker Desktop in Linux mode and previously built frontend
 assets (`npm ci`, `npm run build`). Nothing in this configuration uses a host
 database, imports historical dumps, or exposes the MySQL port to Windows.
@@ -93,4 +93,7 @@ docker compose -f compose.acceptance.yml down
 
 Do not run `migrate:fresh` on any host/legacy connection, do not use `--env-file`
 pointing at a real environment, and do not import historical database backups.
-This sandbox has not been independently certified as production-ready.
+This is a **disposable development/acceptance sandbox**, not a production
+container deployment. Teams adopting this source commercially must configure
+and test their own payments, notifications, secured infrastructure and release
+workflows. See [integration handoff](../../INTEGRATION_GUIDE.md).

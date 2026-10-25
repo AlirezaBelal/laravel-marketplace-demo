@@ -1,9 +1,11 @@
 # Marketplace modernization status
 
-This branch is an **unmerged modernization candidate** for the public multi-vendor
-marketplace. It is **not production-ready**. The original `master` remains the
-last accepted portfolio snapshot until application-level compatibility checks
-are complete.
+The Laravel 13 / PHP 8.4 / Livewire 4 modernization has been integrated into
+`master` as a reusable **commercial marketplace source-code foundation**.
+The code is offered for teams to adapt and integrate, but it is **not a
+production-certified deployment**: the implementing team owns payment and SMS
+providers, security review, final tests and operational launch readiness.
+See [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md).
 
 ## Dependency baseline
 
@@ -71,7 +73,7 @@ of correct real-world checkout or deployment behavior.
 - The Livewire notification event API and common Blade initialization hooks
   were migrated from the removed v2 forms.
 
-## Open compatibility and security work
+## Integrator-owned compatibility, security and release work
 
 1. **Database baseline:** The historical set contained 180 migration files,
    including 68 repeated named migration classes and six further migrations
@@ -109,13 +111,25 @@ of correct real-world checkout or deployment behavior.
    notices even though the full security audits pass. No live payment or SMS
    credentials are used in CI.
 
-## Release and archive gate
+## Source handoff and production release gate
 
-Before merging, confirm CI and both independent dependency audits on the
-final candidate commit, reconcile the database testing limitation, add
-provider-isolated payment tests and complete
-[`ACCEPTANCE_TESTING.md`](ACCEPTANCE_TESTING.md) in a disposable, non-public
-test environment. Keep
-the repository public, retain Apache-2.0, and do not claim production
-readiness. Only archive after the owner accepts any remaining documented
-limitations and the selected verified changes have been merged to `master`.
+The modernized source is already on `master`. All seven CI/security/database
+jobs passed on commit `50daca1`, and the full local Feature suite passed
+with 74 tests / 134 assertions / 18 declared skips. These are **source
+verification results, not deployment approval**. A commercial adopter must:
+
+1. Complete provider-specific payment and notification integrations with its
+   own accounts, credentials and sandbox acceptance; test callbacks, refunds,
+   replay handling, concurrency and financial reconciliation.
+2. Resolve checkout, authorization, guest-cart, uploads, existing-schema
+   migration, resilience and privacy/security concerns listed above.
+3. Execute and document every applicable item in
+   [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md) against an isolated staging
+   environment, including authenticated and cross-user browser journeys.
+4. Deploy and monitor its own hardened infrastructure, with HTTPS, separate
+   secrets, backups, rollback plans, incident handling and release approval.
+
+The repository may be retained or archived as a reusable source reference;
+archiving does not mean a real-world installation has passed these gates.
+The code license remains Apache-2.0 for project-authored code; third-party
+assets and trademarks require independent rights review.

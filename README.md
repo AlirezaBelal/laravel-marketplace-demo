@@ -6,7 +6,7 @@
 
 A modernized Laravel 13 / Livewire 4 multi-vendor marketplace codebase implementing customer, seller and administrator workflows, products, shopping carts, orders, payment records and notification integrations.
 
-**Portfolio modernization candidate — not production-ready.** The supported dependency migration and automated checks are complete on the modernization branch, but browser and payment acceptance work remains. Do not deploy it with real customer data or credentials. GitHub's native archive banner, if present, is the authoritative read-only status.
+**Reusable commercial marketplace source code — integration and deployment owned by the adopter.** The modernized implementation is on `master`. Teams may use and adapt the project-authored code commercially under Apache-2.0; images, brand names, fonts and other third-party material have separate rights. This repository supplies application code, automated checks and development tooling, **not a turnkey production deployment or certification**. Before accepting real customer data or payments, an adopting operator must implement and verify its own gateway, SMS, authorization, security, infrastructure and complete release tests. See [Commercial integration guide](INTEGRATION_GUIDE.md). An archive banner, if present, means the repository is read-only, not that it was production-certified.
 
 This project is independent of and **not affiliated with, endorsed by, or operated by Digikala**.
 
@@ -19,7 +19,7 @@ This project is independent of and **not affiliated with, endorsed by, or operat
 - Administrators: product and commerce management components, payment records and dashboard views.
 - Integrations: configurable payment drivers, SMS/email notifications, charts, SEO helpers, file management and Persian/Jalali dates.
 
-These are implemented code paths, not claims of comprehensive acceptance testing, deployed customers or commercial operation.
+These are implemented code paths intended for adaptation and integration, not a claim that each workflow has passed end-to-end commercial acceptance or serves deployed customers.
 
 ## Stack and boundaries
 
@@ -29,9 +29,9 @@ Routes, controllers and Livewire components coordinate Eloquent models and exter
 
 This is a code-level review of the callback, not proof of complete payment correctness, authorization coverage, concurrency safety or certification against a live gateway. No live payment or notification delivery is claimed.
 
-## Local inspection and setup
+## Development setup
 
-Use an isolated local environment with synthetic records only. Do not expose this application publicly or supply production credentials.
+Start in an isolated local environment with synthetic records and non-production credentials. Before any external deployment, the adopting team must complete the [commercial integration and release guide](INTEGRATION_GUIDE.md); this development setup is not a production runbook.
 
 Requirements for **isolated local testing**: PHP 8.4, Composer 2, Node.js 22, npm and MySQL 8.4. Use test-only credentials and avoid importing historical SQL backups.
 
@@ -66,15 +66,43 @@ The original Laravel 9 dependency graph was vulnerable. The modernization branch
 - **Dependency security audit:** `composer audit --locked` and the full `npm audit --audit-level=low`, including development packages.
 - **Database migration and feature compatibility:** **107 active migrations** (106 reconciled historical + one additive gift-payment migration) on six disposable MySQL 8.4 schemas, a second no-op migration pass, and **74 Feature tests with 134 assertions**. Eighteen tests are explicitly skipped for disabled or conditionally unavailable features, not silently omitted. Chrome Headless also renders four public entry points.
 
-These results were verified in [GitHub Actions](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions) on the modernization branch. Historical duplicate migrations (74 files) are preserved at `database/migrations/legacy-snapshots/`. Some obsolete Bootstrap/Popper notices remain even though the full dependency security audits pass. **Green audits do not prove application-level payment correctness, complete authorization, browser compatibility or production readiness.** See [MODERNIZATION.md](MODERNIZATION.md) and [SECURITY.md](SECURITY.md).
+These results were verified on `master` at commit `50daca1` in [GitHub Actions](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions). Historical duplicate migrations (74 files) are preserved at `database/migrations/legacy-snapshots/`. Some obsolete Bootstrap/Popper notices remain even though the full dependency security audits pass. **Green audits do not prove application-level payment correctness, complete authorization, browser compatibility or production readiness.** Adopting teams own these release gates. See [MODERNIZATION.md](MODERNIZATION.md), [SECURITY.md](SECURITY.md) and [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md).
+
+## Commercial adoption: what the integrating team owns
+
+This repository is a **commercial-use code foundation**, not a hosted service or
+a guarantee of successful live orders. The integrator/operator is responsible for:
+
+- **Payment:** selecting and contracting with a provider; obtaining their own
+  credentials; implementing sandbox and live callbacks, signature/reference
+  verification, idempotency, refunds, failure/reconciliation procedures and
+  concurrent transaction tests. Never use an inherited merchant account.
+- **Notifications:** configuring their own SMS/email/OTP delivery providers,
+  sender identities, rate limits and fraud controls.
+- **Quality assurance:** running the documented automated tests, resolving
+  all skipped/untested cases that apply, and performing real browser,
+  authenticated, cross-account, load and production-staging acceptance tests.
+- **Security and operations:** reviewing all authorization paths, replacing
+  IP-based guest cart tracking, validating server-side inventory/pricing,
+  hardening uploads, implementing HTTPS, secrets, backups, logging, incident
+  response and operational monitoring.
+- **Data and legal:** independently verifying an upgrade of any existing
+  database (no historical dump import), obtaining rights for third-party
+  imagery/trademarks and satisfying applicable privacy, payment and consumer
+  protection requirements.
+
+See [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) for a practical handoff and
+[ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md) for evidence required before launch.
+Commercial permission for project-authored code is governed by Apache-2.0; there
+is no warranty or provider certification.
 
 ## Preservation and public-content review
 
 On 2026-10-25, the owner rewrote both repository branches to remove historical SQL backups and replace Google API key patterns. This does not establish deletion of old pull-request references, cached objects, forks or existing clones. A GitHub Support request has been filed, but server-side cleanup remains pending. The owner reports cancelling Google Cloud; this has not independently established that historically exposed keys are revoked or unusable. Never restore old dumps or merge pre-cleanup history. See [cleanup notes](SECURITY_REMEDIATION.md).
 
-The owner approved retention of the existing imagery, fonts and UI assets for this portfolio artifact. They remain unchanged. This records the owner's decision, not an independent legal clearance; Apache-2.0 does not grant rights over third-party material.
+Historical imagery, fonts, branding and UI assets remain in this source as originally supplied. Their presence is **not** a license to reuse third-party material commercially: adopters must audit, replace or separately license these assets and remove misleading branding before launch.
 
-The owner authorized modernization while preserving the repository identity and project assets. Final merge/archive acceptance remains pending the browser, payment and security limitations documented above. No security audit is disabled or weakened for archival.
+The modernized code was fast-forwarded to `master`, and older feature branches were removed without rewriting the cleaned history. Adopters, rather than this source repository, are responsible for finishing and documenting payment, authentication, security, privacy and deployment acceptance. No security audit was disabled or weakened for archival.
 
 ## License
 

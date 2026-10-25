@@ -9,3 +9,12 @@ On 2026-10-25, the owner used git-filter-repo to remove historical SQL backups u
 - Existing clones must not merge or push pre-cleanup history back into this repository. Reclone the sanitized repository when needed.
 
 Use migrations and synthetic records for isolated local inspection. Never post raw database records, key values or other sensitive evidence in public issues or pull requests. Native archival does not erase historical objects, revoke credentials or resolve dependency vulnerabilities.
+
+## Obligations for commercial adopters
+
+Obtain new provider credentials under your own accounts and keep them outside
+Git. Verify revocation of any potentially exposed historical values before
+integrating third-party services. Never import old database dumps or
+reintroduce pre-sanitization Git history. This historical disclosure response
+is independent of software functionality, provider testing and go-live
+approval; source reuse does not imply all historical references were purged.

@@ -1,7 +1,7 @@
 {
     "name": "alirezabelal/marketplace-demo",
     "type": "project",
-    "description": "Laravel multi-vendor marketplace with Livewire, customer and seller workflows, orders, payments, notifications and administration; preserved as a legacy project.",
+    "description": "Commercially reusable Laravel multi-vendor marketplace source; deploying teams own payment/SMS integration, security, and final acceptance testing.",
     "keywords": [
         "laravel",
         "livewire",

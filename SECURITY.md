@@ -2,11 +2,11 @@
 
 ## Support status
 
-This repository contains a modernized **portfolio marketplace**, not a supported production service. The active modernization candidate targets PHP 8.4, Laravel 13 and Livewire 4. The original Laravel 9 baseline was unsupported and vulnerable; this migration does not by itself certify application security.
+This repository supplies a modernized **commercially reusable marketplace source-code base** (PHP 8.4, Laravel 13, Livewire 4). It is **not** a hosted, independently certified or supported production installation. Each adopter/operator must review and secure its deployment, integrate its own providers and complete release testing. The former Laravel 9 baseline was unsupported and vulnerable; upgrading the framework alone does not certify application security.
 
 The independent [dependency security audit](.github/workflows/security-audit.yml) checks the complete locked Composer and npm dependency graphs, including development dependencies. It fails normally on advisories: no `continue-on-error`, blanket ignore or audit suppression has been introduced. The historical four Composer advisory exceptions were removed during modernization.
 
-The last verified dependency audit passed, but new advisories can appear at any time and should be checked on the final commit. Deprecation notices for some older UI/runtime packages are not the same as a passing security audit or a production safety assessment.
+The independent dependency audit passed on the baseline `master` commit `50daca1`, but new advisories can appear at any time and must be checked for the actual deployment commit. Deprecation notices for some older UI/runtime packages are not the same as a passing security audit or a production safety assessment.
 
 The automated acceptance suite tests fresh installation on six disposable MySQL databases and 74 Feature cases. It is not an independent penetration test and does not validate a real payment gateway. Fake-provider feature tests now cover failed, successful and repeated callbacks, deferred gift debits, gift ownership and expiration. Open issues include anonymous cart identity based on IP addresses, stored price/stock revalidation, **simultaneous** payment callbacks under MySQL concurrency, broad seller/admin permissions, file manager access and unverified authenticated browser/UX journeys. See [MODERNIZATION.md](MODERNIZATION.md) and [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md).
 
@@ -35,6 +35,17 @@ Do not include credentials, personal data, or exploit payloads containing sensit
 
 If a real credential is ever committed, removing it from the current branch is not sufficient. Revoke or rotate the credential at the provider first, then replace it with an environment-variable reference.
 
-## Archive limitations
+## Commercial reuse and archive limitations
 
-The owner authorized preservation of the source and existing UI assets and the attempt to modernize dependencies. GitHub archival is not a security clearance, a production-readiness claim, credential revocation or independent third-party rights verification. GitHub Support cleanup of old refs/caches remains pending. The owner reports cancelling Google Cloud, but invalidation of historical API keys has not been independently confirmed. Do not publish sensitive review evidence in issues or pull requests.
+Adopting teams may use project-authored code according to Apache-2.0, but must
+obtain their own gateway/SMS credentials, test real provider contracts,
+implement deployment protections and independently license/replace any
+third-party imagery, fonts or trademarks. Live deployment must not rely on the
+repository's test-only Compose stack or demo-payment configuration.
+
+GitHub archival is not a security clearance, a production-readiness claim,
+credential revocation or independent third-party rights verification. GitHub
+Support cleanup of old refs/caches remains pending. The owner reports
+cancelling Google Cloud, but invalidation of historical API keys has not
+been independently confirmed. Do not publish sensitive review evidence in
+issues or pull requests. See [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md).
