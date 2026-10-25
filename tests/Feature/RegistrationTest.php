@@ -30,6 +30,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $response->assertSessionHasNoErrors();
+        $response->assertRedirect(RouteServiceProvider::HOME);
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
     }

@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Laravel\Fortify\Features;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -14,11 +15,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Register any events for your application.
@@ -27,6 +24,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // The user model implements MustVerifyEmail, but email verification
+        // routes are optional in Fortify. Only send verification notices when
+        // that feature (and its routes) is actually enabled.
+        if (in_array(Features::emailVerification(), config('fortify.features', []), true)) {
+            Event::listen(Registered::class, SendEmailVerificationNotification::class);
+        }
     }
 }
