@@ -195,7 +195,7 @@
     </div>
 
     <script>
-        document.addEventListener('livewire:load', () => {
+        document.addEventListener('livewire:init', () => {
             let progressSection = document.querySelector('#progressbar'),
                 progressBar = progressSection.querySelector('.progress-bar');
 

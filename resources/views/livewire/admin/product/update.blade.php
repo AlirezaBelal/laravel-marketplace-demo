@@ -246,7 +246,7 @@
         </div>
     </div>
     <script>
-        document.addEventListener('livewire:load', () => {
+        document.addEventListener('livewire:init', () => {
             window.ClassicEditor?.create(document.querySelector('#description_create'), {
                     language: {
                         ui: 'fa',
@@ -267,7 +267,7 @@
                     console.error(error);
                 });
         });
-        document.addEventListener('livewire:load', () => {
+        document.addEventListener('livewire:init', () => {
             let progressSection = document.querySelector('#progressbar'),
                 progressBar = progressSection.querySelector('.progress-bar');
 

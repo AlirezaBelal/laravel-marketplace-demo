@@ -5,9 +5,11 @@
             let data = $(this).val();
         @this.set('permissions',data);
         }) ;
-        window.livewire.on('roleStore',()=>{
+        const registerRoleStore = () => window.Livewire.on('roleStore', () => {
             $('#roles').select2();
         });
+        if (window.Livewire) registerRoleStore();
+        else document.addEventListener('livewire:init', registerRoleStore, { once: true });
     });
 
 

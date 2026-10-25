@@ -25,14 +25,20 @@
     @endif
     <script src="{{asset('chart.js/dist/chart.js')}}"></script>
     <script>
-      window.livewire.on('chartUpdate',(chartId,labels,datasets) =>{
+    (() => {
+        const registerChartUpdate = () => {
+      window.Livewire.on('chartUpdate', ({ chartId, labels, datasets }) => {
          let chart = window[chartId].chart;
-         chart.data.datasets.forEach((datasets,key)=>{
-            datasets.data = datasets[key];
+         chart.data.datasets.forEach((dataset,key)=>{
+            dataset.data = datasets[key];
          });
          chart.data.labels = labels;
          chart.update();
       });
+        };
+        if (window.Livewire) registerChartUpdate();
+        else document.addEventListener('livewire:init', registerChartUpdate, { once: true });
+    })();
     </script>
 
 

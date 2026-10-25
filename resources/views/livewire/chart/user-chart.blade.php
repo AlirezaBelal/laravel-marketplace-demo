@@ -10,7 +10,9 @@
     @section('chart')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
         <script>
-            window.livewire.on('chartUpdate', (chartId, labels, datasets) => {
+    (() => {
+        const registerChartUpdate = () => {
+            window.Livewire.on('chartUpdate', ({ chartId, labels, datasets }) => {
                 let chart = window[chartId].chart;
                 chart.data.datasets.forEach((dataset, key) => {
                     dataset.data = datasets[key];
@@ -18,7 +20,11 @@
                 chart.data.labels = labels;
                 chart.update();
             });
-        </script>
+        };
+        if (window.Livewire) registerChartUpdate();
+        else document.addEventListener('livewire:init', registerChartUpdate, { once: true });
+    })();
+    </script>
         @if($chart)
             {!! $chart->script() !!}
         @endif

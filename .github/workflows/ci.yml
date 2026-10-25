@@ -41,6 +41,13 @@ jobs:
             exit 1
           fi
 
+      - name: Reject removed Livewire 2 JavaScript hooks
+        run: |
+          if rg -n 'livewire:load|window\.livewire\.on' resources/views -g '*.blade.php'; then
+            echo 'Livewire 4 uses livewire:init and the Livewire global.' >&2
+            exit 1
+          fi
+
   php:
     name: PHP framework checks (Laravel 13 candidate)
     runs-on: ubuntu-latest
