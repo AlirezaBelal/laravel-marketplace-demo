@@ -60,7 +60,7 @@ The original Laravel 9 dependency graph was vulnerable. The modernization branch
 
 - **CI:** repository safety, framework checks, selected regression tests and Vite build.
 - **Dependency security audit:** `composer audit --locked` and the full `npm audit --audit-level=low`, including development packages.
-- **Database migration and feature compatibility:** 106 active migrations on six disposable MySQL 8.4 schemas, a second no-op migration pass, and **62 Feature tests with 93 assertions**. Eighteen tests are explicitly skipped for disabled or conditionally unavailable features, not silently omitted. Chrome Headless also renders four public entry points.
+- **Database migration and feature compatibility:** **107 active migrations** (106 reconciled historical + one additive gift-payment migration) on six disposable MySQL 8.4 schemas, a second no-op migration pass, and **74 Feature tests with 134 assertions**. Eighteen tests are explicitly skipped for disabled or conditionally unavailable features, not silently omitted. Chrome Headless also renders four public entry points.
 
 These results were verified in [GitHub Actions](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions) on the modernization branch. Historical duplicate migrations (74 files) are preserved at `database/migrations/legacy-snapshots/`. Some obsolete Bootstrap/Popper notices remain even though the full dependency security audits pass. **Green audits do not prove application-level payment correctness, complete authorization, browser compatibility or production readiness.** See [MODERNIZATION.md](MODERNIZATION.md) and [SECURITY.md](SECURITY.md).
 

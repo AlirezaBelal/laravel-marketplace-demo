@@ -8,7 +8,7 @@ The independent [dependency security audit](.github/workflows/security-audit.yml
 
 The last verified dependency audit passed, but new advisories can appear at any time and should be checked on the final commit. Deprecation notices for some older UI/runtime packages are not the same as a passing security audit or a production safety assessment.
 
-The automated acceptance suite tests fresh installation on six disposable MySQL databases and 62 Feature cases. It is not an independent penetration test and does not validate a real payment gateway. Open issues include anonymous cart identity based on IP addresses, stored price/stock revalidation, gift credit consumed before payment success, replay/concurrent payment callbacks, broad seller/admin permissions, file manager access and an unverified browser/UX journey. See [MODERNIZATION.md](MODERNIZATION.md) and [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md).
+The automated acceptance suite tests fresh installation on six disposable MySQL databases and 74 Feature cases. It is not an independent penetration test and does not validate a real payment gateway. Fake-provider feature tests now cover failed, successful and repeated callbacks, deferred gift debits, gift ownership and expiration. Open issues include anonymous cart identity based on IP addresses, stored price/stock revalidation, **simultaneous** payment callbacks under MySQL concurrency, broad seller/admin permissions, file manager access and unverified authenticated browser/UX journeys. See [MODERNIZATION.md](MODERNIZATION.md) and [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md).
 
 ## Current repository rules
 
@@ -25,7 +25,7 @@ Database dumps are ignored. The owner rewrote both branches on 2026-10-25 to rem
 
 ## Payment safety
 
-The example environment defaults to the local/demo payment driver. A gateway callback must be verified with the configured payment provider before an order is marked paid. Payment replay/idempotency and gift-credit sequencing are not fully accepted. Real gateway deployment requires current provider credentials, HTTPS callbacks, and validation against the provider's current API documentation. Do not use live credentials in public CI.
+The example environment defaults to the local/demo payment driver. A gateway callback must be verified with the configured payment provider before an order is marked paid. Fake-provider tests establish sequential replay protection and defer gift-credit consumption until after verification; they do **not** establish provider compatibility, concurrent processing safety or refunds. Verified payments with missing orders/credit are flagged for manual reconciliation. Real gateway deployment requires current provider credentials, HTTPS callbacks, and validation against the provider's current API documentation. Do not use live credentials in public CI.
 
 ## Reporting a vulnerability
 

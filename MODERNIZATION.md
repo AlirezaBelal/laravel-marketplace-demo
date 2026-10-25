@@ -17,13 +17,13 @@ settings were introduced.
 
 - Composer dependency installation and metadata validation.
 - Framework boot, route listing and Blade view compilation.
-- Selected PHPUnit suite: one existing unit test and 20 focused feature tests
-  covering guest auth rendering, administrator boundaries, shipping address
-  ownership, payment ownership, cart ownership and server-side price derivation.
-- Fresh installation of all **106 active migrations** on six disposable MySQL
+- Selected PHPUnit suite: one existing unit test and **32 focused feature tests**
+  covering guest auth, administrator boundaries, address/cart/payment ownership,
+  server-side price derivation, fake-provider callbacks and gift redemption.
+- Fresh installation of all **107 active migrations** on six disposable MySQL
   8.4 databases, followed by a successful second migration pass.
 - The complete Feature suite runs in a separate disposable MySQL environment
-  with built Vite assets: **62 tests**, including the original Jetstream tests.
+  with built Vite assets: **74 tests and 134 assertions**, including the original Jetstream tests.
   Eighteen tests for disabled or conditionally unavailable features are
   explicitly reported as skipped; they are not silently excluded.
 - Headless Chrome renders the public home, guest registration/login, cart and
@@ -65,6 +65,9 @@ of correct real-world checkout or deployment behavior.
   while a different customer cannot take over or spend the claimed card.
   Expired cards are excluded from checkout and profile claims; a bearer card
   used successfully at the gateway becomes owned by that paying account.
+- The gift-claim modal and checkout's gift/voucher inputs now use Livewire 4
+  scalar properties; the old nested Eloquent model binding failed in genuine
+  Livewire component tests and was corrected after that failure.
 - The Livewire notification event API and common Blade initialization hooks
   were migrated from the removed v2 forms.
 
@@ -75,7 +78,8 @@ of correct real-world checkout or deployment behavior.
    targeting tables that were already created. The 74 later copies have been
    preserved unchanged under
    `database/migrations/legacy-snapshots/`, leaving the earlier definitions
-   active. **Fresh schema construction and the complete Feature suite now pass**
+   active, plus one new additive gift-payment migration. **Fresh schema
+   construction and the complete Feature suite now pass**
    on separate ephemeral GitHub Actions jobs using six disposable databases
    (main plus five historical category connections). An existing database's
    schema and migration ledger still require non-destructive reconciliation.
