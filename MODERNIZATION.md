@@ -49,8 +49,9 @@ of correct real-world checkout or deployment behavior.
    including 68 repeated named migration classes and repeated table creations.
    The later copies have been preserved unchanged under
    `database/migrations/legacy-snapshots/`, leaving the earlier definitions
-   active. Fresh MySQL migration compatibility is checked in a disposable
-   GitHub Actions database; an existing database's schema and migration ledger
+   active. Fresh MySQL migration compatibility is checked using six disposable
+   GitHub Actions databases (main plus five historical category connections);
+   an existing database's schema and migration ledger
    still require non-destructive reconciliation. The complete legacy feature
    suite cannot yet be treated as verified; focused tests use isolated SQLite
    schemas.

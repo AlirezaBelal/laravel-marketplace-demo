@@ -50,6 +50,23 @@ jobs:
           cp .env.example .env
           php artisan key:generate --force
 
+      - name: Provision the five historical category databases
+        env:
+          MYSQL_PWD: test_only_root_password
+        run: |
+          mysql --host=127.0.0.1 --user=root --execute="
+            CREATE DATABASE digikala_category;
+            CREATE DATABASE digikala_electronic;
+            CREATE DATABASE digikala_vehicle;
+            CREATE DATABASE digikala_apparel;
+            CREATE DATABASE digikala_child;
+            GRANT ALL ON digikala_category.* TO 'marketplace_test'@'%';
+            GRANT ALL ON digikala_electronic.* TO 'marketplace_test'@'%';
+            GRANT ALL ON digikala_vehicle.* TO 'marketplace_test'@'%';
+            GRANT ALL ON digikala_apparel.* TO 'marketplace_test'@'%';
+            GRANT ALL ON digikala_child.* TO 'marketplace_test'@'%';
+          "
+
       - name: Run full historical migrations against disposable database
         env:
           APP_ENV: testing
