@@ -1,3 +1,4 @@
+@if (\App\Models\FooterTitle::count() >= 18)
 <aside>
     @php
         $footer_title_16 = \App\Models\FooterTitle::get()[15];
@@ -19,3 +20,4 @@
         </li>
     </ul>
 </aside>
+@endif

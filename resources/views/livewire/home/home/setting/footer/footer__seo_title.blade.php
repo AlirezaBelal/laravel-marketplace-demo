@@ -1,4 +1,4 @@
-@if (\App\Models\FooterTitle::count() >= 2)
+@if (\App\Models\FooterTitle::count() >= 15)
 <div class="c-footer__content">
     @php
         $footer_title_1 = \App\Models\FooterTitle::get()[0];

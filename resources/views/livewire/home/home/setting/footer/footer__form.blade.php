@@ -1,3 +1,4 @@
+@if (\App\Models\FooterTitle::count() >= 4)
 @include('errors.error')
 <form id="SubscribeNewsletter" class="c-form-newsletter" action="{{route('post.newsletter')}}" method="post" >
     @csrf
@@ -25,3 +26,4 @@
         </div>
     </fieldset>
 </form>
+@endif

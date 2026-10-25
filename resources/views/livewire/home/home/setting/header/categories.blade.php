@@ -1,3 +1,4 @@
+@if (\App\Models\SiteHeader::count() >= 8)
 <li class="c-navi-new-list__a-hover js-navi-new-list-category-hover">
     <div></div>
 </li>
@@ -25,3 +26,4 @@
 {{--        document.getElementById("category_option2").style = "display : block !important";--}}
 {{--    }--}}
 {{--</script>--}}
+@endif

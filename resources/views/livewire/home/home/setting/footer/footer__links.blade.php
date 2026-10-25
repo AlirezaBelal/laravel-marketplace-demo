@@ -1,4 +1,4 @@
-@if (\App\Models\FooterLinkTitle::count() >= 2)
+@if (\App\Models\FooterLinkTitle::count() >= 3)
 <div class="c-footer__links">
     <nav class="c-footer__links--col">
         <div class="o-headline-links">

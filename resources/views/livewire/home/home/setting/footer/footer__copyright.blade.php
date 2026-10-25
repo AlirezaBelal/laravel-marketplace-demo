@@ -1,3 +1,4 @@
+@if (\App\Models\FooterTitle::count() >= 3)
 @php
     $footer_title_3 = \App\Models\FooterTitle::get()[2];
 
@@ -8,3 +9,4 @@
        {{$footer_title_3->title}}
     </div>
 </div>
+@endif
