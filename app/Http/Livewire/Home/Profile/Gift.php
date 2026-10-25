@@ -6,20 +6,15 @@ use Livewire\Component;
 
 class Gift extends Component
 {
-    public \App\Models\Gift $gift;
-
-    public function mount()
-    {
-        $this->gift = new \App\Models\Gift();
-    }
+    public string $newcard = '';
 
     protected $rules = [
-        'gift.newcard' => 'nullable',
+        'newcard' => 'required|string|max:64',
     ];
 
-    public function updated($newcard)
+    public function updated($property)
     {
-        $this->validateOnly($newcard);
+        $this->validateOnly($property);
     }
 
     public function giftForm()
@@ -27,7 +22,7 @@ class Gift extends Component
         $this->validate();
         // One conditional update prevents a second account from claiming a
         // card that was already redeemed, even under concurrent requests.
-        $claimed = \App\Models\Gift::where('code', $this->gift->newcard)
+        $claimed = \App\Models\Gift::where('code', trim($this->newcard))
             ->where('type', 0)
             ->whereNull('user_id')
             ->where(function ($query): void {

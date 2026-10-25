@@ -22,32 +22,26 @@ class Payment extends Component
 
     public $sumPrice;
 
-    public Discount $discount;
+    public string $discountCode = '';
 
-    public Gift $gift;
-
-    public function mount()
-    {
-        $this->discount = new Discount();
-        $this->gift = new Gift();
-    }
+    public string $giftCode = '';
 
     protected $rules = [
-        'discount.code' => 'nullable',
-        'gift.code' => 'nullable',
+        'discountCode' => 'nullable|string|max:64',
+        'giftCode' => 'nullable|string|max:64',
     ];
 
-    public function updated($code)
+    public function updated($property)
     {
-        $this->validateOnly($code);
+        $this->validateOnly($property);
     }
 
     public function checkDiscountCode()
     {
         $this->validate();
 
-        if ($this->discount != null) {
-            $code_discount = Discount::where('code', $this->discount->code)->first();
+        if (trim($this->discountCode) !== '') {
+            $code_discount = Discount::where('code', trim($this->discountCode))->first();
             if ($code_discount != null) {
 
                 if ($code_discount->type == 1) {
@@ -96,8 +90,8 @@ class Payment extends Component
 
             }
         }
-        if ($this->gift != null) {
-            $gift_code = Gift::where('code', $this->gift->code)
+        if (trim($this->giftCode) !== '') {
+            $gift_code = Gift::where('code', trim($this->giftCode))
                 ->spendableBy((int) auth()->id())->first();
             if ($gift_code && (int) $gift_code->value_price > 0) {
                     $order2 = Order::where('user_id', auth()->user()->id)->get();

@@ -8,7 +8,7 @@
             data-amount="0">
             <div class="c-payment__serial-input-container">
                 <form wire:submit.prevent="checkDiscountCode">
-                <input wire:model.defer="discount.code"
+                <input wire:model="discountCode"
                     class="c-payment__serial-input "
                     type="text" placeholder="افزودن کد تخفیف"
                     id="payment-voucher-input">

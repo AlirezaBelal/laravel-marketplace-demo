@@ -48,7 +48,7 @@ final class GiftRedemptionAuthorizationTest extends TestCase
     {
         Livewire::actingAs(User::findOrFail(17))
             ->test(GiftComponent::class)
-            ->set('gift.newcard', 'SYNTHETIC-CARD')
+            ->set('newcard', 'SYNTHETIC-CARD')
             ->call('giftForm');
 
         $this->assertDatabaseHas('gifts', [
@@ -57,7 +57,7 @@ final class GiftRedemptionAuthorizationTest extends TestCase
 
         Livewire::actingAs(User::findOrFail(99))
             ->test(GiftComponent::class)
-            ->set('gift.newcard', 'SYNTHETIC-CARD')
+            ->set('newcard', 'SYNTHETIC-CARD')
             ->call('giftForm');
 
         $this->assertDatabaseHas('gifts', [
@@ -73,7 +73,7 @@ final class GiftRedemptionAuthorizationTest extends TestCase
 
         Livewire::actingAs(User::findOrFail(17))
             ->test(GiftComponent::class)
-            ->set('gift.newcard', 'SYNTHETIC-CARD')
+            ->set('newcard', 'SYNTHETIC-CARD')
             ->call('giftForm');
 
         $this->assertDatabaseHas('gifts', [

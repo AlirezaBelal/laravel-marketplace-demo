@@ -83,7 +83,7 @@
         <div class="c-profile-gifts__modal-input">
             <label class="o-form__field-container has-error">
                 <div class="o-form__field-frame">
-                    <input  wire:model.defer="gift.newcard" type="text" placeholder="" value=""
+                    <input  wire:model="newcard" type="text" placeholder="" value=""
                                                         class="o-form__field js-input-field "></div>
             </label></div>
         <div class="c-profile-gifts__modal-btn-container">

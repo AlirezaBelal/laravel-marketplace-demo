@@ -8,7 +8,7 @@
             data-amount="0">
             <div class="c-payment__serial-input-container">
                 <form wire:submit.prevent="checkDiscountCode">
-                <input wire:model.defer="gift.code"
+                <input wire:model="giftCode"
                     class="c-payment__serial-input js-gift-card-serial-input"
                     name="" type="text" placeholder="افزودن کارت هدیه جدید"
                     id="payment-gift-card-input">
