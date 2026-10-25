@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
 
 final class ModernizationAuthSmokeTest extends TestCase
@@ -18,6 +20,26 @@ final class ModernizationAuthSmokeTest extends TestCase
     public function test_guest_cannot_access_administration(): void
     {
         $this->get('/admin')->assertRedirect(route('login'));
+    }
+
+    public function test_authenticated_customer_cannot_access_administration(): void
+    {
+        $customer = new User;
+        $customer->id = 17;
+        $customer->admin = false;
+
+        $this->actingAs($customer)->get('/admin')->assertForbidden();
+    }
+
+    public function test_administration_access_is_reserved_for_administrators(): void
+    {
+        $customer = new User;
+        $customer->admin = false;
+        $admin = new User;
+        $admin->admin = true;
+
+        $this->assertFalse(Gate::forUser($customer)->allows('access-admin'));
+        $this->assertTrue(Gate::forUser($admin)->allows('access-admin'));
     }
 
     public function test_guest_cannot_access_seller_dashboard(): void

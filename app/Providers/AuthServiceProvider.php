@@ -34,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        // Being signed in alone must never grant access to the administration UI.
+        // Register this static gate in CLI test runs too, unlike DB-backed gates.
+        Gate::define('access-admin', fn ($user) => $user->isAdmin());
+
         // Composer package discovery and most CI/Artisan commands should not require
         // a live application database. Dynamic permission gates are only needed for
         // the HTTP runtime where the permission records are available.
