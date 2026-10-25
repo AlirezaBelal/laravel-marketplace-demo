@@ -216,15 +216,21 @@ class Index extends Component
 
     public function addToCart($id)
     {
-        $productSeller = ProductSeller::find($id);
-        $carts = Cart::where('product_seller_id', $id)->first();
+        $productSeller = ProductSeller::findOrFail($id);
         $userIp = Request::ip();
+        $cartQuery = Cart::where('product_seller_id', $id);
+        if (auth()->check()) {
+            $cartQuery->where('user_id', auth()->id());
+        } else {
+            $cartQuery->whereNull('user_id')->where('ip', $userIp);
+        }
+        $carts = $cartQuery->first();
         if ($carts) {
             $carts->update([
                 'count' => $carts->count + 1,
             ]);
         } else {
-            if ($userIp = '127.0.0.1') {
+            if ($userIp === '127.0.0.1') {
                 if (auth()->user()) {
                     $cart = Cart::create([
                         'ip' => $userIp,

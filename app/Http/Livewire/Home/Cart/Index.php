@@ -12,6 +12,20 @@ use Stevebauman\Location\Facades\Location;
 
 class Index extends Component
 {
+    /** Resolve a cart item within the current account or anonymous visitor. */
+    private function ownedCart($id): Cart
+    {
+        $query = Cart::query();
+
+        if (auth()->check()) {
+            $query->where('user_id', auth()->id());
+        } else {
+            $query->whereNull('user_id')->where('ip', Request::ip());
+        }
+
+        return $query->findOrFail($id);
+    }
+
     //    public \App\Models\Gift $gift;
     //
     //    public function mount()
@@ -46,14 +60,14 @@ class Index extends Component
     //    }
     public function deleteCartProduct($id)
     {
-        $cart = Cart::find($id);
+        $cart = $this->ownedCart($id);
         $cart->delete();
         $this->dispatch('toast', type: 'success', message: 'محصول از سبد شما حذف شد');
     }
 
     public function addToCartFromCartOther($id)
     {
-        $cart = Cart::find($id);
+        $cart = $this->ownedCart($id);
         $cart->update([
             'type' => 0,
         ]);
@@ -62,7 +76,7 @@ class Index extends Component
 
     public function addToCartOtherFromCart($id)
     {
-        $cart = Cart::find($id);
+        $cart = $this->ownedCart($id);
         $cart->update([
             'type' => 1,
         ]);
@@ -72,7 +86,7 @@ class Index extends Component
     public function addAllToCArt()
     {
         $userIp = Request::ip();
-        if (auth()->user()->id) {
+        if (auth()->check()) {
             $cart_others = Cart::where('user_id', auth()->user()->id)->where('type', 1)->get();
         } else {
             $cart_others = Cart::where('ip', $userIp)->where('type', 1)->get();
@@ -87,8 +101,8 @@ class Index extends Component
 
     public function addToCount($id)
     {
-        $cart = Cart::find($id);
-        $productSeller = ProductSeller::where('id', $cart->product_seller_id)->first();
+        $cart = $this->ownedCart($id);
+        $productSeller = ProductSeller::findOrFail($cart->product_seller_id);
         if ($productSeller->product_count > $cart->count) {
             if ($productSeller->limit_order > $cart->count) {
 
@@ -107,7 +121,7 @@ class Index extends Component
 
     public function minToCount($id)
     {
-        $cart = Cart::find($id);
+        $cart = $this->ownedCart($id);
         if ($cart->count > 1) {
             $cart->update([
                 'count' => $cart->count - 1,
@@ -124,7 +138,7 @@ class Index extends Component
 
             $userIp2 = Request::ip();
             $location = Location::get($userIp2);
-            if ($carts) {
+            if ($carts->isNotEmpty()) {
                 $order = Order::all()->last();
                 if ($order) {
                     foreach ($carts as $cart) {
@@ -171,7 +185,6 @@ class Index extends Component
                 $this->dispatch('toast', type: 'error', message: ' هیچ محصولی در سبد خرید ندارید.');
             }
 
-            dd($carts);
         } else {
             return $this->redirect('/login');
         }
@@ -184,7 +197,8 @@ class Index extends Component
         $userIp = Request::ip();
         if (auth()->user()) {
 
-            $cartIps = Cart::where('ip', $userIp)->get();
+            // A shared IP must not transfer a different account's cart.
+            $cartIps = Cart::whereNull('user_id')->where('ip', $userIp)->get();
             if ($cartIps) {
                 foreach ($cartIps as $cartIp) {
                     $cartIp->update([
