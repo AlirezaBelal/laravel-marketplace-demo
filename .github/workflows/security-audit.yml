@@ -1,0 +1,55 @@
+name: Dependency security audit (legacy)
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+# These checks remain blocking within this workflow: legacy advisories must
+# remain visible. A failing audit must never be interpreted as a safe runtime.
+jobs:
+  php-dependencies:
+    name: Composer locked dependency audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer:v2
+
+      - name: Audit locked PHP dependencies
+        run: composer audit --locked
+
+  npm-dependencies:
+    name: Full npm dependency audit (including dev)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Audit all npm dependencies, including development tools
+        run: npm audit --audit-level=high
