@@ -56,8 +56,8 @@ class Payment extends Component
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
                     $order_number = $order2->last()->order_number;
-                    $orders = Order::where('order_number', $order_number)->get();
-                    $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+                    $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+                    $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
                     foreach ($payments as $payment) {
                         $payment->update([
                             'discount_code' => $code_discount->code,
@@ -71,8 +71,8 @@ class Payment extends Component
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
                     $order_number = $order2->last()->order_number;
-                    $orders = Order::where('order_number', $order_number)->get();
-                    $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+                    $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+                    $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
                     foreach ($payments as $payment) {
                         $payment->update([
                             'discount_code' => $code_discount->code,
@@ -87,7 +87,7 @@ class Payment extends Component
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
                     $order_number = $order2->last()->order_number;
-                    $orders = Order::where('order_number', $order_number)->get();
+                    $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
                     $this->sumPrice = $orders->sum('total_discount_price');
 
                 }
@@ -103,8 +103,8 @@ class Payment extends Component
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
                     $order_number = $order2->last()->order_number;
-                    $orders = Order::where('order_number', $order_number)->get();
-                    $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+                    $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+                    $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
                     foreach ($payments as $payment) {
                         $payment->update([
                             'gift_code' => $gift_code->code,
@@ -131,7 +131,7 @@ class Payment extends Component
 
     public function paymentTypeInternet($order_number)
     {
-        $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+        $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         foreach ($payments as $payment) {
             $payment->update([
                 'type_payment' => 1,
@@ -141,7 +141,7 @@ class Payment extends Component
 
     public function paymentTypeManual($order_number)
     {
-        $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+        $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         foreach ($payments as $payment) {
             $payment->update([
                 'type_payment' => 0,
@@ -151,8 +151,9 @@ class Payment extends Component
 
     public function continuePayment($order_number)
     {
-        $orders = Order::where('order_number', $order_number)->get();
-        $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+        $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+        $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+        abort_if($orders->isEmpty() || $payments->isEmpty(), 404);
         if ($this->discount_type == null) {
             if ($this->dgift == null) {
                 $price = $orders->sum('total_discount_price');
@@ -202,8 +203,8 @@ class Payment extends Component
         $order2 = Order::where('user_id', auth()->user()->id)->get();
         $order_last = $order2->last();
         $order_number = $order2->last()->order_number;
-        $orders = Order::where('order_number', $order_number)->get();
-        $payments = \App\Models\Payment::where('order_number', $order_number)->get();
+        $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
+        $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         $addresses = Address::where('user_id', auth()->user()->id)->get();
 
         return view('livewire.home.order.payment', compact('order_number', 'payments', 'orders', 'order_last', 'order_number'))
