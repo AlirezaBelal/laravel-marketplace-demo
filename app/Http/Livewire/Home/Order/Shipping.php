@@ -24,7 +24,7 @@ class Shipping extends Component
 
     public function checkout_address($id)
     {
-        $address = Address::find($id);
+        $address = Address::where('user_id', auth()->id())->findOrFail($id);
         $this->address_use = $address;
         foreach ($this->orders as $order) {
             $order->update([
@@ -35,8 +35,7 @@ class Shipping extends Component
 
     public function deleteAddress($id)
     {
-        $address = Address::find($id);
-        dd($address);
+        Address::where('user_id', auth()->id())->findOrFail($id)->delete();
     }
 
     public function anbaradd($id)

@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\Home\Order\Shipping;
 use App\Models\Address;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -70,6 +72,32 @@ final class ShippingAddressAuthorizationTest extends TestCase
 
         $this->delete(route('address.shipping.delete', ['id' => $ownAddress->id]))
             ->assertRedirect();
+        $this->assertDatabaseMissing('addresses', ['id' => $ownAddress->id]);
+    }
+
+    public function test_livewire_checkout_rejects_another_customers_address(): void
+    {
+        $otherAddress = Address::create(['user_id' => 99, 'name' => 'Other']);
+        $this->actingAs($this->customer(17));
+
+        $this->expectException(ModelNotFoundException::class);
+        (new Shipping)->checkout_address($otherAddress->id);
+    }
+
+    public function test_livewire_address_deletion_is_limited_to_the_current_customer(): void
+    {
+        $otherAddress = Address::create(['user_id' => 99, 'name' => 'Other']);
+        $ownAddress = Address::create(['user_id' => 17, 'name' => 'Mine']);
+        $this->actingAs($this->customer(17));
+
+        try {
+            (new Shipping)->deleteAddress($otherAddress->id);
+            $this->fail('A customer must not delete another customer\'s address.');
+        } catch (ModelNotFoundException) {
+            $this->assertDatabaseHas('addresses', ['id' => $otherAddress->id]);
+        }
+
+        (new Shipping)->deleteAddress($ownAddress->id);
         $this->assertDatabaseMissing('addresses', ['id' => $ownAddress->id]);
     }
 
