@@ -11,7 +11,7 @@ if (is_dir($docPath)) {
         new RecursiveDirectoryIterator($docPath, FilesystemIterator::SKIP_DOTS)
     );
     foreach ($iterator as $file) {
-        if ($file->isFile() && strtolower($file->getExtension()) === 'sql') {
+        if ($file->isFile() && preg_match('/\.(?:sql(?:\.gz)?|dump|bak)$/i', $file->getFilename())) {
             $failures[] = 'Database dump is tracked: '.$file->getPathname();
         }
     }
@@ -34,6 +34,24 @@ if (! str_contains($paymentController, '->verify()')) {
 }
 if (str_contains($paymentController, '69a09ffa-8521-11ea-8c16-000c295eb8fc')) {
     $failures[] = 'Legacy hard-coded merchant identifier is still present';
+}
+
+// Check publicly served JavaScript, including archived analytics bundles.
+// Historical Google API keys were present here rather than in app/ or config/.
+$publicJsDirectory = $root.'/public/js';
+if (is_dir($publicJsDirectory)) {
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($publicJsDirectory, FilesystemIterator::SKIP_DOTS)
+    );
+    foreach ($iterator as $file) {
+        if (! $file->isFile() || strtolower($file->getExtension()) !== 'js') {
+            continue;
+        }
+        $content = (string) file_get_contents($file->getPathname());
+        if (preg_match('/AIza[0-9A-Za-z_-]{35}/', $content)) {
+            $failures[] = 'Google API key pattern is tracked in '.$file->getPathname();
+        }
+    }
 }
 
 $scanRoots = ['app', 'config', 'routes', 'resources/views'];

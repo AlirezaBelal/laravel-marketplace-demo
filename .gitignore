@@ -17,4 +17,7 @@ yarn-error.log
 
 # Never commit development or production database exports.
 *.sql
+*.sql.gz
+*.dump
+*.bak
 /DOC/backup*/
