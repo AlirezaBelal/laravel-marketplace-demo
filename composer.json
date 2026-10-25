@@ -10,45 +10,39 @@
     ],
     "license": "Apache-2.0",
     "require": {
-        "php": "^8.2",
-        "artesaos/seotools": "^0.22.0",
-        "consoletvs/charts": "6.*",
-        "cviebrock/eloquent-sluggable": "^9.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "php": "^8.4",
+        "artesaos/seotools": "^1.4",
+        "consoletvs/charts": "^6.9",
+        "cviebrock/eloquent-sluggable": "^13.0",
+        "guzzlehttp/guzzle": "^7.9",
         "kavenegar/php": "^1.2",
-        "laravel/framework": "^9.0",
-        "laravel/helpers": "^1.4",
-        "laravel/jetstream": "^2.3",
-        "laravel/sanctum": "^2.6",
-        "laravel/scout": "^9.4",
-        "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0",
-        "morilog/jalali": "3.*",
-        "pharaonic/livewire-select2": "^1.0",
+        "laravel/framework": "^13.0",
+        "laravel/helpers": "^1.8",
+        "laravel/jetstream": "^5.5",
+        "laravel/sanctum": "^4.3",
+        "laravel/scout": "^11.9",
+        "laravel/tinker": "^3.0",
+        "livewire/livewire": "^4.4",
+        "morilog/jalali": "^3.5",
+        "pharaonic/livewire-select2": "^1.2",
         "shetabit/multipay": "^1.9",
-        "stevebauman/location": "^6.2",
-        "unisharp/laravel-filemanager": "^2.2"
+        "stevebauman/location": "^7.7",
+        "unisharp/laravel-filemanager": "^2.15"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.14",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.3.3",
-        "spatie/laravel-ignition": "^1.0"
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.32",
+        "laravel/sail": "^1.69",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.9",
+        "phpunit/phpunit": "^12.0",
+        "spatie/laravel-ignition": "^2.12"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
         "audit": {
-            "ignore": [
-                "PKSA-m5cs-t1y6-qpcs",
-                "PKSA-3r5d-mb8f-1qw9",
-                "PKSA-mdq4-51ck-6kdq",
-                "PKSA-8qx3-n5y5-vvnd"
-            ],
             "abandoned": "report"
         }
     },
