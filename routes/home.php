@@ -99,8 +99,10 @@ Route::get('/cart', \App\Http\Livewire\Home\Cart\Index::class)->name('cart.index
 //shopping
 Route::get('/shipping', \App\Http\Livewire\Home\Order\Shipping::class)
     ->name('order.shipping')->middleware('auth');
-Route::post('/shipping', [PostController::class, 'shipping'])->name('address.shipping.create');
-Route::delete('/shipping/delete/{id}', [PostController::class, 'shipping_delete'])->name('address.shipping.delete');
+Route::post('/shipping', [PostController::class, 'shipping'])
+    ->name('address.shipping.create')->middleware('auth');
+Route::delete('/shipping/delete/{id}', [PostController::class, 'shipping_delete'])
+    ->name('address.shipping.delete')->middleware('auth');
 //payment
 Route::get('/payment', \App\Http\Livewire\Home\Order\Payment::class)
     ->name('order.payment')->middleware('auth');

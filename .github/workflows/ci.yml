@@ -73,8 +73,8 @@ jobs:
       - name: Run unit tests
         run: vendor/bin/phpunit --testsuite Unit
 
-      - name: Render guest authentication page through Livewire 4
-        run: vendor/bin/phpunit tests/Feature/ModernizationAuthSmokeTest.php
+      - name: Test modernized authentication and shipping authorization
+        run: vendor/bin/phpunit --testsuite Feature --filter 'ModernizationAuthSmokeTest|ShippingAddressAuthorizationTest'
 
       - name: Identify source of failed compiled Blade view
         if: failure()

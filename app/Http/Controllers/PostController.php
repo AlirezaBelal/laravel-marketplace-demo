@@ -46,7 +46,8 @@ class PostController extends Controller
 
     public function shipping_delete($id)
     {
-        $address = Address::find($id);
+        // Address identifiers are user-controlled; never delete another customer's address.
+        $address = Address::where('user_id', auth()->id())->findOrFail($id);
         $address->delete();
 
         //        alert()->success(' آدرس با موفقیت حذف شد.', 'حذف آدرس');
