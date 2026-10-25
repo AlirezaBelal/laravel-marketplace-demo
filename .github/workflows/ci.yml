@@ -85,10 +85,10 @@ jobs:
         run: php artisan view:cache
 
       - name: Run unit tests
-        run: vendor/bin/phpunit --testsuite Unit
+        run: vendor/bin/phpunit --testsuite Unit --display-phpunit-deprecations
 
       - name: Test modernized authentication and shipping authorization
-        run: vendor/bin/phpunit --testsuite Feature --filter 'ModernizationAuthSmokeTest|ShippingAddressAuthorizationTest|ShippingPriceIntegrityTest|PaymentAuthorizationTest'
+        run: vendor/bin/phpunit --testsuite Feature --filter 'ModernizationAuthSmokeTest|ShippingAddressAuthorizationTest|ShippingPriceIntegrityTest|PaymentAuthorizationTest|CartAuthorizationTest' --display-phpunit-deprecations
 
       - name: Identify source of failed compiled Blade view
         if: failure()
