@@ -1,0 +1,39 @@
+name: Test patched frontend dependency graph (temporary)
+
+on:
+  push:
+    branches: [modernization/laravel13-php84]
+    paths:
+      - package.json
+      - .github/workflows/experimental-patched-npm-lock.yml
+
+permissions:
+  contents: write
+
+jobs:
+  test-overrides:
+    if: github.repository == 'AlirezaBelal/laravel-marketplace-demo' && github.ref == 'refs/heads/modernization/laravel13-php84'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Resolve package overrides without lifecycle scripts
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Install locked packages
+        run: npm ci --no-audit --no-fund
+      - name: Test Vite production build with patched typography parser
+        run: npm run build
+      - name: Require no npm security advisories at any severity
+        run: npm audit --audit-level=low
+      - name: Commit tested npm lockfile only
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(modernization): resolve patched frontend lockfile'
+            git push origin HEAD:refs/heads/modernization/laravel13-php84
+          fi
