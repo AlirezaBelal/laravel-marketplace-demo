@@ -42,6 +42,9 @@ test database, stubbed payment gateway and stubbed SMS delivery. Do not run
   known IP-based guest-cart identification is a production limitation.
 - [ ] Quantity and stock limits, shipping, voucher expiry, discounts and gift
   credit produce the expected total derived on the server.
+- [ ] Redeem an unclaimed synthetic gift in one profile, confirm another
+  synthetic user cannot claim or spend it, and verify past-expiry gifts cannot
+  reduce the checkout amount. Check the same interactions through the UI.
 - [ ] A test payment failure does not fulfill an order or consume credit;
   a fake verified payment fulfills once; duplicate/replayed callbacks do not
   trigger duplicate fulfillment, notifications or charges.

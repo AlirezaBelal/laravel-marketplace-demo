@@ -114,7 +114,7 @@ class PayController extends Controller
             // Lock the gift before debit so two different orders cannot spend it twice.
             if ((int) $lockedBank->gift_applied > 0) {
                 $gift = Gift::where('code', $lockedBank->gift_code)
-                    ->where('type', 0)->lockForUpdate()->first();
+                    ->spendableBy((int) $lockedBank->user_id)->lockForUpdate()->first();
                 if (! $gift || (int) $gift->value_price < (int) $lockedBank->gift_applied) {
                     // Gateway verified but credit was exhausted in the meantime.
                     // Record the verified reference and leave the order unfulfilled
@@ -125,7 +125,11 @@ class PayController extends Controller
                     return collect();
                 }
 
-                $gift->update(['value_price' => (int) $gift->value_price - (int) $lockedBank->gift_applied]);
+                $gift->update([
+                    'value_price' => (int) $gift->value_price - (int) $lockedBank->gift_applied,
+                    'user_id' => $lockedBank->user_id,
+                    'type' => 1,
+                ]);
             }
 
             PaymentModel::where('order_number', $lockedBank->order_number)

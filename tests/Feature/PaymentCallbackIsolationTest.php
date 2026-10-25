@@ -67,8 +67,10 @@ final class PaymentCallbackIsolationTest extends TestCase
         });
         Schema::connection('sqlite')->create('gifts', function (Blueprint $table): void {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('code');
             $table->integer('type')->default(0);
+            $table->date('date_expire')->nullable();
             $table->unsignedBigInteger('value_price')->default(0);
             $table->timestamps();
         });
@@ -166,6 +168,7 @@ final class PaymentCallbackIsolationTest extends TestCase
 
         $provider->callback();
         $this->assertDatabaseHas('gifts', ['code' => 'GIFT-TEST', 'value_price' => 400]);
+        $this->assertDatabaseHas('gifts', ['code' => 'GIFT-TEST', 'user_id' => 17, 'type' => 1]);
         $this->assertDatabaseHas('orders', ['order_number' => 'TEST-ORDER', 'payment' => 1]);
 
         $provider->callback();

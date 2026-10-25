@@ -61,6 +61,10 @@ of correct real-world checkout or deployment behavior.
   serializes order fulfillment; replayed callbacks do not repeat notifications
   or gift spending. Provider verification is replaceable with an isolated fake
   in feature tests. This protection still requires concurrent MySQL testing.
+- Gift codes claimed in a customer profile are now spendable by their owner,
+  while a different customer cannot take over or spend the claimed card.
+  Expired cards are excluded from checkout and profile claims; a bearer card
+  used successfully at the gateway becomes owned by that paying account.
 - The Livewire notification event API and common Blade initialization hooks
   were migrated from the removed v2 forms.
 
@@ -77,7 +81,7 @@ of correct real-world checkout or deployment behavior.
    schema and migration ledger still require non-destructive reconciliation.
 2. **Checkout integrity:** Verify stored cart prices against current product
    and seller offers, and test quantity, stock, order grouping, shipping,
-   discounts, gift expiry/usage and repeated submissions. The new gift debit
+   discounts, gift expiry boundary behavior and repeated submissions. The new gift debit
    and callback replay protection are covered with sequential fake-gateway
    tests, but concurrent callbacks and actual bank integration are unverified.
    When a provider has verified a payment but its gift credit was consumed by

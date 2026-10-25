@@ -97,9 +97,9 @@ class Payment extends Component
             }
         }
         if ($this->gift != null) {
-            $gift_code = Gift::where('code', $this->gift->code)->first();
-            if ($gift_code) {
-                if ($gift_code->type == 0) {
+            $gift_code = Gift::where('code', $this->gift->code)
+                ->spendableBy((int) auth()->id())->first();
+            if ($gift_code && (int) $gift_code->value_price > 0) {
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
                     $order_number = $order2->last()->order_number;
@@ -116,14 +116,10 @@ class Payment extends Component
                     } elseif ($gift_code->value_price < $orders->sum('total_discount_price')) {
                         $this->dgift = $gift_code->value_price;
                     } else {
-                        $this->dispatch('toast', type: 'error', message: ' کد هدیه شما وجود ندارد.');
+                        $this->dgift = $gift_code->value_price;
                     }
-
-                } elseif ($gift_code->type == 1) {
-                    $this->dispatch('toast', type: 'error', message: ' کد هدیه شما استفاده شده است.');
-                }
             } else {
-                $this->dispatch('toast', type: 'error', message: ' کد هدیه شما پیدا نشد.');
+                $this->dispatch('toast', type: 'error', message: ' کارت هدیه نامعتبر، منقضی یا متعلق به حساب دیگری است.');
 
             }
         }
@@ -214,7 +210,7 @@ class Payment extends Component
         }
         $afterDiscount = max(0, $subtotal - $discountAmount);
         $gift = $payments->first()->gift_code
-            ? Gift::where('code', $payments->first()->gift_code)->where('type', 0)->first()
+            ? Gift::where('code', $payments->first()->gift_code)->spendableBy((int) auth()->id())->first()
             : null;
         $giftApplied = $gift ? min($afterDiscount, max(0, (int) $gift->value_price)) : 0;
 

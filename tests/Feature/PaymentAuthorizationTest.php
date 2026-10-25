@@ -67,8 +67,10 @@ final class PaymentAuthorizationTest extends TestCase
         });
         Schema::connection('sqlite')->create('gifts', function (Blueprint $table): void {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('code');
             $table->integer('type')->default(0);
+            $table->date('date_expire')->nullable();
             $table->unsignedBigInteger('value_price')->default(0);
             $table->timestamps();
         });
@@ -181,6 +183,65 @@ final class PaymentAuthorizationTest extends TestCase
             'gift_code' => 'TEST-GIFT', 'gift_applied' => 500, 'status' => 0,
         ]);
         $this->assertDatabaseHas('gifts', ['code' => 'TEST-GIFT', 'value_price' => 500]);
+    }
+
+    public function test_customer_can_pay_using_a_gift_claimed_to_their_account(): void
+    {
+        $this->orderWithGift('OWN-CLAIMED', 17, 'CLAIMED-GIFT');
+        DB::table('gifts')->insert([
+            'code' => 'CLAIMED-GIFT', 'type' => 1, 'user_id' => 17, 'value_price' => 400,
+        ]);
+        $this->actingAs($this->customer(17));
+
+        (new PaymentComponent)->continuePayment('OWN-CLAIMED');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'order_number' => 'OWN-CLAIMED', 'price' => 800,
+            'gift_code' => 'CLAIMED-GIFT', 'gift_applied' => 400,
+        ]);
+    }
+
+    public function test_claimed_gift_cannot_be_spent_by_a_different_customer(): void
+    {
+        $this->orderWithGift('OTHER-CLAIMED', 17, 'CLAIMED-GIFT');
+        DB::table('gifts')->insert([
+            'code' => 'CLAIMED-GIFT', 'type' => 1, 'user_id' => 99, 'value_price' => 400,
+        ]);
+        $this->actingAs($this->customer(17));
+
+        (new PaymentComponent)->continuePayment('OTHER-CLAIMED');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'order_number' => 'OTHER-CLAIMED', 'price' => 1200,
+            'gift_code' => null, 'gift_applied' => 0,
+        ]);
+    }
+
+    public function test_expired_gift_does_not_discount_the_payment(): void
+    {
+        $this->orderWithGift('EXPIRED-GIFT-ORDER', 17, 'EXPIRED-GIFT');
+        DB::table('gifts')->insert([
+            'code' => 'EXPIRED-GIFT', 'type' => 0, 'value_price' => 400,
+            'date_expire' => today()->subDay()->toDateString(),
+        ]);
+        $this->actingAs($this->customer(17));
+
+        (new PaymentComponent)->continuePayment('EXPIRED-GIFT-ORDER');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'order_number' => 'EXPIRED-GIFT-ORDER', 'price' => 1200, 'gift_applied' => 0,
+        ]);
+    }
+
+    private function orderWithGift(string $orderNumber, int $userId, string $giftCode): void
+    {
+        DB::table('orders')->insert([
+            'user_id' => $userId, 'order_number' => $orderNumber, 'total_discount_price' => 1000,
+        ]);
+        Payment::create([
+            'user_id' => $userId, 'order_number' => $orderNumber,
+            'shipping_price' => 200, 'gift_code' => $giftCode,
+        ]);
     }
 
     private function customer(int $id): User

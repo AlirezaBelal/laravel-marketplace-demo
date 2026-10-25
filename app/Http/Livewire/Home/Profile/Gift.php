@@ -25,15 +25,22 @@ class Gift extends Component
     public function giftForm()
     {
         $this->validate();
-        $newcode = \App\Models\Gift::where('code', $this->gift->newcard)->first();
-        if ($newcode) {
-            $newcode->update([
+        // One conditional update prevents a second account from claiming a
+        // card that was already redeemed, even under concurrent requests.
+        $claimed = \App\Models\Gift::where('code', $this->gift->newcard)
+            ->where('type', 0)
+            ->whereNull('user_id')
+            ->where(function ($query): void {
+                $query->whereNull('date_expire')->orWhereDate('date_expire', '>=', today());
+            })
+            ->update([
                 'user_id' => auth()->user()->id,
                 'type' => 1,
             ]);
+        if ($claimed === 1) {
             $this->dispatch('toast', type: 'success', message: ' کد هدیه وارد شده ثبت شد.');
         } else {
-            $this->dispatch('toast', type: 'error', message: ' کد هدیه وارد شده وجود ندارد.');
+            $this->dispatch('toast', type: 'error', message: ' کارت هدیه نامعتبر، منقضی یا متعلق به حساب دیگری است.');
         }
 
     }
