@@ -11,7 +11,7 @@ if (is_dir($docPath)) {
         new RecursiveDirectoryIterator($docPath, FilesystemIterator::SKIP_DOTS)
     );
     foreach ($iterator as $file) {
-        if ($file->isFile() && preg_match('/\\.(?:sql(?:\\.gz)?|dump|bak)$/i', $file->getFilename())) {
+        if ($file->isFile() && preg_match('/\.(?:sql(?:\.gz)?|dump|bak)$/i', $file->getFilename())) {
             $failures[] = 'Database dump is tracked: '.$file->getPathname();
         }
     }
