@@ -76,6 +76,25 @@ jobs:
       - name: Render guest authentication page through Livewire 4
         run: vendor/bin/phpunit tests/Feature/ModernizationAuthSmokeTest.php
 
+      - name: Identify source of failed compiled Blade view
+        if: failure()
+        shell: bash
+        run: |
+          php -r '
+          require "vendor/autoload.php";
+          $app = require "bootstrap/app.php";
+          $app->make(Illuminate\\Contracts\\Console\\Kernel::class)->bootstrap();
+          $compiler = $app->make("blade.compiler");
+          $needle = "c918496435ed5bdb80de86eb62198b81.php";
+          $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("resources/views", FilesystemIterator::SKIP_DOTS));
+          foreach ($iterator as $file) {
+              if (!str_ends_with($file->getFilename(), ".blade.php")) continue;
+              if (basename($compiler->getCompiledPath($file->getRealPath())) === $needle) {
+                  echo "Original Blade view: ".$file->getPathname().PHP_EOL;
+              }
+          }
+          '
+
 
   frontend:
     name: Frontend build and runtime dependency audit
