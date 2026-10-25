@@ -14,7 +14,7 @@ RUN set -eux; \
         libsqlite3-dev \
         libzip-dev; \
     docker-php-ext-configure gd --with-freetype --with-jpeg; \
-    docker-php-ext-install -j"$(nproc)" \
+    docker-php-ext-install -j2 \
         bcmath curl exif gd intl mbstring pdo_mysql pdo_sqlite zip; \
     rm -rf /var/lib/apt/lists/*
 

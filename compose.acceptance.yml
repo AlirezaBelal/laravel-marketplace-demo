@@ -23,8 +23,8 @@ services:
 
   app:
     build:
-      context: .
-      dockerfile: tests/docker/Dockerfile
+      context: ./tests/docker
+      dockerfile: Dockerfile
     working_dir: /app
     volumes:
       - .:/app
