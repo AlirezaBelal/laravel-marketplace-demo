@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\OrderSubmit;
 use App\Models\BankPayment;
 use App\Models\Email as EmailLog;
+use App\Models\Gift;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Payment as PaymentModel;
@@ -37,7 +38,8 @@ class PayController extends Controller
         return $gateway
             ->callbackUrl(route('bank.callback'))
             ->purchase($invoice, function ($driver, $transactionId) use ($bank) {
-                PaymentModel::where('order_number', $bank->order_number)->update([
+                PaymentModel::where('order_number', $bank->order_number)
+                    ->where('user_id', $bank->user_id)->update([
                     'transactionId' => $transactionId,
                     'driver' => config('payment.default'),
                 ]);
@@ -60,24 +62,22 @@ class PayController extends Controller
             return redirect()->route('home.index');
         }
 
+        // A retry must not contact the gateway or fulfill an already paid order.
+        if ((int) $paymentRecord->status === 1) {
+            return redirect()->route('home.index');
+        }
+
         $bankPayment = BankPayment::where('order_number', $paymentRecord->order_number)
+            ->where('user_id', $paymentRecord->user_id)
             ->where('status', 0)
-            ->first();
+            ->latest('id')->first();
 
         if (! $bankPayment) {
             return redirect()->route('home.index');
         }
 
-        $gateway = new PaymentGateway(config('payment'));
-        if ($paymentRecord->driver) {
-            $gateway->via($paymentRecord->driver);
-        }
-
         try {
-            $receipt = $gateway
-                ->amount($bankPayment->price)
-                ->transactionId($transactionId)
-                ->verify();
+            $referenceId = $this->verifyTransaction($paymentRecord, $bankPayment, $transactionId);
         } catch (InvalidPaymentException $exception) {
             report($exception);
 
@@ -88,20 +88,53 @@ class PayController extends Controller
             return redirect()->route('home.index');
         }
 
-        $referenceId = method_exists($receipt, 'getReferenceId')
-            ? (string) $receipt->getReferenceId()
-            : (string) $transactionId;
+        $orders = DB::transaction(function () use ($bankPayment, $paymentRecord, $referenceId) {
+            // The payment row serializes concurrent callbacks for this order.
+            $lockedPayment = PaymentModel::whereKey($paymentRecord->id)->lockForUpdate()->first();
+            if (! $lockedPayment || (int) $lockedPayment->status === 1) {
+                return collect();
+            }
 
-        $orders = DB::transaction(function () use ($bankPayment, $referenceId) {
-            PaymentModel::where('order_number', $bankPayment->order_number)->update([
+            $lockedBank = BankPayment::whereKey($bankPayment->id)->lockForUpdate()->first();
+            if (! $lockedBank || (string) $lockedBank->status !== '0' ||
+                BankPayment::where('order_number', $bankPayment->order_number)
+                    ->where('user_id', $bankPayment->user_id)->where('status', 1)->exists()) {
+                return collect();
+            }
+
+            $orders = Order::where('order_number', $lockedBank->order_number)
+                ->where('user_id', $lockedBank->user_id)->get();
+            if ($orders->isEmpty()) {
+                $lockedBank->update(['status' => 'reconciliation_required', 'gateway_reference' => $referenceId]);
+
+                return collect();
+            }
+
+            // An unsuccessful/abandoned gateway attempt must never consume credit.
+            // Lock the gift before debit so two different orders cannot spend it twice.
+            if ((int) $lockedBank->gift_applied > 0) {
+                $gift = Gift::where('code', $lockedBank->gift_code)
+                    ->where('type', 0)->lockForUpdate()->first();
+                if (! $gift || (int) $gift->value_price < (int) $lockedBank->gift_applied) {
+                    // Gateway verified but credit was exhausted in the meantime.
+                    // Record the verified reference and leave the order unfulfilled
+                    // for manual payment reconciliation; never re-charge automatically.
+                    $lockedBank->update(['status' => 'reconciliation_required', 'gateway_reference' => $referenceId]);
+                    report(new \RuntimeException('Verified bank payment requires gift credit reconciliation for bank payment #'.$lockedBank->id));
+
+                    return collect();
+                }
+
+                $gift->update(['value_price' => (int) $gift->value_price - (int) $lockedBank->gift_applied]);
+            }
+
+            PaymentModel::where('order_number', $lockedBank->order_number)
+                ->where('user_id', $lockedBank->user_id)->update([
                 'status' => 1,
             ]);
 
-            BankPayment::where('order_number', $bankPayment->order_number)->update([
-                'status' => 1,
-            ]);
+            $lockedBank->update(['status' => 1, 'gateway_reference' => $referenceId]);
 
-            $orders = Order::where('order_number', $bankPayment->order_number)->get();
             foreach ($orders as $order) {
                 $order->update([
                     'payment' => 1,
@@ -143,6 +176,10 @@ class PayController extends Controller
             return $orders;
         });
 
+        if ($orders->isEmpty()) {
+            return redirect()->route('home.index');
+        }
+
         $customer = User::find($bankPayment->user_id);
         $admin = User::find(1);
 
@@ -167,6 +204,27 @@ class PayController extends Controller
         return $customer
             ? redirect()->route('profile.index')
             : redirect()->route('home.index');
+    }
+
+    /**
+     * Verify a provider transaction before any persistent fulfillment.
+     * Kept isolated so feature tests can substitute a fake provider.
+     */
+    protected function verifyTransaction(PaymentModel $payment, BankPayment $bank, string $transactionId): string
+    {
+        $gateway = new PaymentGateway(config('payment'));
+        if ($payment->driver) {
+            $gateway->via($payment->driver);
+        }
+
+        $receipt = $gateway
+            ->amount($bank->price)
+            ->transactionId($transactionId)
+            ->verify();
+
+        return method_exists($receipt, 'getReferenceId')
+            ? (string) $receipt->getReferenceId()
+            : $transactionId;
     }
 
     private function sendSms(User $user, string $message, string $type): void

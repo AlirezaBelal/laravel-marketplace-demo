@@ -161,11 +161,11 @@ class Payment extends Component
             'order_number' => $payments[0]->order_number,
             'price' => $price,
             'status' => 0,
+            'gift_code' => $giftApplied > 0 ? $gift->code : null,
+            'gift_applied' => $giftApplied,
         ]);
 
-        if ($giftApplied > 0) {
-            $gift->update(['value_price' => (int) $gift->value_price - $giftApplied]);
-        }
+        // The gift is reserved as a snapshot, not deducted until the gateway verifies.
         foreach ($orders as $order) {
             $order->update([
                 'status' => 'wait',

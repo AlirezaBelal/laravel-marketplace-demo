@@ -9,7 +9,7 @@ class BankPayment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status', 'user_id', 'price', 'order_number'];
+    protected $fillable = ['status', 'user_id', 'price', 'order_number', 'gift_code', 'gift_applied', 'gateway_reference'];
 
     public function user()
     {

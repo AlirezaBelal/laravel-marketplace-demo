@@ -45,6 +45,10 @@ test database, stubbed payment gateway and stubbed SMS delivery. Do not run
 - [ ] A test payment failure does not fulfill an order or consume credit;
   a fake verified payment fulfills once; duplicate/replayed callbacks do not
   trigger duplicate fulfillment, notifications or charges.
+- [ ] Concurrent fake callbacks against MySQL cannot debit one gift twice;
+  simulate exhausted credit after gateway verification and verify the
+  `reconciliation_required` bank entry is resolved manually (do not retry
+  or refund against a live provider for this test).
 - [ ] Non-admins cannot reach `/admin`; sellers cannot perform admin-only
   mutations. Review order status transitions and the file manager.
 - [ ] Livewire 4 interactions, Select2, image uploads, charts, Jalali dates,

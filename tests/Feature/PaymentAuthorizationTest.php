@@ -45,6 +45,9 @@ final class PaymentAuthorizationTest extends TestCase
             $table->string('order_number');
             $table->unsignedBigInteger('price');
             $table->integer('status')->default(0);
+            $table->string('gift_code')->nullable();
+            $table->unsignedBigInteger('gift_applied')->default(0);
+            $table->string('gateway_reference')->nullable();
             $table->timestamps();
         });
         Schema::connection('sqlite')->create('return_orders', function (Blueprint $table): void {
@@ -157,6 +160,27 @@ final class PaymentAuthorizationTest extends TestCase
             'order_number' => 'OWN-DISCOUNT',
             'price' => 950,
         ]);
+    }
+
+    public function test_gift_credit_is_only_snapshotted_before_gateway_verification(): void
+    {
+        DB::table('orders')->insert([
+            'user_id' => 17, 'order_number' => 'GIFT-ORDER', 'total_discount_price' => 1000,
+        ]);
+        DB::table('gifts')->insert(['code' => 'TEST-GIFT', 'type' => 0, 'value_price' => 500]);
+        Payment::create([
+            'user_id' => 17, 'order_number' => 'GIFT-ORDER',
+            'shipping_price' => 200, 'gift_code' => 'TEST-GIFT',
+        ]);
+        $this->actingAs($this->customer(17));
+
+        (new PaymentComponent)->continuePayment('GIFT-ORDER');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'order_number' => 'GIFT-ORDER', 'price' => 700,
+            'gift_code' => 'TEST-GIFT', 'gift_applied' => 500, 'status' => 0,
+        ]);
+        $this->assertDatabaseHas('gifts', ['code' => 'TEST-GIFT', 'value_price' => 500]);
     }
 
     private function customer(int $id): User
