@@ -16,7 +16,7 @@ else
     exit 1
 fi
 
-php artisan serve --host=127.0.0.1 --port="${browser_port}" >"${browser_temp}/server.log" 2>&1 &
+php artisan serve --no-reload --host=127.0.0.1 --port="${browser_port}" >"${browser_temp}/server.log" 2>&1 &
 browser_server_pid=$!
 trap 'kill "${browser_server_pid}" 2>/dev/null || true' EXIT
 
