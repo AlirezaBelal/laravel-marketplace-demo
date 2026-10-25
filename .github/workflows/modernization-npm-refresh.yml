@@ -29,6 +29,9 @@ jobs:
       - name: Regenerate the npm lockfile without dependency scripts
         run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
 
+      - name: Apply non-breaking security fixes to npm lockfile only
+        run: npm audit fix --package-lock-only --ignore-scripts --audit-level=high --no-fund
+
       - name: Install exact locked frontend dependencies
         run: npm ci --no-audit --no-fund
 
