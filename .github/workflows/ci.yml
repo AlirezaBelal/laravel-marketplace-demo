@@ -35,7 +35,7 @@ jobs:
             | xargs -0 -n1 php -l
 
   php:
-    name: PHP framework checks (legacy)
+    name: PHP framework checks (Laravel 13 candidate)
     runs-on: ubuntu-latest
 
     steps:
@@ -67,8 +67,14 @@ jobs:
           php artisan --version
           php artisan route:list
 
+      - name: Compile Blade views
+        run: php artisan view:cache
+
       - name: Run unit tests
         run: vendor/bin/phpunit --testsuite Unit
+
+      - name: Render guest authentication page through Livewire 4
+        run: vendor/bin/phpunit tests/Feature/ModernizationAuthSmokeTest.php
 
 
   frontend:
