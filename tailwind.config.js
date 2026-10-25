@@ -1,26 +1,11 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-
-module.exports = {
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './vendor/laravel/jetstream/**/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-    ],
-
+// Tailwind v4 reads this legacy theme extension via @config in resources/css/app.css.
+// Keep the original portfolio typography while progressively migrating styles.
+export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Nunito', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             },
         },
     },
-
-    variants: {
-        extend: {
-            opacity: ['disabled'],
-        },
-    },
-
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

@@ -85,7 +85,7 @@
 <script src="{{asset('/fonts/font.css')}}"></script>
 
 
-<script src="{{mix('/js/app.js')}}" defer></script>
+@vite('resources/js/app.js')
 <script src="{{asset('js/alpine.min.js')}}" defer></script>
 
 <livewire:styles/>

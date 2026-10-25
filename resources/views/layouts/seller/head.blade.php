@@ -24,5 +24,5 @@
             src="https://maps.googleapis.com/maps-api-v3/api/js/48/8/intl/fa_ALL/util.js"></script>
     <livewire:styles />
     <script src="{{asset('/js/sweetalert.min.js')}}"></script>
-    <script src="{{mix('/js/app.js')}}" defer></script>
+    @vite('resources/js/app.js')
 </head>

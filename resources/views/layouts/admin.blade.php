@@ -3,7 +3,7 @@
 <head>
     <livewire:admin.dashboard.head/>
 
-    <script src="{{mix('/js/app.js')}}" defer></script>
+    @vite('resources/js/app.js')
 </head>
 <body>
 {{--@include('sweet::alert')--}}
