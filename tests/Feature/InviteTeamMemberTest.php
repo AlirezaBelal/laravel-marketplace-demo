@@ -7,12 +7,21 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Laravel\Jetstream\Mail\TeamInvitation;
+use Laravel\Jetstream\Jetstream;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class InviteTeamMemberTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        if (! Jetstream::hasTeamFeatures()) {
+            $this->markTestSkipped('Jetstream Teams is disabled in config/jetstream.php.');
+        }
+    }
 
     public function test_team_members_can_be_invited_to_team()
     {

@@ -5,12 +5,21 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
+use Laravel\Jetstream\Jetstream;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class UpdateTeamMemberRoleTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        if (! Jetstream::hasTeamFeatures()) {
+            $this->markTestSkipped('Jetstream Teams is disabled in config/jetstream.php.');
+        }
+    }
 
     public function test_team_member_roles_can_be_updated()
     {

@@ -15,7 +15,8 @@ class RegistrationTest extends TestCase
     {
         $response = $this->get('/register');
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('user.login-register'));
+        $this->get(route('user.login-register'))->assertOk();
     }
 
     public function test_new_users_can_register()
@@ -28,6 +29,7 @@ class RegistrationTest extends TestCase
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
         ]);
 
+        $response->assertSessionHasNoErrors();
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
     }

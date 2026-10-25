@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Laravel\Fortify\Features;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -28,7 +29,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         }
 
         if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
+            $user instanceof MustVerifyEmail &&
+            in_array(Features::emailVerification(), config('fortify.features', []), true)) {
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
