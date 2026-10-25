@@ -45,12 +45,15 @@ of correct real-world checkout or deployment behavior.
 
 ## Open compatibility and security work
 
-1. **Database baseline:** The historical set contains 180 migration files,
-   including 68 repeated named migration classes and many repeated table
-   creations. Do not blindly remove or suppress them: the schema history must
-   be reconciled against a representative database. The existing complete
-   feature suite cannot be treated as verified; focused tests currently use
-   isolated SQLite schemas.
+1. **Database baseline:** The historical set contained 180 migration files,
+   including 68 repeated named migration classes and repeated table creations.
+   The later copies have been preserved unchanged under
+   `database/migrations/legacy-snapshots/`, leaving the earlier definitions
+   active. Fresh MySQL migration compatibility is checked in a disposable
+   GitHub Actions database; an existing database's schema and migration ledger
+   still require non-destructive reconciliation. The complete legacy feature
+   suite cannot yet be treated as verified; focused tests use isolated SQLite
+   schemas.
 2. **Checkout integrity:** Verify stored cart prices against current product
    and seller offers, and test quantity, stock, order grouping, shipping,
    discounts, gift expiry/usage and repeated submissions. Gift credit is

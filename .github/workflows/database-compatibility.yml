@@ -62,3 +62,16 @@ jobs:
           CACHE_STORE: array
           SESSION_DRIVER: array
         run: php artisan migrate:fresh --force --no-interaction
+
+      - name: Verify a second migration pass is idempotent
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: "3306"
+          DB_DATABASE: marketplace_test
+          DB_USERNAME: marketplace_test
+          DB_PASSWORD: test_only_password
+          CACHE_STORE: array
+          SESSION_DRIVER: array
+        run: php artisan migrate --force --no-interaction
