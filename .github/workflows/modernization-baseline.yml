@@ -1,0 +1,58 @@
+name: Modernization compatibility baseline
+
+on:
+  push:
+    branches:
+      - 'modernize/**'
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php83-baseline:
+    name: PHP 8.3 compatibility baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+      - name: Validate Composer
+        run: composer validate --no-check-publish
+      - name: Install locked PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Prepare synthetic local environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+      - name: Check Laravel boot and routes
+        run: |
+          php artisan --version
+          php artisan route:list
+      - name: Unit tests
+        run: vendor/bin/phpunit --testsuite Unit
+
+  node22-baseline:
+    name: Node 22 frontend compatibility baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked npm dependencies
+        run: npm ci
+      - name: Build existing assets with Node 22
+        run: npm run production
+      - name: Audit runtime npm dependencies
+        run: npm audit --omit=dev --audit-level=high
