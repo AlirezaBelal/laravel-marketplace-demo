@@ -61,7 +61,7 @@
     </span>
 </li>
 <li class="c-checkout-bill__to-forward-button">
-    <a href="" wire:click="addToPayment({{$orders->sum('total_discount_price')}})"
+    <a href="" wire:click="addToPayment"
        class="o-btn o-btn--full-width o-btn--contained-red-lg js-save-shipping-data"
        style="display: none; pointer-events: all; cursor: pointer;">
         ادامه فرآیند خرید

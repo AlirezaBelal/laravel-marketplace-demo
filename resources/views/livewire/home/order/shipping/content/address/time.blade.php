@@ -22,8 +22,9 @@
                             <ul class="c-time-table__hour-container">
                                 <li class="c-outline-radio c-time-table__hour-item js-handle-dynamic-shipping-hour">
                                     <input type="radio" name="shipping[time_scopes][0-1-1]"
-
-                                           value="{{$this->dateId =  $adtime->id}}"
+                                           wire:click="shippingId({{ $adtime->id }})"
+                                           value="{{ $adtime->id }}"
+                                           @checked($this->dateId == $adtime->id)
                                            id="hour-radio-0-1-1-{{$adtime->id}}-normal">
                                     <label class="c-time-table__radio-label
 
@@ -36,7 +37,7 @@
                                             data-history-row-id=".js-0-1-1-package-row-normal"
                                             {{--                                            wire:click=""--}}
                                             data-dynamic-shipping-cost="{{ $adtime->price}}0">
-                                         {{\App\Models\PersianNumber::translate(number_format(  $this->dPrice = $adtime->price))}}
+                                         {{\App\Models\PersianNumber::translate(number_format($adtime->price))}}
                                                 تومان
                                                </span>
                                     </label>

@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Home\Order;
 
 use App\Models\Address;
+use App\Models\AddressTime;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\ReceiptCenter;
 use Livewire\Component;
 
@@ -26,7 +28,7 @@ class Shipping extends Component
     {
         $address = Address::where('user_id', auth()->id())->findOrFail($id);
         $this->address_use = $address;
-        foreach ($this->orders as $order) {
+        foreach ($this->pendingOrders() as $order) {
             $order->update([
                 'address_id' => $address->id,
             ]);
@@ -40,8 +42,8 @@ class Shipping extends Component
 
     public function anbaradd($id)
     {
-        $address = ReceiptCenter::find($id);
-        foreach ($this->orders as $order) {
+        $address = ReceiptCenter::findOrFail($id);
+        foreach ($this->pendingOrders() as $order) {
             $order->update([
                 'anbar_id' => $address->id,
                 'type_order' => 1,
@@ -51,29 +53,38 @@ class Shipping extends Component
 
     public function shippingId($id)
     {
-        //        $this->dateId = $id;
+        $time = AddressTime::findOrFail($id);
+        $this->dateId = $time->id;
+        $this->dPrice = $time->price;
     }
 
-    public function addToPayment($data)
+    public function addToPayment()
     {
-        foreach ($this->orders as $order) {
-            \App\Models\Payment::create([
-                'user_id' => auth()->user()->id,
+        // Never accept order totals or shipping prices from a Livewire argument
+        // or mutable public properties. Both amounts must come from the database.
+        $orders = $this->pendingOrders();
+        $shippingTime = AddressTime::findOrFail($this->dateId);
+        $subtotal = $orders->sum('total_discount_price');
+        $shippingPrice = $shippingTime->price;
+
+        foreach ($orders as $order) {
+            Payment::create([
+                'user_id' => auth()->id(),
                 'order_id' => $order->id,
-                'total_price' => $data + $this->dPrice,
-                'time_id' => $this->dateId,
-                'shipping_price' => $this->dPrice,
+                'total_price' => $subtotal + $shippingPrice,
+                'time_id' => $shippingTime->id,
+                'shipping_price' => $shippingPrice,
                 'order_number' => $order->order_number,
             ]);
             if ($order->address_id == null) {
-                $address = Address::where('user_id', auth()->user()->id)->first();
+                $address = Address::where('user_id', auth()->id())->firstOrFail();
                 $order->update([
                     'address_id' => $address->id,
                 ]);
             }
         }
 
-        $carts = Cart::where('user_id', auth()->user()->id)->where('type', 0)->get();
+        $carts = Cart::where('user_id', auth()->id())->where('type', 0)->get();
         foreach ($carts as $cart) {
             $cart->delete();
         }
@@ -84,10 +95,8 @@ class Shipping extends Component
     public function render()
     {
 
-        $order = Order::where('user_id', auth()->user()->id)->get();
-        $order_last = $order->last();
-        $order_number = $order->last()->order_number;
-        $orders = Order::where('order_number', $order_number)->get();
+        $orders = $this->pendingOrders();
+        $order_last = $orders->last();
         $this->orders = $orders;
         $carts = Cart::where('user_id', auth()->user()->id)
             ->where('type', 0)->get();
@@ -97,5 +106,18 @@ class Shipping extends Component
         return view('livewire.home.order.shipping',
             compact('addresses', 'orders', 'order_last')
         )->layout('layouts.shipping');
+    }
+
+    private function pendingOrders()
+    {
+        $latest = Order::where('user_id', auth()->id())
+            ->where('payment', 0)
+            ->latest('id')
+            ->firstOrFail();
+
+        return Order::where('user_id', auth()->id())
+            ->where('order_number', $latest->order_number)
+            ->where('payment', 0)
+            ->get();
     }
 }
