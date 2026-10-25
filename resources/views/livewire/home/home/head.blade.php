@@ -5,4 +5,5 @@
 {!! SEO::generate() !!}
 @include('layouts.home.css')
 @include('layouts.home.js')
+@vite('resources/js/app.js')
 <livewire:styles/>

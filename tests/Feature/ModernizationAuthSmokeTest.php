@@ -8,6 +8,13 @@ use Tests\TestCase;
 
 final class ModernizationAuthSmokeTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // The frontend production build is verified in its own CI job.
+        $this->withoutVite();
+    }
+
     public function test_guest_account_entry_renders_under_livewire_four(): void
     {
         // Do not submit a form or invoke SMS / payment providers.
