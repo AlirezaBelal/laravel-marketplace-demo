@@ -1,4 +1,4 @@
-name: Dependency security audit (legacy)
+name: Dependency security audit
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
 permissions:
   contents: read
 
-# These checks remain blocking within this workflow: legacy advisories must
-# remain visible. A failing audit must never be interpreted as a safe runtime.
+# These checks remain blocking: advisories must remain visible. A failing
+# audit must never be interpreted as a safe runtime.
 jobs:
   php-dependencies:
     name: Composer locked dependency audit
@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
@@ -38,12 +38,12 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "22"
           cache: npm
