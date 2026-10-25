@@ -179,3 +179,19 @@ jobs:
           MAIL_MAILER: array
           QUEUE_CONNECTION: sync
         run: vendor/bin/phpunit --testsuite Feature --colors=never --display-phpunit-deprecations
+
+      - name: Open public storefront and auth entry points in headless Chrome
+        env:
+          APP_ENV: testing
+          APP_DEBUG: "false"
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: "3306"
+          DB_DATABASE: marketplace_test
+          DB_USERNAME: marketplace_test
+          DB_PASSWORD: test_only_password
+          CACHE_STORE: array
+          SESSION_DRIVER: array
+          MAIL_MAILER: array
+          QUEUE_CONNECTION: sync
+        run: bash tests/browser_smoke.sh
