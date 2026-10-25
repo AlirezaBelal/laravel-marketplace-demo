@@ -13,8 +13,11 @@ Open PR #13 and verify that every job succeeds on the **same head commit**:
 2. `Dependency security audit`: Composer locked audit and full npm
    audit, including development packages. Neither audit has been disabled.
 3. `Database migration and feature compatibility`: fresh + repeat
-   migration on MySQL 8.4, and the full Feature suite with real Vite assets.
+   migration on MySQL 8.4, the full Feature suite with real Vite assets,
+   and headless Chrome rendering of four public entry points.
 
+The browser smoke only proves those four unauthenticated routes render; it
+does not execute checkout, private dashboards or an OTP/payment provider.
 The database workflow provisions six disposable schemas using **test-only**
 credentials and never connects to the original marketplace database.
 Historical duplicate migrations remain available at

@@ -26,6 +26,9 @@ settings were introduced.
   with built Vite assets: **62 tests**, including the original Jetstream tests.
   Eighteen tests for disabled or conditionally unavailable features are
   explicitly reported as skipped; they are not silently excluded.
+- Headless Chrome renders the public home, guest registration/login, cart and
+  seller-login entry points against the disposable MySQL test application.
+  This does **not** exercise authenticated browser mutations or real providers.
 - Production Vite build and runtime npm audit.
 - Independent `composer audit --locked` and **full**
   `npm audit --audit-level=low`, including development dependencies.

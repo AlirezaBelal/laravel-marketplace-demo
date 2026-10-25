@@ -2,20 +2,13 @@
 
 ## Support status
 
-This repository preserves a completed **legacy Laravel marketplace project**, not a supported production service.
+This repository contains a modernized **portfolio marketplace**, not a supported production service. The active modernization candidate targets PHP 8.4, Laravel 13 and Livewire 4. The original Laravel 9 baseline was unsupported and vulnerable; this migration does not by itself certify application security.
 
-The application currently targets Laravel 9. Laravel 9's official security-fix window ended on **February 6, 2024**. Before using this code in a deployed environment, upgrade Laravel and the surrounding dependency stack to supported versions and perform a fresh security review.
+The independent [dependency security audit](.github/workflows/security-audit.yml) checks the complete locked Composer and npm dependency graphs, including development dependencies. It fails normally on advisories: no `continue-on-error`, blanket ignore or audit suppression has been introduced. The historical four Composer advisory exceptions were removed during modernization.
 
-The locked dependency graph is intentionally kept on **stable releases**. The dedicated Dependency security audit (legacy) workflow runs a full Composer audit and allows only the following Laravel 9 advisories because no supported fix exists on the Laravel 9 release line:
+The last verified dependency audit passed, but new advisories can appear at any time and should be checked on the final commit. Deprecation notices for some older UI/runtime packages are not the same as a passing security audit or a production safety assessment.
 
-- `PKSA-m5cs-t1y6-qpcs`
-- `PKSA-3r5d-mb8f-1qw9`
-- `PKSA-mdq4-51ck-6kdq`
-- `PKSA-8qx3-n5y5-vvnd`
-
-These exceptions document framework end-of-life debt; they are not claims that the issues are safe for production. Any additional PHP advisory still fails the independent security-audit workflow.
-
-A fresh locked audit on 2026-10-24 reports six additional, non-ignored advisories across laravel/framework (2), league/commonmark (2), symfony/http-foundation (1) and symfony/yaml (1). One Laravel advisory is classified critical by the advisory feed. The complete npm dependency graph reports 69 findings. These are dependency findings, not application exploit verification. Existing exceptions have not been expanded; the previous green CI does not establish current dependency safety.
+The automated acceptance suite tests fresh installation on six disposable MySQL databases and 62 Feature cases. It is not an independent penetration test and does not validate a real payment gateway. Open issues include anonymous cart identity based on IP addresses, stored price/stock revalidation, gift credit consumed before payment success, replay/concurrent payment callbacks, broad seller/admin permissions, file manager access and an unverified browser/UX journey. See [MODERNIZATION.md](MODERNIZATION.md) and [ACCEPTANCE_TESTING.md](ACCEPTANCE_TESTING.md).
 
 ## Current repository rules
 
@@ -32,7 +25,7 @@ Database dumps are ignored. The owner rewrote both branches on 2026-10-25 to rem
 
 ## Payment safety
 
-The example environment defaults to the local/demo payment driver. A gateway callback must be verified with the configured payment provider before an order is marked paid. Real gateway deployment requires current provider credentials, HTTPS callbacks, and validation against the provider's current API documentation.
+The example environment defaults to the local/demo payment driver. A gateway callback must be verified with the configured payment provider before an order is marked paid. Payment replay/idempotency and gift-credit sequencing are not fully accepted. Real gateway deployment requires current provider credentials, HTTPS callbacks, and validation against the provider's current API documentation. Do not use live credentials in public CI.
 
 ## Reporting a vulnerability
 
@@ -44,4 +37,4 @@ If a real credential is ever committed, removing it from the current branch is n
 
 ## Archive limitations
 
-The owner authorized retention of the legacy source with known dependency audit failures visible and approved retention of the existing UI assets. Archival is not a security clearance, credential revocation or independent third-party rights verification. GitHub Support cleanup of old refs/caches remains pending. The owner reports cancelling Google Cloud, but invalidation of the historical API keys has not been independently confirmed. Do not publish sensitive review evidence in issues or pull requests.
+The owner authorized preservation of the source and existing UI assets and the attempt to modernize dependencies. GitHub archival is not a security clearance, a production-readiness claim, credential revocation or independent third-party rights verification. GitHub Support cleanup of old refs/caches remains pending. The owner reports cancelling Google Cloud, but invalidation of historical API keys has not been independently confirmed. Do not publish sensitive review evidence in issues or pull requests.

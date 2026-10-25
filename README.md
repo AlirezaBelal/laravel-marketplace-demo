@@ -1,11 +1,12 @@
 # Laravel Multi-Vendor Marketplace
 
 [![CI](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/ci.yml)
-[![Dependency security audit (legacy)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml)
+[![Dependency security audit](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml)
+[![Database and Feature checks](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/database-compatibility.yml/badge.svg)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/database-compatibility.yml)
 
-A completed Laravel 9 and Livewire 2 multi-vendor marketplace project implementing customer, seller and administrator workflows, product management, shopping carts, orders, payment records and notification integrations.
+A modernized Laravel 13 / Livewire 4 multi-vendor marketplace codebase implementing customer, seller and administrator workflows, products, shopping carts, orders, payment records and notification integrations.
 
-**Completed legacy project:** no routine feature development is planned. This unsupported runtime is retained for code review and portfolio reference, not production deployment. GitHub's native archive banner is the authoritative read-only status.
+**Portfolio modernization candidate — not production-ready.** The supported dependency migration and automated checks are complete on the modernization branch, but browser and payment acceptance work remains. Do not deploy it with real customer data or credentials. GitHub's native archive banner, if present, is the authoritative read-only status.
 
 This project is independent of and **not affiliated with, endorsed by, or operated by Digikala**.
 
@@ -22,7 +23,7 @@ These are implemented code paths, not claims of comprehensive acceptance testing
 
 ## Stack and boundaries
 
-Laravel 9.52.22, Livewire 2.12.8, Blade, Jetstream/Fortify/Sanctum, Eloquent, MySQL-oriented migrations, Tailwind, Bootstrap and Alpine.js. Payment integration uses Shetabit Multipay; SMS integration uses Kavenegar.
+PHP 8.4, Laravel 13.38, Livewire 4.4, Jetstream 5.5, Sanctum 4.3, Blade, Eloquent, MySQL 8.4, Vite 8 and Tailwind 4, alongside retained Bootstrap and other UI assets. Payment integration uses Shetabit Multipay; SMS integration uses Kavenegar.
 
 Routes, controllers and Livewire components coordinate Eloquent models and external adapters. Payment callbacks call the configured gateway's verification API with the recorded transaction and amount before changing payment/order state. Those database updates run in a transaction; SMS/email delivery follows the commit.
 
@@ -32,7 +33,7 @@ This is a code-level review of the callback, not proof of complete payment corre
 
 Use an isolated local environment with synthetic records only. Do not expose this application publicly or supply production credentials.
 
-Requirements: PHP 8.2 (the CI environment), Composer 2, Node.js/npm and a database compatible with the migrations. CI used Node.js 20; that historical toolchain is not a recommendation for a newly deployed service.
+Requirements for **isolated local testing**: PHP 8.4, Composer 2, Node.js 22, npm and MySQL 8.4. Use test-only credentials and avoid importing historical SQL backups.
 
 ```bash
 git clone https://github.com/AlirezaBelal/laravel-marketplace-demo.git
@@ -41,27 +42,27 @@ cp .env.example .env
 composer install
 php artisan key:generate
 npm ci
-npm run dev
+npm run build
 ```
 
-Configure a local database in `.env`, then:
+Configure a **new, disposable** main database in `.env` and provision the five additional category databases defined in `config/database.php` before running migrations. The GitHub Actions database workflow provisions all six schemas automatically with synthetic credentials. On an empty test database only:
 
 ```bash
 php artisan migrate
 php artisan serve --host=127.0.0.1
 ```
 
-The checked-in environment defaults to the local payment driver and disabled debug mode. Keep payment, SMS, mail and database credentials outside Git. Migrations are the supported schema source; no complete synthetic catalog or end-to-end installation/data fixture is claimed. Do not restore historical development dumps.
+The checked-in environment defaults to the local payment driver and disabled debug mode. Keep payment, SMS, mail and database credentials outside Git. **Never use `migrate:fresh` on an existing database**: it drops tables. No comprehensive demo catalog or end-to-end installation/data fixture is claimed. See [the acceptance checklist](ACCEPTANCE_TESTING.md).
 
 ## Security and verification status
 
-Laravel 9's security support ended on February 6, 2024. Livewire 2 and the frontend stack are legacy dependencies; no ongoing security-support guarantee is made.
+The original Laravel 9 dependency graph was vulnerable. The modernization branch regenerated both lockfiles, removed the former Composer audit ignore list, and replaced the obsolete Mix/webpack build. All three workflow groups have passed together:
 
-Functional CI checks repository safety/PHP lint, Laravel boot/routes plus **one PHPUnit test with one assertion**, and the frontend build/runtime npm audit. A **separate, visibly failing** [Dependency security audit (legacy)](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions/workflows/security-audit.yml) checks locked Composer dependencies and the complete npm graph, including development tools. This separation does not ignore advisories, fix vulnerabilities, or make the runtime safe; check **both** workflow results. CI does not test complete customer, seller, administrator or payment workflows.
+- **CI:** repository safety, framework checks, selected regression tests and Vite build.
+- **Dependency security audit:** `composer audit --locked` and the full `npm audit --audit-level=low`, including development packages.
+- **Database migration and feature compatibility:** 106 active migrations on six disposable MySQL 8.4 schemas, a second no-op migration pass, and **62 Feature tests with 93 assertions**. Eighteen tests are explicitly skipped for disabled or conditionally unavailable features, not silently omitted. Chrome Headless also renders four public entry points.
 
-A fresh locked-dependency audit on **2026-10-24** failed: Composer reported six non-ignored advisories across Laravel, CommonMark and Symfony, in addition to four existing Laravel exceptions. The complete npm graph reported 69 findings. Counts are a dated dependency snapshot, not proof that every issue is reachable in this application; inspect the actual dependency tree and [security policy](SECURITY.md). Old green CI is not a current security clearance.
-
-No advisory exception was added or validation weakened for this presentation update. A supported runtime would require separately authorized modernization and application-level security/integration tests.
+These results were verified in [GitHub Actions](https://github.com/AlirezaBelal/laravel-marketplace-demo/actions) on the modernization branch. Historical duplicate migrations (74 files) are preserved at `database/migrations/legacy-snapshots/`. Some obsolete Bootstrap/Popper notices remain even though the full dependency security audits pass. **Green audits do not prove application-level payment correctness, complete authorization, browser compatibility or production readiness.** See [MODERNIZATION.md](MODERNIZATION.md) and [SECURITY.md](SECURITY.md).
 
 ## Preservation and public-content review
 
@@ -69,7 +70,7 @@ On 2026-10-25, the owner rewrote both repository branches to remove historical S
 
 The owner approved retention of the existing imagery, fonts and UI assets for this portfolio artifact. They remain unchanged. This records the owner's decision, not an independent legal clearance; Apache-2.0 does not grant rights over third-party material.
 
-The owner accepts preservation of this unsupported source archive with known dependency failures disclosed. No security checks or advisory exceptions are weakened for archival.
+The owner authorized modernization while preserving the repository identity and project assets. Final merge/archive acceptance remains pending the browser, payment and security limitations documented above. No security audit is disabled or weakened for archival.
 
 ## License
 
