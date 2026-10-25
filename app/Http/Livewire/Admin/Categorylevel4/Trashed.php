@@ -33,7 +33,7 @@ class Trashed extends Component
         $category = CategoryLevel4::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $category->img);
         $category->forceDelete();
-        $this->emit('toast', 'success', ' دسته سطح چهارم به صورت کامل با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته سطح چهارم به صورت کامل با موفقیت حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -45,7 +45,7 @@ class Trashed extends Component
             'url' => 'بازیابی دسته سطح چهارم'.'-'.$category->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' دسته سطح چهارم با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته سطح چهارم با موفقیت بازیابی شد.');
     }
 
     public function render()

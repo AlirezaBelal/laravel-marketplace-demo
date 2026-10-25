@@ -36,7 +36,7 @@ class Trashed extends Component
     {
         $attribute = AttributeValue::withTrashed()->findOrFail($id);
         $attribute->forceDelete();
-        $this->emit('toast', 'success', ' مقدار مشخصه کالا به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقدار مشخصه کالا به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -48,7 +48,7 @@ class Trashed extends Component
             'url' => 'بازیابی مقدار مشخصه کالا'.'-'.$attribute->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقدار مشخصه کالا با موفقیت بازیابی شد.');
     }
 
     public function render()

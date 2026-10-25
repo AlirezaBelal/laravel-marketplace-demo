@@ -21,7 +21,7 @@ class Email extends Component
             return $this->redirect(route('seller.register.detail', $usr->user_id));
         } else {
 
-            $this->emit('toast', 'error', ' کد وارد شده صحیح نمی باشد.');
+            $this->dispatch('toast', type: 'error', message: ' کد وارد شده صحیح نمی باشد.');
         }
 
     }

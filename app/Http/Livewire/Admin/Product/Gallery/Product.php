@@ -66,7 +66,7 @@ class Product extends Component
             'url' => 'افزودن تصویر محصول'.'-'.$this->gallery->product_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' تصویر محصول با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' تصویر محصول با موفقیت ایجاد شد.');
 
     }
 
@@ -98,7 +98,7 @@ class Product extends Component
             'url' => 'غیرفعال کردن وضعیت تصویر محصول'.'-'.$this->gallery->product_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تصویر محصول با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -112,7 +112,7 @@ class Product extends Component
             'url' => 'فعال کردن وضعیت تصویر محصول'.'-'.$this->gallery->product_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تصویر محصول با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تصویر محصول با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -124,7 +124,7 @@ class Product extends Component
             'url' => 'حذف کردن تصویر محصول'.'-'.$this->gallery->product_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' تصویر محصول با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تصویر محصول با موفقیت حذف شد.');
     }
 
     public function render()

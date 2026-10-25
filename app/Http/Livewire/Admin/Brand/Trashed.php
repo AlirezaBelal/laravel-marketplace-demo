@@ -33,7 +33,7 @@ class Trashed extends Component
         $brand = Brand::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $brand->img);
         $brand->forceDelete();
-        $this->emit('toast', 'success', ' برند به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' برند به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -45,7 +45,7 @@ class Trashed extends Component
             'url' => 'بازیابی برند'.'-'.$brand->name,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' برند با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' برند با موفقیت بازیابی شد.');
     }
 
     public function render()

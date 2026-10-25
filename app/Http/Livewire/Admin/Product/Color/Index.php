@@ -58,7 +58,7 @@ class Index extends Component
             'url' => 'افزودن رنگ'.'-'.$this->color->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' رنگ با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' رنگ با موفقیت ایجاد شد.');
 
     }
 
@@ -78,7 +78,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت رنگ'.'-'.$this->color->name,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت رنگ با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -92,7 +92,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت رنگ'.'-'.$this->color->name,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت رنگ با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت رنگ با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -104,7 +104,7 @@ class Index extends Component
             'url' => 'حذف کردن رنگ'.'-'.$this->color->name,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' رنگ با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' رنگ با موفقیت حذف شد.');
     }
 
     public function render()

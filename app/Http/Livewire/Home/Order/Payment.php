@@ -64,7 +64,7 @@ class Payment extends Component
                             'discount_price' => $code_discount->price,
                         ]);
                     }
-                    $this->emit('toast', 'success', ' کد تخفیف وارد شده اعمال شد.');
+                    $this->dispatch('toast', type: 'success', message: ' کد تخفیف وارد شده اعمال شد.');
                 } elseif ($code_discount->type == 0) {
                     $this->discount_price = $code_discount->percent;
                     $this->discount_type = 0;
@@ -82,7 +82,7 @@ class Payment extends Component
                     $dPercent = ($orders->sum('total_discount_price') * $this->discount_price) / 100;
 
                     $this->dTotalPercent = $orders->sum('total_discount_price') - $dPercent;
-                    $this->emit('toast', 'success', ' کد تخفیف وارد شده اعمال شد.');
+                    $this->dispatch('toast', type: 'success', message: ' کد تخفیف وارد شده اعمال شد.');
                 } else {
                     $order2 = Order::where('user_id', auth()->user()->id)->get();
                     $order_last = $order2->last();
@@ -92,7 +92,7 @@ class Payment extends Component
 
                 }
             } else {
-                $this->emit('toast', 'error', ' کد تخفیف وارد شده وجود ندارد.');
+                $this->dispatch('toast', type: 'error', message: ' کد تخفیف وارد شده وجود ندارد.');
 
             }
         }
@@ -116,14 +116,14 @@ class Payment extends Component
                     } elseif ($gift_code->value_price < $orders->sum('total_discount_price')) {
                         $this->dgift = $gift_code->value_price;
                     } else {
-                        $this->emit('toast', 'error', ' کد هدیه شما وجود ندارد.');
+                        $this->dispatch('toast', type: 'error', message: ' کد هدیه شما وجود ندارد.');
                     }
 
                 } elseif ($gift_code->type == 1) {
-                    $this->emit('toast', 'error', ' کد هدیه شما استفاده شده است.');
+                    $this->dispatch('toast', type: 'error', message: ' کد هدیه شما استفاده شده است.');
                 }
             } else {
-                $this->emit('toast', 'error', ' کد هدیه شما پیدا نشد.');
+                $this->dispatch('toast', type: 'error', message: ' کد هدیه شما پیدا نشد.');
 
             }
         }

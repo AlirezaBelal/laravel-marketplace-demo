@@ -57,7 +57,7 @@ class Time extends Component
         $this->addressTime->time = '';
         $this->addressTime->date = '';
         $this->addressTime->price = '';
-        $this->emit('toast', 'success', ' زمان ارسال با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' زمان ارسال با موفقیت ایجاد شد.');
 
     }
 
@@ -70,7 +70,7 @@ class Time extends Component
     {
         $times = AddressTime::find($id);
         $times->delete();
-        $this->emit('toast', 'success', ' زمان ارسال با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' زمان ارسال با موفقیت حذف شد.');
 
     }
 

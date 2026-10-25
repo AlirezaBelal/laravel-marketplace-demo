@@ -78,7 +78,7 @@ class IndexUser extends Component
             'url' => 'افزودن کاربر'.'-'.$this->user->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' کاربر با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' کاربر با موفقیت ایجاد شد.');
 
     }
 
@@ -105,7 +105,7 @@ class IndexUser extends Component
             'email_verified_at' => now(),
         ]);
 
-        $this->emit('toast', 'success', 'ایمیل کاربر با موفقیت تایید شد.');
+        $this->dispatch('toast', type: 'success', message: 'ایمیل کاربر با موفقیت تایید شد.');
     }
 
     public function deleteUser($id)
@@ -113,7 +113,7 @@ class IndexUser extends Component
         $user = user::find($id);
         $user->delete();
 
-        $this->emit('toast', 'success', ' کاربر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' کاربر با موفقیت حذف شد.');
 
     }
 

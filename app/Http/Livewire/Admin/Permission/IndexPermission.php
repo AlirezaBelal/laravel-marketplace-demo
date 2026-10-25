@@ -58,7 +58,7 @@ class IndexPermission extends Component
             'url' => 'افزودن دسترسی'.'-'.$this->permission->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' دسترسی با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسترسی با موفقیت ایجاد شد.');
 
     }
 
@@ -76,7 +76,7 @@ class IndexPermission extends Component
             'url' => 'حذف کردن دسترسی'.'-'.$role->name,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' دسترسی با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسترسی با موفقیت حذف شد.');
 
     }
 

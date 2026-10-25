@@ -33,7 +33,7 @@ class Trashed extends Component
         $category = Category::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $category->img);
         $category->forceDelete();
-        $this->emit('toast', 'success', ' دسته به صورت کامل با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته به صورت کامل با موفقیت حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -45,7 +45,7 @@ class Trashed extends Component
             'url' => 'بازیابی دسته'.'-'.$category->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' دسته با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته با موفقیت بازیابی شد.');
     }
 
     public function render()

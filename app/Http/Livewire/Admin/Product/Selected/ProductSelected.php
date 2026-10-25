@@ -60,7 +60,7 @@ class ProductSelected extends Component
             'url' => 'افزودن محصول منتخب'.'-'.$this->product->product_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' محصول منتخب با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول منتخب با موفقیت ایجاد شد.');
 
     }
 
@@ -80,7 +80,7 @@ class ProductSelected extends Component
             'url' => 'غیرفعال کردن وضعیت محصول منتخب'.'-'.$category->category_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول منتخب با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول منتخب با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -94,7 +94,7 @@ class ProductSelected extends Component
             'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی'.'-'.$category->category_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول منتخب با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول منتخب با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -106,7 +106,7 @@ class ProductSelected extends Component
             'url' => 'حذف کردن محصول منتخب'.'-'.$category->category_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' محصول منتخب با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول منتخب با موفقیت حذف شد.');
 
     }
 

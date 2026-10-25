@@ -51,7 +51,7 @@ class Categorylevel extends Component
             'url' => 'افزودن دسته های زیردسته ها'.'-'.$this->category_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' دسته های زیردسته ها با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته های زیردسته ها با موفقیت ایجاد شد.');
 
     }
 
@@ -74,7 +74,7 @@ class Categorylevel extends Component
             'url' => 'غیرفعال کردن وضعیت دسته های زیردسته ها'.'-'.$category2->category_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته های زیردسته ها با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته های زیردسته ها با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -91,7 +91,7 @@ class Categorylevel extends Component
             'url' => 'فعال کردن وضعیت دسته های زیردسته ها'.'-'.$category2->category_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته های زیردسته ها با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته های زیردسته ها با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -106,7 +106,7 @@ class Categorylevel extends Component
             'url' => 'حذف کردن دسته های زیردسته ها'.'-'.$amazing2->category_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' دسته های زیردسته ها با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته های زیردسته ها با موفقیت حذف شد.');
 
     }
 

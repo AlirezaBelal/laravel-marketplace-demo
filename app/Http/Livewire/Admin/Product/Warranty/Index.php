@@ -55,7 +55,7 @@ class Index extends Component
             'url' => 'افزودن گارانتی'.'-'.$this->warranty->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' گارانتی با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' گارانتی با موفقیت ایجاد شد.');
 
     }
 
@@ -75,7 +75,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت گارانتی'.'-'.$this->warranty->name,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت گارانتی با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت گارانتی با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -89,7 +89,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت گارانتی'.'-'.$this->warranty->name,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت گارانتی با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت گارانتی با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -101,7 +101,7 @@ class Index extends Component
             'url' => 'حذف کردن گارانتی'.'-'.$this->warranty->name,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' گارانتی با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' گارانتی با موفقیت حذف شد.');
     }
 
     public function render()

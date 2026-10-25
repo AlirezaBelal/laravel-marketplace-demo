@@ -59,7 +59,7 @@ class Index extends Component
             'url' => 'افزودن منو'.'-'.$this->menu->category_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' منو با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' منو با موفقیت ایجاد شد.');
 
     }
 
@@ -79,7 +79,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت منو'.'-'.$category->category_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت منو با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت منو با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -93,7 +93,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت منو'.'-'.$category->category_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت منو با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت منو با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -107,9 +107,9 @@ class Index extends Component
                 'url' => 'حذف کردن منو'.'-'.$category->category_id,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' منو با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' منو با موفقیت حذف شد.');
         } else {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا این دسته، شامل دسته کودک است!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا این دسته، شامل دسته کودک است!');
         }
 
     }

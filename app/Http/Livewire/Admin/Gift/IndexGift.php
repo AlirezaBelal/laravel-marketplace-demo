@@ -60,7 +60,7 @@ class IndexGift extends Component
             'url' => 'افزودن کارت هدیه'.'-'.auth()->user()->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' کارت هدیه با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' کارت هدیه با موفقیت ایجاد شد.');
 
     }
 
@@ -73,7 +73,7 @@ class IndexGift extends Component
     {
         $gift = \App\Models\Gift::find($id);
         if ($gift->type == 1) {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا کارت هدیه توسط کاربر استفاده شده است!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا کارت هدیه توسط کاربر استفاده شده است!');
 
         } else {
             $gift->delete();
@@ -82,7 +82,7 @@ class IndexGift extends Component
                 'url' => 'حذف کردن کارت هدیه'.'-'.$gift->code,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' کارت هدیه با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' کارت هدیه با موفقیت حذف شد.');
         }
 
     }

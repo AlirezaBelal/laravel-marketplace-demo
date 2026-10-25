@@ -48,7 +48,7 @@ class Index extends Component
     {
         $cart = Cart::find($id);
         $cart->delete();
-        $this->emit('toast', 'success', 'محصول از سبد شما حذف شد');
+        $this->dispatch('toast', type: 'success', message: 'محصول از سبد شما حذف شد');
     }
 
     public function addToCartFromCartOther($id)
@@ -57,7 +57,7 @@ class Index extends Component
         $cart->update([
             'type' => 0,
         ]);
-        $this->emit('toast', 'success', 'محصول به سبد اصلی خرید شما اضافه شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول به سبد اصلی خرید شما اضافه شد.');
     }
 
     public function addToCartOtherFromCart($id)
@@ -66,7 +66,7 @@ class Index extends Component
         $cart->update([
             'type' => 1,
         ]);
-        $this->emit('toast', 'success', 'محصول به لیست خرید بعدی شما اضافه شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول به لیست خرید بعدی شما اضافه شد.');
     }
 
     public function addAllToCArt()
@@ -82,7 +82,7 @@ class Index extends Component
                 'type' => 0,
             ]);
         }
-        $this->emit('toast', 'success', ' تمام محصول به لیست خرید بعدی شما اضافه شدند.');
+        $this->dispatch('toast', type: 'success', message: ' تمام محصول به لیست خرید بعدی شما اضافه شدند.');
     }
 
     public function addToCount($id)
@@ -95,12 +95,12 @@ class Index extends Component
                 $cart->update([
                     'count' => $cart->count + 1,
                 ]);
-                $this->emit('toast', 'success', 'محصول آپدیت شد');
+                $this->dispatch('toast', type: 'success', message: 'محصول آپدیت شد');
             } else {
-                $this->emit('toast', 'error', 'حداکثر تعداد سفارش برای این محصول ');
+                $this->dispatch('toast', type: 'error', message: 'حداکثر تعداد سفارش برای این محصول ');
             }
         } else {
-            $this->emit('toast', 'error', 'حداکثر تعداد محصول نزد فروشنده ');
+            $this->dispatch('toast', type: 'error', message: 'حداکثر تعداد محصول نزد فروشنده ');
         }
 
     }
@@ -113,7 +113,7 @@ class Index extends Component
                 'count' => $cart->count - 1,
             ]);
         }
-        $this->emit('toast', 'success', 'محصول آپدیت شد');
+        $this->dispatch('toast', type: 'success', message: 'محصول آپدیت شد');
     }
 
     public function shipping()
@@ -168,7 +168,7 @@ class Index extends Component
                 return $this->redirect(route('order.shipping'));
 
             } else {
-                $this->emit('toast', 'error', ' هیچ محصولی در سبد خرید ندارید.');
+                $this->dispatch('toast', type: 'error', message: ' هیچ محصولی در سبد خرید ندارید.');
             }
 
             dd($carts);

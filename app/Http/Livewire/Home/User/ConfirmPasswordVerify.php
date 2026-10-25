@@ -51,11 +51,11 @@ class ConfirmPasswordVerify extends Component
 
                 return $this->redirect('/');
             } else {
-                $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
+                $this->dispatch('toast', type: 'error', message: ' کد وارد شده اشتباه است!');
             }
 
         } else {
-            $this->emit('toast', 'error', ' کد وارد شده اشتباه است!');
+            $this->dispatch('toast', type: 'error', message: ' کد وارد شده اشتباه است!');
         }
     }
 
@@ -74,7 +74,7 @@ class ConfirmPasswordVerify extends Component
             'type' => $type,
             'user_id' => $mobile->id,
         ]);
-        $this->emit('toast', 'success', 'کد تایید دوباره ارسال شد!');
+        $this->dispatch('toast', type: 'success', message: 'کد تایید دوباره ارسال شد!');
 
         return $this->redirect(request()->header('Referer'));
     }

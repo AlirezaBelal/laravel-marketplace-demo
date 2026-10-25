@@ -31,7 +31,7 @@ class Trashed extends Component
         $product = Product::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $product->img);
         $product->forceDelete();
-        $this->emit('toast', 'success', ' محصول به صورت کامل با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول به صورت کامل با موفقیت حذف شد.');
     }
 
     public function trashedProduct($id)
@@ -43,7 +43,7 @@ class Trashed extends Component
             'url' => 'بازیابی محصول'.'-'.$product->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' محصول با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول با موفقیت بازیابی شد.');
     }
 
     public function render()

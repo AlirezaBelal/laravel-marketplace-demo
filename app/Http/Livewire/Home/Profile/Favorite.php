@@ -36,7 +36,7 @@ class Favorite extends Component
             'link' => Str::random('6'),
             'user_id' => auth()->user()->id,
         ]);
-        $this->emit('toast', 'success', ' لیست اضافه شد!');
+        $this->dispatch('toast', type: 'success', message: ' لیست اضافه شد!');
 
         return $this->redirect(request()->header('Referer'));
     }
@@ -46,14 +46,14 @@ class Favorite extends Component
 
         $favorites = \App\Models\Favorite::where('id', $id)->first();
         $favorites->delete();
-        $this->emit('toast', 'success', 'محصول از لیست علاقه مندی های شما حذف شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول از لیست علاقه مندی های شما حذف شد.');
     }
 
     public function deleteObserved($id)
     {
         $observed = \App\Models\Observed::where('id', $id)->first();
         $observed->delete();
-        $this->emit('toast', 'success', 'محصول از لیست اطلاع رسانی های شما حذف شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول از لیست اطلاع رسانی های شما حذف شد.');
     }
 
     public function render()

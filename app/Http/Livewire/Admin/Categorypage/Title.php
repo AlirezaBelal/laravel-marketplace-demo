@@ -40,7 +40,7 @@ class Title extends Component
             'url' => 'افزودن عناوین'.'-'.$this->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' عناوین با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' عناوین با موفقیت ایجاد شد.');
 
     }
 
@@ -62,7 +62,7 @@ class Title extends Component
             'url' => 'حذف کردن عناوین'.'-'.$banner2->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' عناوین با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' عناوین با موفقیت حذف شد.');
 
     }
 

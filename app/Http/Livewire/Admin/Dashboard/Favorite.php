@@ -33,7 +33,7 @@ class Favorite extends Component
             'url' => 'حذف کردن علاقه مندی'.'-'.$id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' با موفقیت از لیست علاقه مندی ها حذف شد ! ');
+        $this->dispatch('toast', type: 'success', message: ' با موفقیت از لیست علاقه مندی ها حذف شد ! ');
 
     }
 

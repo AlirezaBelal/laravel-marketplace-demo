@@ -84,7 +84,7 @@ class IndexDiscount extends Component
             'url' => 'افزودن کد تخفیف'.'-'.auth()->user()->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' کد تخفیف با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' کد تخفیف با موفقیت ایجاد شد.');
 
     }
 
@@ -105,7 +105,7 @@ class IndexDiscount extends Component
             'url' => 'غیرفعال کردن کد تخفیف'.'-'.$discount->code,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' کد تخفیف با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: ' کد تخفیف با موفقیت غیرفعال شد.');
 
     }
 
@@ -121,7 +121,7 @@ class IndexDiscount extends Component
             'url' => 'فعال کردن کد تخفیف'.'-'.$discount->code,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' کد تخفیف با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: ' کد تخفیف با موفقیت فعال شد.');
 
     }
 
@@ -130,7 +130,7 @@ class IndexDiscount extends Component
         $discount = Discount::find($id);
 
         $discount->delete();
-        $this->emit('toast', 'success', ' کد تخفیف با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' کد تخفیف با موفقیت حذف شد.');
 
     }
 

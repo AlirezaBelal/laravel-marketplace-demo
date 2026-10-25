@@ -64,7 +64,7 @@ class Product extends Component
             'url' => 'افزودن محصول'.'-'.$this->title_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' محصول با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول با موفقیت ایجاد شد.');
 
     }
 
@@ -86,7 +86,7 @@ class Product extends Component
             'url' => 'حذف کردن محصول'.'-'.$banner2->title_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' محصول با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول با موفقیت حذف شد.');
 
     }
 

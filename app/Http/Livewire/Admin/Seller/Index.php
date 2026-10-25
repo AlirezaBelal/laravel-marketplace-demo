@@ -50,9 +50,9 @@ class Index extends Component
                 'url' => 'حذف کردن فروشنده'.'-'.$this->seller->title,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' فروشنده با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' فروشنده با موفقیت حذف شد.');
         } else {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا فروشنده، شامل محصول است!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا فروشنده، شامل محصول است!');
         }
 
     }
@@ -82,7 +82,7 @@ class Index extends Component
         ]);
 
         Mail::to($seller->email)->send(new OrderSubmit($email));
-        $this->emit('toast', 'success', ' فروشنده با موفقیت تایید شد.');
+        $this->dispatch('toast', type: 'success', message: ' فروشنده با موفقیت تایید شد.');
     }
 
     public function render()

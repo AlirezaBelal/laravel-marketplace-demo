@@ -63,7 +63,7 @@ class Index extends Component
             'url' => 'افزودن صفحه سایت'.'-'.$this->site_page->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' صفحه سایت با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه سایت با موفقیت ایجاد شد.');
 
     }
 
@@ -92,7 +92,7 @@ class Index extends Component
             'url' => 'حذف کردن صفحه سایت'.'-'.$this->site_page->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' صفحه سایت با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه سایت با موفقیت حذف شد.');
 
     }
 

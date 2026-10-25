@@ -33,7 +33,7 @@ class FavlistProfile extends Component
             'url' => 'حذف کردن لیست عمومی'.'-'.$id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' با موفقیت از لیست های عمومی حذف شد ! ');
+        $this->dispatch('toast', type: 'success', message: ' با موفقیت از لیست های عمومی حذف شد ! ');
 
     }
 

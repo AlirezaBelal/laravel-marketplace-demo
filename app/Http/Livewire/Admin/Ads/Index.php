@@ -66,7 +66,7 @@ class Index extends Component
             'url' => 'افزودن تبلیغات دسته'.'-'.$this->ads->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' تبلیغات دسته با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' تبلیغات دسته با موفقیت ایجاد شد.');
 
     }
 
@@ -97,7 +97,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت تبلیغات دسته'.'-'.$this->ads->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تبلیغات دسته با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تبلیغات دسته با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -111,7 +111,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت تبلیغات دسته'.'-'.$this->ads->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تبلیغات دسته با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تبلیغات دسته با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -123,7 +123,7 @@ class Index extends Component
             'url' => 'حذف کردن تبلیغات دسته'.'-'.$this->ads->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' تبلیغات دسته با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تبلیغات دسته با موفقیت حذف شد.');
 
     }
 

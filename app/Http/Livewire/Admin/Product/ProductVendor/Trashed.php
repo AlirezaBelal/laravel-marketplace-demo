@@ -30,7 +30,7 @@ class Trashed extends Component
         $pVendor = ProductSeller::withTrashed()->findOrFail($id);
 
         $pVendor->forceDelete();
-        $this->emit('toast', 'success', ' تنوع قیمت به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع قیمت به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function trashedProduct($id)
@@ -42,7 +42,7 @@ class Trashed extends Component
             'url' => 'بازیابی تنوع محصول'.'-'.$product->product_id,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' تنوع محصول با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع محصول با موفقیت بازیابی شد.');
     }
 
     public function render()

@@ -39,7 +39,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت محصول'.'-'.$product->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -53,7 +53,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت محصول'.'-'.$product->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -66,7 +66,7 @@ class Index extends Component
             'url' => 'حذف کردن محصول'.'-'.$product->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' محصول با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول با موفقیت حذف شد.');
     }
 
     public function render()

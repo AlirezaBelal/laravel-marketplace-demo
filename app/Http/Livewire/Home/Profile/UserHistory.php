@@ -53,7 +53,7 @@ class UserHistory extends Component
     {
         $userHistory = \App\Models\UserHistory::find($id);
         $userHistory->delete();
-        $this->emit('toast', 'success', ' تاریخچه بازدید شما با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تاریخچه بازدید شما با موفقیت حذف شد.');
     }
 
     //    public function sendEditForm($address)

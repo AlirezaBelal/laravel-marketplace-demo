@@ -76,7 +76,7 @@ class Index extends Component
             'url' => 'افزودن برند'.'-'.$this->brand->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' برند با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' برند با موفقیت ایجاد شد.');
 
     }
 
@@ -107,7 +107,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت برند'.'-'.$this->brand->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت برند با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت برند با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -121,7 +121,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت برند'.'-'.$this->brand->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت برند با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت برند با موفقیت فعال شد.');
     }
 
     public function updateBrandDisable($id)
@@ -135,7 +135,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت برند'.'-'.$this->brand->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت برند با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت برند با موفقیت غیرفعال شد.');
     }
 
     public function updateBrandEnable($id)
@@ -149,7 +149,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت برند'.'-'.$this->brand->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت برند با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت برند با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -163,9 +163,9 @@ class Index extends Component
                 'url' => 'حذف کردن برند'.'-'.$this->brand->title,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' برند با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' برند با موفقیت حذف شد.');
         } else {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا برند، شامل محصول است!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا برند، شامل محصول است!');
         }
 
     }

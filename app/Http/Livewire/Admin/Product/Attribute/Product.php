@@ -61,7 +61,7 @@ class Product extends Component
             'url' => 'افزودن مقدار مشخصه کالا'.'-'.$this->attribute->value,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقدار مشخصه کالا با موفقیت ایجاد شد.');
 
         return redirect()->back();
     }
@@ -82,7 +82,7 @@ class Product extends Component
             'url' => 'غیرفعال کردن وضعیت مقدار مشخصه کالا'.'-'.$this->attribute->value,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت مقدار مشخصه کالا با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت مقدار مشخصه کالا با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -96,7 +96,7 @@ class Product extends Component
             'url' => 'فعال کردن وضعیت مقدار مشخصه کالا'.'-'.$this->attribute->value,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت مقدار مشخصه کالا با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت مقدار مشخصه کالا با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -108,7 +108,7 @@ class Product extends Component
             'url' => 'حذف کردن مقدار مشخصه کالا'.'-'.$this->attribute->value,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' مقدار مشخصه کالا با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقدار مشخصه کالا با موفقیت حذف شد.');
     }
 
     public function render()

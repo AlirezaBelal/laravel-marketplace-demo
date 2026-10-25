@@ -52,7 +52,7 @@ class PasswordReset extends Component
 
             return $this->redirect('/');
         } else {
-            $this->emit('toast', 'error', ' پسورد وارد شده با هم مطابقت ندارد!');
+            $this->dispatch('toast', type: 'error', message: ' پسورد وارد شده با هم مطابقت ندارد!');
         }
 
     }

@@ -39,7 +39,7 @@ class CommentIndex extends Component
             'status' => 0,
         ]);
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -71,14 +71,14 @@ class CommentIndex extends Component
 
         Mail::to($comment->user->email)->send(new OrderSubmit($email));
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
     {
         $comment = Comment::find($id);
         $comment->delete();
-        $this->emit('toast', 'success', ' نظر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' نظر با موفقیت حذف شد.');
 
     }
 

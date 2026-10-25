@@ -68,7 +68,7 @@ class ProfileBanner extends Component
             'url' => 'افزودن بنر پروفایل'.'-'.$this->banner->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' بنر پروفایل با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' بنر پروفایل با موفقیت ایجاد شد.');
 
     }
 

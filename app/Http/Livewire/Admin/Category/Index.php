@@ -85,7 +85,7 @@ class Index extends Component
             'url' => 'افزودن دسته'.'-'.$this->category->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' دسته با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته با موفقیت ایجاد شد.');
 
     }
 
@@ -116,7 +116,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت دسته'.'-'.$category->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -130,7 +130,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت دسته'.'-'.$category->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -144,9 +144,9 @@ class Index extends Component
                 'url' => 'حذف کردن دسته'.'-'.$category->title,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' دسته با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' دسته با موفقیت حذف شد.');
         } else {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا زیردسته دارد!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا زیردسته دارد!');
         }
 
     }

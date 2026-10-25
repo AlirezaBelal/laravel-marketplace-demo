@@ -34,6 +34,13 @@ jobs:
           find app bootstrap config database routes tests -type f -name '*.php' -print0 \
             | xargs -0 -n1 php -l
 
+      - name: Reject Livewire 2 emit calls in active component code
+        run: |
+          if rg -n '^[[:space:]]*\$this->emit\(' app/Http/Livewire; then
+            echo 'Livewire 4 requires dispatch() with named event parameters.' >&2
+            exit 1
+          fi
+
   php:
     name: PHP framework checks (Laravel 13 candidate)
     runs-on: ubuntu-latest

@@ -33,7 +33,7 @@ class ReturnDetail extends Component
         $returnOrder->update([
             'status' => 1,
         ]);
-        $this->emit('toast', 'success', ' مرجوعی کالا با موفقیت تایید شد.');
+        $this->dispatch('toast', type: 'success', message: ' مرجوعی کالا با موفقیت تایید شد.');
 
     }
 

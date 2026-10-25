@@ -58,7 +58,7 @@ class Single extends Component
             'url' => 'افزودن تنوع قیمت محصول'.'-'.$this->productSeller->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع قیمت محصول با موفقیت ایجاد شد.');
 
         return redirect()->back();
     }
@@ -79,7 +79,7 @@ class Single extends Component
             'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -93,7 +93,7 @@ class Single extends Component
             'url' => 'فعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -105,7 +105,7 @@ class Single extends Component
             'url' => 'حذف کردن تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع قیمت محصول با موفقیت حذف شد.');
     }
 
     public function render()

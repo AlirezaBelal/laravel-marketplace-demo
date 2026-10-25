@@ -62,7 +62,7 @@ class Amazing extends Component
             'url' => 'افزودن پیشنهاد شگفت انگیز'.'-'.$this->product_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' پیشنهاد شگفت انگیز با موفقیت ایجاد شد.');
 
     }
 
@@ -85,7 +85,7 @@ class Amazing extends Component
             'url' => 'غیرفعال کردن وضعیت پیشنهاد شگفت انگیز'.'-'.$category2->category_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت پیشنهاد شگفت انگیز با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -102,7 +102,7 @@ class Amazing extends Component
             'url' => 'فعال کردن وضعیت پیشنهاد شگفت انگیز'.'-'.$category2->category_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت پیشنهاد شگفت انگیز با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت پیشنهاد شگفت انگیز با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -117,7 +117,7 @@ class Amazing extends Component
             'url' => 'حذف کردن پیشنهاد شگفت انگیز'.'-'.$amazing2->category_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' پیشنهاد شگفت انگیز با موفقیت حذف شد.');
 
     }
 

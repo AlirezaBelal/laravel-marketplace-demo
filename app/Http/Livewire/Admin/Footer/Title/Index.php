@@ -42,7 +42,7 @@ class Index extends Component
                 'url' => 'افزودن صفحه به فوتر سایت'.'-'.$this->footerTitle->title,
                 'actionType' => 'ایجاد',
             ]);
-            $this->emit('toast', 'success', ' عنوان فوتر سایت با موفقیت ایجاد شد.');
+            $this->dispatch('toast', type: 'success', message: ' عنوان فوتر سایت با موفقیت ایجاد شد.');
         }
 
     }

@@ -39,7 +39,7 @@ class ReviewIndex extends Component
             'status' => 0,
         ]);
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -71,7 +71,7 @@ class ReviewIndex extends Component
 
         Mail::to($review->user->email)->send(new OrderSubmit($email));
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت فعال شد.');
     }
 
     public function vip($id)
@@ -81,7 +81,7 @@ class ReviewIndex extends Component
             'ok_buy' => 1,
         ]);
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت غیرفعال شد.');
     }
 
     public function dvip($id)
@@ -91,14 +91,14 @@ class ReviewIndex extends Component
             'ok_buy' => 0,
         ]);
 
-        $this->emit('toast', 'success', 'وضعیت نظر با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت نظر با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
     {
         $review = Review::find($id);
         $review->delete();
-        $this->emit('toast', 'success', ' نظر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' نظر با موفقیت حذف شد.');
 
     }
 

@@ -33,7 +33,7 @@ class Address extends Component
         $address = \App\Models\Address::where('id', $id)->first();
         $address->delete();
 
-        $this->emit('toast', 'success', ' آدرس با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' آدرس با موفقیت حذف شد.');
     }
 
     public function render()

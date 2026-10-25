@@ -58,7 +58,7 @@ class Slider extends Component
             'url' => 'افزودن اسلایدر'.'-'.$this->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' اسلایدر با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' اسلایدر با موفقیت ایجاد شد.');
 
     }
 
@@ -92,7 +92,7 @@ class Slider extends Component
             'url' => 'حذف کردن اسلایدر'.'-'.$slider2->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' اسلایدر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' اسلایدر با موفقیت حذف شد.');
 
     }
 
@@ -111,7 +111,7 @@ class Slider extends Component
             'url' => 'غیرفعال کردن اسلایدر'.'-'.$slider2->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'اسلایدر با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'اسلایدر با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -128,7 +128,7 @@ class Slider extends Component
             'url' => 'فعال کردن اسلایدر'.'-'.$slider2->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'اسلایدر با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'اسلایدر با موفقیت فعال شد.');
     }
 
     public function render()

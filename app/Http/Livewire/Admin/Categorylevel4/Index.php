@@ -73,7 +73,7 @@ class Index extends Component
             'url' => 'افزودن دسته سطح 4'.'-'.$this->categorylevel4->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' دسته سطح 4 با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' دسته سطح 4 با موفقیت ایجاد شد.');
 
     }
 
@@ -104,7 +104,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت دسته سطح 4'.'-'.$category->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته سطح 4 با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته سطح 4 با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -118,7 +118,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت دسته سطح 4'.'-'.$category->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت دسته سطح 4 با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت دسته سطح 4 با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -132,9 +132,9 @@ class Index extends Component
                 'url' => 'حذف کردن دسته سطح 4'.'-'.$category->title,
                 'actionType' => 'حذف',
             ]);
-            $this->emit('toast', 'success', ' دسته سطح 4 با موفقیت حذف شد.');
+            $this->dispatch('toast', type: 'success', message: ' دسته سطح 4 با موفقیت حذف شد.');
         } else {
-            $this->emit('toast', 'success', ' امکان حذف وجود ندارد زیرا این دسته، شامل محصول است!');
+            $this->dispatch('toast', type: 'success', message: ' امکان حذف وجود ندارد زیرا این دسته، شامل محصول است!');
         }
 
     }

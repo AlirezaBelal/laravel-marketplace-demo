@@ -39,7 +39,7 @@ class Partner extends Component
             'url' => 'افزودن صفحه به فوتر سایت'.'-'.$this->footerLinkOne->page_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه به فوتر سایت با موفقیت ایجاد شد.');
 
     }
 
@@ -57,7 +57,7 @@ class Partner extends Component
             'url' => 'حذف کردن صفحه به فوتر سایت'.'-'.$this->footerLinkOne->page_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' صفحه به فوتر سایت با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه به فوتر سایت با موفقیت حذف شد.');
 
     }
 

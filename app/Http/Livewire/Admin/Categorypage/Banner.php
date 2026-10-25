@@ -62,7 +62,7 @@ class Banner extends Component
             'url' => 'افزودن بنر'.'-'.$this->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' بنر با موفقیت ایجاد شد.');
 
     }
 
@@ -96,7 +96,7 @@ class Banner extends Component
             'url' => 'حذف کردن بنر'.'-'.$banner2->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' بنر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' بنر با موفقیت حذف شد.');
 
     }
 

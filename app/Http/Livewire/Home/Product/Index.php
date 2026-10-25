@@ -90,7 +90,7 @@ class Index extends Component
                 ->where('product_id', $com->product_id)->first();
             if ($rate) {
                 $rate->delete();
-                $this->emit('toast', 'success', ' امتیاز شما حذف شد.');
+                $this->dispatch('toast', type: 'success', message: ' امتیاز شما حذف شد.');
 
             } else {
                 Rate::create([
@@ -100,7 +100,7 @@ class Index extends Component
                     'like' => 1,
                 ]);
             }
-            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' امتیاز شما ثبت شد.');
 
         } else {
             return $this->redirect('/login');
@@ -113,14 +113,14 @@ class Index extends Component
             $com = Comment::find($id);
 
             if ($com->report == 1) {
-                $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+                $this->dispatch('toast', type: 'success', message: ' گزارش شما ثبت شد.');
 
             } else {
                 $com->update([
                     'report' => 1,
                 ]);
             }
-            $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' گزارش شما ثبت شد.');
 
         } else {
             return $this->redirect('/login');
@@ -139,7 +139,7 @@ class Index extends Component
                 ->where('product_id', $review->product_id)->first();
             if ($rate) {
                 $rate->delete();
-                $this->emit('toast', 'success', ' امتیاز شما حذف شد.');
+                $this->dispatch('toast', type: 'success', message: ' امتیاز شما حذف شد.');
 
             } else {
                 Rate::create([
@@ -150,7 +150,7 @@ class Index extends Component
                 ]);
             }
 
-            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' امتیاز شما ثبت شد.');
 
         } else {
             return $this->redirect('/login');
@@ -165,7 +165,7 @@ class Index extends Component
                 'liked' => 0,
                 'dislike' => 1,
             ]);
-            $this->emit('toast', 'success', ' امتیاز شما ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' امتیاز شما ثبت شد.');
 
         } else {
             return $this->redirect('/login');
@@ -178,14 +178,14 @@ class Index extends Component
             $review = Review::find($id);
 
             if ($review->report == 1) {
-                $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+                $this->dispatch('toast', type: 'success', message: ' گزارش شما ثبت شد.');
 
             } else {
                 $review->update([
                     'report' => 1,
                 ]);
             }
-            $this->emit('toast', 'success', ' گزارش شما ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' گزارش شما ثبت شد.');
 
         } else {
             return $this->redirect('/login');
@@ -205,7 +205,7 @@ class Index extends Component
                 'parent' => 0,
                 'status' => 0,
             ]);
-            $this->emit('toast', 'success', ' نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.');
+            $this->dispatch('toast', type: 'success', message: ' نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد.');
 
             return back();
         } else {
@@ -355,7 +355,7 @@ class Index extends Component
             ]);
         }
 
-        $this->emit('toast', 'success', ' محصول ثبت شد و در صورت موجود بودن با روش های انتخابی اطلاع رسانی خواهد شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول ثبت شد و در صورت موجود بودن با روش های انتخابی اطلاع رسانی خواهد شد.');
         //        return $this->redirect(request()->header('Referer'));
     }
 
@@ -363,7 +363,7 @@ class Index extends Component
     {
         $favorites = Favorite::where('product_id', $id)->where('user_id', auth()->user()->id)->first();
         $favorites->delete();
-        $this->emit('toast', 'success', 'محصول از علاقه مندی ها حذف شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول از علاقه مندی ها حذف شد.');
     }
 
     public function updateFavoriteEnable($id)
@@ -372,14 +372,14 @@ class Index extends Component
             'product_id' => $id,
             'user_id' => auth()->user()->id,
         ]);
-        $this->emit('toast', 'success', 'محصول به علاقه مندی ها اضافه شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول به علاقه مندی ها اضافه شد.');
     }
 
     public function updateObservedDisable($id)
     {
         $observed = \App\Models\Observed::where('product_id', $id)->where('user_id', auth()->user()->id)->first();
         $observed->delete();
-        $this->emit('toast', 'success', 'محصول از اطلاع رسانی ها حذف شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول از اطلاع رسانی ها حذف شد.');
     }
 
     public function updateObservedEnable($id)
@@ -388,7 +388,7 @@ class Index extends Component
             'product_id' => $id,
             'user_id' => auth()->user()->id,
         ]);
-        $this->emit('toast', 'success', 'محصول به اطلاع رسانی ها اضافه شد.');
+        $this->dispatch('toast', type: 'success', message: 'محصول به اطلاع رسانی ها اضافه شد.');
     }
 
     public function compareAdd($id)

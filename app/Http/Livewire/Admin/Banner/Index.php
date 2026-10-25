@@ -63,7 +63,7 @@ class Index extends Component
             'url' => 'افزودن بنر'.'-'.$this->banner->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' بنر با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' بنر با موفقیت ایجاد شد.');
 
     }
 

@@ -64,7 +64,7 @@ class Category extends Component
             'url' => 'افزودن مشخصات کالا'.'-'.$this->attribute->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' مشخصات کالا با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' مشخصات کالا با موفقیت ایجاد شد.');
 
         return redirect()->back();
     }
@@ -85,7 +85,7 @@ class Category extends Component
             'url' => 'غیرفعال کردن وضعیت مشخصات کالا'.'-'.$this->attribute->childCategory,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت مشخصات کالا با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -99,7 +99,7 @@ class Category extends Component
             'url' => 'فعال کردن وضعیت مشخصات کالا'.'-'.$this->attribute->childCategory,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت مشخصات کالا با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت مشخصات کالا با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -111,7 +111,7 @@ class Category extends Component
             'url' => 'حذف کردن مشخصات کالا'.'-'.$this->attribute->childCategory,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' مشخصات کالا با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' مشخصات کالا با موفقیت حذف شد.');
     }
 
     public function render()

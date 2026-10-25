@@ -49,7 +49,7 @@ class Index extends Component
             'url' => 'افزودن خبرنامه'.'-'.$this->newsletter->email,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' خبرنامه با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' خبرنامه با موفقیت ایجاد شد.');
 
     }
 
@@ -67,7 +67,7 @@ class Index extends Component
             'url' => 'حذف کردن خبرنامه'.'-'.$this->newsletter->email,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' خبرنامه با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' خبرنامه با موفقیت حذف شد.');
 
     }
 

@@ -64,7 +64,7 @@ class Index extends Component
             'url' => 'افزودن محصول دسته صفحه اصلی'.'-'.$this->category->product_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول دسته صفحه اصلی با موفقیت ایجاد شد.');
 
     }
 
@@ -84,7 +84,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت محصول دسته صفحه اصلی'.'-'.$category->category_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول دسته صفحه اصلی با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -98,7 +98,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت محصول دسته های صفحه اصلی'.'-'.$category->category_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت محصول دسته صفحه اصلی با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت محصول دسته صفحه اصلی با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -110,7 +110,7 @@ class Index extends Component
             'url' => 'حذف کردن محصول دسته صفحه اصلی'.'-'.$category->category_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' محصول دسته صفحه اصلی با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' محصول دسته صفحه اصلی با موفقیت حذف شد.');
 
     }
 

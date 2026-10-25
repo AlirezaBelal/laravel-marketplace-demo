@@ -68,7 +68,7 @@ class Index extends Component
             'url' => 'افزودن تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع قیمت محصول با موفقیت ایجاد شد.');
 
     }
 
@@ -88,7 +88,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تنوع قیمت محصول با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -102,7 +102,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت تنوع قیمت محصول با موفقیت فعال شد.');
     }
 
     public function updateAnbarDisable($id)
@@ -116,7 +116,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن موجودی انبار فروشنده در تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت غیرفعال شد.');
     }
 
     public function updateAnbarEnable($id)
@@ -130,7 +130,7 @@ class Index extends Component
             'url' => 'فعال کردن موجودی انبار فروشنده در تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'موجودی انبار فروشنده در تنوع قیمت محصول با موفقیت فعال شد.');
     }
 
     public function OkNewProduct($id)
@@ -175,7 +175,7 @@ class Index extends Component
         Mail::to($pro->user->email)->send(new OrderSubmit($email));
 
         $pro->delete();
-        $this->emit('toast', 'success', 'محصول با موفقیت ساخته شد .');
+        $this->dispatch('toast', type: 'success', message: 'محصول با موفقیت ساخته شد .');
 
     }
 
@@ -188,7 +188,7 @@ class Index extends Component
             'url' => 'حذف کردن تنوع قیمت محصول'.'-'.$this->productSeller->product_id,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' تنوع قیمت محصول با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' تنوع قیمت محصول با موفقیت حذف شد.');
     }
 
     public function render()

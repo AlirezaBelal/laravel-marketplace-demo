@@ -34,14 +34,14 @@ class Trashed extends Component
             'url' => 'بازیابی گارانتی'.'-'.$warranty->name,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' گارانتی با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' گارانتی با موفقیت بازیابی شد.');
     }
 
     public function deleteCategory($id)
     {
         $warranty = Warranty::withTrashed()->findOrFail($id);
         $warranty->forceDelete();
-        $this->emit('toast', 'success', ' گارانتی به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' گارانتی به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function render()

@@ -67,7 +67,7 @@ class IndexRole extends Component
             'url' => 'افزودن مقام'.'-'.$this->role->name,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' مقام با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقام با موفقیت ایجاد شد.');
 
     }
 
@@ -85,7 +85,7 @@ class IndexRole extends Component
             'url' => 'حذف کردن مقام'.'-'.$role->name,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' مقام با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' مقام با موفقیت حذف شد.');
 
     }
 

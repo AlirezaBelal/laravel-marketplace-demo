@@ -31,7 +31,7 @@ class Trashed extends Component
         $color = Color::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $color->img);
         $color->forceDelete();
-        $this->emit('toast', 'success', ' رنگ به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' رنگ به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -43,7 +43,7 @@ class Trashed extends Component
             'url' => 'بازیابی رنگ'.'-'.$color->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' رنگ با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' رنگ با موفقیت بازیابی شد.');
     }
 
     public function render()

@@ -49,7 +49,7 @@ class Index extends Component
             'url' => 'افزودن عنوان دسته صفحه اصلی سایت'.'-'.$this->index->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' عنوان دسته صفحه اصلی سایت با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' عنوان دسته صفحه اصلی سایت با موفقیت ایجاد شد.');
 
     }
 

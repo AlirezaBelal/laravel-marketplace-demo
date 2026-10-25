@@ -59,7 +59,7 @@ class Index extends Component
             'url' => 'افزودن شبکه اجتماعی'.'-'.$this->social->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' شبکه اجتماعی با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' شبکه اجتماعی با موفقیت ایجاد شد.');
 
     }
 
@@ -77,7 +77,7 @@ class Index extends Component
             'url' => 'حذف کردن شبکه اجتماعی'.'-'.$this->social->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' شبکه اجتماعی با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' شبکه اجتماعی با موفقیت حذف شد.');
 
     }
 

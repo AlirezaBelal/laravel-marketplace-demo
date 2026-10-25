@@ -31,9 +31,9 @@ class Gift extends Component
                 'user_id' => auth()->user()->id,
                 'type' => 1,
             ]);
-            $this->emit('toast', 'success', ' کد هدیه وارد شده ثبت شد.');
+            $this->dispatch('toast', type: 'success', message: ' کد هدیه وارد شده ثبت شد.');
         } else {
-            $this->emit('toast', 'error', ' کد هدیه وارد شده وجود ندارد.');
+            $this->dispatch('toast', type: 'error', message: ' کد هدیه وارد شده وجود ندارد.');
         }
 
     }

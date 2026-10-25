@@ -71,7 +71,7 @@ class Index extends Component
             'url' => 'افزودن منو هدر'.'-'.$this->header->title,
             'actionType' => 'ایجاد',
         ]);
-        $this->emit('toast', 'success', ' منو هدر با موفقیت ایجاد شد.');
+        $this->dispatch('toast', type: 'success', message: ' منو هدر با موفقیت ایجاد شد.');
 
     }
 
@@ -102,7 +102,7 @@ class Index extends Component
             'url' => 'غیرفعال کردن وضعیت منو هدر'.'-'.$header->title,
             'actionType' => 'غیرفعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت منو هدر با موفقیت غیرفعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت منو هدر با موفقیت غیرفعال شد.');
     }
 
     public function updateCategoryEnable($id)
@@ -116,7 +116,7 @@ class Index extends Component
             'url' => 'فعال کردن وضعیت منو هدر'.'-'.$header->title,
             'actionType' => 'فعال',
         ]);
-        $this->emit('toast', 'success', 'وضعیت منو هدر با موفقیت فعال شد.');
+        $this->dispatch('toast', type: 'success', message: 'وضعیت منو هدر با موفقیت فعال شد.');
     }
 
     public function deleteCategory($id)
@@ -128,7 +128,7 @@ class Index extends Component
             'url' => 'حذف کردن منو هدر'.'-'.$header->title,
             'actionType' => 'حذف',
         ]);
-        $this->emit('toast', 'success', ' منو هدر با موفقیت حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' منو هدر با موفقیت حذف شد.');
     }
 
     public function render()

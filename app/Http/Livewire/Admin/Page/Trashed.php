@@ -33,7 +33,7 @@ class Trashed extends Component
         $page = Page::withTrashed()->findOrFail($id);
         Storage::disk('public')->delete('storage', $page->img);
         $page->forceDelete();
-        $this->emit('toast', 'success', ' صفحه سایت به صورت کامل از دیتابیس حذف شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه سایت به صورت کامل از دیتابیس حذف شد.');
     }
 
     public function trashedCategory($id)
@@ -45,7 +45,7 @@ class Trashed extends Component
             'url' => 'بازیابی صفحه سایت'.'-'.$page->title,
             'actionType' => 'بازیابی',
         ]);
-        $this->emit('toast', 'success', ' صفحه سایت با موفقیت بازیابی شد.');
+        $this->dispatch('toast', type: 'success', message: ' صفحه سایت با موفقیت بازیابی شد.');
     }
 
     public function render()
