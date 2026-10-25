@@ -5,7 +5,7 @@
     @section('title', 'Page Not Found')
 </head>
 <body class=" t-index" style="">
-@include('sweet::alert')
+@includeIf('sweet::alert')
 @include('livewire.home.home.header')
 <main id="main">
     <div id="HomePageTopBanner"></div>

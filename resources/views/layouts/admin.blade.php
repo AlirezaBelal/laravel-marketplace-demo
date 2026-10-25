@@ -6,7 +6,7 @@
     @vite('resources/js/app.js')
 </head>
 <body>
-{{--@include('sweet::alert')--}}
+{{--@includeIf('sweet::alert')--}}
 <livewire:admin.dashboard.sidebar/>
 <div class="content">
 

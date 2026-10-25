@@ -950,7 +950,7 @@
     <livewire:styles/>
 </head>
 <body class="has-top-banner" style="">
-@include('sweet::alert')
+@includeIf('sweet::alert')
 @include('livewire.home.home.header')
 <style>
     @media screen and (-ms-high-contrast: none) {

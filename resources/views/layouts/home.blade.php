@@ -5,7 +5,7 @@
 
 </head>
 <body class=" t-index">
-{{--@include('sweet::alert')--}}
+{{--@includeIf('sweet::alert')--}}
 @include('livewire.home.home.header')
 {{$slot}}
 @include('livewire.home.home.footer')
