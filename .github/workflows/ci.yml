@@ -83,7 +83,7 @@ jobs:
           php -r '
           require "vendor/autoload.php";
           $app = require "bootstrap/app.php";
-          $app->make(Illuminate\\Contracts\\Console\\Kernel::class)->bootstrap();
+          $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
           $compiler = $app->make("blade.compiler");
           $needle = "c918496435ed5bdb80de86eb62198b81.php";
           $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("resources/views", FilesystemIterator::SKIP_DOTS));
