@@ -93,22 +93,7 @@
                 </span>
                     <span class="c-checkout-bill__total-price--amount">
 
-                    @if($this->discount_type == null)
-                            @if ($this->dgift == null)
-                                {{\App\Models\PersianNumber::translate($orders->sum('total_discount_price'))}}
-                            @else
-                                {{\App\Models\PersianNumber::translate($orders->sum('total_discount_price') - $this->dgift)}}
-                            @endif
-
-
-                        @elseif($this->discount_type==1)
-
-                            {{\App\Models\PersianNumber::translate($orders->sum('total_discount_price') - $this->discount_price)}}
-                        @elseif ($this->discount_type ==0)
-
-                            {{\App\Models\PersianNumber::translate($this->dTotalPercent)}}
-
-                        @endif
+                    {{\App\Models\PersianNumber::translate($amountDue)}}
                     <span
                         class="c-checkout-bill__total-price--currency">
                         تومان

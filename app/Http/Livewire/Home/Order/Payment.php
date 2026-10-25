@@ -154,17 +154,8 @@ class Payment extends Component
         $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         abort_if($orders->isEmpty() || $payments->isEmpty(), 404);
-        if ($this->discount_type == null) {
-            if ($this->dgift == null) {
-                $price = $orders->sum('total_discount_price');
-            } else {
-                $price = $orders->sum('total_discount_price') - $this->dgift;
-            }
-        } elseif ($this->discount_type == 1) {
-            $price = $orders->sum('total_discount_price') - $this->discount_price;
-        } elseif ($this->discount_type == 0) {
-            $price = $this->dTotalPercent;
-        }
+        [$price, $gift, $giftApplied] = $this->payableAmount($orders, $payments);
+
         $bankPayment = BankPayment::create([
             'user_id' => auth()->user()->id,
             'order_number' => $payments[0]->order_number,
@@ -172,17 +163,8 @@ class Payment extends Component
             'status' => 0,
         ]);
 
-        if ($this->dgift != null) {
-            $gift = Gift::where('code', $this->gift->code)->first();
-            if ($gift->value_price > $orders->sum('total_discount_price')) {
-                $gift->update([
-                    'value_price' => $gift->value_price - $orders->sum('total_discount_price'),
-                ]);
-            } elseif ($gift->value_price < $orders->sum('total_discount_price')) {
-                $gift->update([
-                    'value_price' => 0,
-                ]);
-            }
+        if ($giftApplied > 0) {
+            $gift->update(['value_price' => (int) $gift->value_price - $giftApplied]);
         }
         foreach ($orders as $order) {
             $order->update([
@@ -206,8 +188,36 @@ class Payment extends Component
         $orders = Order::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         $payments = \App\Models\Payment::where('user_id', auth()->id())->where('order_number', $order_number)->get();
         $addresses = Address::where('user_id', auth()->user()->id)->get();
+        [$amountDue] = $this->payableAmount($orders, $payments);
 
-        return view('livewire.home.order.payment', compact('order_number', 'payments', 'orders', 'order_last', 'order_number'))
+        return view('livewire.home.order.payment', compact('order_number', 'payments', 'orders', 'order_last', 'amountDue'))
             ->layout('layouts.shipping');
+    }
+
+    private function payableAmount($orders, $payments): array
+    {
+        // Livewire public properties are client-controlled. Recalculate the
+        // amount from persisted order, delivery and voucher records instead.
+        $subtotal = max(0, (int) $orders->sum('total_discount_price'));
+        $shipping = max(0, (int) $payments->first()->shipping_price);
+        $discountAmount = 0;
+        if ($payments->first()->discount_code) {
+            $discount = Discount::where('code', $payments->first()->discount_code)->first();
+            if ($discount) {
+                if ((int) $discount->type === 1) {
+                    $discountAmount = max(0, (int) $discount->price);
+                } elseif ((int) $discount->type === 0) {
+                    $percent = min(100, max(0, (int) $discount->percent));
+                    $discountAmount = intdiv($subtotal * $percent, 100);
+                }
+            }
+        }
+        $afterDiscount = max(0, $subtotal - $discountAmount);
+        $gift = $payments->first()->gift_code
+            ? Gift::where('code', $payments->first()->gift_code)->where('type', 0)->first()
+            : null;
+        $giftApplied = $gift ? min($afterDiscount, max(0, (int) $gift->value_price)) : 0;
+
+        return [$afterDiscount - $giftApplied + $shipping, $gift, $giftApplied];
     }
 }

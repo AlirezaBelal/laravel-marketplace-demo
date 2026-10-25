@@ -26,6 +26,7 @@ final class PaymentAuthorizationTest extends TestCase
             $table->unsignedBigInteger('user_id');
             $table->string('order_number');
             $table->unsignedBigInteger('total_discount_price')->default(0);
+            $table->string('status')->nullable();
             $table->timestamps();
         });
         Schema::connection('sqlite')->create('payments', function (Blueprint $table): void {
@@ -33,6 +34,39 @@ final class PaymentAuthorizationTest extends TestCase
             $table->unsignedBigInteger('user_id');
             $table->string('order_number');
             $table->integer('type_payment')->default(0);
+            $table->unsignedBigInteger('shipping_price')->default(0);
+            $table->string('discount_code')->nullable();
+            $table->string('gift_code')->nullable();
+            $table->timestamps();
+        });
+        Schema::connection('sqlite')->create('bank_payments', function (Blueprint $table): void {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('order_number');
+            $table->unsignedBigInteger('price');
+            $table->integer('status')->default(0);
+            $table->timestamps();
+        });
+        Schema::connection('sqlite')->create('return_orders', function (Blueprint $table): void {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('order_number');
+            $table->unsignedBigInteger('order_id');
+            $table->timestamps();
+        });
+        Schema::connection('sqlite')->create('discounts', function (Blueprint $table): void {
+            $table->id();
+            $table->string('code');
+            $table->integer('type');
+            $table->unsignedBigInteger('price')->default(0);
+            $table->integer('percent')->default(0);
+            $table->timestamps();
+        });
+        Schema::connection('sqlite')->create('gifts', function (Blueprint $table): void {
+            $table->id();
+            $table->string('code');
+            $table->integer('type')->default(0);
+            $table->unsignedBigInteger('value_price')->default(0);
             $table->timestamps();
         });
     }
@@ -71,6 +105,58 @@ final class PaymentAuthorizationTest extends TestCase
 
         $this->expectException(NotFoundHttpException::class);
         (new PaymentComponent)->continuePayment('OTHER-ORDER');
+    }
+
+    public function test_final_amount_ignores_mutable_livewire_discount_values(): void
+    {
+        DB::table('orders')->insert([
+            'user_id' => 17,
+            'order_number' => 'OWN-ORDER',
+            'total_discount_price' => 1000,
+        ]);
+        Payment::create([
+            'user_id' => 17,
+            'order_number' => 'OWN-ORDER',
+            'shipping_price' => 200,
+        ]);
+        $this->actingAs($this->customer(17));
+
+        $component = new PaymentComponent;
+        $component->discount_type = 1;
+        $component->discount_price = 50000;
+        $component->dTotalPercent = -10000;
+        $component->dgift = 10000;
+        $component->continuePayment('OWN-ORDER');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'user_id' => 17,
+            'order_number' => 'OWN-ORDER',
+            'price' => 1200,
+        ]);
+    }
+
+    public function test_discount_is_recomputed_using_the_saved_voucher(): void
+    {
+        DB::table('orders')->insert([
+            'user_id' => 17,
+            'order_number' => 'OWN-DISCOUNT',
+            'total_discount_price' => 1000,
+        ]);
+        DB::table('discounts')->insert(['code' => 'VALID', 'type' => 0, 'percent' => 25]);
+        Payment::create([
+            'user_id' => 17,
+            'order_number' => 'OWN-DISCOUNT',
+            'shipping_price' => 200,
+            'discount_code' => 'VALID',
+        ]);
+        $this->actingAs($this->customer(17));
+
+        (new PaymentComponent)->continuePayment('OWN-DISCOUNT');
+
+        $this->assertDatabaseHas('bank_payments', [
+            'order_number' => 'OWN-DISCOUNT',
+            'price' => 950,
+        ]);
     }
 
     private function customer(int $id): User
